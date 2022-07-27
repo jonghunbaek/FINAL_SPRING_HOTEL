@@ -10,4 +10,6 @@ public class FinalSpringHotelApplication {
 		SpringApplication.run(FinalSpringHotelApplication.class, args);
 	}
 
+	
+	
 }
