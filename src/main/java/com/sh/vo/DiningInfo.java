@@ -2,12 +2,15 @@ package com.sh.vo;
 
 import java.util.Date;
 
+import org.apache.ibatis.type.Alias;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter @Setter @ToString
-public class DnInfo {
+@Alias("DiningInfo")
+public class DiningInfo {
 
 	private int diningNo;
 	private String main;
