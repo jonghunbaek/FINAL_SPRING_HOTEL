@@ -53,15 +53,15 @@
         <div class="row">
             <div class="col" id="nav-left">
                 <ul class="navbar-nav" style="float: left; flex-direction: row;">
-                    <li><a href="">호텔찾기<img src="../resources/images/find_hotel.png"></a></li>
-                    <li><a href="">예약<img src="../resources/images/reservation.png"></a></li>
+                    <li><a href="">호텔찾기<img src="../resources/images/nav/find_hotel.png"></a></li>
+                    <li><a href="">예약<img src="../resources/images/nav/reservation.png"></a></li>
                 </ul>
             </div>
         </div>
         <!-- 로고 -->
         <div class="row" id="img-logo">
             <div class="col-md-4">
-                <a href="/home.jsp"><img src="../resources/images/nav_logo1.png"/></a>
+                <a href="/home.jsp"><img src="../resources/images/nav/nav_logo1.png"/></a>
             </div>
         </div>
         <!-- 오른쪽 -->
