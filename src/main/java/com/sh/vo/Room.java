@@ -1,9 +1,7 @@
 package com.sh.vo;
 
 import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +12,7 @@ import lombok.ToString;
 @Alias("Room")
 
 public class Room {
-
+	
 	private int id;
 	private int no;
 	private String name;
@@ -25,5 +23,5 @@ public class Room {
 	private String image;
 	private Location location;
 	private RoomCategory roomCategory; 
-	
+
 }
