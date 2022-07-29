@@ -14,8 +14,7 @@
 		<result column="user_created_date" property="createdDate"/>
 		<result column="user_updated_date" property="updatedDate"/>
 		<result column="user_point" property="point"/>
-		<result column="user_grade" property="grade"/>
-		<result column="user_annual_stay" property="annualStay"/>
+		<result column="user_annual_stay" property="stay"/>
 	</resultMap>
 	<!-- User getUserById(String id); -->
 		<select id="getUserById" parameterType="string" resultMap="UserResultMap">

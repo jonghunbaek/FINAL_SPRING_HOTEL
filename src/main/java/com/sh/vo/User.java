@@ -29,7 +29,7 @@ public class User {
 		private String deleted;
 		private Date deletedDate;
 		private double point;
-  	private int stay;
-	  private Grade grade;
+  	    private int stay;
+	    private Grade grade;
 		
 }
