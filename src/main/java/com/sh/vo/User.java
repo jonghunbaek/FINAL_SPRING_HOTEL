@@ -1,11 +1,8 @@
 package com.sh.vo;
 
 import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,12 +24,12 @@ public class User {
 		private String email;
 		private String tel;
 		private String address;
-		private int point;
 		private Date createdDate;
 		private Date updatedDate;
 		private String deleted;
 		private Date deletedDate;
-		private int annualStay;
-		private String grade;
+		private double point;
+  	private int stay;
+	  private Grade grade;
 		
 }
