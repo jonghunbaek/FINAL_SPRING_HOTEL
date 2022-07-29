@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.mapper.DiningMapper">
+	
+	<!-- Location getLocationByNo(int no); -->
+	<select id="getLocationByNo" parameterType="int" resultType="Location">
+		select location_no as no,
+			   location_name as name
+		from sh_location
+		where location_no = #{value}
+	</select>
+
+	<!-- List<Location> getAllLocations(); -->
+	<select id="getAllLocations" resultType="Location">
+		select location_no as no,
+			   location_name as name
+		from sh_location
+		order by location_no asc
+	</select>
+	
+	<!-- List<Dining> getDiningByLocationNo(int no); -->
+	<select id="getDiningByLocationNo" parameterType="int" resultMap="DiningResultMap">
+		select *
+		from sh_dn
+		where location_no = #{value}
+	</select>
+	
+	<!-- DiningInfo getDiningInfoByNo(int no); -->
+	<select id="getDiningInfoByNo" parameterType="int"	 resultType="DnInfo">
+		select dn_info_main as main,
+			   dn_info_detail as detail,
+			   dn_info_location as location,
+			   dn_info_time as time,
+			   dn_info_tel as tel,
+			   dn_info_room as room,
+			   dn_info_seat as seat,
+			   dn_no as diningNo,
+			   dn_info_food_img1 as foodimage1,
+			   dn_info_food_img2 as foodimage2,
+			   dn_info_food_img3 as foodimage3,
+			   dn_info_lunch_pdf as lunchPdf,
+			   dn_info_dinner_pdf as dinnerPdf,
+			   dn_info_notice as notice
+		from sh_dn_info
+		where dn_no = #{value}
+	</select>
+	
+	<resultMap type="Dn" id="DiningResultMap">
+		<id column="dn_no" property="no"/>
+		<result column="dn_name" property="name"/>
+		<result column="dn_image" property="imagename"/>
+		<result column="dn_max_count" property="maxCount"/>
+		<association property="location" column="locatino_no" select="getLocationByNo"/>
+		<association property="dnInfo" column="dn_no" select="getDiningInfoByNo"/>
+	</resultMap>
+	
+	<!-- Dining getDiningByNo(int no); -->
+	<select id="getDiningByNo" parameterType="int" resultMap="DiningResultMap">
+		select *
+		from sh_dn
+		where dn_no = #{value}
+	</select>
+	
+	
+	
+</mapper>
