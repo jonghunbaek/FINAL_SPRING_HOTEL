@@ -34,6 +34,24 @@ public class HomeController {
 		return "loginform";
 	}
 	
+	// 호텔소개
+	@GetMapping(path="/about")
+	public String about() {
+		return "aboutSpring";
+	}
+	
+	// 고객문의
+	@GetMapping(path="/contact")
+	public String contact() {
+		return "contactus";
+	}
+	
+	// 스프링리워즈
+	@GetMapping(path="/rewards")
+	public String rewards() {
+		return "rewards";
+	}
+	
 	// 로그인
 	@PostMapping(path="/login")
 	public String login(@RequestParam("id") String id, @RequestParam("password") String password, Model model) {
