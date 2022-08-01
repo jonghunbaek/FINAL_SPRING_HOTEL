@@ -9,8 +9,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Alias("ShopCategory")
-public class ShopCategory {
+@Alias("ProductCategory")
+public class ProductCategory {
 	
 	private int no;
 	private Category category;
