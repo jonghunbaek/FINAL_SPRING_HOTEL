@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.mapper.UserMapper">
+
+	<resultMap type="User" id="UserResultMap">
+		<id column="user_id" property="id"/>
+		<result column="user_password" property="password"/>
+		<result column="user_name" property="name"/>
+		<result column="user_eamil" property="eamil"/>
+		<result column="user_tel" property="tel"/>
+		<result column="user_address" property="address"/>
+		<result column="user_deleted" property="deleted"/>
+		<result column="user_deleted_date" property="deletedDate"/>
+		<result column="user_created_date" property="createdDate"/>
+		<result column="user_updated_date" property="updatedDate"/>
+		<result column="user_point" property="point"/>
+		<result column="user_annual_stay" property="stay"/>
+	</resultMap>
+	<!-- User getUserById(String id); -->
+		<select id="getUserById" parameterType="string" resultMap="UserResultMap">
+			select *
+			from sh_users
+			where user_id = #{id}
+		</select>
+	<!-- void insertUser(User user); -->
+	
+	<!-- void updateUser(User user); -->
+</mapper>

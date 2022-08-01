@@ -37,8 +37,15 @@
         <div class="nav" id="nav-div" >
             <div class="nav-top" id="nav-top">
                 <ul style="float: right;">
-                    <li class="nav-item"><a href="">로그인</a></li>
-                    <li class="nav-item"><a href="">스프링리워즈 가입</a></li>
+                <c:if test="${empty LOGIN_USER}">
+                    <li class="nav-item"><a href="/login">로그인</a></li>
+                    <li class="nav-item"><a href="/register">스프링리워즈 가입</a></li>
+                </c:if>
+                <c:if test="${not empty LOGIN_USER }">
+                	<li><strong>${LOGIN_USER.name }</strong>님 환영합니다.<li>
+               		<li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+                </c:if>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="" id="navbar-dropdown-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">예약확인</a>
                         <ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
@@ -61,7 +68,7 @@
         <!-- 로고 -->
         <div class="row" id="img-logo">
             <div class="col-md-4">
-                <a href="/home.jsp"><img src="../resources/images/nav_logo1.png"/></a>
+                <a href="/"><img src="../resources/images/nav_logo1.png"/></a>
             </div>
         </div>
         <!-- 오른쪽 -->

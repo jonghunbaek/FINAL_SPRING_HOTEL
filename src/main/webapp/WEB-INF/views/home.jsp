@@ -16,8 +16,8 @@
 	#specialOffer img {width: 300px; height: auto;}
 	#plus {float: right; text-align: center; vertical-align: bottom;}
 	#plus img {width: 80px; height: auto;}
-	
 </style>
+
 <title>Spring Hotel</title>
 </head>
 <body>
@@ -62,7 +62,6 @@
 		</div>
 		<div class="row" id="specialOfferDetail">
 			<div class="col">
-				asdf
 			</div>
 		</div>
 	</div>
