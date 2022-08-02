@@ -1,5 +1,6 @@
 package com.sh.controller;
 
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,22 @@ public class HomeController {
 		return "loginform";
 	}
 	
-	@GetMapping(path = "/completed")
-	public String completed() {
-		return "completed";
+	// 호텔소개
+	@GetMapping(path="/about")
+	public String about() {
+		return "aboutSpring";
+	}
+	
+	// 고객문의
+	@GetMapping(path="/contact")
+	public String contact() {
+		return "contactus";
+	}
+	
+	// 스프링리워즈
+	@GetMapping(path="/rewards")
+	public String rewards() {
+		return "rewards";
 	}
 
 	// 로그인
@@ -72,7 +86,12 @@ public class HomeController {
 		return "registerform";
 
 	}
-
+  
+  @GetMapping(path = "/completed")
+	public String completed() {
+		return "completed";
+	}
+  
 	@PostMapping(path = "/register")
 	public String register(@ModelAttribute("userRegisterForm") @Valid UserRegisterForm userRegisterForm,
 			BindingResult errors) throws Exception {
@@ -90,4 +109,6 @@ public class HomeController {
 		}
 		return "redirect:/completed";
 	}
+  
+ 
 }
