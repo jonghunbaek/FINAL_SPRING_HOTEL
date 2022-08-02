@@ -22,7 +22,33 @@
 			from sh_users
 			where user_id = #{id}
 		</select>
+	<!-- User getUserByEmail(String email); -->
+	<select id="getUserByEmail" parameterType="string" resultMap="UserResultMap">
+		select *
+		from sh_users
+		where user_email = #{value}
+	</select>
 	<!-- void insertUser(User user); -->
-	
+		<insert id="insertUser" parameterType="User">
+		insert into sh_users
+		(user_no, user_id, user_password, user_name, user_email, user_tel, user_address, postcode , first_name, last_name, birthday)
+		values
+		(user_seq.nextval, #{id}, #{password}, #{name},  #{email}, #{tel}, #{postcode}, #{address}, #{firstName}, #{lastName}, #{birthDay})
+		</insert>
 	<!-- void updateUser(User user); -->
+	<update id="updateUser" parameterType="User">
+		update sh_users
+		set 
+			user_password = #{password},
+			user_name = #{name},
+			user_tel = #{tel},
+			user_email = #{email},
+			user_address = #{address},
+			postcode = #{postcode},
+			first_name = #{firstName},
+			last_name = #{lastName},
+			birthday = #{birthDay},
+			user_updated_date = sysdate
+		where user_id = #{id}
+	</update>
 </mapper>

@@ -2,7 +2,7 @@
 #container {
 	padding: 65px 0 0 0;
 	text-align: center;
-	width: 1200px;
+	width: 930px;
 	margin: auto;
 	zoom: 1;
 	margin: 0 auto 100px auto;
@@ -54,13 +54,13 @@
 }
 
 .rgt {
-	right: 172px;
+	right: 40px;
 }
 
 .contents .location .list {
 	display: block;
 	font-size: 11px;
-	background: url(resources/images/locaton.gif) no-repeat 0 1px;
+	background: url(../images/locaton.gif) no-repeat 0 1px;
 	line-height: 12px;
 	padding: 0 0 0 17px;
 }
@@ -80,14 +80,6 @@
 
 .info {
 	font-size: 14px;
-}
-
-.contents .headTit .tit {
-	float: left;
-	width: 430px;
-	height: 35px;
-	line-height: 100px;
-	overflow: hidden;
 }
 
 .loginBox.contents .headTit {
@@ -138,15 +130,13 @@
 	margin: auto;
 }
 
-.loginBox.contents .headTit .tit {
-	background: url(resources/images/loginTit.gif) no-repeat;
-	width: 467px;
-	line-height: 200px;
-	overflow: hidden;
+.tit {
+	float: left;
+	color: #865009;
+	font-weight: 550;
 }
 
 .loginBox .top {
-	background: url(resources/images//loginTop.gif) no-repeat;
 	width: 600px;
 	height: 144px;
 	margin: 0 auto 35px;
@@ -200,3 +190,78 @@ button a{
 	display: inline-block;
 }
 
+/* 회원가입 */
+
+.registerBox.contents .headTit {
+    border-bottom: #432c10 solid 5px;
+    height: 47px;
+    width: 866px;
+    margin: 0 auto;
+}
+.registerTit {
+	float: left;
+	color: #865009;
+	font-weight: 550;
+} 
+#registerForm p {
+	text-align: left;
+	font-weight: bolder;
+	margin: 10px 0px;
+}
+#registerForm ul li {
+	background: #FFFDF9;
+	border-top: #856f56 solid 1px;
+	width: 866px;
+	text-align: left;
+}
+
+#registerForm ul .first {
+	border-top: #865009 solid 3px;
+	width: 866px;
+}
+#registerForm ul .end {
+	border-bottom: #865009 solid 3px;
+	width: 866px;
+}
+
+#registerForm ul .none {
+	border-top: 0px;
+	width: 866px;
+}
+
+#registerForm ul label {
+	width: 160px;
+	background: #f2f1ea;
+	text-align: left;
+	font-weight: bolder;
+	padding: 10px;
+}
+
+#registerForm input {
+	margin: 5px 10px;
+	padding: 0px;
+}
+
+#registerForm #registerbutton {
+	margin-top : 30px;
+	padding: 10px 40px;
+}
+
+#registerForm .required:before{
+	content : '\002A';
+	margin: 5px;
+	color: #F29B29;
+}
+
+#registerForm #ex{
+	font-size: 13px;
+	color: #828148;
+}
+
+#registerForm #btn{
+	background-color: #856f56;
+	color: #fff;
+	border: 0px;
+	padding: 5px 10px;
+	font-size: 15px;
+}
