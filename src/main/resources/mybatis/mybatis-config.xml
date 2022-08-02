@@ -14,5 +14,4 @@
 		 -->
 		 <package name="com.sh.vo"/>
 	</typeAliases>
-
 </configuration>
