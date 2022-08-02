@@ -81,4 +81,9 @@ public class HomeController {
 		
 	}
 	
+	//쇼핑몰
+	@GetMapping(path="/shop")
+	public String shop() {
+		return "shop/home";
+	}
 }
