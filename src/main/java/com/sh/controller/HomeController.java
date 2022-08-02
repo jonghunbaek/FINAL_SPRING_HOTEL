@@ -1,5 +1,6 @@
 package com.sh.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +33,24 @@ public class HomeController {
 	@GetMapping(path="/login")
 	public String loginform() {
 		return "loginform";
+	}
+	
+	// 호텔소개
+	@GetMapping(path="/about")
+	public String about() {
+		return "aboutSpring";
+	}
+	
+	// 고객문의
+	@GetMapping(path="/contact")
+	public String contact() {
+		return "contactus";
+	}
+	
+	// 스프링리워즈
+	@GetMapping(path="/rewards")
+	public String rewards() {
+		return "rewards";
 	}
 	
 	// 로그인

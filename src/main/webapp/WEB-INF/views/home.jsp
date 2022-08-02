@@ -8,6 +8,15 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+	#container {padding: 0%; text-align: center;}
+	#div-dining {display: block; margin-top: 50px;}
+	#div-dining img {width: 1200px; height: 60px;}
+	#div-specialOffer {display: block; margin: auto; margin-top: 50px; width: 1200px; height: 2400px;}
+	#specialOffer img {width: 300px; height: auto;}
+	#plus {float: right; text-align: center; vertical-align: bottom;}
+	#plus img {width: 80px; height: auto;}
+</style>
 
 <title>Spring Hotel</title>
 </head>
