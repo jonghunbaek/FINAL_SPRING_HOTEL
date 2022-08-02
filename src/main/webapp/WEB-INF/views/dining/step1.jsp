@@ -29,6 +29,18 @@
 	margin-top:30px;
 	font-size: 50%;
 }
+#modal-main-img img{
+    width: 750px;
+    height: 500px;
+}
+#modal-sub-img1 img{
+    width: 400px;
+    height: 700px;
+}
+#modal-sub-img2 img{
+    width: 300px;
+    height: 200px;
+}
 </style>
 <title>Spring Hotel</title>
 </head>
@@ -39,6 +51,7 @@
 	<div class="row border-bottom p-5" >
 		<div class="col text-center">
 			<h4>다이닝 예약</h4>
+			<a href='#' id="btn-open-modal-detail2">레스토랑 상세보기 <i class="bi bi-plus-circle"></i></a>
 		</div>
 	</div>
 		<div class="row p-4 border-bottom">
@@ -63,7 +76,7 @@
 						</select>
 					</div>
 					<div class="col-4">
-					    <button type="submit" class="btn btn-secondary btn-sm">Confirm identity</button>
+					    <button type="submit" class="btn btn-secondary btn-sm">예약</button>
 					</div>
 				</div>
 			</form>
@@ -75,9 +88,42 @@
 		</div>
 	</div>
 </div>
+
+<div class="modal" id="modal-detail">
+	<div class="modal-dialog modal-dialog-scrollable modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">레스토랑 상세보기</h4>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col" id="modal-main-img">
+						<img src="../resources/images/dining/더파크뷰메인.jpg"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-7" id="modal-sub-img1">
+						<img src="../resources/images/dining/아리아께1.png"/>
+					</div>
+					<div class="col-5" id="modal-sub-img2">
+						<img src="../resources/images/dining/아리아께2.png"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
+	let detailModal = new bootstrap.Modal(document.getElementById("modal-detail"));
+	
+	$("#holtel-info").on('click', "#btn-open-modal-detail", function() {
+		detailModal.show();
+	});
+	
 	
 	$(":radio[name=hotel]").change(function() {
 		searchHotel();
@@ -91,20 +137,25 @@ $(function() {
 		let queryString = $("#form-select").serialize();
 		let $diningSelect = $("#dining-select").empty();
 		
-		console.log(queryString);
+		let $hotelInfo = $("#hotel-info").empty();
+		
+		//console.log(queryString);
+		
+		let hotelInfoContent = `
+			<div class="col-12">
+				<h3 class="text-center" style="margin: 100px;">예약을 원하시는 호텔, 다이닝을 선택해주세요.</h3>
+			</div>
+		`
+		$hotelInfo.append(hotelInfoContent);
+		$diningSelect.append('<option selected>다이닝선택</option>');
 		
 		$.getJSON("/dining/search", queryString, function(dinings){
-			if(dinings.length == 0) {
-				let content = '';
-				$diningSelect.append(content);
 			
-				
-			} else {
-				$.each(dinings, function(index, dining) {
-					content = '<option value="' + dining.no + '"> '+ dining.name + '</option>';
-					$diningSelect.append(content);
-				})
-			}
+			$.each(dinings, function(index, dining) {
+				let content = '<option value="' + dining.no + '"> '+ dining.name + '</option>';
+				$diningSelect.append(content);
+			})
+			
 		})
 		
 	}
@@ -113,7 +164,8 @@ $(function() {
 		let queryString = $("#form-dining-select").serialize();
 		let $hotelInfo = $("#hotel-info").empty();
 		
-		console.log(queryString);
+		
+		//console.log(queryString);
 		
 		$.getJSON("/dining/info", queryString, function(dining) {
 			if(dining == null) {
@@ -126,12 +178,12 @@ $(function() {
 			} else {
 				let content = '';
 				content += '<div class="col-6">'
-				content += '<img  src="../resources/images/dining/'+dining.imagename+'"></a>'
+				content += '<img  src="../resources/images/dining/'+dining.imagename+'"/>'
 				content += '</div>'
 				content += '<div class="col-6">'
 				content += 	'<h4 class="tit" >'+dining.dnInfo.main+'</h4>'
 				content += 	'<p class="subTit">'+dining.dnInfo.detail+'</p>'
-				content += 	'<a href="step2" class="bnt-rest-info">레스토랑 상세보기 <i class="bi bi-plus-circle"></i></a>'
+				content += 	'<a href="#" id="btn-open-modal-detail">레스토랑 상세보기 <i class="bi bi-plus-circle"></i></a>'
 				content += 	'<div class="row">'
 				content += 		'<div class="col-4 info" >'
 				content += 			'<p><strong>문의</strong></p>'
@@ -151,6 +203,9 @@ $(function() {
 			}
 		})
 	}
+	
+	
+	
 })
 </script>
 </body>
