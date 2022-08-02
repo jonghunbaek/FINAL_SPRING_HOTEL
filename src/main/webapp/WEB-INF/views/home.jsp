@@ -15,7 +15,7 @@
 <c:set var="menu" value="home"/>
 <%@ include file="common/nav.jsp" %>
 <div class="container-fluid" id="container">
-	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+	<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true"  style="width: 100%";>
 		<div class="carousel-indicators">
 		  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
 		  <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -40,9 +40,9 @@
 		  <span class="carousel-control-next-icon" aria-hidden="true"></span>
 		  <span class="visually-hidden">Next</span>
 		</button>
-	  	</div>
+	</div>
 	<div class="row" id="div-dining">
-		<a href=""><img src="resources/images/dining_reservation.png" alt="다이닝 예약 바로가기"></a>
+		<a href=""><img src="resources/images/dining_reservation.png" style="width: 100%;" alt="다이닝 예약 바로가기"></a>
 	</div>
 	<div class="row" id="div-specialOffer">
 		<div class="col" id="specialOffer">
