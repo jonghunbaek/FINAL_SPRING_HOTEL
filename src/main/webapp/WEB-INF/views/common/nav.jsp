@@ -2,13 +2,14 @@
 <%@ include file="tags.jsp" %>
 <!DOCTYPE html>
 <style>
+	#nav-container {width:1200px; margin: auto;}
     #nav-top {font-size: 13px; width: 1200px; height: 10px;}
     #nav {background-color: rgb(241, 227, 196); text-align: center;}
     a {text-decoration: none; color: rgb(133, 111, 86);}
     .nav-link, .dropdown-item {color: rgb(133, 111, 86);}
     a:hover, .nav-link:hover, .dropdown-item:hover {color: brown;}
     li {list-style-type: none; text-align: center;}
-    #nav-div {width: 1200px; height: 10px; margin-left: 100px; display: inline-block;}
+    #nav-div {width: 1200px; height: 10px; text-align: right;}
     #nav-top li {display: inline-block; margin-left: 20px;}
     #nav-left li {
         display: inline-block;
@@ -28,11 +29,11 @@
         top: 20px;
     }
     #nav-right img {width: 25px; height: 25px; margin-left: 10px;}
-    #img-logo {display: block; margin-left: 70px;}
+    #img-logo {display: block; position: relative; left: 50px;}
     #img-logo img {text-align: center; width: 230px; height: 80px;}
 </style>
 <nav class="navbar" id="nav">
-    <div class="container" id="nav-container">
+    <div class="container-fluid" id="nav-container">
         <!-- 최상단 nav -->
         <div class="nav" id="nav-div" >
             <div class="nav-top" id="nav-top">
@@ -75,9 +76,9 @@
         <div class="row">
             <div class="col" id="nav-right">
                 <ul class="navbar-nav" style="float: right; flex-direction: row;">
-                    <li><a href="">호텔소개</a></li>
-                    <li><a href="">고객문의</a></li>
-                    <li><a href="">스프링리워즈</a></li>
+                    <li><a href="/about">호텔소개</a></li>
+                    <li><a href="/contact">고객문의</a></li>
+                    <li><a href="/rewards">스프링리워즈</a></li>
                 </ul>
             </div>      
         </div>
