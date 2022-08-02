@@ -21,8 +21,11 @@ public class User {
 		private String id;
 		private String password;
 		private String name;
+		private String firstName;
+		private String lastName;
 		private String email;
 		private String tel;
+		private String postcode;
 		private String address;
 		private Date createdDate;
 		private Date updatedDate;
@@ -31,5 +34,6 @@ public class User {
 		private double point;
   	    private int stay;
 	    private Grade grade;
-		
+	    private Date birthDay;
+	    
 }
