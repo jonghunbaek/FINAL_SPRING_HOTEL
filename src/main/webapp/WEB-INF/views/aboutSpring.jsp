@@ -121,6 +121,7 @@
 		document.querySelector('#div-content6').style.display = "none";
 		document.querySelector('#div-contents').style.height = "1292px";
 		document.querySelector('#container').style.height = "1292px";
+		
 	}
 	function seoul() {
 		document.querySelector('#div-content1').style.display = "none";
