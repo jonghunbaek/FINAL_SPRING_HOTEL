@@ -19,7 +19,7 @@ public class Product {
 	private int price;
 	private int discountPrice;
 	private String detail;
-	private ProductCategory shopCategory;
+	private ProductCategory shopCategoryNo;
 	private String tip;
 	private String img;
 	private String summary;
