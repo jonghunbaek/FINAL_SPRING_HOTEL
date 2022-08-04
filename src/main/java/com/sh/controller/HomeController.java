@@ -148,7 +148,7 @@ public class HomeController {
 		}
 		return "redirect:/completed";
 	}
-	
+
 	// 아이디 중복체크
 	@PostMapping(path ="/idCheck")
 	@ResponseBody
