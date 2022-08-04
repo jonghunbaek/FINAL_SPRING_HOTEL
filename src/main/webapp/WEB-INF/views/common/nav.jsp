@@ -70,6 +70,7 @@
 	               	   <li class="list-inline-item"><strong>${LOGIN_USER.name }</strong>님 환영합니다.</li>
 	              	   <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
 	               </c:if>
+
 	                   <li class="list-inline-item dropdown">
 	                       <a class="nav-link dropdown-toggle" href="" id="navbar-dropdown-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">예약확인</a>
 	                       <ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">

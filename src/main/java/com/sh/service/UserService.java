@@ -1,34 +1,33 @@
 package com.sh.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.util.UUID;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.sh.exception.ApplicationException;
 import com.sh.mapper.UserMapper;
 import com.sh.vo.User;
 import com.sh.web.form.UserRegisterForm;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserService {
 
 	@Autowired
 	private UserMapper userMapper;
 	
+	/** 유저정보 가져오기
+	 * @param userid
+	 * @return 유저정보 획득
+	 */
 	public User getUserDetail(String userid) {
 		return userMapper.getUserById(userid);
 	}
-	
 	
 	/** 로그인
 	 * @param id 아이디
@@ -45,21 +44,58 @@ public class UserService {
 		}
 		return user;
 	}
+	
+	/**
+	 * 카카오 로그인으로 획득한 사용자정보로 로그인처리를 수행한다.<p>
+	 * 카카오 로그인은 회원가입 절차없이 카카오 로그인 API로 획득한 정보를 데이터베이스에 저장한다.<p>
+	 * 카카오 로그인으로 우리 서비스를 한 번이라도 사용한 사용자는 사용자 정보가 데이터베이스에 이미 저장되어 있다.
+	 * @param user 카카오 로그인으로 획득한 사용자 정보
+	 * @return 사용자 정보
+	 */
+	public User loginWithKakao(User user) {
+		User savedUser = userMapper.getUserByEmail(user.getEmail());
+		log.info("카카오 로그인 아이디로 조회한 유저 정보: " + savedUser);
+		if (savedUser == null) {
+			user.setId(UUID.randomUUID().toString());
+			userMapper.insertUser(user);
+			log.info("카카오 로그인 신규 사용자 정보 등록 완료: " + user.getId() + ", " + user.getName());
+		}
+		return savedUser;
+	}
 
 
 	/** 회원가입
 	 * @param userRegisterForm
 	 */
 	public void addNewUser(UserRegisterForm userRegisterForm) {
-			
 		User user = userMapper.getUserByEmail(userRegisterForm.getEmail());
 			if (user != null) {
-		throw new RuntimeException("이미 사용중인 이메일입니다.");
-		}
+			throw new RuntimeException("이미 사용중인 이메일입니다.");
+			}
 		
 		user = new User();
-		BeanUtils.copyProperties(userRegisterForm, user); // userRegisterForm값이 User로 복사된다.
+		BeanUtils.copyProperties(userRegisterForm, user);
 		
 		userMapper.insertUser(user);
+	}
+	
+	/** 아이디 중복체크
+	 * @param id
+	 * @return 0 or 1 
+	 */
+	public int idCheck(String id) {
+		int check = userMapper.idCheck(id);
+		System.out.println("check:" + check);
+		return check;
+	}
+	
+	/** 이메일 중복체크
+	 * @param id
+	 * @return 0 or 1
+	 */
+	public int emailCheck(String email) {
+		int check = userMapper.emailCheck(email);
+		System.out.println("check:" + check);
+		return check;
 	}
 }
