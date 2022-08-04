@@ -16,11 +16,6 @@
 	html {
 	  font-family: "Noto Sans KR", sans-serif;
 	}
-
-	body {
-	font-family: 'NotoSansCJKkr', sans-serif;
-	font-size: 14px;
-	}
 	
 	a {text-decoration: none;}
 	
@@ -109,7 +104,7 @@
 			<div class="col">
 				<div class="h-top-img">
 					<a href="/" target="_blink" class="h-top-logo">
-						<img src="../resources/images/shop/common/hotel-logo-brown.png" height="50">
+						<img src="/resources/images/shop/common/hotel-logo-brown.png" height="50">
 					</a>	
 				</div>
 <!-- HEADER-UTIL-MENU -->
@@ -117,15 +112,15 @@
 					<ul class="h-top-txt-align">
 						<c:if test="${empty LOGIN_USER }">
 						    <li><a href="/login">로그인</a></li>
-						    <li><a href="/shop/nomem/nomem_order_lists">비회원 주문조회</a></li>
+						    <li><a href="/shop/nomem/orderist">비회원 주문조회</a></li>
 						    <li><a href="/register">회원가입</a></li>
 						</c:if>
 						<c:if test="${not empty LOGIN_USER }">
 						    <li><a href="/logout">로그아웃</a></li>
-						    <li><a href="/shop/order_lists">주문조회</a></li>
+						    <li><a href="/shop/orderlist">주문조회</a></li>
 						</c:if>
-							<li><a href="/shop/faq/faq_lists">FAQ</a></li>
-							<li class="cart"><a href="/shop/cart/cart_lists">장바구니</a></li>
+							<li><a href="/shop/faq/faq_list">FAQ</a></li>
+							<li class="cart"><a href="/shop/cart/cart_list">장바구니</a></li>
 					</ul>
 				</div>
 <!-- END-HEADER-UTIL-MENU -->				
@@ -143,9 +138,9 @@
 				</div>
 				<div class="h-bottom-category">	
 					<ul>
-						<a href="/shop/product_lists"><span>푸드</span></a>
-						<a href="/shop/product_lists"><span>기념일 선물</span></a>
-						<a href="/shop/product_lists"><span>프리미엄 베딩</span></a>
+						<a href="/shop/productlist"><span>푸드</span></a>
+						<a href="/shop/productlist"><span>기념일 선물</span></a>
+						<a href="/shop/productlist"><span>프리미엄 베딩</span></a>
 					</ul>
 				</div>
 <!-- HEADER-SEARCH-BUTTON -->
@@ -175,9 +170,9 @@
 					</div>
 					<div class="category-inner-right">
 						<ul>
-							<li><a href="/shop/product_lists"><span>시즌 상품</span></a></li>
-							<li><a href="/shop/product_lists"><span>케이크</span></a></li>
-							<li><a href="/shop/product_lists"><span>선물세트</span></a></li>
+							<li><a href="/shop/productlist"><span>시즌 상품</span></a></li>
+							<li><a href="/shop/productlist"><span>케이크</span></a></li>
+							<li><a href="/shop/productlist"><span>선물세트</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -187,9 +182,9 @@
 					</div>
 					<div class="category-inner-right">
 						<ul>
-							<li><a href="/shop/product_lists"><span>와인&치즈</span></a></li>
-							<li><a href="/shop/product_lists"><span>과일바구니</span></a></li>
-							<li><a href="/shop/product_lists"><span>꽃</span></a></li>
+							<li><a href="/shop/productlist"><span>와인&치즈</span></a></li>
+							<li><a href="/shop/productlist"><span>과일바구니</span></a></li>
+							<li><a href="/shop/productlist"><span>꽃</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -199,9 +194,9 @@
 					</div>
 					<div class="category-inner-right">
 						<ul>
-							<li><a href="/shop/product_lists"><span>침구</span></a></li>
-							<li><a href="/shop/product_lists"><span>타월</span></a></li>
-							<li><a href="/shop/product_lists"><span>꽃</span></a></li>
+							<li><a href="/shop/productlist"><span>침구</span></a></li>
+							<li><a href="/shop/productlist"><span>타월</span></a></li>
+							<li><a href="/shop/productlist"><span>꽃</span></a></li>
 						</ul>
 					</div>
 				</div>

@@ -12,6 +12,18 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 	html {font-family: "Noto Sans KR", sans-serif; font-size:16px;}
 	
+	.category-sort-txt{
+	float:left;
+	width:30%;
+	line-height:30px;
+	}
+	
+	.category-sort-select{	float:right;
+	width:30%;
+	line-height:30px;
+	text-align:right;
+	}
+
 </style>
 </head>
 <body>
@@ -120,7 +132,8 @@
 	<div>
 		<div class="text-center">
 			<h3>e-SHOP 추천상품</h3>
-		</div>
+		</div>	
+		
 		<div class="row">
 			<div class="col-4">
 				<div class="card">
@@ -199,8 +212,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 
 <%@ include file="footer.jsp" %>
