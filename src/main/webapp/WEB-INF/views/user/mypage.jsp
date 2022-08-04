@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="common/tags.jsp" %>
+<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,37 +12,65 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style type="text/css">
-	#container {padding-top: 65px; width: 1200px; height:1292px; margin: auto; padding-left: 0px; padding-right: 0px;}
-	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
+
+	#container {padding-top: 65px; width: 1200px; height:1500px; margin: auto; padding-left: 0px; padding-right: 0px;}
 	#container a {text-decoration: none; color: rgb(99, 62, 16);}
+	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
 	li {list-style: none;}
-	#div-sidebar {float: left; width: 264px; height: 442px; background-color: rgb(241, 227, 196);
+	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px; margin-bottom: 30px;}
+	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
-	#div-sidebar li {color: rgb(99, 62, 16); font-weight: bold; margin-top: 25px; text-align: left;}
-	#div-sidebar a {display: block;}
-	#div-contents {float: right; margin: auto; width: 866px; height: 1292px;}
+	#list {margin-top: 25px; text-align: left;}
+	#list li {margin-top:10px; text-align: left; font-size: 13px;}
+	#div-sidebar span {color: rgb(99, 62, 16); font-weight: bold;}
+	#div-sidebar li a {display: block; color: rgb(135,97,51);}
+	#list-border {border-top: 1px dotted rgb(206,194,168); padding-top: 5px; margin-top: 5px;}
+	#div-contents {float: right; margin: auto; width: 866px; height: 100%;}
+	
 </style>
 <title>Spring Hotel</title>
 </head>
 <body>
-<%@ include file="common/nav.jsp" %>
+<%@ include file="../common/nav.jsp" %>
 <div class="container-fluid" id="container">
 	<div id="div-sidebar">
-		<h3 class="fs-7 border-dark border-bottom border-5 pb-3">호텔 소개</h3>
+		<h3 class="fs-7 border-dark border-bottom border-5 pb-3">마이 페이지</h3>
 		<ul class="menu">
-			<li><a href="#" onclick="overview()"><span>개요</span></a></li>
-			<li><a href="#" onclick="seoul()"><span>서울스프링호텔</span></a></li>
-			<li><a href="#" onclick="jeju()"><span>제주스프링호텔</span></a></li>
-			<li><a href="#" onclick="monogram()"><span>스프링모노그램</span></a></li>
-			<li><a href="#" onclick="stay()"><span>스프링스테이</span></a></li>
-			<li><a href="#" onclick="awards()"><span>수상이력</span></a></li>
+			<li id="list"><a href="#" onclick="benefits()"  ><span>스프링리워즈 등급 및 포인트</span></a></li>
+			<li id="list"><span >예약 확인/취소</span>
+				<ul id="list-border">
+					<li><a href="#" onclick="roomPackage()">객실/패키지</a></li>
+					<li><a href="#" onclick="events()">다이닝</a></li>
+				</ul>
+			</li>
+			<li id="list"><span >포인트</span>
+				<ul id="list-border">
+					<li><a href="#" onclick="roomPackage()">포인트 조회</a></li>
+					<li><a href="#" onclick="events()">포인트 조정신청</a></li>
+					<li><a href="#" onclick="events()">상품권 교환 신청</a></li>
+				</ul>
+			</li>
+			<li id="list"><span >쿠폰</span>
+				<ul id="list-border">
+					<li><a href="#" onclick="faq()"  >쿠폰함</a></li>
+					<li><a href="#" onclick="contact()"  >프로모션 숙박권</a></li>
+				</ul>
+			</li>
+			<li id="list"><span >내 정보</span>
+				<ul id="list-border">
+					<li><a href="#" onclick="faq()"  >프로필 수정</a></li>
+					<li><a href="#" onclick="contact()"  >비밀번호 변경</a></li>
+					<li><a href="#" onclick="contact()"  >문의 내역</a></li>
+					<li><a href="#" onclick="contact()"  >탈퇴 요청</a></li>
+				</ul>
+			</li>
 		</ul>
 	</div>
 	
 	<div id="div-contents">
 		<div id="div-content1" style="display:block">
-			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">호텔 개요</h3>
+			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">스프링리워즈 등급 및 포인트</h3>
 			<br>
 			<div>
 				<img src="resources/images/about/brandMainImg.jpeg">
@@ -110,7 +138,7 @@
 	</div>
 	
 </div>
-<%@ include file="common/footer.jsp" %>
+<%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 
