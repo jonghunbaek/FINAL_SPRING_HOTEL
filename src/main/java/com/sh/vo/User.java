@@ -4,6 +4,7 @@ import java.util.Date;
 import org.apache.ibatis.type.Alias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Alias("User")
+@Builder
 public class User {
 		
 		private int no;
@@ -26,7 +28,7 @@ public class User {
 		private String email;
 		private String tel;
 		private String postcode;
-		private String address;
+		private String totalAddress;
 		private Date createdDate;
 		private Date updatedDate;
 		private String deleted;
@@ -35,5 +37,8 @@ public class User {
   	    private int stay;
 	    private Grade grade;
 	    private Date birthDay;
-	    
+	    // 로그인 구분 - 본 사이트에서 가입한 경우:normal, 카카오 로그인으로 가입한 경우: kakao다.
+		private String loginType;
+		private int age;
+		private String gender;
 }

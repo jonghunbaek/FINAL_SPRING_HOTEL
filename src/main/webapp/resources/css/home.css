@@ -186,11 +186,18 @@ button a{
 	font-size: 13px;
 }
 
-.loginBtn {
-	display: inline-block;
+.loginBtn input{
+	margin: 10px 0 0 0;
+}
+.loginBtn img{
+	position: relative;
+	bottom: 25px;
 }
 
 /* 회원가입 */
+.registerBox ul {
+	list-style-type: none;
+}
 
 .registerBox.contents .headTit {
     border-bottom: #432c10 solid 5px;
@@ -238,7 +245,7 @@ button a{
 }
 
 #registerForm input {
-	margin: 5px 10px;
+	margin: 5px 5px;
 	padding: 0px;
 }
 
@@ -254,7 +261,7 @@ button a{
 }
 
 #registerForm #ex{
-	font-size: 13px;
+	font-size: 15px;
 	color: #828148;
 }
 

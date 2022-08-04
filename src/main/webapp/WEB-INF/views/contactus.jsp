@@ -13,8 +13,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style type="text/css">
 	#container {padding-top: 65px; width: 1200px; height:1292px; margin: auto; padding-left: 0px; padding-right: 0px;}
-	h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
-	#div-sidebar {float: left; width: 264px; height: 224px; background-color: rgb(241, 227, 196); margin: auto; padding: 23px; text-align: left;}
+	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
+	#container a {text-decoration: none; color: rgb(99, 62, 16);} 
+	li {list-style: none;}
+	#div-sidebar {float: left; width: 264px; height: 224px; background-color: rgb(241, 227, 196);
+	 			  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
 	#div-sidebar li {color: rgb(99, 62, 16); font-weight: bold; margin-top: 25px; text-align: left;}
 	#div-sidebar a {display: block;}
