@@ -26,10 +26,7 @@
 	#div-sidebar span {color: rgb(99, 62, 16); font-weight: bold;}
 	#div-sidebar li a {display: block; color: rgb(135,97,51);}
 	#list-border {border-top: 1px dotted rgb(206,194,168); padding-top: 5px; margin-top: 5px;}
-	#div-contents {float: right; margin: auto; width: 866px; height: 743px;}
-	#div-userInfo1, #div-userInfo2 li  {float: left;}
-	#div-userInfo2 {float: right; margin: auto;}
-	
+	#div-contents {float: right; margin: auto; width: 866px; height: 100%;}
 	
 </style>
 <title>Spring Hotel</title>
@@ -71,37 +68,19 @@
 		</ul>
 	</div>
 	
-	<div class="row" id="div-contents">
-		<div class="col" id="div-content1">
-			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">스프링리워즈 등급 및 포인트</h3>
+	<div id="div-contents">
+		<div id="div-content1">
+			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">예약 확인/취소 - 객실/패키지</h3>
 			<br>
 			<div>
-				<div id="div-userInfo1">
-					<p>ㅇㅇㅇ 님은</p>
-					<p><strong>BROWN</strong>회원입니다.</p>
-				</div>
-				<div id="div-userInfo2">
-					<ul style="float: left;">
-						<li><span>회원번호</span></li>
-						<li><strong>2121525</strong></li>
-					</ul>
-					<ul style="float: right;">
-						<li><span>포인트</span></li>
-						<li><strong>123<b>P</b></strong></li>
-					</ul>
-				</div>
+				<img src="resources/images/about/brandMainImg.jpeg">
 			</div>
 			<div>
-				<div style="float: left;">
-					<img src="/resources/images/mypage/graphTitTxt.gif">
-				</div>
-				<div style="float: right;">
-					<a href="/benefits">등급별 혜택보기</a>
-				</div>
+				<img src="resources/images/about/brandText.jpeg">
 			</div>
 		</div>
-		
 	</div>
+	
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>

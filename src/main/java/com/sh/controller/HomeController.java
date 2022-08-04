@@ -52,12 +52,32 @@ public class HomeController {
 		return "contactus";
 	}
 	
-	// 스프링리워즈
+	// 스프링리워즈 메인
 	@GetMapping(path="/rewards")
 	public String rewards() {
-		return "rewards";
+		return "rewards/rewards";
 	}
-
+	// 스프링리워즈 회원특전
+	@GetMapping(path="/benefits")
+	public String benefits() {
+		return "rewards/benefits";
+	}
+	// 스프링리워즈 포인트
+	@GetMapping(path="/points")
+	public String points() {
+		return "rewards/points";
+	}
+	// 스프링리워즈 이벤트
+	@GetMapping(path="/events")
+	public String events() {
+		return "rewards/events";
+	}
+	// 스프링리워즈 FAQ
+	@GetMapping(path="/faq")
+	public String faq() {
+		return "rewards/faq";
+	}
+	
 	// 로그인
 	@PostMapping(path = "/login")
 	public String login(@RequestParam("id") String id, @RequestParam("password") String password, Model model) {
