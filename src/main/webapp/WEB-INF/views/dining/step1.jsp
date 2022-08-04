@@ -41,6 +41,10 @@
     width: 300px;
     height: 200px;
 }
+#btn-open-modal-detail{color:brown; margin-bottom: 100px;}
+
+#form-select .btn-outline-secondary{ margin-right: 10px; margin-bottom: 10px;}
+
 </style>
 <title>Spring Hotel</title>
 </head>
