@@ -9,9 +9,10 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 카카오 로그인 라이브러리 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/home.css" rel="stylesheet">
 <title>Spring Hotel</title>
 </head>
@@ -67,17 +68,26 @@
 										</div>
 										<div class="loginBtn">
 										<input type="image" src="resources/images/loginBtnLogin.gif"/>
+							    		<%-- 
+							    			카카오 로그인 처리중 중 오류가 발생하면 아래 경고창에 표시된다.
+							    			카카오 로그인 오류는 스크립트에서 아래 경고창에 표시합니다.
+							    		 --%>
+							    			<div class="alert alert-danger d-none" id="alert-kakao-login">오류 메세지</div>
+							    			<a id="btn-kakao-login" href="kakao/login">
+							  					<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="150" height="60" alt="카카오 로그인 버튼"/>
+											</a>
 										</div>
 									</div>
-									<p class="msg" id="pwNot" style="display: none">
-										아이디와 비밀번호가 일치하지 않습니다.<br>연속 5회 오류시(로그인 날짜가 달라도 해당됨) 로그인이
-										제한됩니다.<br>제한해제를 위해서는 임시 비밀번호를 발급받으시거나 비밀번호를 재설정해주시기 바랍니다.
-									</p><br>
-									<p class="msg" id="pwError" style="display: none">비밀번호를 연속
-										5회 잘못 입력하셨습니다. 임시 비밀번호를 발급받아 이용해주시기 바랍니다.</p>
-									<input type="hidden" name="nextURL" id="nextURL" value="">
 								</form>
 								
+								<form id="form-kakao-login" method="post" action="kakao-login">
+						    		<input type="hidden" name="id" />
+						    		<input type="hidden" name="nickname" />
+						    		<input type="hidden" name="email" />
+						    		<input type="hidden" name="ageRange" />
+						    		<input type="hidden" name="gender" />
+						    	</form>
+						    	
 								<div>
 									<button class="btnJoin">
 									<a href="/register">스프링리워즈 가입</a> 
@@ -188,6 +198,13 @@
 													class="rName3 input uiform text" placeholder="이름">
 											</div>
 										</div>
+									 	<p class="msg" id="pwNot" style="display: none">
+										아이디와 비밀번호가 일치하지 않습니다.<br>연속 5회 오류시(로그인 날짜가 달라도 해당됨) 로그인이 제한됩니다.<br>
+										제한해제를 위해서는 임시 비밀번호를 발급받으시거나 비밀번호를 재설정해주시기 바랍니다.</p><br>
+										<p class="msg" id="pwError" style="display: none">
+										비밀번호를 연속 5회 잘못 입력하셨습니다. 임시 비밀번호를 발급받아 이용해주시기 바랍니다.</p>
+									<input type="hidden" name="nextURL" id="nextURL" value="">
+										
 									</form>
 									<div class="loginBtn">
 										<a href="javascript:loginSubmit();" title="Login"> <img
@@ -215,6 +232,44 @@ $(function() {
 			return false;
 		}
 	});
+	
+	// 카카오 로그인 버튼을 클릭할 때 실행할 이벤트 핸들러 함수를 등록한다.
+	$('#btn-kakao-login').click(function(event){
+		// a태그는 클릭이벤트가 발생하면 페이지를 이동하는 기본동작이 수행되는데, 그 기본동작이 실행되지 않게 한다.
+		event.preventDefault();
+		// 카카오 로그인 실행시 오류메세지를 표시하는 경고창을 화면에 보이지 않게 한다.
+		$("#alert-kakao-login").addClass("d-none");
+		// 사용자키를 전달해서 카카오 로그인 서비스를 초기화한다.
+		Kakao.init('0f5efd23f2359c36bc8e32b428cd9954');
+		// 카카오 로그인 서비스 실행하기 및 사용자 정보 가져오기
+		Kakao.Auth.login({
+			success: function(auth) {
+				Kakao.API.request({
+					url: '/v2/user/me',
+					success: function(response) {
+						// 사용자 정보를 가져와서 폼에 추가한다.
+						var account = response.kakao_account;
+						
+						$('#form-kakao-login input[name=username]').val(response.id);
+						$('#form-kakao-login input[name=nickname]').val(account.profile.nickname);
+						$('#form-kakao-login input[name=email]').val(account.email);
+						$('#form-kakao-login input[name=age]').val(account.age_range);
+						$('#form-kakao-login input[name=gender]').val(account.gender);
+						// 사용자 정보가 포함된 폼을 서버로 제출한다.
+						document.querySelector("#form-kakao-login").submit()
+					},
+					fail: function(error) {
+						// 경고창에 에러 메세지를 표시한다.
+						$("#alert-kakao-login").removeClass("d-none").text("카카오 로그인 처리 중 오류가 발생하였습니다.");
+					}
+				});
+			},
+			fail: function(error) {
+				// 경고창에 에러 메세지를 표시한다.
+				$("#alert-kakao-login").removeClass("d-none").text("카카오 로그인 처리 중 오류가 발생하였습니다.");
+			}
+		});		
+	})
 });	
 </script>
 </body>

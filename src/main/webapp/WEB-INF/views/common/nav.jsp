@@ -43,11 +43,11 @@
 	               	   <li class="list-inline-item"><strong>${LOGIN_USER.name }</strong>님 환영합니다.</li>
 	              	   <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
 	               </c:if>
-	                   <li class="list-inline-item dropdown">
-	                       <a class="nav-link dropdown-toggle" href="" id="navbar-dropdown-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">예약확인</a>
-	                       <ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
-	                           <li><a class="dropdown-item" href="">객실</a></li>
-	                           <li><a class="dropdown-item" href="">다이닝</a></li>
+	                   <li class="list-inline-item menu lst">
+	                       <a href="" class="link_menu" data-bs-toggle="dropdown" aria-expanded="false">예약확인</a>
+	                       <ul class="sub" aria-labelledby="navbar-dropdown-menu">
+	                           <li><a href="">객실</a></li>
+	                           <li><a href="">다이닝</a></li>
 	                       </ul>
 	                   </li>
 	            </ul>

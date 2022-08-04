@@ -8,7 +8,8 @@
 		<result column="user_name" property="name"/>
 		<result column="user_eamil" property="eamil"/>
 		<result column="user_tel" property="tel"/>
-		<result column="user_address" property="address"/>
+		<result column="user_postcode" property="postcode"/>
+		<result column="user_address" property="totalAddress"/>
 		<result column="user_deleted" property="deleted"/>
 		<result column="user_deleted_date" property="deletedDate"/>
 		<result column="user_created_date" property="createdDate"/>
@@ -16,25 +17,43 @@
 		<result column="user_point" property="point"/>
 		<result column="user_annual_stay" property="stay"/>
 	</resultMap>
+	
 	<!-- User getUserById(String id); -->
 		<select id="getUserById" parameterType="string" resultMap="UserResultMap">
 			select *
 			from sh_users
 			where user_id = #{id}
 		</select>
+		
 	<!-- User getUserByEmail(String email); -->
 	<select id="getUserByEmail" parameterType="string" resultMap="UserResultMap">
 		select *
 		from sh_users
 		where user_email = #{value}
 	</select>
+	
+	<!-- int idCheck(String id); -->
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(user_id)
+		from sh_users
+		where user_id = #{id}
+	</select>
+	
+	<!-- int emailCheck(String email); -->
+	<select id="emailCheck"  parameterType="String" resultType="int">
+		select count(user_email)
+		from sh_users
+		where user_email = #{email}
+	</select>
+	
 	<!-- void insertUser(User user); -->
 		<insert id="insertUser" parameterType="User">
 		insert into sh_users
 		(user_no, user_id, user_password, user_name, user_email, user_tel, user_address, postcode , first_name, last_name, birthday)
 		values
-		(user_seq.nextval, #{id}, #{password}, #{name},  #{email}, #{tel}, #{postcode}, #{address}, #{firstName}, #{lastName}, #{birthDay})
+		(user_seq.nextval, #{id}, #{password}, #{name}, #{email}, #{tel}, #{totalAddress}, #{postcode}, #{firstName}, #{lastName}, #{birthDay})
 		</insert>
+		
 	<!-- void updateUser(User user); -->
 	<update id="updateUser" parameterType="User">
 		update sh_users
@@ -43,7 +62,7 @@
 			user_name = #{name},
 			user_tel = #{tel},
 			user_email = #{email},
-			user_address = #{address},
+			user_address = #{totalAddress},
 			postcode = #{postcode},
 			first_name = #{firstName},
 			last_name = #{lastName},
