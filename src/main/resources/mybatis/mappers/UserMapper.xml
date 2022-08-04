@@ -6,7 +6,7 @@
 		<id column="user_id" property="id"/>
 		<result column="user_password" property="password"/>
 		<result column="user_name" property="name"/>
-		<result column="user_eamil" property="eamil"/>
+		<result column="user_eamil" property="email"/>
 		<result column="user_tel" property="tel"/>
 		<result column="user_address" property="address"/>
 		<result column="user_deleted" property="deleted"/>
