@@ -11,13 +11,15 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style type="text/css">
 
 	#container {padding-top: 65px; width: 1200px; height:1500px; margin: auto; padding-left: 0px; padding-right: 0px;}
 	#container a {text-decoration: none; color: rgb(99, 62, 16);}
 	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
+	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
-	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px; margin-bottom: 30px;}
+	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px;}
 	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
@@ -27,6 +29,12 @@
 	#div-sidebar li a {display: block; color: rgb(135,97,51);}
 	#list-border {border-top: 1px dotted rgb(206,194,168); padding-top: 5px; margin-top: 5px;}
 	#div-contents {float: right; margin: auto; width: 866px; height: 100%;}
+	#span-color {color:rgb(118,118,118)}
+	#div-topmsg {margin: 20px 0px;}
+	#div-tableBox {margin: 20px 0 26px;}
+	#div-table {border: none; border-top: 1px solid #cdcbbe; width: 100%; border-collapse: collapse;}
+	.table {text-align: center; font-size: 13px;}
+	.table th {border-bottom: 1px solid #cdcbbe; color: #666666; line-height: 20px;}
 	
 </style>
 <title>Spring Hotel</title>
@@ -71,13 +79,36 @@
 	<div id="div-contents">
 		<div id="div-content1">
 			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">쿠폰함</h3>
-			<br>
-			<div>
-				<img src="resources/images/about/brandMainImg.jpeg">
+			<div id="div-topmsg">
+				<img src="/resources/images/mypage/couponTopMsg.gif">
 			</div>
-			<div>
-				<img src="resources/images/about/brandText.jpeg">
+			<div class="fs-7">
+				<p>※ 추가 다운로드 가능한 쿠폰은 총 0 건 있습니다. (쿠폰함의 ＇쿠폰 받기＇에서 다운로드하실 수 있습니다.)</p>
 			</div>
+			<div id="div-tableBox">
+				<div class="mt-3" id="div-table">
+					<table class="table background-color" summary="호텔,구분,이용금액(원),적립포인트,사용포인트,이용날짜로 구성된 게시물 리스트 표">
+						<colgroup>
+							<col width="33%" class="col1">
+							<col width="34%" class="col2">
+							<col width="33%" class="col3">
+						</colgroup>
+						<thead>
+							<tr style="background-color: #faf9f4;">
+								<th>구분</th>
+								<th>적립 포인트</th>
+								<th>사용 포인트</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="first last">
+								<td colspan="3">사용 가능한 쿠폰이 없습니다.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	
 		</div>
 	</div>
 	
@@ -86,7 +117,6 @@
 </body>
 <script type="text/javascript">
 
-	
 	
 </script>
 </html>
