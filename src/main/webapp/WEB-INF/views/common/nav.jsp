@@ -63,7 +63,13 @@
 		    <div class="col pt-3 me-4">
 	       		<ul class="list-inline">
 	               <c:if test="${empty LOGIN_USER}">
-	                   <li class="list-inline-item"><a href="/login">로그인</a></li>
+	                   <li class="list-inline-item dropdown">
+	                       <a class="nav-link dropdown-toggle" href="" id="navbar-dropdown-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">로그인</a>
+	                       <ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
+	                           <li style="border-bottom: 2px solid rgb(129, 114, 95);"><a class="dropdown-item" href="../admin/login">관리자</a></li>
+	                           <li><a class="dropdown-item" href="../login">고객</a></li>
+	                       </ul>
+	                   </li>
 	                   <li class="list-inline-item"><a href="/register">스프링리워즈 가입</a></li>
 	               </c:if>
 	               <c:if test="${not empty LOGIN_USER }">
