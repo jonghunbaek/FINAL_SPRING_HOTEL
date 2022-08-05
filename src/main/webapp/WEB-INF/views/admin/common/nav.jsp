@@ -118,7 +118,7 @@
               직원관리 시스템
             </a>
             <ul class="sub-list" id="emp-list">
-	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>새 직원 등록</a></li>
+	            <li class="sub"><a href="registerform"><span data-feather="chevron-right"></span>새 직원 등록</a></li>
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>직원 스케쥴 관리</a></li>
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>직원 근태 관리</a></li>
             </ul>

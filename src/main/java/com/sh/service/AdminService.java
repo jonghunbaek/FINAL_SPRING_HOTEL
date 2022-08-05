@@ -15,12 +15,11 @@ public class AdminService {
 
 	public Admin login(int no, String password) {
 		Admin admin = adminMapper.getUserByNo(no);
-		
 		if (admin == null) {
-			throw new ApplicationException("1");
+			throw new ApplicationException("사원정보가 존재하지 않습니다.");
 		}
 		if (!admin.getPassword().equals(password)) {
-			throw new ApplicationException("2");
+			throw new ApplicationException("비밀번호가 일치하지 않습니다.");
 		}
 		return admin;
 	}

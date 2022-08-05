@@ -25,6 +25,11 @@ public class AdminController {
 		return "admin/main";
 	}
 	
+	@GetMapping(path = "/registerform")
+	public String registerform() {
+		return "admin/registerform";
+	}
+	
 	@GetMapping(path = "/login")
 	public String loginform() {
 		return "admin/loginform";
