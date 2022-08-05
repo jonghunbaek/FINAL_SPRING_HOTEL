@@ -17,6 +17,7 @@
 	#container {padding-top: 65px; width: 1200px; height:1500px; margin: auto; padding-left: 0px; padding-right: 0px;}
 	#container a {text-decoration: none; color: rgb(99, 62, 16);}
 	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
+	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
 	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px; margin-bottom: 30px;}
 	#div-sidebar {float: left; width: 264px; height: 430px; background-color: rgb(241, 227, 196);
@@ -28,9 +29,10 @@
 	#div-sidebar li a {display: block; color: rgb(135,97,51);}
 	#list-border {border-top: 1px dotted rgb(206,194,168); padding-top: 5px; margin-top: 5px;}
 	#div-contents {float: right; margin: auto; width: 866px; height: 100%;}
+	#span-color {color:rgb(118,118,118)}
 	#div-box {width: 866px; height: 173px; border: solid 1px; border-color: rgb(227, 214, 198); 
 			  padding: 19px 190px 9px 35px; margin-bottom: 50px; font-size: 14px;}
-	#div-search {display:block; float: right; width:110px; height:34px; position: relative; left: 150px; bottom: 50px;
+	#div-search {display:block; float: right; width:110px; height:34px; position: relative; left: 150px; bottom: 54px;
 				 background-color: rgb(62,43,44); text-align: center;}
 	#div-search a {display: block; color: white; padding-top: 2px;}
 	#keywords li {float:left; border: 2px solid #e3d6c6; margin-right: 5px;}
@@ -79,7 +81,7 @@
 			<div>
 				<div id="div-box">
 					<div class="border-bottom mb-3 pb-3" id="div-date">
-						<span class="me-3">기간조회</span>
+						<span class="me-3" id="span-color">기간 조회</span>
 						<label class="dateStart" for="searchStrtDt"></label>
 						<input type="text" class="dateStart uiform text" id="searchStrtDt" name="searchStrtDt" value="" onclick="popCalendarLayer2('searchStrtDt','2022-08-02');" autocomplete="off">
 						<a href="#none" onclick="popCalendarLayer2('searchStrtDt','2022-08-02');" >
@@ -91,7 +93,7 @@
 						<span class="material-symbols-outlined" style="position: relative; top: 5px;">calendar_month</span></a>
 					</div>
 					<div class="mb-2" id="keywords">
-						<span class="me-3" style="float: left; width: 70px;">호텔 선택</span>
+						<span class="me-3 pt-2" id="span-color" style="float: left; width: 70px;">호텔 선택</span>
 						<ul>
 							<li id="keyword1"><a href="#" onclick="" >서울스프링호텔</a></li>		
 							<li id="keyword2"><a href="#" onclick="" >제주스프링호텔</a></li>		
@@ -101,7 +103,7 @@
 					</div>
 					<br>
 					<div id="keywords">
-						<span class="me-3" style="float: left; width: 70px;">키워드</span>
+						<span class="me-3 pt-1" id="span-color" style="float: left; width: 70px;">키워드</span>
 						<ul>
 							<li id="keyword1"><a href="#" onclick="" >Member's Day</a></li>		
 						</ul>
