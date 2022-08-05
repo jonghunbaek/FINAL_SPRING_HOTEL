@@ -28,6 +28,12 @@ public class DiningController {
 		return "dining/step1";
 	}
 	
+	@GetMapping("/step2")
+	public String step2(Model model) {
+		
+		return "dining/step2";
+	}
+	
 	@GetMapping("/search")
 	@ResponseBody
 	public List<Dn> search(@RequestParam("hotel") int locationNo) {
@@ -39,4 +45,6 @@ public class DiningController {
 	public Dn info(@RequestParam("dining") int diningNo) {
 		return diningService.getDiningByNo(diningNo);
 	}
+	
+	
 }

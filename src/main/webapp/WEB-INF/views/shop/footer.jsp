@@ -3,6 +3,13 @@
 <html lang="ko">
 <style>
 
+/* 폰트적용 */
+	@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+	
+	html {
+	  font-family: "Noto Sans KR", sans-serif;
+	}
+	
 	.f-top {
     margin-top: 90px;
     padding: 53px 60px 0;
@@ -109,7 +116,7 @@
 					<div class="row">
 			        	<div class="f-top-img">
 							<a href="/" target="_blink" class="h-top-logo">
-								<img src="../resources/images/shop/common/footer-logo-wht.png">
+								<img src="/resources/images/shop/common/footer-logo-wht.png">
 							</a>
 						</div>
 					</div>

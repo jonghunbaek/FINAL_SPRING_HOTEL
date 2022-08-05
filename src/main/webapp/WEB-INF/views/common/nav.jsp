@@ -4,6 +4,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	/* 로고이미지, 로그인,회원가입,예약확인 */
@@ -76,6 +78,7 @@
 	               	   <li class="list-inline-item"><strong>${LOGIN_USER.name }</strong>님 환영합니다.</li>
 	              	   <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
 	               </c:if>
+
 	                   <li class="list-inline-item dropdown">
 	                       <a class="nav-link dropdown-toggle" href="" id="navbar-dropdown-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">예약확인</a>
 	                       <ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
@@ -94,7 +97,7 @@
 	               <div class="gnb" id="dining"><a href="">다이닝</a><div class="snb" id="dining-div"></div></div><div class="vr" id="vr-3"></div>
 		           <div class="gnb" id="info"><a href="">호텔소개</a><div class="snb" id="info-div"></div></div><div class="vr" id="vr-4"></div>
 	               <div class="gnb" id="rewards"><a href="">스프링리워즈</a><div class="snb" id="rewards-div"></div></div><div class="vr" id="vr-5"></div>
-	               <div class="gnb" id="store"><a href="">스프링스토어</a><div class="snb" id="store-div"></div></div>
+	               <div class="gnb" id="store"><a href="../shop" target="_blink">스프링스토어</a><div class="snb" id="store-div"></div></div>
         		</div>
     		</div> 
     	</div>

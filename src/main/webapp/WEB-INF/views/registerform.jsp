@@ -11,7 +11,7 @@
 	rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- 다음주소검색 -->
+<!-- 카카오 주소 검색 라이브러리 -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f5efd23f2359c36bc8e32b428cd9954&libraries=services"></script>
 <title>Spring Hotel</title>
@@ -48,20 +48,37 @@
 					&nbsp; First name(이름) <form:input path="firstName"/> 
 					Last name(성) <form:input path="lastName"/>
 				</li>
-				<li>
-					<label class="required">생년월일</label>
-					<form: input type="date" name="birthDay"/>
+				<li><label class="required">생년월일</label>
+					<form:input path="year" cssStyle="width:80px" placeholder="년(4자)"/>
+					<form:select path="month" cssStyle="width:60px" placeholder="월">
+						<form:option value="" label="월" />
+						<form:option value="01" label="1" />
+						<form:option value="02" label="2" />
+						<form:option value="03" label="3" />
+						<form:option value="04" label="4" />
+						<form:option value="05" label="5" />
+						<form:option value="06" label="6" />
+						<form:option value="07" label="7" />
+						<form:option value="08" label="8" />
+						<form:option value="09" label="9" />
+						<form:option value="10" label="10" />
+						<form:option value="11" label="11" />
+						<form:option value="12" label="12" />
+					</form:select>
+					<form:input path="day" cssStyle="width:60px" placeholder="일"/>
 				</li>
 				<li><label class="required">이메일</label>
-					<form:input path="email"/>
-					<!-- @<input type="text" name="emailServer"> -->
-					<button id="btn" onclick="emailCheck()">이메일 중복확인</button>
+					<form:input path="email1"/>@
+					<form:input path="email2"/>
+					<button type="button" id="btn" onclick="emailCheck()">이메일 중복확인</button>
 					<form:errors path="email" class="text-danger small fst-italic"></form:errors>
 				</li>
 				
 				<li>
 					<label class="required ">휴대전화</label>
-					<form:input path="tel"/>
+					<form:input path="tel1" cssStyle="width:60px"/>
+					-<form:input path="tel2" cssStyle="width:80px"/>
+					-<form:input path="tel3" cssStyle="width:80px"/>
 					<form:errors path="tel" class="text-danger small fst-italic"></form:errors>
 				</li>
 				
@@ -72,17 +89,17 @@
 				</li>
 				<li class="none">
 					<label>자택주소</label>
-					<form:input path="address" id="address" style="width:200px;" placeholder="주소"/><br>
+					<form:input path="address" style="width:200px;" placeholder="주소"/><br>
 				</li>
 				<li class="end none"><label>&nbsp;</label>
-					<input type="text" id="detailAddress" style="width:300px;" placeholder="상세주소">
+					<form:input path="detailAddress" style="width:300px;" placeholder="상세주소"/>
 					<input type="text" id="extraAddress" style="width:250px;" placeholder="참고항목">
 				</li>
 				<p> 웹사이트 비밀번호 입력 </p>
 				<li class="first">
-					<label class="required" name="id">아이디</label>
+					<label class="required">아이디</label>
 					<form:input path="id"/>
-					<button id="btn" onclick="idCheck()">아이디 중복확인</button>
+					<button type="button" id="btn" onclick="idCheck()">아이디 중복확인</button>
 					<span id="ex">5~12자 이내 영문 또는 영문/숫자 조합</span><br>
 					<form:errors path="id" class="text-danger small fst-italic"></form:errors>
 				</li>
@@ -95,17 +112,88 @@
 				</li>
 				<li class="end">
 					<label class="required">비밀번호 확인</label>
-					<input type="password" name="passwordCheck"/>
+					<input type="password" name="passwordCheck" id="passwordCheck"/>
+					<font id="pwCheck" size="3"></font>
 				</li>
 					<button id="registerbutton" type="submit" >가입 신청</button>
 			</ul>
 			</form:form>
 		</div>
 </div>
-
 <%@ include file="common/footer.jsp"%>
-<!-- 다음주소검색 스크립트코드 -->
 <script>
+	// 아이디 중복확인
+	function idCheck() {
+		let id = document.getElementById('id').value;
+		
+		$.ajax({
+			url: '/idCheck',
+			type: 'post',
+			data: {id},
+			success:function(check){
+				if(check == 0) {
+					alert("사용 가능한 아이디입니다.");
+				} else {
+					alert("이미 사용중인 아이디입니다.");
+				}
+			}, 
+			error:function(){
+				alert("에러입니다.");
+			}
+		})
+	};
+	
+	// 이메일 중복확인
+	function emailCheck() {
+		let email = '' 
+		let email1	= document.getElementById('email1').value;
+		let email2	= document.getElementById('email2').value;
+			email = email1 + "@"+ email2;
+		$.ajax({
+			url: '/emailCheck',
+			type: 'post',
+			data: {email},
+			success:function(check){
+				if(check == 0) {
+					alert("사용 가능한 이메일입니다.");
+				} else {
+					alert("이미 사용중인 이메일입니다.");
+				}
+			}, 
+			error:function(){
+				alert("에러입니다.");
+			}
+		})
+	};
+	
+	// 비밀번호 확인 
+	$(":input[name=passwordCheck]").keyup(function() {
+		let p1 = document.getElementById('password').value;
+		let p2 = document.getElementById('passwordCheck').value;
+		
+		if(p1 == p2) {
+			$("#pwCheck").html('비밀번호가 일치합니다.');
+			$('#pwCheck').attr('color', 'green');
+		} else {
+			$("#pwCheck").html('비밀번호가 일치하지 않습니다.');
+			$('#pwCheck').attr('color', 'red');
+		}
+	});
+	
+	// 가입 버튼 클릭시 체크사항
+	$("#registerForm").submit(function() {
+		let p1 = document.getElementById('password').value;
+		let p2 = document.getElementById('passwordCheck').value;
+		
+		if(p1 != p2) {
+			alter("비밀번호를 다시 확인해주세요.");
+			return false;
+		}
+		return true;
+		});
+		
+		
+	// 카카오 주소 검색 API 
     function execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -153,8 +241,6 @@
             }
         }).open();
     }
-    
-    
 </script>
 </body>
 </html>
