@@ -32,19 +32,20 @@
                 <hr>
                 <div class="row">
                     <div class="col">
-                        
+                        스프링 호텔 소개
                     </div>
                     <div class="col">
-                        
+                        고객 문의
                     </div>
                     <div class="col">
-                        
+                        사이트맵
                     </div>
                 </div>
             </div>
         </div>
         <div class="footer" id="div-footer2">
     		<hr>
+    		(주)호텔 스프링 서울특별시 중구 동호로 249(우 : 04605) 대표이사 이응수   사업자등록번호123-12-12345 통신판매신고번호 중구00272 
     	</div>
     </div>    
 </footer>
