@@ -30,7 +30,7 @@ public class RoomController {
 	}
 	
 	//2
-	@PostMapping(path="/roomRev2")
+	@GetMapping(path="/roomRev2")
 	public String roomRev2() {
 		//
 		return "/room/roomRev2";
