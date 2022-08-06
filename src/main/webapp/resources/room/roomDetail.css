@@ -1,0 +1,313 @@
+@charset "UTF-8";
+/* 세로 내비바 */
+.contain {
+	padding-top: 50px;
+	display: grid;
+}
+li {
+    list-style-type: none;
+    text-align: center;
+    padding: 3px;
+}
+h5 {
+	margin-block: 11px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: #432c10 solid 5px;
+}
+#container {
+	column-gap: 30px;
+}
+.container {
+	padding-left:40px;
+	float: left;
+}
+.st-menu {
+	padding-block: 4px;
+	margin-top: 10px;
+	margin-bottom: 25px;
+	padding-left: 0px;
+    border-top : 0.01em dashed rgb(133 111 86 / 27%);
+}
+#lounge {
+	margin-bottom: 50px;
+}
+
+#all-view {
+	margin-bottom: 20px;
+	outline: 15px solid rgb(133, 111, 86);
+    margin-left: 15px;
+    height: 50px;
+    background-color: rgb(133, 111, 86);
+    color: white;
+    font-size: 16px;
+}
+.all-view {
+	margin-bottom: 20px;
+}
+.room {
+	font: 14px light; 
+	text-align: left;
+}
+.roomt{
+	margin-top: 5px;
+	text-align: left;
+	font: 14px light; 
+}
+
+.line::after {
+	border : 0px;
+  border-top: 1px dotted #663399;
+}
+.r-type {
+	border-bottom: dotted 1px;
+}
+.side-nav {
+	float: left;
+    height: max-content;
+    width: 250px;
+    background: #f1e3c4;
+    padding: 20px;
+}
+.menu {
+	padding-left: 0px;
+    margin-bottom: 20px;
+    border-bottom-width: 60px;
+    font-size: 18px;
+    text-align-last: left;
+    color: #5e5246;
+    font-weight: bold;
+}
+.location {
+	justify-content: flex-end;
+}
+
+/* 메인 컨텐츠 */
+.main {
+	width: 900px;
+    height: 1700px;
+    /* border: 1px solid; */
+    margin-left: 310px;
+} 
+.main-title {
+	color: rgb(133, 111, 86);
+    border-bottom: #432c10 solid 5px;
+    font-size: 33px;
+    padding-bottom:8px;
+}
+.location {
+	float: right;
+	font-size: 13px;
+}
+.location-bc {
+	float: right;
+	font-size: 13px;
+	display: flex;
+}
+.email-print {
+	float: right;
+	font-size: 11px;
+}
+/* 슬라이드 */
+
+.swiper {
+        width: 100%;
+        height: 100%;
+      }
+
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+/* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper {
+  width: 100%;
+  height: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: black;
+}
+
+.swiper-slide {
+  background-size: cover;
+  background-position: center;
+}
+
+.mySwiper2 {
+  height: 80%;
+  width: 100%;
+}
+
+.mySwiper {
+  height: 96px;
+  box-sizing: border-box;
+  padding: 10px  0;
+}
+
+.mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+  border: 5px #b4ae52 solid; /*active border qqq*/
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 아래 세로 박스 */
+
+/* detail 1 */
+.btm-detail {
+	display: inline-flex;
+	margin-top: 50px;
+}
+.detail1 {
+	width: 480px;
+    height: 1000px;
+}
+.detail2{
+	border-left-width: 20px;
+    margin-left: 50px;
+    width: 370px;
+}
+.amenity {
+	padding-block: 60px;
+	padding-bottom: 80px;
+	border-bottom: 0.01em solid #90773829;
+}
+
+#amenity-box {
+	margin-bottom: 20px;
+    outline: 10px solid rgb(133, 111, 86);
+    outline-width: 12px;
+    background-color: rgb(133, 111, 86);
+    color: white;
+    font-size: 16px;
+    margin-left: 12px;
+    
+}
+.room-info-room {
+	display: inline-flex;
+    height: 200px;
+	border-bottom: 0.01em solid #90773829;
+	
+}
+.room-info-etc {
+	display: inline-flex;
+    height: 250px;
+	border-bottom: 0.01em solid #90773829;
+}
+.info-title {
+	font-size: 15px;
+    color: #31312fbd;
+	background-color: lime;
+    width: 130px;
+    height: 20px;
+    margin-block: 80px;
+	
+}
+.info-title1 {
+	font-size: 15px;
+    color: #31312fbd;
+	background-color: lime;
+    width: 130px;
+    height: 20px;
+    margin-block: 100px;
+	
+}
+.info-content {
+	width: 340px;
+    padding: 20px;
+    font-size: 15px;
+}
+.room-info-service {
+	display: inline-flex;
+    height: 180px;
+	border-bottom: 0.01em solid #90773829;
+}
+.sns {
+	padding-top: 20px;
+}
+
+/* detail 2*/
+.btn-set {
+	display: inline-flex;
+	justify-content: space-between;
+	grid-column-gap: 4px;
+    margin-bottom: 50px;
+	
+}
+.btn-p{
+	background-color: rgb(140 90 55);
+	height: 45px;
+    padding-top: 7px;
+}
+
+.btn-q{
+	background-color: rgb(133, 111, 86);
+    height: 45px;
+    padding-top: 7px;
+}
+.btn-r {
+	background-color: #4d3b06;
+    height: 45px;
+    padding-top: 7px;
+}
+
+.btn-set div a {
+    width: 100px;
+    color: white;
+    padding: 13px;
+    padding-right: 29px;
+    padding-left: 29px;
+    font-size: 18px;
+}
+
+.package {
+	width: 370px;
+	margin-bottom: 30px;
+}
+.room-info-side {
+	background-color: #faf7ed;
+    height: 500px;
+    font-size: 16px;
+    opacity: 70%;
+    padding: 20px;
+}
+
+.info-menu {
+	margin-block:35px;
+	border: 1px dotted;
+	height: 100px;
+	font-size: 14px;
+}
+
+

@@ -1,0 +1,149 @@
+@charset "UTF-8";
+/* 세로 내비바 */
+.contain {
+	padding-top: 50px;
+	display: flex;
+}
+li {
+    list-style-type: none;
+    text-align: center;
+    padding: 3px;
+}
+h5 {
+	margin-block: 11px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: #432c10 solid 5px;
+}
+#container {
+	column-gap: 30px;
+}
+.container {
+	padding-left:40px;
+	float: left;
+}
+.st-menu {
+	padding-block: 4px;
+	margin-top: 10px;
+	margin-bottom: 25px;
+	padding-left: 0px;
+    border-top : 0.01em dashed rgb(133 111 86 / 33%);
+}
+#lounge {
+	margin-bottom: 50px;
+}
+
+#all-view {
+	margin-bottom: 20px;
+	outline: 15px solid rgb(133, 111, 86);
+    margin-left: 15px;
+    height: 50px;
+    background-color: rgb(133, 111, 86);
+    color: white;
+    font-size: 16px;
+}
+.all-view {
+	margin-bottom: 20px;
+}
+.room {
+	font: 14px light; 
+	text-align: left;
+}
+.roomt{
+	margin-top: 5px;
+	text-align: left;
+	font: 14px light; 
+}
+
+.line::after {
+	border : 0px;
+  border-top: 1px dotted #663399;
+}
+.r-type {
+	border-bottom: dotted 1px;
+}
+.side-nav {
+	float: left;
+    height: max-content;
+    width: 250px;
+    background: #f1e3c4;
+    padding: 20px;
+}
+.menu {
+	padding-left: 0px;
+    margin-bottom: 20px;
+    border-bottom-width: 60px;
+    font-size: 18px;
+    text-align-last: left;
+    color: #5e5246;
+    font-weight: bold;
+}
+.location {
+	justify-content: flex-end;
+}
+
+/*메인 컨텐츠 */
+.main {
+	width: 900px;
+    height: 3000px;
+    margin-left: 310px;
+} 
+.main .title-l {
+	font: 36px monospace;
+	color: #101010;
+    margin-bottom: 60px;
+}
+
+.main .title-s {
+	font: italic 15px monospace;
+    color: #101010;
+    opacity: 60%;
+    margin-top: 10px;
+	
+}
+.main-room-title {
+	margin-block: 20px;
+    color: rgb(133, 111, 86);
+    font-size: 23px;
+}
+
+.main-room-title1 {
+	margin-block: 20px;
+    color: rgb(133, 111, 86);
+    font-size: 23px;
+    border-top: #d3c7a170 0.01em solid;
+    padding-top: 35px;
+}
+
+/* 객실 박스 */
+.room-box1 {
+	display: flex;
+	height: 342px;
+}
+.st-box1 {
+	width: 50%;
+	padding-right: 10px;
+}
+.st-box2 {
+	width: 50%;
+	padding-left: 10px;
+}
+img {
+	width: 100%;
+}
+.st-info {
+	display: flex;
+	margin-top: 30px;
+}
+.st-info-text {
+	width: 60%;
+}
+.st-info-btn {
+	width: 40%;
+}
+.st-info-btn img {
+   	width: 80px;
+    display: inline;
+    float: right;
+    margin-left: 5px;
+}
