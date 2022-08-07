@@ -17,11 +17,18 @@
 		<result column="admin_updated_date" property="updatedDate"/>
 	</resultMap>
 	
-	<!-- Admin getUserByNo(int no); -->
-	<select id="getUserByNo" parameterType="int" resultMap="AdminResultMap">
+	<!-- Admin getAdminByEmail(String email); -->
+	<select id="getAdminByEmail" parameterType="string" resultMap="AdminResultMap">
 		select *
 		from sh_admins
-		where admin_no = #{no}
+		where admin_email = #{email}
+	</select>
+	
+	<!-- int checkAdminByEmail(String email); -->
+	<select id="checkAdminByEmail" parameterType="string" resultType="int">
+		select count(admin_email) 
+		from sh_admins 
+		where admin_email = #{email}
 	</select>
 	
 </mapper>
