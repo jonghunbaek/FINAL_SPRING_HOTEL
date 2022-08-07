@@ -7,5 +7,6 @@ import com.sh.vo.Admin;
 @Mapper
 public interface AdminMapper {
 
-	Admin getUserByNo(int no);
+	Admin getAdminByEmail(String email);
+	int checkAdminByEmail(String email);
 }

@@ -38,7 +38,7 @@
 			</h1>
 			<div class="info">
 				<p>
-					<strong>사원번호와 비밀번호를 입력해 주시기 바랍니다.</strong>
+					<strong>이메일과 비밀번호를 입력해 주시기 바랍니다.</strong>
 				</p>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 								<input type="hidden" id="" name="" value="">
 								<div class="inputForm">
 									<div class="inputId">
-										<input type="text" class="id" name="no" id="id-field" placeholder="사원번호 입력" >
+										<input type="text" class="id" name="email" id="email-field" placeholder="이메일 입력" >
 									</div>
 									<div class="inputPw">
 										<input type="password" class="pw" name="password" id="password-field" maxlength="20" placeholder="비밀번호 입력">
@@ -71,7 +71,7 @@
 							
 							<div>
 								<button class="btnLostId">
-									<a href="">사원번호 찾기</a>
+									<a href="">이메일 찾기</a>
 								</button>
 								<button class="btnLostPw">
 									<a href="">비밀번호 찾기</a>
