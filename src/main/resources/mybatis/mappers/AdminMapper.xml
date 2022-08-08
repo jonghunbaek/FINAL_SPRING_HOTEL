@@ -31,4 +31,14 @@
 		where admin_email = #{email}
 	</select>
 	
+	<!-- void insertAdmin(Admin admin); -->
+	<insert id="insertAdmin" parameterType="Admin">
+		insert into sh_admins
+		(admin_no, admin_password, admin_email, admin_tel, admin_grade, admin_name, admin_birth, admin_address, admin_address_detail,
+		 admin_postcode, admin_hire_date, location_no, admin_gender, admin_profile_image)
+		values
+		(admin_seq.nextval, #{password}, #{email}, #{tel}, #{grade}, #{name}, #{birth}, #{address}, #{addressDetail}, #{postcode}, 
+		#{hireDate}, #{location.no}, #{gender}, #{profileImage})
+	</insert>
+	
 </mapper>

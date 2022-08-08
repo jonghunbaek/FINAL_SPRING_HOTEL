@@ -1,18 +1,24 @@
 package com.sh.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.sh.exception.ApplicationException;
 import com.sh.service.AdminService;
 import com.sh.vo.Admin;
 import com.sh.web.form.AdminRegisterForm;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -37,9 +43,25 @@ public class AdminController {
 		return "admin/registerform";
 	}
 	
-	/*
-	 * @PostMapping(path = "/register") public String register
-	 */
+	// 신규 직원 등록
+    @PostMapping(path = "/register") 
+    public String register(@ModelAttribute("adminRegisterForm") @Valid AdminRegisterForm adminRegisterForm, BindingResult errors) throws Exception {
+    	
+    	if (errors.hasErrors()) {
+    		System.out.println(errors);
+			return "admin/registerform";
+		}
+		try {
+			adminService.addNewAdmin(adminRegisterForm);			
+		} catch (ApplicationException e) {
+			// BindingResult객체에 오류내용을 수동으로 추가하기
+			errors.rejectValue("email", null, e.getMessage());
+			return "admin/registerform";
+		}
+		
+		return "redirect:/admin/complete";
+    }
+	 
 	
 	// 입력된 이메일 존재 여부 체크
 	@PostMapping(path = "/emailCheck")
@@ -66,6 +88,12 @@ public class AdminController {
 		return "admin/main";
 	}
 	
+	// 사원등록 완료 시 노출되는 페이지
+	@GetMapping(path = "/complete")
+	public String complete() {
+
+		return "admin/complete";
+	}
 	
 }
 	
