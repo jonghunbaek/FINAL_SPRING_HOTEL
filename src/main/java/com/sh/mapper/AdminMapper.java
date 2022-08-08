@@ -9,4 +9,5 @@ public interface AdminMapper {
 
 	Admin getAdminByEmail(String email);
 	int checkAdminByEmail(String email);
+	void insertAdmin(Admin admin);
 }

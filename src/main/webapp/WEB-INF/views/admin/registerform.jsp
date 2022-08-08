@@ -20,42 +20,45 @@
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f5efd23f2359c36bc8e32b428cd9954&libraries=services"></script>
 <title>신규 직원 등록</title>
 <style>
-	#main {
-		background-color: #dcdcdc;
-		height: 700px;
-		border-radius: 10px;
-	}
-	
 	p {
 		color:black;
 		font-size:20px;
 		font-weight:bold;
 	}
 	
-	#form {
+    #form {
 		font-size: bold !important;
-		color: white;
-		background-color: darkgray !important;
+		color: black;
+		background-color: #dcdcdc !important;
 		position:relative; top:70px;
 		border-radius: 10px;
-	}
+	} 
 	
-		
 	.form-control {
 		box-shadow: 1px 1px 5px 1px black;
 		font-size: 12px;
 	}
-
+	
+	/* 가운데 구분선 */
 	#half1 {
 	  padding-right:-10px;
 	  margin-right:30px;
 	  border-right:1px solid white;
 	}
-
-	#btn-overlap {
-	  position:relative; top: 29px; height:33px;
-	  box-shadow: 1px 1px 5px 1px black;
+	
+	.btn {
+		color: rgba(30, 22, 54, 0.6);
+		box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
 	}
+	
+	.btn:hover {
+		color: rgba(255, 255, 255, 0.85);
+		box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
+	}
+	
+	/* #submitForm {
+		background-color:;
+	} */
 	
 </style>
 </head>
@@ -67,7 +70,7 @@
 	<div class="container-fluid" id="container">
 		<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 pb-3">
 			<p class="list">
-				<span data-feather="user"></span>&nbsp;&gt;&nbsp;<span data-feather="user-plus"></span>&nbsp;<strong>신규 직원등록</strong>
+				<span data-feather="user"></span>&nbsp;&gt;&nbsp;<span data-feather="user-plus"></span>&nbsp;<strong style="font-size:13px;">신규 직원등록</strong>
 			</p>
 		</div>
 		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="main">
@@ -115,19 +118,16 @@
 							<div class="col-6 mb-3">
 								<label for="birth-field" class="form-label">생년월일</label>
 								<form:input type="text" class="form-control" id="datepicker" path="birth" />
-								<form:errors path="birth" class="text-danger small fst-italic"></form:errors>
 							</div>
 							<div class="col-6 mb-3">
 								<label for="birth-field" class="form-label">입사일</label>
-								<form:input type="text" class="form-control datepicker" path="birth" />
-								<form:errors path="birth" class="text-danger small fst-italic"></form:errors>
+								<form:input type="text" class="form-control datepicker" path="hireDate" />
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-6 mb-3">
 								<label for="postcode-field" class="form-label">우편번호</label>
 								<form:input class="form-control" id="postcode-field" path="postcode" />
-								<form:errors path="postcode" class="text-danger small fst-italic"></form:errors>
 							</div>
 							<div class="col-4 mb-3">
 								<label for="birth-field" class="form-label">참고항목</label>
@@ -138,7 +138,6 @@
 							<div class="col-6 mb-3">
 								<label for="address-field" class="form-label">주소</label>
 								<form:input class="form-control" path="address" id="address-field" placeholder="주소를 입력하세요" />
-								<form:errors path="address" class="text-danger small fst-italic"></form:errors>
 							</div>
 							<div class="col-6 mb-3">
 								<label for="addressDetail-field" class="form-label">상세주소</label>
@@ -149,40 +148,37 @@
 							<div class="col-3 mb-3">
 								<label for="birth-field" class="form-label">직급</label>
 								<form:select type="select" class="form-control" path="grade" placeholder="010-1234-5678">
-									<option value="americano">매니저</option>
-								    <option value="caffe latte">사원</option>
+									<option value="M">매니저</option>
+								    <option value="E">사원</option>
 								</form:select>
-								<form:errors path="grade" class="text-danger small fst-italic"></form:errors>
 							</div>
 							<div class="col-3 mb-3">
 								<label for="tel-field" class="form-label">근무지</label>
-								<form:select class="form-control" path="location" name="location" id="location-field">
+								<form:select class="form-control" path="locationNo" name="locationNo" id="location-field">
 									<option value="1">서울</option>
 								    <option value="2">부산</option>
 								    <option value="3">제주</option>
 								    <option value="4">강릉</option>
 								    <option value="5">광주</option>
 								</form:select>
-								<form:errors path="location" class="text-danger small fst-italic"></form:errors>
 							</div>
 							<div class="col-3 mb-3">
-								<label for="tel-field" class="form-label">프로필이미지</label> <input type="file" class="form-control" name="profileFile" id="profile-file-field" />
+								<label for="tel-field" class="form-label">프로필이미지</label> 
+								<input type="file" class="form-control" name="profileFile" id="profile-file-field" />
 							</div>
 							<div class="col-3 mb-3">
 								<label for="name-field" class="form-label">성별</label>
 								<form:radiobutton path ="gender" value = "M" label = "남" />
 		                  		<form:radiobutton path ="gender" value = "F" label = "여" />
-								<form:errors path="name" class="text-danger small fst-italic"></form:errors>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="text-end">
-					<a href="/" class="btn btn-secondary">취소</a>
-					<button id="submitForm" type="submit" class="btn btn-primary">등록</button>
+				<div class="text-end">		
+					<a href="main" class="btn">취소</a>
+					<button id="submitForm" type="submit" class="btn">등록</button>
 				</div>
 			</form:form>
-			
 		</main>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>

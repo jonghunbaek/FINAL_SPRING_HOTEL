@@ -18,7 +18,7 @@ import lombok.ToString;
 @Alias("Admin")
 public class Admin {
 
-	private int no;
+    private int no;
 	private String password;
 	private String email;
 	private String tel;
@@ -26,8 +26,12 @@ public class Admin {
 	private String name;
 	private Date birth;
 	private String address;
+	private String addressDetail;
 	private int postcode;
 	private Date hireDate;
 	private Date createdDate;
 	private Date updatedDate;
+	private Location location;
+	private String profileImage;
+	private String gender;
 }
