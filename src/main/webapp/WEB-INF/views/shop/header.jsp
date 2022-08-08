@@ -34,7 +34,7 @@
     .nav-txt-align li a{padding: 0 10px;}
 
 /* HEADER 2 */
-	.header{padding:0px;  /* margin-bottom:50px; */}
+	.header{padding:0px;  /* margin-bottom:50px; */ position: sticky;top: 0; z-index:10; background-color: #fff;}
 	.header .head{border-bottom: 1px solid #DCDCDC;}
 	.header .row{padding: 0px 60px; width:100%; max-width: 1680px; margin:0 auto;}
 	.header .row .col-2{float:left;}
@@ -50,15 +50,14 @@
 	.header .searchbox input{width:82%; height:100%; float:left; border:0;padding: 0 14px;background-color: #fff;border-radius: 0;}
 	.header .searchbox button{width:15%; height:100%;background: #fff url(/resources/images/shop/common/icon-search.png)no-repeat 50%;background-size: 22px;text-indent: -9999px; overflow: hidden; border: 0;cursor: pointer;outline: none;float:left;}
 	
-	.header .dropmenu {border-bottom: 1px solid #DCDCDC; box-shadow: 0px 30px 30px -30px rgba(0,0,0,0.2);}
-	.header .dropmenu .row {padding: 30px 60px; width:100%; max-width: 1680px; height:280px; margin:0 auto; /* display:none; */}
-	.header .dropmenu .row .col-3{border-right: 1px solid #DCDCDC;; float:right; width:20%; margin:0 2% 0 0;}
-	.header .dropmenu .row .col-3 .category-name{text-align:center;}
-	.header .dropmenu .row .col-3 .category-name a{font-size: 22px;}
-	.header .dropmenu .row .col-7{float:right; font-size: 18px; font-weight: 500;}
-	.header .dropmenu .row .col-7 .row .col{height:40px;}
-	.header .dropmenu .row .col-7 .row .col a{}
-	.header .dropmenu .row .col-7 .row .col ul li a{color: #666;}
+	.header .dropmenu {border-bottom: 1px solid #DCDCDC; box-shadow: 0px 30px 30px -30px rgba(0,0,0,0.2); padding: 30px 60px; width:100%; max-width: 1680px; height:280px; margin:0 auto; /* display:inline-flex; */ display:none;}
+	.header .dropmenu .col-3{border-right: 1px solid #DCDCDC;; float:left; width:25%; margin:0 2% 0 0;}
+	.header .dropmenu .col-3 .category-name{text-align:center;}
+	.header .dropmenu .col-3 .category-name a{font-size: 22px;}
+	.header .dropmenu .col-7{float:left; width:60%; font-size: 18px; font-weight: 500;}
+	.header .dropmenu .col-7 .row .col{height:40px;}
+	.header .dropmenu .col-7 .row .col a{}
+	.header .dropmenu .col-7 .row .col ul li a{color: #666;}
 	
 </style>
 </head>
@@ -95,7 +94,19 @@
 </nav>
 <!-- END HEADER 1 -->
 
+<script>
 
+
+	// 마우스 오버시 dropdown 메뉴를 열고닫는다.
+	function dropping(index) {
+		document.querySelector("#category-no-" + index).style.display ='inline-flex';
+	}
+	function collapsing(index) {
+		document.querySelector("#category-no-" + index).style.display ='none';
+	}
+
+	
+</script>
 
 
 <!-- HEADER 2 -->
@@ -110,19 +121,19 @@
 			
 			<div class="col-7" >
 				<div class="row row-cols-5" >
-						<div class="level1" >
+						<div class="level1" id="big-category-no-1" onmouseover="dropping(1);" onmouseout="collapsing(1);">
 							<a href="/shop/productlist" ><span>스프링 TO-GO</span></a>
 						</div>
-						<div class="level1" >
+						<div class="level1" id="big-category-no-2" onmouseover="dropping(2);" onmouseout="collapsing(2);">
 							<a href="/shop/productlist" ><span>푸드</span></a>
 						</div>
-						<div class="level1" >
+						<div class="level1" id="big-category-no-3" onmouseover="dropping(3);" onmouseout="collapsing(3);">
 							<a href="/shop/productlist" ><span>기념일 선물</span></a>
 						</div>
-						<div class="level1" >
+						<div class="level1" id="big-category-no-4" onmouseover="dropping(4);" onmouseout="collapsing(4);">
 							<a href="/shop/productlist" ><span>프리미엄 베딩</span></a>
 						</div>
-						<div class="level1" >
+						<div class="level1" id="big-category-no-5" >
 							<a href="/shop/productlist" ><span>지류 상품권</span></a>
 						</div>
 				</div>
@@ -140,9 +151,8 @@
 	</div>
 
 
-	
-	<div class="dropmenu"  >
-		<div class="row row-cols-2" >
+<!-- DROPMENU -->	
+		<div class="dropmenu" id="category-no-1" onmouseover="dropping(1);" onmouseout="collapsing(1);">
 			<div class="col-3" >
 							<div class="category-name" >
 								<a href="/shop/productlist" ><span>스프링 TO-GO &gt;</span></a>
@@ -171,7 +181,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row row-cols-2" >
+		<div class="dropmenu" id="category-no-2" onmouseover="dropping(2);" onmouseout="collapsing(2);">
 			<div class="col-3" >
 							<div class="category-name" >
 								<a href="/shop/productlist" ><span>푸드 &gt;</span></a>
@@ -198,7 +208,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row row-cols-2" >
+		<div class="dropmenu" id="category-no-3" onmouseover="dropping(3);" onmouseout="collapsing(3);">
 			<div class="col-3" >
 							<div class="category-name" >
 								<a href="/shop/productlist" ><span>기념일 선물 &gt;</span></a>
@@ -218,7 +228,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row row-cols-2" >
+		<div class="dropmenu" id="category-no-4" onmouseover="dropping(4);" onmouseout="collapsing(4);">
 			<div class="col-3" >
 							<div class="category-name" >
 								<a href="/shop/productlist" ><span>프리미엄 베딩 &gt;</span></a>
@@ -238,7 +248,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </header>						
 </body>
 </html>

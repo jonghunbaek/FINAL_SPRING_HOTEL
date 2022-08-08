@@ -21,6 +21,9 @@
 	
 	.js-familytitle-btn option{background: #111; border: 1px solid #666; color: #999; width: 100%; padding: 10px 14px 0px;display: block; font-size:16px; height:40px;}
 
+	.go-top {right:60px;bottom:10%; position:fixed; z-index: 550;}
+	.go-top button{width: 50px;height: 50px; background: #666 url(/resources/images/shop/common/icon-go-top.png) no-repeat 50%;background-size: 16px; border-radius: 100%; text-indent:-9999px; outline:none; border:0;}
+
 	
 /*FOOTER-BOTTOM*/
 	#f-bottom-txt li{display: inline-block;list-style:none;text-align:center;margin: 0px;}
@@ -38,9 +41,24 @@
 </style>
 
 <!-- QUICK -->
-<div style="right:60px;bottom:10%; position:fixed; z-index: 550;">
-	<button type="button" style="width: 50px;height: 50px; background: #666 url(/resources/images/shop/common/icon-go-top.png) no-repeat 50%;background-size: 16px; border-radius: 100%; text-indent:-9999px; outline:none; border:0;">TOP</button>
+<div class="go-top">
+	<button type="button" id="go-top-button" onclick="goingTop();" >TOP</button>
 </div>
+
+<script>
+
+	//goingTop() 메소드는 버튼을 클릭하면 화면 제일 위로 움직이는 이벤트핸들러 함수이다.
+	function goingTop(){
+		window.scrollTo({
+			  top: 0,
+			  left: 0,
+			  behavior: 'smooth'
+			});
+
+
+	}
+	
+</script>
 
 <!-- FOOTER -->
 <footer id="footer" class="footer">
