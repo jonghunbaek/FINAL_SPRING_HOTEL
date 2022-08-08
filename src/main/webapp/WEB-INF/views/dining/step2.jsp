@@ -38,6 +38,22 @@
 #select-people .bi{border: 1px solid brown; color:brown;}
 
 #date-choice img{width: 100px; height: 30px;}
+
+#visit-div{border: 1px solid grey;}
+
+#datepicker{margin-left: 50px; margin-bottom: 50px;}
+
+#visit-div .col-6{border-left: 1px solid grey;}
+
+#date-choice-text, #time-choice-text{margin: 10px; margin-bottom: 30px;}
+
+#meal-type-select {margin-bottom: 30px;}
+
+#gap {margin-top: 50px; border-bottom: solid 3px brown; }
+
+#submit-button {margin-top: 50px;}
+
+#submit-button img {width: 150px; height: 50px;}
 </style>
 </head>
 <body>
@@ -60,7 +76,7 @@
 	<div id="must-require">
 		<p>표시 필수 입력사항</p>
 	</div>
-	<form id="form-select" method="get">
+	<form id="form-select" method="get" action="step3">
 		<div id="seat-choice">
 			<p><strong>좌석 유형 선택</strong></p>
 		</div>
@@ -114,24 +130,89 @@
 				</div>
 			</div>
 		</div>
+		<div class="row" id="visit-div">
+			<div class="col-6">
+				<div id="date-choice-text">
+					<p><strong>날짜선택</strong></p>
+				</div>
+				<div id="datepicker"></div>
+				<input type="hidden" id="date" name="date"/>
+			</div>
+			<div class="col-6">
+				<div id="time-choice-text">
+					<p><strong>시간선택</strong></p>
+				</div>
+				<div id="meal-type-select">
+					<input type="radio" class="btn-check" name="mealTime" id="lunch-select" value="lunch" autocomplete="off">
+					<label class="btn btn-outline-secondary" for="lunch-select">런치</label>
+					<input type="radio" class="btn-check" name="mealTime" id="dinner-select" value="dinner" autocomplete="off">
+					<label class="btn btn-outline-secondary" for="dinner-select">디너</label>
+				</div>
+				<div>
+					<select class="form-select form-select-sm" name="visitTime" id="time-select">
+						<option selected>방문예정시간을 선택해주세요.</option>
+						<option value="18:00">18:00</option>
+						<option value="18:00">18:00</option>
+						<option value="18:00">18:00</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div id="gap">
+		</div>
+		<div class="row" id="submit-button">
+			<div class="col-7">
+				<a href="step1"><img src="../resources/images/dining/이전.png"/></a>
+			</div>
+			<div class="col-5 text-end">
+				<a href="#" id="btn-member-rev"><img src="../resources/images/dining/회원예약.png"/></a>
+				<a href="#" id="btn-non-member-rev"><img src="../resources/images/dining/비회원예약.png"/></a>
+			</div>
+		</div>
+	</form>
 	
 
-<!-- <div id="datepicker"></div> -->
 
 </div>
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
+	$("#btn-non-member-rev").click(function(){
+		$("#form-select").submit()
+	});	
+	
+	$("#form-select").submit(function(){
+		let seatValue = $(":input[name=seat]").val();
+		console.log(seatValue);
+		if (seatValue === "") {
+			alert("좌석유형을 골라주세요");
+			return false;
+		}
+	});
 	
 	$("#datepicker").datepicker({
+		inline: true,
 	    dateFormat: "yy-mm-dd", 
 	    showAnim: "slide",
 	    currentText: '오늘',
 	    showMonthAfterYear: true ,
 	    dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
 	    monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-	    monthNamesShort : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-	   });
+	    monthNamesShort : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    onSelect: function (date) {
+	        $("#date").val(date)
+	    }
+		
+	});
+	
+	$('#decreaseAdult').click(function(){
+		let seatValue = $(":input[name=seat]").val();
+		console.log(seatValue);
+		if (seatValue === "") {
+			alert("좌석유형을 골라주세요");
+			return false;
+		}
+	});
 	
 	$('#decreaseAdult').click(function(e){
 		e.preventDefault();
@@ -142,8 +223,14 @@ $(function() {
 			num =0;
 		}
 		$('#adultScore').text(num);
+		$(":input[name=adult]").val(num);
 	});
 	$('#increaseAdult').click(function(e){
+		let seatValue = $.trim( $(":input[name=seat]").val() );
+		if (seatValue === "") {
+			alert("좌석유형을 골라주세요");
+			return false;
+		}
 		e.preventDefault();
 		var stat = $('#adultScore').text();
 		var num = parseInt(stat,10);
@@ -154,6 +241,7 @@ $(function() {
 			num=5;
 		}
 		$('#adultScore').text(num);
+		$(":input[name=adult]").val(num);
 	});
 	$('#decreaseChild').click(function(e){
 		e.preventDefault();
@@ -164,6 +252,7 @@ $(function() {
 			num =0;
 		}
 		$('#childScore').text(num);
+		$(":input[name=child]").val(num);
 	});
 	$('#increaseChild').click(function(e){
 		e.preventDefault();
@@ -176,6 +265,7 @@ $(function() {
 			num=5;
 		}
 		$('#childScore').text(num);
+		$(":input[name=child]").val(num);
 	});
 	$('#decreaseBaby').click(function(e){
 		e.preventDefault();
@@ -186,6 +276,7 @@ $(function() {
 			num =0;
 		}
 		$('#babyScore').text(num);
+		$(":input[name=baby]").val(num);
 	});
 	$('#increaseBaby').click(function(e){
 		e.preventDefault();
@@ -198,6 +289,7 @@ $(function() {
 			num=5;
 		}
 		$('#babyScore').text(num);
+		$(":input[name=baby]").val(num);
 	});
 });
 </script>
