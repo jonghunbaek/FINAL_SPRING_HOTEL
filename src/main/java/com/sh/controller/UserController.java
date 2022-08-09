@@ -56,6 +56,13 @@ public class UserController {
 		return "user/modify";
 	}
 	
+	// 내 정보 -> 프로필 수정 -> 프로필 수정 폼
+	@GetMapping("/modifyform")
+	public String modifyform() {
+		
+		return "user/modifyform";
+	}
+	
 	// 내 정보 -> 비밀번호 변경
 	@GetMapping("/changePw")
 	public String changepw() {

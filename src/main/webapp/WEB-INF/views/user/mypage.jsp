@@ -9,6 +9,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style type="text/css">
@@ -38,7 +39,12 @@
 	#div-userInfo2 strong {float: right;}
 	#div-info {width: 866px; height: 71px; margin: 20px 0px 40px;}
 	#div-userInfoTitle, #div-TableTitle {width: 866px; height: 15px; margin-bottom: 25px;}
-	#div-userInfo-graphbox {width: 866px; height: 315px; border: 1px solid #e3d6c6;}
+	#div-userInfo-graphbox {width: 866px; height: 400px; border: 1px solid #e3d6c6; text-align: center; padding: 30px 0;}
+	#div-chart1 {float: left; padding: 0 20px; margin-left: 80px; width:300px;}
+	#div-chart2 {float: right; padding: 0 20px; margin-right: 80px; width:300px;}
+	#div-img1 {position: relative; bottom: 195px;}
+	#div-img2 {position: relative; bottom: 195px;}
+	#span-red {color: #856f56; font-weight: bold;}
 	#div-tiertxt {font-size: 12px; color: #727272;}
 	#div-pointTable {width: 866px; height: 98px; margin-top: 60px;}
 	#div-table {border: none; border-top: 1px solid #cdcbbe; width: 100%; border-collapse: collapse;}
@@ -114,7 +120,18 @@
 				</div>
 			</div>
 			<div class="mt-3" id="div-userInfo-graphbox">
-				
+				<div id="div-chart1">
+					<p><img src="/resources/images/mypage/graphTit1.gif"></p>
+					<canvas class="mb-3" id="myChart1" width="200" height="200"></canvas>
+					<p><strong>SILVER</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.</p>
+					<div id="div-img1"><img src="/resources/images/mypage/night_icon.png"></div>
+				</div>
+				<div id="div-chart2">
+					<p><img src="/resources/images/mypage/graphTit2.gif"></p>
+					<canvas class="mb-3" id="myChart2" width="200" height="200"></canvas>
+					<p><strong>SILVER</strong> 등급까지 <span id="span-red">100P</span> 남았습니다.</p>
+					<div id="div-img2"><img src="/resources/images/mypage/points_icon.png"></div>
+				</div>
 			</div>
 			<div class="mt-3" id="div-tiertxt">
 				<p>※ 등급평가 및 조정은 1월 1일부터 12월 31일까지 (체크아웃기준) 1년간 이용한 실적기준</p>
@@ -160,7 +177,23 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-
-	
+	data = {
+	        datasets: [{
+	            backgroundColor: ['brown', '#e3d6c6'],
+	            data: [10,90]
+	        }],       
+	    };
+	let ctx1 = document.getElementById("myChart1");
+	let myDoughnutChart1 = new Chart(ctx1, {
+	    type: 'doughnut',
+	    data: data,
+	    options: {}
+	});
+	let ctx2 = document.getElementById("myChart2");
+	let myDoughnutChart2 = new Chart(ctx2, {
+	    type: 'doughnut',
+	    data: data,
+	    options: {}
+	});
 </script>
 </html>

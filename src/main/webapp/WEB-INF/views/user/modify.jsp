@@ -38,7 +38,20 @@
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: left;}
     #btn2 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-right: 300px;
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: right;}
-		
+	       
+    .modal-content {width: 550px;}
+  	.modal-header {background-color: #9b7f5b; color:white; border: 0; padding: 10px 25px 5px;}
+  	.modal-body {border: solid 5px #9b7f5b; padding: 25px 27px; font-size: 13px;}
+  	.modal-body h5 {color:rgb(121,87,45); padding-left: 15px; font-size: 16px;}
+	#div-modal-body {padding: 15px; border: solid 1px #e2d5c5;}
+	.formBox input, .formBox select {border: 1px solid rgb(204,204,204);}
+	.formBox {border:solid 1px #e9e9e9; background-color: #fbfbfb; padding: 19px; margin: 0 0 10px 0;}
+	.formBox table {border-collapse: separate; border-spacing: 10px;}
+	#div-modal-btn {text-align: center; padding-top:30px; margin-bottom:30px;}
+	.modal-footer {border-top: solid 1px #a1886f;  padding: 10px; margin: 0;}
+	#div-modal-box1 {float: left; text-align: center; width: 197px;}
+	#div-modal-box2 {float: right; text-align: center; width: 200px;}
+	
 </style>
 <title>Spring Hotel</title>
 </head>
@@ -108,12 +121,193 @@
 			</div>
 			</form>
 			<div id="div-btn">
-				<a href="" id="btn1">비밀번호 찾기</a>
-				<a href="" id="btn2">확인</a>
+				<a href="#" id="btn1" data-bs-toggle="modal" data-bs-target="#modal-password">비밀번호 찾기</a>
+				<a href="modifyform" id="btn2">확인</a>
 			</div>
 		</div>
 	</div>
-	
+</div>
+
+<!-- 비밀번호 찾기 Modal -->
+<form action="POST">
+<div class="modal fade" id="modal-password" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-header">
+       		<h5 class="modal-title" id="modalLabel">비밀번호 찾기</h5>
+        	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      	</div>
+  		<div class="modal-body">
+			<h5>임시 비밀번호 발급</h5>
+  			<div id="div-modal-body">
+  				<p>회원가입 시 등록하신 이메일 및 휴대폰으로 임시비밀번호를 발급해드립니다.</p>
+  				<div class="formBox">
+					<table class="tableFormBox" summary="성명,이메일,휴대폰으로 구성된테이블입니다">
+						<colgroup>
+							<col width="25%">
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row"><label for="idInput" class="idInput">리워즈 번호</label></th>
+								<td><input type="text" class="uiform idInput" id="rewardNum" name="rewardNum" value="" size="15"></td>
+							</tr>
+							<tr>
+								<th scope="row"><label for="idInput" class="idInput2">성명</label></th>
+								<td>
+									<div class="inputForm2">
+										<div class="Fname" style="float: left;">
+											<label for="firstName"></label>
+											<input type="text" class="firstName input uiform" id="mbrEnFnm" name="mbrEnFnm" placeholder="First name(이름)" style=" width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
+										</div>
+										<div class="Lname" style="float: right;">
+											<label for="lastName"></label>
+											<input type="text" class="lastName input uiform" id="mbrEnLnm" name="mbrEnLnm" placeholder="Last name(성)" style="width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row" style="text-align:left;">
+									<input type="radio" name="findPwOpt" class="findIdOpt1 uiform" id="findIdOpt1" checked="" value="email">
+									<label for="findIdOpt1" class="findIdOpt1">이메일</label>
+								</th>
+								<td>
+									<label class="emailId" for="emailId"></label>
+									<input id="email" name="email" class="emailId uiform text" type="text" style="width: 260px;" size="15">
+								</td>
+							</tr>
+							<tr>
+								<th scope="row" style="text-align:left;">
+									<input type="radio" name="findPwOpt" class="findIdOpt1 uiform" id="findIdOpt1" checked="" value="email">
+									<label for="findIdOpt1" class="findIdOpt1">휴대전화</label>
+								</th>
+								<td><input type="text" value=""></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="mb-5" id="div-modal-btn">
+					<a class="me-2" href="#modal-password-result" data-bs-toggle="modal"><img alt="확인" src="/resources/images/mypage/popFindIdBtnSubmit.gif"></a>
+					<a class="ms-2" href=""><img alt="취소" src="/resources/images/mypage/popFindIdBtnCancel.gif" data-bs-dismiss="modal"></a>
+				</div>
+				<div class="modal-footer justify-content-center">
+					<div id="div-modal-box1">
+						<span class="txt1">로그인을 하시려면</span>
+						<p><a href="/login" class="btnLogin"><img src="/resources/images/mypage/popFindIdBtnLogin.gif"></a></p>
+					</div>
+					<div class="pb-4">
+						<img src="/resources/images/mypage/popFindIdLine.gif">
+					</div>
+					<div id="div-modal-box2">
+						<span class="txt3">아이디를 찾으시려면?</span>
+						<p><a href="#modal-id" data-bs-toggle="modal" class="btnLostId"><img src="/resources/images/mypage/popFindPwBtnLostId.gif"></a></p>
+					</div>
+		    	</div>
+  			</div>
+    	</div>
+    </div>
+  </div>
+</div>
+<!-- 비밀번호 찾기 결과 Modal -->
+<div class="modal fade" id="modal-password-result" aria-hidden="true" aria-labelledby="modalToggleLabel2" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalToggleLabel2">비밀번호 찾기</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+      		<div class="modal-body">
+      			<div class="formBox" style="text-align: center;">
+					<p class="pt-3">회원님의 이메일 <strong>asdf@naver.com</strong> 로</p>
+					<p>임시 비밀번호를 발송해드렸습니다.</p>
+					<p>발급받은 임시 비밀번호로 로그인 해주시기 바랍니다.</p>
+				</div>
+		      	<div class="modal-footer justify-content-center border-0">
+		        	<div id="div-modal-btn">
+						<a href="/login" class="btnLogin"><img src="/resources/images/mypage/popFindIdBtnLogin.gif"></a>
+					</div>
+		      	</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 아이디 찾기 Modal -->
+<div class="modal fade" id="modal-id" aria-hidden="true" aria-labelledby="modalToggleLabel2" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalToggleLabel2">아이디 찾기</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+      		<div class="modal-body">
+      			<div class="formBox">
+					<table class="tableFormBox" summary="성명,이메일,휴대폰으로 구성된테이블입니다">
+						<colgroup>
+							<col width="25%">
+							<col>
+						</colgroup>
+						<tbody>
+							<tr>
+								<th scope="row"><label for="idInput" class="idInput2">성명</label></th>
+								<td>
+									<div class="inputForm2">
+										<div class="Fname" style="float: left;">
+											<label for="firstName"></label>
+											<input type="text" class="firstName input uiform" id="mbrEnFnm" name="mbrEnFnm" placeholder="First name(이름)" style=" width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
+										</div>
+										<div class="Lname" style="float: right;">
+											<label for="lastName"></label>
+											<input type="text" class="lastName input uiform" id="mbrEnLnm" name="mbrEnLnm" placeholder="Last name(성)" style="width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
+										</div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th scope="row" style="text-align:left;">
+									<label for="findIdOpt1" class="findIdOpt1">이메일</label>
+								</th>
+								<td>
+									<label class="emailId" for="emailId"></label>
+									<input id="email" name="email" class="emailId uiform text" type="text" style="width: 260px;" size="15">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+		      	<div class="modal-footer justify-content-center border-0">
+		        	<div class="pt-3">
+						<a href="#modal-id-result" data-bs-toggle="modal"><img src="/resources/images/mypage/popFindIdBtnSubmit.gif"></a>
+					</div>
+		      	</div>
+			</div>
+		</div>
+	</div>
+</div>
+</form>
+<!-- 아이디 찾기 결과 Modal -->
+<div class="modal fade" id="modal-id-result" aria-hidden="true" aria-labelledby="modalToggleLabel2" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalToggleLabel2">아이디 찾기</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+      		<div class="modal-body">
+      			<p>스프링 리워즈 번호 찾기 결과는 아래와 같습니다.</p>
+      			<div class="formBox" style="text-align: center;">
+					<p class="pt-3"><strong>DDD</strong> 스프링리워즈 번호 - <strong>[123456]</strong></p>
+					<p>ID - <strong>[asdf1234]</strong></p>
+				</div>
+		      	<div class="modal-footer justify-content-center border-0">
+		        	<div id="div-modal-btn">
+						<a class="me-2" href=""><img alt="확인" src="/resources/images/mypage/popFindIdBtnSubmit.gif" data-bs-dismiss="modal"></a>
+						<a class="ms-2" href="#modal-password" data-bs-toggle="modal"><img alt="비밀번호찾기" src="/resources/images/mypage/popFindIdBtnLostPw.gif"></a>
+					</div>
+		      	</div>
+			</div>
+		</div>
+	</div>
 </div>
 <%@ include file="../common/footer.jsp" %>
 </body>
