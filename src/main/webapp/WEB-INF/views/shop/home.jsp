@@ -29,6 +29,7 @@
     padding: 0;
     box-sizing: border-box;}
 </style>
+
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -86,7 +87,7 @@
 						<img src="../resources/images/shop/product/img_product_023.jpg" style="width:100%;">
 					</div>
 					<div class="" style="margin-top:24px; padding:0px;">
-							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
+							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px; margin-bottom: 10px;">[스프링호텔 서울]</span>
 							<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">애플망고 빙수</a></h2>
 					</div>
 					<div class="" style="margin: 20px 0 0;">
