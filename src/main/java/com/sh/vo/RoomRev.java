@@ -12,6 +12,7 @@ import lombok.Setter;
 @Alias("RoomRev")
 public class RoomRev {
 
+	
 	private int no;
 	private int adult;
 	private int child;
@@ -24,4 +25,5 @@ public class RoomRev {
 	private Date createdDate;
 	private Date updatedDate;
 	private User user;
+	private Room room;
 }

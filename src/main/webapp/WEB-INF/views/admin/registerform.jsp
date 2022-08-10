@@ -20,7 +20,13 @@
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=0f5efd23f2359c36bc8e32b428cd9954&libraries=services"></script>
 <title>신규 직원 등록</title>
 <style>
-	p {
+
+	#keymap {
+		position:relative;
+		top:10px;
+	}
+	
+	.row p {
 		color:black;
 		font-size:20px;
 		font-weight:bold;
@@ -55,11 +61,6 @@
 		color: rgba(255, 255, 255, 0.85);
 		box-shadow: rgba(30, 22, 54, 0.7) 0 80px 0px 2px inset;
 	}
-	
-	/* #submitForm {
-		background-color:;
-	} */
-	
 </style>
 </head>
 
@@ -69,7 +70,7 @@
 
 	<div class="container-fluid" id="container">
 		<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 pb-3">
-			<p class="list">
+			<p id="keymap">
 				<span data-feather="user"></span>&nbsp;&gt;&nbsp;<span data-feather="user-plus"></span>&nbsp;<strong style="font-size:13px;">신규 직원등록</strong>
 			</p>
 		</div>
@@ -120,7 +121,7 @@
 								<form:input type="text" class="form-control" id="datepicker" path="birth" />
 							</div>
 							<div class="col-6 mb-3">
-								<label for="birth-field" class="form-label">입사일</label>
+								<label for="hireDate-field" class="form-label">입사일</label>
 								<form:input type="text" class="form-control datepicker" path="hireDate" />
 							</div>
 						</div>

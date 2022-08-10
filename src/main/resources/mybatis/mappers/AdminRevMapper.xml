@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.mapper.AdminRevMapper">
+
+	<resultMap type="RoomRev" id="RoomRevResultMap">
+		<id column="room_rev_no" property="no"/>
+		<result column="room_rev_adult" property="adult"/>
+		<result column="room_rev_child" property="child"/>
+		<result column="room_rev_total_price" property="totalPrice"/>
+		<result column="room_rev_checkin" property="checkin"/>
+		<result column="room_rev_checkout" property="checkout"/>
+		<result column="room_rev_checkin_time" property="checkinTime"/>
+		<result column="room_rev_checkout_time" property="checkoutTime"/>
+		<result column="room_rev_request" property="request"/>
+		<result column="room_rev_created_date" property="createdDate"/>
+		<result column="room_rev_updated_date" property="updatedDate"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
+		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
+	</resultMap>
+	
+	<!-- RoomRev getAllRoomRevList(); -->
+	<select id="getAllRoomRevList" resultMap="RoomRevResultMap">
+		select *
+		from sh_room_rev
+	</select>
+</mapper>
