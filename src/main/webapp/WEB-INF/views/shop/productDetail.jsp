@@ -71,6 +71,73 @@
 				</div> 
 			</div>
 
+<script type="text/javascript">
+
+	function optionChecking() {
+		
+		deleteOption();
+		let checkedRadioEl = document.querySelector("input[name='optionradio']:checked")
+		let radioValue = checkedRadioEl.value
+		
+		if (radioValue == 'pickup') {
+			document.getElementById("dayandtime").style.display="flex";
+			document.getElementById("location").style.display="flex";
+		};
+		if (radioValue == 'sendgift') {
+			refreshOption();
+		};
+		
+	}
+
+	function selectLocation() {
+		/* let selectBtn = document.getElementById("select-location-button"); */
+/* 		let selectOption = document.getElementById("select-location-button");
+		let index = selectOption.options[selectOption.selectedIndex];
+		let index = document.getElementById("select-location-button").options[document.getElementById("select-location-button").selectedIndex];
+		if (index == 1) { */
+/* 			document.getElementById("selectionview").style.display="flex;"
+		}; */
+		
+		let index = document.getElementById("select-location-button").options.selectedIndex;
+		if (index !== 0) {
+			
+			let tdday = document.getElementById("selectionday");
+			tdday.textContent = document.getElementById("select-day").value;
+			
+			let tdtime = document.getElementById("selectiontime");
+			tdtime.textContent = document.getElementById("select-time").value;
+
+			
+			let tdlocation = document.getElementById("selectionlocation");
+			tdlocation.textContent = document.getElementById("select-location-button").options[document.getElementById("select-location-button").options.selectedIndex].textContent;
+			
+			
+			let price = parseInt(document.getElementById("product-price").textContent);
+			let qty = parseInt(document.getElementById("product-quantity").value);
+			let totprice = price*qty;
+			document.getElementById("totprice").textContent = totprice;
+			
+			document.getElementById("selectionview").style.display="flex";
+			refreshOption();
+		};
+		
+	}
+	
+	function refreshOption() {
+			document.getElementById("dayandtime").style.display="none";
+			document.getElementById("location").style.display="none";
+		
+	};
+	
+	function deleteOption() {
+		document.getElementById("selectionview").style.display="none";		
+	};
+	
+	
+
+
+	
+</script>	
 	<!-- PRODUCT OPTION CHOICE -->
 
 			<!-- PICKUP OR GIFT -->
@@ -81,64 +148,64 @@
 				<div class="col-5">
 					<div class="row">
 						<div class="col" style="height: 18px;margin: 0 18px 0 0;">
-							<input type="radio" name="detail-radio" id="radio-pickup"><lable for="radio-pickup">직접픽업</lable>
+							<input type="radio" name="optionradio" id="radio-pickup" value="pickup" onclick="optionChecking();"><lable for="radio-pickup">직접픽업</lable>
 						</div>
 						<div class="col" style="height: 18px;margin: 0 18px 0 0;">
-							<input type="radio" name="detail-radio" id="radio-gift"><lable for="radio-gift">선물하기</lable>
+							<input type="radio" name="optionradio" id="radio-sendgift" value="sendgift" onclick="optionChecking();"><lable for="radio-gift">선물하기</lable>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<!-- PICKUP DATE -->
-			<div class="row" style="background-color:yellow; border:1px solid pink; padding-top: 27px;display:none;">
+			<div class="row" id="dayandtime" style="background-color:yellow; border:1px solid pink; padding-top: 27px; display:none;">
 				<div class="col-3" style="display: table;">
 					<p style=" display: table-cell; vertical-align: middle; color: #666;">사용일시</p>
 				</div>
 				<div class="col-8">
 						<div class="row" style="margin: 0px 18px 0 0; height:50px;">
-							<input type="text" placeholder="원하시는 사용일을 선택하세요.">
+							<input id="select-day" type="date" placeholder="원하시는 사용일을 선택하세요.">
 						</div>
 						<div class="row" style="margin: 10px 18px 0 0; height:50px;">
 							<lable for="select" class="hide"></lable>
-							<select type="button" style="height:100%;">
+							<select id="select-time" type="button" style="height:100%;">
 								<option selected disabled><span>원하시는 사용시간을 선택하세요</span></option>
-								<option value=""><span>12:00</span></option>
-								<option><span>13:00</span></option>
-								<option><span>14:00</span></option>
-								<option><span>15:00</span></option>
-								<option><span>16:00</span></option>
-								<option><span>17:00</span></option>
-								<option><span>18:00</span></option>
-								<option><span>19:00</span></option>
-								<option><span>20:00</span></option>
+								<option value="12:00"><span>12:00</span></option>
+								<option value="13:00"><span>13:00</span></option>
+								<option value="14:00"><span>14:00</span></option>
+								<option value="15:00"><span>15:00</span></option>
+								<option value="16:00"><span>16:00</span></option>
+								<option value="17:00"><span>17:00</span></option>
+								<option value="18:00"><span>18:00</span></option>
+								<option value="19:00"><span>19:00</span></option>
+								<option value="20:00"><span>20:00</span></option>
 							</select>
 						</div>
 				</div>
 			</div>
 			
 			<!-- PICKUP LOCATION -->
-			<div class="row" style="background-color:yellow; border:1px solid pink; padding-top: 27px;display:none;">
+			<div class="row" id="location" style="background-color:yellow; border:1px solid pink; padding-top: 27px; display:none;">
 				<div class="col-3" style="display: table;">
 					<p style=" display: table-cell; vertical-align: middle; color: #666;">사용장소</p>
 				</div>
 				<div class="col-8">
 					<div class="row" style="margin: 10px 18px 0 0; height:50px;">
 						<lable for="select" class="hide"></lable>
-						<select type="button" style="height:100%;">
+						<select type="button" style="height:100%;" id="select-location-button" onchange="selectLocation();">
 							<option selected disabled><span>원하시는 픽업장소를 선택하세요</span></option>
-							<option value=""><span>스프링 서울</span></option>
-							<option><span>스프링 제주</span></option>
-							<option><span>스프링 부산</span></option>
-							<option><span>스프링 광주</span></option>
-							<option><span>스프링 강릉</span></option>
+							<option name="selectlocation" value="스프링 서울"><span>스프링 서울</span></option>
+							<option name="selectlocation" value=""><span>스프링 제주</span></option>
+							<option name="selectlocation" value=""><span>스프링 부산</span></option>
+							<option name="selectlocation" value=""><span>스프링 광주</span></option>
+							<option name="selectlocation" value=""><span>스프링 강릉</span></option>
 						</select>
 					</div>
 				</div>
 			</div>
 			
 <!-- SELECTED OPTION VIEW -->
-			<div class="row" style="margin-top:30px; margin-right:18px; background: #F4F4F4; border: 1px solid #DCDCDC;padding: 20px 15px;">
+			<div class="row" id="selectionview" style="margin-top:30px; margin-right:18px; background: #F4F4F4; border: 1px solid #DCDCDC;padding: 20px 15px; display:none;">
 				<div class="">
 						<table style="margin-bottom: 20px; display:block; border:1px solid orange; table-layout: fixed; overflow:hidden;">
 							<tr style=" margin-top:8px; vertical-align: middle; border:1px solid red; height:30px;">
@@ -147,39 +214,42 @@
 							</tr>
 							<tr style=" margin-top:8px; border:1px solid red;height:30px;">
 								<td style="padding-right: 8px; font-weight: 500;">사용일시</td>
-								<td>2022-08-07 12:00</td>
+								<td id="selectionday">2022-08-07</td>
+								<td>&nbsp;</td>
+								<td id="selectiontime">12:00</td>
 							</tr>
 							<tr style=" margin-top:8px; border:1px solid red;height:30px;">
 								<td style="padding-right: 8px; font-weight: 500;">사용장소</td>
-								<td>[스프링호텔]서울</td>
+								<td id="selectionlocation">[스프링호텔]서울</td>
 							</tr>
 						</table>
 				</div>
 				<div class="" style="display: table;width: 100%;border:1px solid orange;">
 					<div>
 						<button type="button" class="minus" style="width: 34px;height: 34px;float: left;border: 1px solid #DCDCDC;background: #fff;cursor: pointer;outline: none;"><span>-</span></button>
-						<input type="num" class="qty" value="1" style="width: 66px;height: 34px;line-height: 34px;float: left;padding: 0 5px;border: 1px solid #DCDCDC;border-right: 0;border-left: 0;font-size: 14px;text-align: center;cursor: text;background-color: field;">
+						<input id="product-quantity" type="num" class="qty" value="1" style="width: 66px;height: 34px;line-height: 34px;float: left;padding: 0 5px;border: 1px solid #DCDCDC;border-right: 0;border-left: 0;font-size: 14px;text-align: center;cursor: text;background-color: field;">
 						<button type="button" class="plus" style="width: 34px;height: 34px;float: left;border: 1px solid #DCDCDC;background: #fff;cursor: pointer;outline: none;"><span>+</span></button>
 					</div>
 					<div style="border:1px solid orange;width: 113px;font-size: 16px; text-align: center;display: table-cell;vertical-align: middle;font-weight: 500;">
-						104,000원
+						<span id="totprice">104000</span>원
+						
 					</div>
 					<div style="width: 14px;display: table-cell;vertical-align: middle;">
-						<button type="button" class="delete" style="width: 14px;height: 14px;background: url(/resources/images/shop/common/icon-delete.png) 50% 50% no-repeat;background-size: 100%;text-indent: -9999px;overflow: hidden;cursor: pointer;outline: none;">삭제</button>
+						<button type="button" class="delete" onclick="deleteOption();" style="width: 14px;height: 14px;background: url(/resources/images/shop/common/icon-delete.png) 50% 50% no-repeat;background-size: 100%;text-indent: -9999px;overflow: hidden;cursor: pointer;outline: none;">삭제</button>
 					</div>
 				</div>
 			</div>
 
 			
 <!-- TOTAL PRICE -->
-			<div class="row" style="margin-top:30px; margin-right:18px; border:1px solid orange; height:70px; padding: 20px 0;">
+			<div class="row" style="margin-top:30px; margin-right:18px; border:1px solid orange; height:70px; padding: 20px 0; display:flex;">
 				<div class="col-3" style="display: table;">
 					<p style=" display: table-cell; vertical-align: middle; color: #666;">총 상품금액</p>
 				</div>
 				<div class="col-8" style="display: table; text-align:right; ">
 					<p style=" display: table-cell; vertical-align: middle; font-weight:500;color: #666;font-size: 28px;">
 						<span style="margin-right:10px;width:35px;font-size: 16px;display:inline-block; font-weight:400;vertical-align:middle;">KRW</span>
-						49,000원</p>
+						<span id="product-price" >49000</span>원</p>
 				</div>
 			</div>
 			
@@ -252,4 +322,8 @@
 
 <%@ include file="footer.jsp" %>
 </body>
+<style>
+
+
+</style>
 </html>

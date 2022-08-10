@@ -45,21 +45,6 @@
 	<button type="button" id="go-top-button" onclick="goingTop();" >TOP</button>
 </div>
 
-<script>
-
-	//goingTop() 메소드는 버튼을 클릭하면 화면 제일 위로 움직이는 이벤트핸들러 함수이다.
-	function goingTop(){
-		window.scrollTo({
-			  top: 0,
-			  left: 0,
-			  behavior: 'smooth'
-			});
-
-
-	}
-	
-</script>
-
 <!-- FOOTER -->
 <footer id="footer" class="footer">
 	<div class="container-fluid" style="margin-top: 90px; padding: 53px 60px 0; background: #111; color: #999; height:auto;">
@@ -136,5 +121,16 @@
 	</div>
 </div><div style="clear:both:"></div>
 </footer>
+<script type="text/javascript">
 
+	//goingTop() 메소드는 버튼을 클릭하면 화면 제일 위로 움직이는 이벤트핸들러 함수이다.
+	function goingTop(){
+		window.scrollTo({
+			  top: 0,
+			  left: 0,
+			  behavior: 'smooth'
+			});
+	}
+	
+</script>
 </html>

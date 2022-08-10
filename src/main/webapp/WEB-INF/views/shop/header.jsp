@@ -94,21 +94,6 @@
 </nav>
 <!-- END HEADER 1 -->
 
-<script>
-
-
-	// 마우스 오버시 dropdown 메뉴를 열고닫는다.
-	function dropping(index) {
-		document.querySelector("#category-no-" + index).style.display ='inline-flex';
-	}
-	function collapsing(index) {
-		document.querySelector("#category-no-" + index).style.display ='none';
-	}
-
-	
-</script>
-
-
 <!-- HEADER 2 -->
 <header class="header" >
 	<div class="head" >
@@ -250,4 +235,16 @@
 		</div>
 </header>						
 </body>
+
+<script type="text/javascript">
+
+	// 마우스 오버시 dropdown 메뉴를 열고닫는다.
+	function dropping(index) {
+		document.querySelector("#category-no-" + index).style.display ='inline-flex';
+	}
+	function collapsing(index) {
+		document.querySelector("#category-no-" + index).style.display ='none';
+	}
+	
+</script>
 </html>
