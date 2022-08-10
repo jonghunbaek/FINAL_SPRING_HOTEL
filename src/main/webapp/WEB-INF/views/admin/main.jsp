@@ -50,7 +50,7 @@
           </thead>
           <tbody>
             <tr>
-              <td>1,001</td>
+              <td><a href="">1,001</a></td>
               <td>random</td>
               <td>data</td>
               <td>placeholder</td>

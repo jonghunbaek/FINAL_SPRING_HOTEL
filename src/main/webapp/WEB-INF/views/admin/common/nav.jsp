@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <link href="${pageContext.request.contextPath}/resources/admincss/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 <style>
 	
 	.bd-placeholder-img {
@@ -30,6 +31,7 @@
 	
 	#rev-list li {list-style-type: none;}
 	#sell-list li {list-style-type: none;}
+	#hotel-list li {list-style-type: none;}
 	#emp-list li {list-style-type: none;}
 
 </style>
@@ -66,8 +68,19 @@
               예약현황
             </a>
             <ul class="sub-list" id="rev-list">
+	            <li class="sub"><a href="roomrev"><span data-feather="chevron-right"></span>객실</a></li>
+	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>레스토랑</a></li>
+            </ul>
+          </li>
+          <li class="nav-item" id="hotel">
+            <a class="nav-link" href="#" role="button" id="rev">
+              <i class="bi bi-building"></i>
+              &nbsp;호텔현황
+            </a>
+            <ul class="sub-list" id="hotel-list">
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>객실</a></li>
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>레스토랑</a></li>
+	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>부대시설</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -169,7 +182,9 @@
     </nav>
   </div>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/resources/admincss/dashboard.js"></script>
 <script type="text/javascript">
 $(function() {
 	
@@ -179,6 +194,10 @@ $(function() {
 	
 	$("#sell").click(function() {
 		$("#sell-list").slideToggle('slow');
+	})
+	
+	$("#hotel").click(function() {
+		$("#hotel-list").slideToggle('slow');
 	})
 	
 	$("#emp").click(function() {
