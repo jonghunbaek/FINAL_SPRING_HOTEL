@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+html a{
+	text-decoration: none;
+	color: #74522ead
+}
 .contain .container {
     margin-top: 60px;
     border: 1px solid orange;
@@ -22,7 +26,6 @@
 .rev-main-search .s-city {
 	width: 25%;
 	display: grid;
-    /* background-color: bisque; */
 }
 .rev-main-search .s-date {
 	width: 48%;
@@ -446,7 +449,6 @@ border: 2px solid lime;
 }
 .que::before{
   display: inline-block;
-  /* content: 'Q'; */
   font-size: 17px;
   color: #006633;
   margin: 0 5px;
@@ -477,7 +479,6 @@ border: 2px solid lime;
   /* ////// */
 .anw::before {
   display: flex;
- /*  content: 'A';  */
   font-size: 17px;
   font-weight: bold;
   color: #666;
