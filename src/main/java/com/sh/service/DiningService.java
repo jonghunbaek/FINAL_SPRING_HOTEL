@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sh.mapper.DiningMapper;
 import com.sh.vo.Dn;
+import com.sh.vo.DnMealTime;
+import com.sh.vo.DnRev;
 import com.sh.vo.Location;
 
 @Service
@@ -29,6 +31,26 @@ public class DiningService {
 		return diningMapper.getDiningByNo(diningNo);
 	}
 	
+	public List<DnRev> getDiningRevByNo(int diningNo) {
+		return diningMapper.getDiningRevByNo(diningNo);
+	}
 	
+	public List<DnMealTime> getMealTimeByNo(int diningNo) {
+		List<DnMealTime> dnMealTimes = diningMapper.getMealTimeByNo(diningNo);
+		for(DnMealTime dnMealTime : dnMealTimes) {
+			if(dnMealTime.getMealTime().equals("lunch")) {
+				dnMealTime.setName("런치");
+			} else if (dnMealTime.getMealTime().equals("dinner")) {
+				dnMealTime.setName("디너");
+			} else {
+				dnMealTime.setName("브런치");
+			}
+		}
+		return dnMealTimes;
+	}
+	
+	public List<String> getTimeByParaMeters(String week, int diningNo, String mealTime) {
+		return diningMapper.getTimeByParaMeters(week, diningNo, mealTime);
+	}
 
 }

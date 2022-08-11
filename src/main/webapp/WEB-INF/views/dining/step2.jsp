@@ -43,7 +43,7 @@
 
 #datepicker{margin-left: 50px; margin-bottom: 50px;}
 
-#visit-div .col-6{border-left: 1px solid grey;}
+#visit-div-left{border-right: 1px solid grey;}
 
 #date-choice-text, #time-choice-text{margin: 10px; margin-bottom: 30px;}
 
@@ -77,13 +77,14 @@
 		<p>표시 필수 입력사항</p>
 	</div>
 	<form id="form-select" method="get" action="step3">
+		<input type="hidden" name="diningNo"/>
 		<div id="seat-choice">
 			<p><strong>좌석 유형 선택</strong></p>
 		</div>
 		<div>
-			<input type="radio" class="btn-check" name="seat" id="table-select" value="table" autocomplete="off">
+			<input type="radio" class="btn-check" name="seat" id="table-select" value="table" >
 			<label class="btn btn-outline-secondary" for="table-select">테이블</label>
-			<input type="radio" class="btn-check" name="seat" id="room-select" value="room" autocomplete="off">
+			<input type="radio" class="btn-check" name="seat" id="room-select" value="room" >
 			<label class="btn btn-outline-secondary" for="room-select">룸</label>
 		</div>
 		<div id="seat-notice">
@@ -126,68 +127,233 @@
 					<input type="hidden" name="baby"/>
 				</div>
 				<div class="col-1" id="date-choice">
-					<a href="#"><img src="../resources/images/dining/날짜선택.png"></a>
+					<a href="#" id="btn-date-choice"><img src="../resources/images/dining/날짜선택.png"></a>
 				</div>
 			</div>
 		</div>
-		<div class="row" id="visit-div">
-			<div class="col-6">
-				<div id="date-choice-text">
-					<p><strong>날짜선택</strong></p>
+		<div class="row mb-3 d-none" id="date-time-select-form">
+			<div class="row" id="visit-div">
+				<div class="col-6" id="visit-div-left">
+					<div id="date-choice-text">
+						<p><strong>날짜선택</strong></p>
+					</div>
+					<div id="datepicker"></div>
+					<input type="hidden" id="input-date" name="date"/>
 				</div>
-				<div id="datepicker"></div>
-				<input type="hidden" id="date" name="date"/>
+				<div class="col-6">
+					<div id="time-choice-text">
+						<p><strong>시간선택</strong></p>
+					</div>
+					<div id="meal-type-select">
+						<c:forEach var="meal" items="${mealTimes }">
+							<input type="radio" class="btn-check" name="mealTime" id="${meal.mealTime }-select" value="${meal.mealTime }" autocomplete="off">
+							<label class="btn btn-outline-secondary" for="${meal.mealTime }-select">${meal.name }</label>
+						</c:forEach>
+					</div>
+					<div>
+						<select class="form-select form-select-sm" name="visitTime" id="time-select">
+							<option selected>방문예정시간을 선택해주세요.</option>
+						</select>
+					</div>
+				</div>
 			</div>
-			<div class="col-6">
-				<div id="time-choice-text">
-					<p><strong>시간선택</strong></p>
+			<div id="gap"></div>
+			<div class="row" id="submit-button">
+				<div class="col-7">
+					<a href="step1"><img src="../resources/images/dining/이전.png"/></a>
 				</div>
-				<div id="meal-type-select">
-					<input type="radio" class="btn-check" name="mealTime" id="lunch-select" value="lunch" autocomplete="off">
-					<label class="btn btn-outline-secondary" for="lunch-select">런치</label>
-					<input type="radio" class="btn-check" name="mealTime" id="dinner-select" value="dinner" autocomplete="off">
-					<label class="btn btn-outline-secondary" for="dinner-select">디너</label>
+				<div class="col-5 text-end">
+					<a href="#" id="btn-member-rev"><img src="../resources/images/dining/회원예약.png"/></a>
+					<a href="#" id="btn-non-member-rev"><img src="../resources/images/dining/비회원예약.png"/></a>
 				</div>
-				<div>
-					<select class="form-select form-select-sm" name="visitTime" id="time-select">
-						<option selected>방문예정시간을 선택해주세요.</option>
-						<option value="18:00">18:00</option>
-						<option value="18:00">18:00</option>
-						<option value="18:00">18:00</option>
-					</select>
-				</div>
-			</div>
-		</div>
-		<div id="gap">
-		</div>
-		<div class="row" id="submit-button">
-			<div class="col-7">
-				<a href="step1"><img src="../resources/images/dining/이전.png"/></a>
-			</div>
-			<div class="col-5 text-end">
-				<a href="#" id="btn-member-rev"><img src="../resources/images/dining/회원예약.png"/></a>
-				<a href="#" id="btn-non-member-rev"><img src="../resources/images/dining/비회원예약.png"/></a>
 			</div>
 		</div>
 	</form>
-	
-
-
 </div>
+
+<div class="modal" tabindex="-1" id="modal-logIn" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">로그인</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form id="modal-login" method="post" action="logIn">
+	        <div class="row">
+	        	<div class="col-8">
+			        <div class="inputId">
+		        		<input type="text" class="id" name="id" id="id-field" placeholder="스프링리워즈 번호 또는 아이디를 입력해주세요">
+			        </div>
+			        <div class="inputPw">
+			        	<input type="password" class="password" name="password" id="pw-field">
+			        </div>
+			        <input type="hidden" name="loginDiningNo">
+	        	</div>	
+	        	<div class="col-4">
+	        		<button>로그인</button>
+	        	</div>
+	        </div>
+       	</form>
+      	</div>
+        <div class="row">
+        	<div class="col-4">
+        		<p>회원가입</p>
+        	</div>
+        	<div class="col-4 text-center">
+        		<p>회원가입</p>
+        	</div>
+        	<div class="col-4 text-end">
+        		<p>회원가입</p>
+        	</div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" id="modal-seat_change" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">예약초기화 안내</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+     	<h5>좌석 유형변경시 검색결과가 초기화 됩니다.</h5>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" id="btn-reset-seat">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
+	let logInModal = new bootstrap.Modal(document.getElementById("modal-logIn"));
+	let seatModal = new bootstrap.Modal(document.getElementById("modal-seat_change"));
+	
+	let params = new URLSearchParams(document.location.search);
+	let diningNo = params.get("dining"); 
+	$(":input[name='diningNo']").val(diningNo);
+	$(":input[name=loginDiningNo]").val(diningNo);
+	
+	// 비회원 예약버튼 클릭시
 	$("#btn-non-member-rev").click(function(){
-		$("#form-select").submit()
+		
 	});	
 	
+	// 회원 예약버튼 클릭시
+	$("#btn-member-rev").click(function() {
+		$.getJSON('logInCheck').done(function(result){
+			if(result.isLogined) {
+				$("#form-select").submit();
+			}else {
+				logInModal.show();
+			}
+		});
+	});
+	
+	// 테이블 , 룸 변경시
+	$("#:radio[name=seat]").change(function(e) {
+		if((!$("#date-time-select-form").hasClass('d-none'))){
+			e.preventDefault();
+			seatModal.show();
+		}
+	});
+	
+	// 테이블, 룸 리셋 버튼
+	$("#btn-reset-seat").click(function() {
+		$("#date-time-select-form").addClass('d-none');
+		seatModal.hide();
+		$("#babyScore").text(0);
+		$(":input[name=adult]").val(0);
+		$("#adultScore").text(0);
+		$(":input[name=child]").val(0);
+		$("#childScore").text(0);
+		$(":input[name=baby]").val(0);
+		
+		let $mealTimeEls = $("#:radio[name=mealTime]");
+		for(var i=0; i<$mealTimeEls.length; i++) {
+			$mealTimeEls[i].checked = false;
+		}
+		// 셀렉트 드롭 첫번째를 제외하고 모든옵션 제거
+		$('select[name=visitTime]').children('option:not(:first)').remove();
+		/* $("select[name=visitTime] option:eq(0)").prop("selected", true); */
+	});
+	
 	$("#form-select").submit(function(){
-		let seatValue = $(":input[name=seat]").val();
-		console.log(seatValue);
-		if (seatValue === "") {
-			alert("좌석유형을 골라주세요");
+		
+	});
+
+	// 식사 타임 변경시
+	$("#:radio[name=mealTime]").change(function(){
+		searchTime();
+	})
+	
+	// 식사타임 클릭시
+	$("#:radio[name=mealTime]").click(function(){
+		if($("#input-date").val() == '') {
+			alert("날짜를 먼저 선택해주세요");
 			return false;
 		}
+	});
+	
+	// 모달창 로그인
+	$("#modal-login").submit(function() {
+		let idValue = $("#id-field").val();  
+		if (idValue === "") {
+			alert("아이디는 필수입력값입니다.");
+			return false;
+		}
+		
+		let passwordValue = $("#pw-field").val();
+		if (passwordValue === "") {
+			alert("비밀번호는 필수입력값입니다.");
+			return false;
+		}
+	});
+	
+	// 날짜선택 클릭시
+	$("#btn-date-choice").click(function(){
+		let adultStat = $('#adultScore').text();
+		let adultNum = parseInt(adultStat,10);
+		let childStat = $('#childScore').text();
+		let childNum = parseInt(childStat,10);
+		let babyStat = $('#babyScore').text();
+		let babyNum = parseInt(babyStat,10);
+		let totalNum = adultNum + childNum + babyNum;
+		
+		let checkedSeatLength = $(":radio[name:'seat']:checked").length;
+		let checkedSeatVal = $(":radio[name=seat]:checked").val();
+		if(checkedSeatLength === 0) {
+			alert("좌석유형을 골라주세요");
+			return;
+		}
+		if(checkedSeatVal === 'table') {
+			if(totalNum < 2) {
+				alert("테이블은 최소인원이 2명이상이어야 합니다.");
+				return;
+			}
+		} else {
+			if(totalNum<10) {
+				alert("룸은 최소인원이 8명이상이어야 합니다.");
+				return;
+			}
+		}
+		
+		$("#date-time-select-form").removeClass('d-none');
+	});
+	
+	// 날짜변경 클릭시
+	$("#datepicker").click(function(){
+		if($(":radio[name=mealTime]:checked").length > 0 ) {
+			searchTime();
+		} else {
+			return;
+		} 
 	});
 	
 	$("#datepicker").datepicker({
@@ -196,101 +362,213 @@ $(function() {
 	    showAnim: "slide",
 	    currentText: '오늘',
 	    showMonthAfterYear: true ,
-	    dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+	    dayNamesMin: ['일','월', '화', '수', '목', '금', '토'], 
 	    monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 	    monthNamesShort : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+	    minDate : 0,
+	    maxDate : 50,
 	    onSelect: function (date) {
-	        $("#date").val(date)
+	        $("#input-date").val(date);
 	    }
 		
 	});
 	
-	$('#decreaseAdult').click(function(){
-		let seatValue = $(":input[name=seat]").val();
-		console.log(seatValue);
-		if (seatValue === "") {
-			alert("좌석유형을 골라주세요");
-			return false;
-		}
-	});
 	
 	$('#decreaseAdult').click(function(e){
-		e.preventDefault();
-		var stat = $('#adultScore').text();
-		var num = parseInt(stat,10);
-		num--;
-		if(num<=-1){
-			num =0;
-		}
-		$('#adultScore').text(num);
-		$(":input[name=adult]").val(num);
-	});
-	$('#increaseAdult').click(function(e){
-		let seatValue = $.trim( $(":input[name=seat]").val() );
-		if (seatValue === "") {
+		let adultStat = $('#adultScore').text();
+		let adultNum = parseInt(adultStat,10);
+		let childStat = $('#childScore').text();
+		let childNum = parseInt(childStat,10);
+		let babyStat = $('#babyScore').text();
+		let babyNum = parseInt(babyStat,10);
+		let totalNum = adultNum + childNum + babyNum;
+		
+		let isChecked = false;
+		$(":input[name='seat']").each(function(index, el) {
+			if (el.checked) {
+				isChecked = true;
+			}
+		});
+		
+		if (!isChecked) {
 			alert("좌석유형을 골라주세요");
-			return false;
 		}
-		e.preventDefault();
-		var stat = $('#adultScore').text();
-		var num = parseInt(stat,10);
-		num++;
-
-		if(num>5){
-			alert('더이상 늘릴수 없습니다.');
-			num=5;
+		
+		adultNum--;
+		if(adultNum<=-1){
+			adultNum =0;
 		}
-		$('#adultScore').text(num);
-		$(":input[name=adult]").val(num);
+		$('#adultScore').text(adultNum);
+		$(":input[name=adult]").val(adultNum);
+	});
+	
+	$('#increaseAdult').click(function(){
+		let adultStat = $('#adultScore').text();
+		let adultNum = parseInt(adultStat,10);
+		let childStat = $('#childScore').text();
+		let childNum = parseInt(childStat,10);
+		let babyStat = $('#babyScore').text();
+		let babyNum = parseInt(babyStat,10);
+		let totalNum = adultNum + childNum + babyNum;
+		
+		let checkedSeatLength = $(":input[name:seat]:checked").length;
+		let checkedSeatValue = $(":input[name:seat]:checked").val();
+		if(checkedSeatLength === 0) {
+			alert("좌석유형을 골라주세요");
+			return;
+		}
+		
+		if(checkedSeatValue === 'table') {
+			if(totalNum>=4){
+				alert('테이블은 1~4인까지 가능합니다.');
+				return;
+			}
+		} else {
+			if(totalNum>=20){
+				alert('룸은 20인까지 가능합니다');
+				return;
+			}
+		}
+		adultNum++;
+	
+		
+		$('#adultScore').text(adultNum);
+		$(":input[name=adult]").val(adultNum);
 	});
 	$('#decreaseChild').click(function(e){
-		e.preventDefault();
-		var stat = $('#childScore').text();
-		var num = parseInt(stat,10);
-		num--;
-		if(num<=-1){
-			num =0;
+		let adultStat = $('#adultScore').text();
+		let adultNum = parseInt(adultStat,10);
+		let childStat = $('#childScore').text();
+		let childNum = parseInt(childStat,10);
+		let babyStat = $('#babyScore').text();
+		let babyNum = parseInt(babyStat,10);
+		let totalNum = adultNum + childNum + babyNum;
+		
+		let checkedSeatLength = $(":radio[name:'seat']:checked").length;
+		if(checkedSeatLength === 0) {
+			alert("좌석유형을 골라주세요");
+			return;
 		}
-		$('#childScore').text(num);
-		$(":input[name=child]").val(num);
+		
+		childNum--;
+		if(childNum<=-1){
+			childNum =0;
+		}
+		$('#childScore').text(childNum);
+		$(":input[name=child]").val(childNum);
 	});
+	
 	$('#increaseChild').click(function(e){
-		e.preventDefault();
-		var stat = $('#childScore').text();
-		var num = parseInt(stat,10);
-		num++;
-
-		if(num>5){
-			alert('더이상 늘릴수 없습니다.');
-			num=5;
+		let adultStat = $('#adultScore').text();
+		let adultNum = parseInt(adultStat,10);
+		let childStat = $('#childScore').text();
+		let childNum = parseInt(childStat,10);
+		let babyStat = $('#babyScore').text();
+		let babyNum = parseInt(babyStat,10);
+		let totalNum = adultNum + childNum + babyNum;
+		
+		let checkedSeatLength = $(":input:radio[name:'seat']:checked").length;
+		let checkedSeatValue = $(":radio[name:seat]:checked").val();
+		if(checkedSeatLength === 0) {
+			alert("좌석유형을 골라주세요");
+			return;
 		}
-		$('#childScore').text(num);
-		$(":input[name=child]").val(num);
+		
+		if(checkedSeatValue === 'table') {
+			if(totalNum>=4){
+				alert('테이블은 1~4인까지 가능합니다.');
+				return;
+			}
+		} else {
+			if(totalNum>=20){
+				alert('룸은 20인까지 가능합니다');
+				return;
+			}
+		}
+		
+		e.preventDefault();
+		childNum++;
+
+		$('#childScore').text(childNum);
+		$(":input[name=child]").val(childNum);
 	});
 	$('#decreaseBaby').click(function(e){
+		let adultStat = $('#adultScore').text();
+		let adultNum = parseInt(adultStat,10);
+		let childStat = $('#childScore').text();
+		let childNum = parseInt(childStat,10);
+		let babyStat = $('#babyScore').text();
+		let babyNum = parseInt(babyStat,10);
+		let totalNum = adultNum + childNum + babyNum;
+		
+		let checkedSeatValue = $(":radio[name:seat]:checked").val();
+		let checkedSeatLength = $(":radio[name:'seat']:checked").length;
+		if(checkedSeatLength === 0) {
+			alert("좌석유형을 골라주세요");
+		}
+		
 		e.preventDefault();
 		var stat = $('#babyScore').text();
 		var num = parseInt(stat,10);
-		num--;
-		if(num<=-1){
-			num =0;
+		babyNum--;
+		if(babyNum<=-1){
+			babyNum =0;
 		}
-		$('#babyScore').text(num);
-		$(":input[name=baby]").val(num);
+		$('#babyScore').text(babyNum);
+		$(":input[name=baby]").val(babyNum);
 	});
 	$('#increaseBaby').click(function(e){
-		e.preventDefault();
-		var stat = $('#babyScore').text();
-		var num = parseInt(stat,10);
-		num++;
-
-		if(num>5){
-			alert('더이상 늘릴수 없습니다.');
-			num=5;
+		let adultStat = $('#adultScore').text();
+		let adultNum = parseInt(adultStat,10);
+		let childStat = $('#childScore').text();
+		let childNum = parseInt(childStat,10);
+		let babyStat = $('#babyScore').text();
+		let babyNum = parseInt(babyStat,10);
+		let totalNum = adultNum + childNum + babyNum;
+		
+		let checkedSeatValue = $(":radio[name:seat]:checked").val();
+		let checkedSeatLength = $(":radio[name:'seat']:checked").length;
+		if(checkedSeatLength === 0) {
+			alert("좌석유형을 골라주세요");
+			return;
 		}
-		$('#babyScore').text(num);
-		$(":input[name=baby]").val(num);
+
+		if(checkedSeatValue === 'table') {
+			if(totalNum>=4){
+				alert('테이블은 1~4인까지 가능합니다.');
+				return;
+			}
+		} else {
+			if(totalNum>=20){
+				alert('룸은 20인까지 가능합니다');
+				return;
+			}
+		}
+		
+		babyNum++;
+
+		$('#babyScore').text(babyNum);
+		$(":input[name=baby]").val(babyNum);
 	});
+	
+	function searchTime() {
+		let queryString = $("#form-select").serialize();
+		let $select = $("#time-select").empty();
+		
+		let basisOptionContent = `
+			<option selected>방문예정시간을 선택해주세요.</option>
+		`;
+		$select.append(basisOptionContent);
+		
+		$.getJSON("/dining/time", queryString, function(times){
+			$.each(times, function(index, time){
+				let content = '';
+				content += '<option value="' + time +'">'+ time +'</option>'
+				
+				$select.append(content);
+			})
+		})
+	}
 });
 </script>
 </body>
