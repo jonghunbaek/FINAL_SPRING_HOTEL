@@ -54,6 +54,13 @@
 		<association property="dnInfo" column="dn_no" select="getDiningInfoByNo"/>
 	</resultMap>
 	
+	<resultMap type="DnRev" id="DiningRevResultMap">
+		<result column="dn_rev_meal_time" property="mealTime"/>
+		<result column="dn_rev_week" property="week"/>
+		<result column="dn_rev_time" property="time"/>
+		<association property="dn" column="dn_no" select="getDiningByNo"/>
+	</resultMap>
+	
 	<!-- Dining getDiningByNo(int no); -->
 	<select id="getDiningByNo" parameterType="int" resultMap="DiningResultMap">
 		select *
@@ -61,6 +68,25 @@
 		where dn_no = #{value}
 	</select>
 	
+	<!-- DnRev getDiningRevByNo(int no); -->
+	<select id="getDiningRevByNo" parameterType="int" resultMap="DiningRevResultMap">
+		select *
+		from sh_dn_rev
+		where dn_no = #{value}
+	</select>
 	
+	<!-- String getMealTimeByNo(int no); -->
+	<select id="getMealTimeByNo" parameterType="int" resultType="DnMealTime">
+		select distinct dn_rev_meal_time as mealTime
+		from sh_dn_rev
+		where dn_no = #{value}
+	</select>
 	
+	<select id="getTimeByParaMeters" resultType="String">
+		select dn_rev_time
+		from sh_dn_rev
+		where dn_no = #{no}
+		and dn_rev_meal_time = #{mealTime}
+		and dn_rev_week = #{week}
+	</select>
 </mapper>

@@ -55,7 +55,7 @@
 	<div class="row border-bottom p-5" >
 		<div class="col text-center">
 			<h4>다이닝 예약</h4>
-			<a href='#' id="btn-open-modal-detail2">레스토랑 상세보기 <i class="bi bi-plus-circle"></i></a>
+			<!-- <a href='#' id="btn-open-modal-detail2">레스토랑 상세보기 <i class="bi bi-plus-circle"></i></a> -->
 		</div>
 	</div>
 		<div class="row p-4 border-bottom">
