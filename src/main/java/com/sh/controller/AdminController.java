@@ -34,7 +34,7 @@ public class AdminController {
 		return "admin/main";
 	}
 	
-	// 사원 등록 페이지 요청
+	// 직원 등록 페이지 요청
 	@GetMapping(path = "/register")
 	public String registerform(Model model) {
 
@@ -62,7 +62,6 @@ public class AdminController {
 		return "redirect:/admin/complete";
     }
 	 
-	
 	// 입력된 이메일 존재 여부 체크
 	@PostMapping(path = "/emailCheck")
 	@ResponseBody
@@ -88,7 +87,7 @@ public class AdminController {
 		return "admin/main";
 	}
 	
-	// 사원등록 완료 시 노출되는 페이지
+	// 사원등록 완료 페이지
 	@GetMapping(path = "/complete")
 	public String complete() {
 

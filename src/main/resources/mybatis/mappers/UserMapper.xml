@@ -18,12 +18,19 @@
 		<result column="user_annual_stay" property="stay"/>
 	</resultMap>
 	
+	<!-- User getUserByNo(int no); 관리자페이지 예약현황에서 고객정보 가져오기위한 용도-->
+	<select id="getUserByNo" parameterType="int" resultMap="UserResultMap">
+		select *
+		from sh_users
+		where user_no = #{no}
+	</select>
+	
 	<!-- User getUserById(String id); -->
-		<select id="getUserById" parameterType="string" resultMap="UserResultMap">
-			select *
-			from sh_users
-			where user_id = #{id}
-		</select>
+	<select id="getUserById" parameterType="string" resultMap="UserResultMap">
+		select *
+		from sh_users
+		where user_id = #{id}
+	</select>
 		
 	<!-- User getUserByEmail(String email); -->
 	<select id="getUserByEmail" parameterType="string" resultMap="UserResultMap">
