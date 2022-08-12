@@ -278,7 +278,7 @@
 									<div>객실요금</div>
 									<div class="sub2-price">560,000 원</div>
 								</div>
-								<div class="옵션사항 col-4">
+								<div class="옵션사항 col-4"><!-- 성인조식/엑스트라베드/어린이조식 -->
 									<div>옵션사항</div>
 									<div class="sub2-price">330,000 원</div>
 								</div>
@@ -302,7 +302,7 @@
 							<span class="text1">요금합계</span> <span class="text2">부가가치세
 								포함</span>
 						</div>
-						<div class="total-price" style="margin-right: 20px;">616,000원</div>
+						<div class="total-price" style="margin-right: 20px; margin-top: 10px;">616,000원</div>
 						<a href="#" class="nm-btn"><img alt="선택"
 							src="../resources/images/room/rev/nonmember.gif"></a>
 							<a href="#" class="m-btn"><img alt="선택"

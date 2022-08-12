@@ -120,6 +120,11 @@ html a{
     font-weight: 600;
 }
 
+.drop-search-box >span {
+    width: 300px;
+    display: block;
+	
+}
 
 /* 1. city box */
 .drop-search-box {
@@ -138,7 +143,9 @@ html a{
 .btn-title, .city-info {
 	font-size: 13px;
 }
-
+.btn-title {
+	margin-top: 20px;
+}
 
 .city-box .city-btn {
 	display: flex;
@@ -165,7 +172,6 @@ html a{
 }
 .city-info .slide {
 	width: 270px;
-    height: 130px;
 }
 /* 확인버튼 */
 .ok-btn {
@@ -174,7 +180,76 @@ html a{
 	margin-bottom: 20px;
 }
 
+/* 슬라이드 */
+.slide {
+	--swiper-theme-color : #ffffff3b;
+}
+.swiper-slide {
+	text-align: center; 
+	font-size : 18px; 
+	background : #fff;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	font-size: 18px;
+	background: #fff;
+	background-size: cover;
+  	background-position: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: black;
+}
+
+.mySwiper2 {
+  height: 80%;
+  width: 100%;
+}
+
+.mySwiper {
+  height: 96px;
+  box-sizing: border-box;
+  padding: 10px  0;
+}
+
+.mySwiper .swiper-slide {
+  width: 25%;
+  height: 100%;
+  opacity: 0.4;
+}
+
+.mySwiper .swiper-slide-thumb-active {
+  opacity: 1;
+  border: 5px #b4ae52 solid; /*active border qqq*/
+}
+
+
 /* 객실 / 인원 카운트 */
+ul .tit {
+	font-size: 18px;
+}
+
 dt {
 	margin-top: 40px;
 	font-size: 15px;
@@ -218,7 +293,6 @@ ul li {
 /* 확인버튼 */
 .ok-btn1 {
 	text-align: center;
-	padding-top: 30px;
 	margin-bottom: 20px;
 }
 /* part line */

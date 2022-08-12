@@ -114,29 +114,27 @@ h5 {
 	font-size: 11px;
 }
 /* 슬라이드 */
-
-.swiper {
-        width: 100%;
-        height: 100%;
-      }
-
-      .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-/* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
+.swiper-slide {
+	text-align: center; 
+	font-size : 18px; 
+	background : #fff;
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	font-size: 18px;
+	background: #fff;
+	background-size: cover;
+  	background-position: center;
 }
 
 .swiper-slide img {
@@ -154,10 +152,6 @@ h5 {
   background-color: black;
 }
 
-.swiper-slide {
-  background-size: cover;
-  background-position: center;
-}
 
 .mySwiper2 {
   height: 80%;
@@ -181,12 +175,6 @@ h5 {
   border: 5px #b4ae52 solid; /*active border qqq*/
 }
 
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
 /* 아래 세로 박스 */
 
 /* detail 1 */

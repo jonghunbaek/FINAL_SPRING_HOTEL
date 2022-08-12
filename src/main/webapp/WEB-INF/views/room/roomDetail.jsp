@@ -9,8 +9,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/room/roomDetail.css" rel="stylesheet">
-<!-- Link Swiper's CSS -->
+<!-- Link Swiper'-->
 <link href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
 <title>Spring Hotel</title>
 </head>
 <body>
@@ -193,11 +195,8 @@
 	</div>
 	</div>
 <%@ include file="../common/footer.jsp" %>
-<!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-
-    <!-- Initialize Swiper -->
     <script>
+    <!-- Swiper -->
       var swiper = new Swiper(".mySwiper", {
         loop: true,
         spaceBetween: 10,
