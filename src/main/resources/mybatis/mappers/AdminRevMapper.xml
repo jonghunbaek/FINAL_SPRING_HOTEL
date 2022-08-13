@@ -12,15 +12,96 @@
 		<result column="room_rev_checkin_time" property="checkinTime"/>
 		<result column="room_rev_checkout_time" property="checkoutTime"/>
 		<result column="room_rev_request" property="request"/>
+		<result column="room_rev_status" property="status"/>
 		<result column="room_rev_created_date" property="createdDate"/>
 		<result column="room_rev_updated_date" property="updatedDate"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
 	</resultMap>
 	
-	<!-- RoomRev getAllRoomRevList(); -->
-	<select id="getAllRoomRevList" resultMap="RoomRevResultMap">
+	<!-- RoomRev getAllRoomRevList(); 예약현황 페이지 첫 진입시 전체 리스트 뿌리기 -->
+	<select id="getAllRoomRevList" parameterType="Pagination" resultMap="RoomRevResultMap">
 		select *
-		from sh_room_rev
+		from (select row_number() over (order by room_rev_no desc) row_number, V.*
+			  from sh_room_rev V)
+	    where row_number &gt;= #{beginIndex} and row_number &lt;= #{endIndex}
 	</select>
+	
+	<!-- int getTotalRows(); 페이징처리 총 개수 반환-->
+	<select id="getTotalRows" resultType="int">
+	 	select count(*)
+	 	from sh_room_rev
+	</select>
+		
+	<!-- List<RoomRev> filterRev(AdminRoomRevCriteria adminRoomRevCriteria); -->
+	<select id="filterRev" parameterType="AdminRoomRevCriteria" resultMap="RoomRevResultMap">
+		select *
+		from (select row_number() over
+		<choose>	
+			<when test='sortRev == null and sortCheckin == null'>
+				(order by room_rev_no desc)
+			</when>
+			<when test='sortRev == "desc" and sortCheckin == "desc"'>
+				(order by room_rev_no desc, room_rev_checkin_time desc)
+			</when>
+			<when test='sortRev == "desc" and sortCheckin == "asc"'>
+				(order by room_rev_no desc, room_rev_checkin_time asc)
+			</when>
+			<when test='sortRev == "asc" and sortCheckin == "desc"'>
+				(order by room_rev_no asc, room_rev_checkin_time desc)
+			</when>
+			<when test='sortRev == "asc" and sortCheckin == "asc"'>
+				(order by room_rev_no asc, room_rev_checkin_time asc)
+			</when>
+			<when test='sortRev == null and sortCheckin == "asc"'>
+				(order by room_rev_checkin_time asc)
+			</when>
+			<when test='sortRev == null and sortCheckin == "desc"'>
+				(order by room_rev_checkin_time desc)
+			</when>
+			<when test='sortRev == "asc" and sortCheckin == null'>
+				(order by room_rev_no asc)
+			</when>
+			<when test='sortRev == "desc" and sortCheckin == null'>
+				(order by room_rev_no desc)
+			</when>	
+		</choose>
+			row_number, V.*
+			from sh_room_rev V
+		<where>
+			<if test='search == "name"'>
+			    user_no in (select user_no
+		                    from sh_users
+		                    where user_name like '%'||#{keyword}||'%')
+			</if>
+			<if test='search == "revNo"'>
+				and room_rev_no like '%'||#{keyword}||'%'
+			</if>
+			<if test="location != 0">
+		 		and room_id in (select room_id
+		                    	from sh_room
+		                    	where location_no = #{locationNo})
+			</if>
+			<if test="roomCategory != 0">
+			    and room_id in (select room_id 
+		                 	    from sh_room
+		                        where room_category_no in (select g.room_category_no
+			                                               from sh_room_category g, sh_room_category c
+			                                               where g.room_group_no = c.room_category_no
+			                                               and g.room_group_no = #{roomCategoryNo}))
+			</if>
+			<if test="revStatus != null">
+				and room_rev_status = #{revStatus}
+			</if>
+			<if test="checkinPeriod != null">
+				and room_rev_checkin_time between to_date(#{inStartDate}) and to_date(#{inEndDate})
+			</if>
+		</where>	  
+			  )
+		<where>
+				row_number &gt;= #{beginIndex} and row_number &lt;= #{endIndex}
+		</where>
+	</select>
+	
+	
 </mapper>

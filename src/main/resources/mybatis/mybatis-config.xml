@@ -13,5 +13,6 @@
 			 * vo클래스에 @Alias 어노테이션이 있으면 그 어노테이션으로 지정한 이름이 별칭으로 등록됨
 		 -->
 		 <package name="com.sh.vo"/>
+		 <package name="com.sh.criteria"/>
 	</typeAliases>
 </configuration>
