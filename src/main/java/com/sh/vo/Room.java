@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Alias("Room")
-
 public class Room {
 	
 	private int id;
