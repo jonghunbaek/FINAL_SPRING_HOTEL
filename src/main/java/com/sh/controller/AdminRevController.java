@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +17,7 @@ import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.service.AdminRevService;
 import com.sh.vo.Pagination;
 import com.sh.vo.RoomRev;
+import com.sh.web.form.AdminRoomRevUpdateForm;
 
 @Controller
 @RequestMapping("/admin")
@@ -43,6 +45,22 @@ public class AdminRevController {
 	@GetMapping(path = "/roomrev/filter")
 	@ResponseBody
 	public Map<String, Object> Filter(AdminRoomRevCriteria adminRoomRevCriteria) {
+		
+		System.out.println("===============================test"+adminRoomRevCriteria.getCheckinPeriod());
 		return adminRevService.filterRev(adminRoomRevCriteria);
+	}
+	
+	// 객실 예약정보 상세조회
+	@GetMapping(path = "/roomrev/detail")
+	@ResponseBody
+	public RoomRev detail(int revNo) {
+		return adminRevService.getRoomRevDetailByNo(revNo);
+	}
+	
+	// 객실 예약 상세정보 수정
+	@PostMapping(path = "/roomrev/updateRoomRevDetail")
+	public void updateRoomRevDetail(AdminRoomRevUpdateForm adminRoomRevUpdateForm) {
+		System.out.println(adminRoomRevUpdateForm.getAdult());
+		adminRevService.updateRoomRevDetailByNo(adminRoomRevUpdateForm);
 	}
 }

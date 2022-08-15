@@ -38,10 +38,15 @@
 		background-color: #dcdcdc !important;
 		position:relative; top:70px;
 		border-radius: 10px;
+		box-shadow: 1px 1px 5px 1px gray;
 	} 
 	
 	.form-control {
-		box-shadow: 1px 1px 5px 1px black;
+		font-size: 12px;
+	}
+	
+	.form-control:hover {
+		box-shadow: 1px 1px 5px 5px darkgray;
 		font-size: 12px;
 	}
 	
