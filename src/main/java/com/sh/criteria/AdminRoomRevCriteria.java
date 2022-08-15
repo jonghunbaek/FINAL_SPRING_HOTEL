@@ -13,6 +13,7 @@ import lombok.ToString;
 public class AdminRoomRevCriteria {
 
 	private String search;
+	private String page;
 	private String keyword;
 	private String location;		// 변환
 	private String roomCategory;	// 변환
@@ -25,7 +26,7 @@ public class AdminRoomRevCriteria {
 	private int locationNo;
 	private int roomCategoryNo;
 	
-	private int beginIndex;			// 데이터 조회 시작위치
+	private int beginIndex;			
 	private int endIndex;
 	
 	private String inStartDate;

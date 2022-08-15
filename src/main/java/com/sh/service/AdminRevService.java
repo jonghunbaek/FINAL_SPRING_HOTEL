@@ -13,6 +13,7 @@ import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.mapper.AdminRevMapper;
 import com.sh.vo.Pagination;
 import com.sh.vo.RoomRev;
+import com.sh.web.form.AdminRoomRevUpdateForm;
 
 @Service
 @Transactional
@@ -41,23 +42,21 @@ public class AdminRevService {
 		// 둘째, 값이 많은 수가 아니기때문에 db에서 to_date로 충분히 조회가 가능하기때문 
 		String checkinPeriod = adminRoomRevCriteria.getCheckinPeriod();
 		
-		String[] checkins = checkinPeriod.split("~");
-		
-		List<String> checkinTrim = new ArrayList<String>();
-		
-		for (int i=0; i<checkins.length; i++) {
-			checkinTrim.add(checkins[i].trim());
+		if (checkinPeriod == null || checkinPeriod == "") {
+			 System.out.println("checkinPeriod:-------" + checkinPeriod);
+		} else {
+			
+			String[] checkins = checkinPeriod.split("~");
+			
+			List<String> checkinTrim = new ArrayList<String>();
+			
+			for (int i=0; i<checkins.length; i++) {
+				checkinTrim.add(checkins[i].trim());
+			}
+			
+			adminRoomRevCriteria.setInStartDate(checkinTrim.get(0));
+			adminRoomRevCriteria.setInEndDate(checkinTrim.get(1));
 		}
-		
-		adminRoomRevCriteria.setInStartDate(checkinTrim.get(0));
-		adminRoomRevCriteria.setInEndDate(checkinTrim.get(1));
-		
-		// Pagination 객체 생성 후 페이지에 표시될 개수를 매개변수로 전해주고 그 값을 adminRoomRevCriteria에 담는다.
-		int totalRows = adminRevMapper.getTotalRows();
-		Pagination pagination = new Pagination(Integer.parseInt(adminRoomRevCriteria.getRows()) , totalRows, 1);
-		
-		adminRoomRevCriteria.setBeginIndex(pagination.getBeginIndex());
-		adminRoomRevCriteria.setEndIndex(pagination.getEndIndex());
 		
 		// location, roomCategory를 int로 parse시켜준다.
 		try {
@@ -65,6 +64,20 @@ public class AdminRevService {
 	    	adminRoomRevCriteria.setRoomCategoryNo(Integer.parseInt(adminRoomRevCriteria.getRoomCategory()));
 	    } catch(NumberFormatException e) {}
 	  
+		// Pagination 객체 생성 후 페이지에 표시될 개수를 매개변수로 전해주고 그 값을 adminRoomRevCriteria에 담는다.
+		int totalRows = adminRevMapper.getTotalRowsByFilter(adminRoomRevCriteria);
+		
+		if (adminRoomRevCriteria.getPage() == null || adminRoomRevCriteria.getPage() == "") {
+			adminRoomRevCriteria.setPage("1");
+		}
+		
+		int currentPage = Integer.parseInt(adminRoomRevCriteria.getPage());
+			
+		Pagination pagination = new Pagination(Integer.parseInt(adminRoomRevCriteria.getRows()) , totalRows, currentPage);
+
+		adminRoomRevCriteria.setBeginIndex(pagination.getBeginIndex());
+		adminRoomRevCriteria.setEndIndex(pagination.getEndIndex());
+		
 		List<RoomRev> roomRev = adminRevMapper.filterRev(adminRoomRevCriteria);
 		
 		Map<String, Object> filter = new HashMap<String, Object>();
@@ -72,5 +85,14 @@ public class AdminRevService {
 		filter.put("roomRev", roomRev);
 
 		return filter;
+	}
+
+	public RoomRev getRoomRevDetailByNo(int revNo) {
+		return adminRevMapper.getRoomRevDetailByNo(revNo);
+	}
+
+	public void updateRoomRevDetailByNo(AdminRoomRevUpdateForm adminRoomRevUpdateForm) {
+		
+		adminRevMapper.updateRoomRevDetailByNo(adminRoomRevUpdateForm);	
 	}
 }

@@ -19,6 +19,28 @@
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
 	</resultMap>
 	
+	<!-- void updateRoomRevDetailByNo(RoomRev roomRev); -->
+	<update id="updateRoomRevDetailByNo" parameterType="com.sh.web.form.AdminRoomRevUpdateForm">
+		update sh_room_rev
+		set
+			room_rev_adult = to_number(#{adult}),
+			room_rev_child = to_number(#{child}),
+			room_rev_total_price = to_number(#{price}),
+			room_rev_checkin_time = to_date(#{checkinDate}),
+			room_rev_checkout_time = to_date(#{checkoutDate}),
+			room_rev_request = #{request},
+			room_rev_status = #{status},
+			room_rev_updated_date = sysdate
+		where room_rev_no = to_number(#{no})	
+	</update>
+
+	<!-- RoomRev getRoomRevDetailByNo(int no); -->
+	<select id="getRoomRevDetailByNo" parameterType="int" resultMap="RoomRevResultMap">
+		select *
+		from sh_room_rev
+		where room_rev_no = #{revNo}
+	</select>
+	
 	<!-- RoomRev getAllRoomRevList(); 예약현황 페이지 첫 진입시 전체 리스트 뿌리기 -->
 	<select id="getAllRoomRevList" parameterType="Pagination" resultMap="RoomRevResultMap">
 		select *
@@ -32,7 +54,42 @@
 	 	select count(*)
 	 	from sh_room_rev
 	</select>
-		
+	
+	<!-- int getTotalRowsByFilter(AdminRoomRevCriteria adminRoomRevCriteria); -->	
+	<select id="getTotalRowsByFilter" parameterType="AdminRoomRevCriteria" resultType="int">
+		select count(*)
+		from sh_room_rev
+		<where>
+			<if test='search == "name"'>
+			    user_no in (select user_no
+		                    from sh_users
+		                    where user_name like '%'||#{keyword}||'%')
+			</if>
+			<if test='search == "revNo"'>
+				and room_rev_no like '%'||#{keyword}||'%'
+			</if>
+			<if test="location != 0">
+		 		and room_id in (select room_id
+		                    	from sh_room
+		                    	where location_no = #{locationNo})
+			</if>
+			<if test="roomCategory != 0">
+			    and room_id in (select room_id 
+		                 	    from sh_room
+		                        where room_category_no in (select g.room_category_no
+			                                               from sh_room_category g, sh_room_category c
+			                                               where g.room_group_no = c.room_category_no
+			                                               and g.room_group_no = #{roomCategoryNo}))
+			</if>
+			<if test="revStatus != null">
+				and room_rev_status = #{revStatus}
+			</if>
+			<if test='checkinPeriod != null and checkinPeriod != ""'>
+				and room_rev_checkin_time between to_date(#{inStartDate}) and to_date(#{inEndDate})
+			</if>
+		</where>	  
+	</select>
+	
 	<!-- List<RoomRev> filterRev(AdminRoomRevCriteria adminRoomRevCriteria); -->
 	<select id="filterRev" parameterType="AdminRoomRevCriteria" resultMap="RoomRevResultMap">
 		select *
@@ -93,7 +150,7 @@
 			<if test="revStatus != null">
 				and room_rev_status = #{revStatus}
 			</if>
-			<if test="checkinPeriod != null">
+			<if test='checkinPeriod != null and checkinPeriod != ""'>
 				and room_rev_checkin_time between to_date(#{inStartDate}) and to_date(#{inEndDate})
 			</if>
 		</where>	  
