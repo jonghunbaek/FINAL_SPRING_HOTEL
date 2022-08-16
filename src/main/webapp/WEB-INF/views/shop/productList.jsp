@@ -55,7 +55,7 @@
 			</div>
 			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
 					<span class="sub-title" style=" color: #666; height: 24px; font-size: 16px;">[스프링호텔 서울]</span>
-					<h2><a href="#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
+					<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
 			</div>
 			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
 				<p class="price" style="font-size: 28px; ">
@@ -71,7 +71,7 @@
 			</div>
 			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
 					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span>
-					<h2><a href="#2" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
+					<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
 			</div>
 			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
 				<p class="price" style="font-size: 28px; ">
@@ -87,7 +87,7 @@
 			</div>
 			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
 					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span>
-					<h2><a href="#" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
+					<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
 			</div>
 			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
 				<p class="price" style="font-size: 28px; ">
@@ -105,7 +105,7 @@
 			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
 				<p class="title" style="">
 					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="#" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
+					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
 				</p>
 			</div>
 			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
@@ -123,7 +123,7 @@
 			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
 				<p class="title" style="">
 					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="#" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
+					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
 				</p>
 			</div>
 			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
@@ -140,7 +140,7 @@
 			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
 				<p class="title" style="">
 					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="#" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
+					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
 				</p>
 			</div>
 			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
