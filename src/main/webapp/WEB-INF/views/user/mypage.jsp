@@ -97,17 +97,17 @@
 			<br>
 			<div id="div-info">
 				<div id="div-userInfo1">
-					<p><span>ㅇㅇㅇ </span> 님은</p>
-					<p><strong>BROWN </strong> 회원입니다.</p>
+					<p><span>${user.name } </span> 님은</p>
+					<p><strong>${grade.grade } </strong> 회원입니다.</p>
 				</div>
 				<div id="div-userInfo2">
 					<ul class="ms-3" style="float: left;">
 						<li class="me-5"><span id="span-color">회원번호</span></li>
-						<li><strong>2121525</strong></li>
+						<li><strong>${user.no }</strong></li>
 					</ul>
 					<ul class="me-5" style="float: right;">
 						<li><span id="span-color">포인트</span></li>
-						<li class="ms-5"><strong>123<b>P</b></strong></li>
+						<li class="ms-5"><strong>${user.point } <b> P</b></strong></li>
 					</ul>
 				</div>
 			</div>
@@ -123,13 +123,30 @@
 				<div id="div-chart1">
 					<p><img src="/resources/images/mypage/graphTit1.gif"></p>
 					<canvas class="mb-3" id="myChart1" width="200" height="200"></canvas>
-					<p><strong>SILVER</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.</p>
+					<p>
+						<c:if test="${grade.grade eq 'Brown' }">
+							<strong>SILVER</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						</c:if>
+						<c:if test="${grade.grade eq 'Gold' }">
+							<strong>GOLD</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						</c:if>
+						<c:if test="${grade.grade eq 'Gold' }">
+							<strong>DIAMOND</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						</c:if>
+					</p>
 					<div id="div-img1"><img src="/resources/images/mypage/night_icon.png"></div>
 				</div>
 				<div id="div-chart2">
 					<p><img src="/resources/images/mypage/graphTit2.gif"></p>
 					<canvas class="mb-3" id="myChart2" width="200" height="200"></canvas>
-					<p><strong>SILVER</strong> 등급까지 <span id="span-red">100P</span> 남았습니다.</p>
+					<p>
+						<c:if test="${grade.grade eq 'Brown' }">
+							<strong>SILVER</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						</c:if>
+						<c:if test="${grade.grade eq 'Gold' }">
+							<strong>GOLD</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						</c:if>
+					</p>
 					<div id="div-img2"><img src="/resources/images/mypage/points_icon.png"></div>
 				</div>
 			</div>
@@ -162,9 +179,23 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="first last">
-								<td colspan="6">자료가 없습니다.</td>
-							</tr>
+						<c:choose>
+							<c:when test="${empty points }">
+								<tr class="first last">
+									<td colspan="6">자료가 없습니다.</td>
+								</tr>
+							</c:when>					
+							<c:otherwise>
+								<c:forEach var="point" items="${points }">
+									<tr class="first last">
+										<td>${point.no }</td>
+										<td>${point.title }</td>
+										<td>${point.amount }</td>
+										<td>${point.createdDate }</td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 						</tbody>
 					</table>
 				</div>
@@ -194,6 +225,6 @@
 	    type: 'doughnut',
 	    data: data,
 	    options: {}
-	});
+	}); 
 </script>
 </html>

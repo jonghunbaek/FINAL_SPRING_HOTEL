@@ -95,9 +95,9 @@
 						</colgroup>
 						<thead>
 							<tr style="background-color: #faf9f4;">
-								<th>구분</th>
-								<th>적립 포인트</th>
-								<th>사용 포인트</th>
+								<th>등급</th>
+								<th>쿠폰명</th>
+								<th>사용기간</th>
 							</tr>
 						</thead>
 						<tbody>

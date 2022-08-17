@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sh.exception.ApplicationException;
 import com.sh.service.AdminService;
+import com.sh.utils.SessionUtils;
 import com.sh.vo.Admin;
 import com.sh.web.form.AdminRegisterForm;
 
@@ -82,7 +83,7 @@ public class AdminController {
 	public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
 		
 			Admin admin = adminService.login(email, password);
-			model.addAttribute("LOGIN_ADMIN", admin);
+			SessionUtils.addAttribute("LOGIN_ADMIN", admin);
 
 		return "admin/main";
 	}

@@ -36,8 +36,9 @@
 	#div-btn {width: 866px; height: 70px; padding-top: 20px; text-align: right; display: block;}
 	#btn1 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-left: 300px;
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: left;}
-    #btn2 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-right: 300px;
+    #btn2 {text-decoration: none; display: block; margin-right: 300px;
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: right;}
+	#btn2 span {color: rgb(250,241,208); padding-top: 5px;}
 	       
     .modal-content {width: 550px;}
   	.modal-header {background-color: #9b7f5b; color:white; border: 0; padding: 10px 25px 5px;}
@@ -94,11 +95,11 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
+		<form action="modifyform" method="POST">
 			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">프로필 수정</h3>
 			<div id="div-msg">
-				ㅇㅇㅇ 님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인합니다.
+				${user.name } 님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인합니다.
 			</div>
-			<form>
 			<div id="div-table">
 				<table class="table" summary="아이디,비밀번호로 구성된 테이블">
 					<colgroup>
@@ -108,22 +109,22 @@
 					<tbody>
 						<tr class="first">
 							<th scope="row" class="first">스프링리워즈 번호</th>
-							<td class="first">2121525</td>
+							<td class="first">${user.no }</td>
 						</tr>
 						<tr class="last">
-							<th scope="row" class="last"><label for="mbrPw" class="pw">비밀번호</label></th>
+							<th scope="row" class="last"><label for="password" class="pw">비밀번호</label></th>
 							<td class="last">
-							<input type="password" class="pw uiform password" id="mbrPw" name="mbrPw" maxlength="20" onkeydown="javascript: if(event.keyCode == 13) selectPwCnfm()" autocomplete="off">
+							<input type="password" class="pw uiform password" id="input-password" name="password" maxlength="20" onkeydown="javascript: if(event.keyCode == 13) selectPwCnfm()" autocomplete="off">
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			</form>
 			<div id="div-btn">
 				<a href="#" id="btn1" data-bs-toggle="modal" data-bs-target="#modal-password">비밀번호 찾기</a>
-				<a href="modifyform" id="btn2">확인</a>
+				<button id="btn2"><span>확인</span></button>
 			</div>
+		</form>
 		</div>
 	</div>
 </div>
@@ -296,8 +297,8 @@
       		<div class="modal-body">
       			<p>스프링 리워즈 번호 찾기 결과는 아래와 같습니다.</p>
       			<div class="formBox" style="text-align: center;">
-					<p class="pt-3"><strong>DDD</strong> 스프링리워즈 번호 - <strong>[123456]</strong></p>
-					<p>ID - <strong>[asdf1234]</strong></p>
+					<p class="pt-3"><strong>DDD</strong> 스프링리워즈 번호 - <strong>[${user.no }]</strong></p>
+					<p>ID - <strong>[${user.id }]</strong></p>
 				</div>
 		      	<div class="modal-footer justify-content-center border-0">
 		        	<div id="div-modal-btn">

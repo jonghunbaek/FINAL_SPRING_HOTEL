@@ -36,8 +36,9 @@
 	#div-btn {width: 866px; height: 70px; padding-top: 20px; text-align: right; display: block;}
 	#btn1 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-left: 300px;
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: left;}
-    #btn2 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-right: 300px;
+    #btn2 {text-decoration: none; display: block; margin-right: 300px;
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: right;}
+    #btn2 span {color: rgb(250,241,208); padding-top: 5px;}
 	       
 </style>
 <title>Spring Hotel</title>
@@ -81,6 +82,7 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
+		<form:form action="modifyProfile" method="POST" modelAttribute="userModifyForm">
 			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">프로필 수정</h3>
 			<div id="div-msg">
 				고객님의 정보를 언제든지 확인, 변경하실 수 있습니다.
@@ -88,7 +90,6 @@
 			<div>
 				<h5>기본 정보</h5>
 			</div>
-			<form>
 			<div id="div-table">
 				<table class="table" summary="아이디,비밀번호로 구성된 테이블">
 					<colgroup>
@@ -102,53 +103,37 @@
 					<tbody>
 						<tr>
 							<th scope="row">성명(국문)</th>
-							<td>ㅇㅇㅇ</td>
+							<td>${user.name }</td>
 						</tr>
 						<tr>
 							<th>성명(영문)</th>
-							<td>Dddd</td>
+							<td><span>${user.firstName } </span><span> ${user.lastName }</span></td>
 						</tr>
 						<tr>
 							<th scope="row">아이디</th>
-							<td>ㅇㅇㅇ</td>
+							<td>${user.id }</td>
 						</tr>
 						<tr>
 							<th>이메일</th>
 							<td>
-								<input type="email" value="">
-								<select id="select-email" class="" onchange="emailSet('reg',this.value)">
-									<option value="" selected="selected">직접입력</option>
-									<option value="naver.com" title="naver.com">naver.com</option>
-									<option value="hanmail.net" title="hanmail.net">hanmail.net</option>
-									<option value="hotmail.com" title="hotmail.com">hotmail.com</option>
-									<option value="nate.com" title="nate.com">nate.com</option>
-									<option value="yahoo.co.kr" title="yahoo.co.kr">yahoo.co.kr</option>
-									<option value="empas.com" title="empas.com">empas.com</option>
-									<option value="dreamwiz.com" title="dreamwiz.com">dreamwiz.com</option>
-									<option value="freechal.com" title="freechal.com">freechal.com</option>
-									<option value="lycos.co.kr" title="lycos.co.kr">lycos.co.kr</option>
-									<option value="korea.com" title="korea.com">korea.com</option>
-									<option value="gmail.com" title="gmail.com">gmail.com</option>
-									<option value="hanmir.com" title="hanmir.com">hanmir.com</option>
-									<option value="paran.com" title="paran.com">paran.com</option>
-								</select>
+								<input id="input-email" type="email" name="email" value="${user.email}">
 								<span class="emailConfirm" style="margin-left: 10px;">
-									<a href="#none" onclick=""><img src="/resources/images/mypage/emailConfirm.gif"></a>
+									<a href="#none" onclick="emailCheck();"><img src="/resources/images/mypage/emailConfirm.gif"></a>
 								</span>
 							</td>
 						</tr>
 						<tr class="last">
 							<th>휴대전화</th>
-							<td><input type="text" value=""></td>
+							<td><input type="text" name="phone" value=""></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			</form>
 			<div id="div-btn">
-				<a href="" id="btn1">변경</a>
-				<a href="" id="btn2">취소</a>
+				<a href="modify" id="btn1">취소</a>
+				<button id="btn2"><span>변경</span></button>
 			</div>
+		</form:form>
 		</div>
 	</div>
 	
@@ -156,6 +141,30 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-	
+
+	function emailCheck() {
+		let email = document.getElementById('input-email').value;
+		if (email == '') {
+			alert("이메일을 입력하세요");
+			return false;
+		}
+		$.ajax({
+			url: '/emailCheck',
+			type: 'post',
+			data: {email},
+			success:function(check){
+				if(check == 0) {
+					alert("사용 가능한 이메일입니다.");
+				} else {
+					email = '';
+					alert("이미 사용중인 이메일입니다.");
+				}
+			}, 
+			error:function(){
+				alert("에러입니다.");
+			}
+		})
+	};
+
 </script>
 </html>

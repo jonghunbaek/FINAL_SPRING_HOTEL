@@ -93,7 +93,7 @@ public class HomeController {
 	public String login(@RequestParam("id") String id, @RequestParam("password") String password, Model model) {
 
 		User user = userService.login(id, password);
-		model.addAttribute("LOGIN_USER", user);
+		SessionUtils.addAttribute("LOGIN_USER", user);
 
 		return "redirect:/";
 	}
@@ -126,8 +126,8 @@ public class HomeController {
 	
 	// 로그아웃
 	@GetMapping(path = "/logout")
-	public String logout(SessionStatus sessionStatus) {
-		sessionStatus.setComplete();
+	public String logout() {
+		SessionUtils.sessionInvlidate();
 
 		return "redirect:/";
 	}
