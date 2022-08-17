@@ -16,15 +16,21 @@ public class Product {
 	
 	private int no;
 	private String name;
-	private int price;
-	private int discountPrice;
+	private String imgName;
 	private String detail;
-	private ProductCategory shopCategoryNo;
-	private String tip;
-	private String img;
-	private String summary;
-	private String detailTitle;
+	private String composition;
+	private String caution;
+	private String additionalInfo;
+	private String isOnSale;
+	private Date minDate;
+	private Date maxDate;
 	private Date createdDate;
 	private Date updatedDate;
+	private MainCategory mainCategory;
+	private SubCategory subCategory;
+	private ShopBusiness shopBusiness;
+	private Location location;
+	private int price;
+	private int discountRate;
 	private String deleted;
 }

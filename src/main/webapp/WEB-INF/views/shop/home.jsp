@@ -28,6 +28,25 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;}
+    
+/*IMAGE SLIDES*/    
+    .slides{width: 100%;}
+    
+/*POPULAR ITEMS*/
+    .populars{width: 1400px; margin: 0 auto;}
+	.populars .popularsTitle {margin: 150px 0 50px;}
+	.populars .popularsTitle h3{font-size: 40px;color: #998465;}
+	
+	.populars .row {margin: 0 auto; }
+	.populars .row .col {margin:0px 15px 25px 0px; float: left; width: 442px;}
+	.populars .row .col .imgRow {position:relative; padding:0;}
+	.populars .row .col .titleRow {margin-top:24px; padding:0px;}
+	.populars .row .col .titleRow .sub-title{border:1px dotted dark-gray; color: #666; font-size: 16px; margin-bottom: 10px;}
+	.populars .row .col .titleRow a{font-size: 22px; color: #333; font-weight:500;}
+	.populars .row .col .detailRow{margin: 20px 0 0;}
+	.populars .row .col .detailRow p{font-size:16px; color: #998465;}
+    
+    
 </style>
 
 </head>
@@ -37,7 +56,7 @@
 <div class="shopmain">
 
 <!-- IMAGE SLIDES -->
-	<section class="slides" style="width: 100%;">
+	<section class="slides" style="">
 		<div class="row mb-3">
 			<div class="col-12">
 				<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -76,51 +95,58 @@
 		</div>
 	</section>
 
+
 <!-- POPULAR ITEMS -->
-	<section class="populars" style="width: 1400px; margin: 0 auto;">
-		<div class="row" style="margin: 150px 0 50px;">
-			<h3 style="font-size: 40px;color: #998465; ">인기상품</h3>
+	<section class="populars" >
+		<div class="popularsTitle" style="">
+			<h3 style="">인기상품</h3>
 		</div>
-		<div class="row row-cols-3" style="margin: 0 auto; ">
-				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
-					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/img_product_023.jpg" style="width:100%;">
+		<div class="row row-cols-3" style="">
+				<div class="col position-relative" style=" ">
+					<div class="imgRow">
+						<img src="../resources/images/shop/product/lh_product_020.jpg" style="width:100%;">
 					</div>
-					<div class="" style="margin-top:24px; padding:0px;">
-							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px; margin-bottom: 10px;">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">애플망고 빙수</a></h2>
+					<div class="titleRow" style="">
+							<span class="sub-title" style="">[스프링호텔 서울]</span>
+							<h2><a href="/shop/productdetail#1" class="stretched-link" style="">애플망고 빙수</a></h2>
 					</div>
-					<div class="" style="margin: 20px 0 0;">
-						<p style="font-size:16px; color: #998465;">자세히보기 &gt;</p>
-					</div>
-				</div>
-				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
-					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/img_product_023.jpg" style="width:100%;">
-					</div>
-					<div class="" style="margin-top:24px; padding:0px;">
-							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#2" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">애플망고 빙수</a></h2>
-					</div>
-					<div class="" style="margin: 20px 0 0;">
-						<p style="font-size:16px; color: #998465;">자세히보기 &gt;</p>
+					<div class="detailRow" style="">
+						<p style="">자세히보기 &gt;</p>
 					</div>
 				</div>
-				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
-					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/img_product_023.jpg" style="width:100%;">
+				<div class="col position-relative" style=" ">
+					<div class="imgRow">
+						<img src="../resources/images/shop/product/lh_product_021.jpg" style="width:100%;">
 					</div>
-					<div class="" style="margin-top:24px; padding:0px;">
-							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#3" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">애플망고 빙수</a></h2>
+					<div class="titleRow" style="">
+							<span class="sub-title" style="">[스프링호텔 서울]</span>
+							<h2><a href="/shop/productdetail#1" class="stretched-link" style="">애플망고 빙수</a></h2>
 					</div>
-					<div class="" style="margin: 20px 0 0;">
-						<p style="font-size:16px; color: #998465;">자세히보기 &gt;</p>
+					<div class="detailRow" style="">
+						<p style="">자세히보기 &gt;</p>
+					</div>
+				</div>
+				<div class="col position-relative" style=" ">
+					<div class="imgRow">
+						<img src="../resources/images/shop/product/lh_product_022.jpg" style="width:100%;">
+					</div>
+					<div class="titleRow" style="">
+							<span class="sub-title" style="">[스프링호텔 서울]</span>
+							<h2><a href="/shop/productdetail#1" class="stretched-link" style="">애플망고 빙수</a></h2>
+					</div>
+					<div class="detailRow" style="">
+						<p style="">자세히보기 &gt;</p>
 					</div>
 				</div>
 
+
 		</div>
 	</section>
+	
+<style>
+
+
+</style>
 
 <!-- HOME BANNER -->
 	<section class="home-banner" style="margin-top: 150px; width: 100%; position: relative;">
@@ -145,7 +171,7 @@
 		<div class="row row-cols-3" style="margin: 0 auto; justify-content: space-between;">
 				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
 					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/img_product_023.jpg" style="width:100%;">
+						<img src="../resources/images/shop/product/lh_product_024.jpg" style="width:100%;">
 					</div>
 					<div class="" style="margin-top:24px; padding:0px;">
 							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
@@ -157,7 +183,7 @@
 				</div>
 				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
 					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/img_product_023.jpg" style="width:100%;">
+						<img src="../resources/images/shop/product/lh_product_025.jpg" style="width:100%;">
 					</div>
 					<div class="" style="margin-top:24px; padding:0px;">
 							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
@@ -169,7 +195,7 @@
 				</div>
 				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
 					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/img_product_023.jpg" style="width:100%;">
+						<img src="../resources/images/shop/product/lh_product_026.jpg" style="width:100%;">
 					</div>
 					<div class="" style="margin-top:24px; padding:0px;">
 							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
