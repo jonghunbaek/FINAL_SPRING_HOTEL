@@ -8,7 +8,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="${pageContext.request.contextPath}/resources/room/roomDetail.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/room/css/roomDetail.css" rel="stylesheet">
 <!-- Link Swiper'-->
 <link href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
@@ -30,7 +30,7 @@
 								<span>스탠다드</span>
 							</a>
 							<ul class="st-menu">
-								<li class="roomt"><a href=""><span>디럭스</span></a></li>
+								<li class="roomt"><a href="../room/roomDetail"><span>디럭스</span></a></li>
 								<li class="room"><a href=""><span>비즈니스 디럭스</span></a></li>
 								<li class="room"><a href=""><span>그랜드 코너 디럭스</span></a></li>
 							</ul>
@@ -171,7 +171,7 @@
 									<a href="">문의하기</a>
 								</div>
 								<div class="btn-r">
-									<a href="">예약하기</a>
+									<a href="../room/roomRev1">예약하기</a>
 								</div>
 							</div>
 						<!-- package << 나중에 -->
