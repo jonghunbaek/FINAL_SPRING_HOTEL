@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- roomRev3 CSS -->
 <link
-	href="${pageContext.request.contextPath}/resources/room/roomRev3.css"
+	href="${pageContext.request.contextPath}/resources/room/css/roomRev3.css"
 	rel="stylesheet">
 <!-- total zone -->
 <script
@@ -23,7 +23,7 @@
 <title>Spring Hotel</title>
 </head>
 <body>
-	<c:set var="menu" value="roomRev2" />
+	<c:set var="menu" value="roomRev3" />
 	<%@ include file="../common/nav.jsp"%>
 	<div class="contain">
 		<div class="container">
@@ -692,7 +692,7 @@
 				<div class="que3">
 
 					<div class="arrow-wrap3" style="display: flex;">
-						<a href="#" style="margin-right: 250px;"><img alt=""
+						<a href="../room/roomRev2" style="margin-right: 250px;"><img alt=""
 							src="../resources/images/room/rev/prev.gif"></a>
 						<div class="arrow-top3">↑</div>
 						<div class="arrow-bottom3">상세보기</div>
@@ -703,7 +703,7 @@
 								포함</span>
 						</div>
 						<div class="total-price" style="margin-right: 20px; margin-top: 10px;">616,000원</div>
-						<a href="#" class="nm-btn"><img alt="선택"
+						<a href="../room/completed" class="nm-btn"><img alt="선택"
 							src="../resources/images/room/rev/btn-rev.gif"></a>
 					</div>
 				</div>

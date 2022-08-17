@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- roomRev2 CSS -->
 <link
-	href="${pageContext.request.contextPath}/resources/room/roomRev2.css"
+	href="${pageContext.request.contextPath}/resources/room/css/roomRev2.css"
 	rel="stylesheet">
 <!-- total zone -->
 <script
@@ -294,7 +294,7 @@
 				<div class="que3">
 					
 					<div class="arrow-wrap3" style="display:flex;">
-						<a href="#" style="margin-right: 250px;"><img alt="" src="../resources/images/room/rev/prev.gif"></a>
+						<a href="../room/roomRev1" style="margin-right: 250px;"><img alt="" src="../resources/images/room/rev/prev.gif"></a>
 						<div class="arrow-top3">↑</div> <div class="arrow-bottom3">상세보기</div>
 					</div>
 					<div class="r-box" style="display: flex;">
@@ -303,9 +303,9 @@
 								포함</span>
 						</div>
 						<div class="total-price" style="margin-right: 20px; margin-top: 10px;">616,000원</div>
-						<a href="#" class="nm-btn"><img alt="선택"
+						<a href="../room/roomRev3" class="nm-btn"><img alt="비회원예약"
 							src="../resources/images/room/rev/nonmember.gif"></a>
-							<a href="#" class="m-btn"><img alt="선택"
+							<a href="#" class="m-btn"><img alt="회원예약"
 							src="../resources/images/room/rev/member_rev.gif"></a>
 					</div>
 				</div>

@@ -8,7 +8,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="${pageContext.request.contextPath}/resources/room/roomHome.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/room/css/roomHome.css" rel="stylesheet">
 <title>Spring Hotel</title>
 </head>
 <body>
@@ -24,7 +24,7 @@
 					<li class="m1-first"><a> <span>스탠다드</span>
 					</a>
 						<ul class="st-menu">
-							<li class="roomt"><a href=""><span>디럭스</span></a></li>
+							<li class="roomt"><a href="../room/roomDetail"><span>디럭스</span></a></li>
 							<li class="room"><a href=""><span>비즈니스 디럭스</span></a></li>
 							<li class="room"><a href=""><span>그랜드 코너 디럭스</span></a></li>
 						</ul></li>
