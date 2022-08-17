@@ -9,6 +9,15 @@
 		from sh_location
 		where location_no = #{value}
 	</select>
+	
+	<!-- Location getLocationByDnNo(int dnNo); -->
+	<select id="getLocationByDnNo" parameterType="int" resultType="Location">
+		select a.location_no as no,
+			a.location_name as name
+		from sh_location a, sh_dn d
+		where a.location_no = d.location_no
+		and d.dn_no = #{value}
+	</select>
 
 	<!-- List<Location> getAllLocations(); -->
 	<select id="getAllLocations" resultType="Location">
@@ -26,7 +35,7 @@
 	</select>
 	
 	<!-- DiningInfo getDiningInfoByNo(int no); -->
-	<select id="getDiningInfoByNo" parameterType="int"	 resultType="DnInfo">
+	<select id="getDiningInfoByNo" parameterType="int"	resultType="DnInfo">
 		select dn_info_main as main,
 			   dn_info_detail as detail,
 			   dn_info_location as location,
@@ -50,7 +59,7 @@
 		<result column="dn_name" property="name"/>
 		<result column="dn_image" property="imagename"/>
 		<result column="dn_max_count" property="maxCount"/>
-		<association property="location" column="locatino_no" select="getLocationByNo"/>
+		<association property="location" column="dn_no" select="getLocationByDnNo"/>
 		<association property="dnInfo" column="dn_no" select="getDiningInfoByNo"/>
 	</resultMap>
 	
@@ -88,5 +97,13 @@
 		where dn_no = #{no}
 		and dn_rev_meal_time = #{mealTime}
 		and dn_rev_week = #{week}
+	</select>
+	
+	<select id="getAllAllergies" resultType="Allergy">
+		select 
+			allergy_no as no,
+			allergy_type as type
+		from sh_rt_allergy
+		order by allergy_no asc
 	</select>
 </mapper>
