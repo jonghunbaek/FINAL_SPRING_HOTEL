@@ -27,6 +27,12 @@ public interface AdminRevMapper {
 	// 예약 상세정보 수정
 	void updateRoomRevDetailByNo(AdminRoomRevUpdateForm adminRoomRevUpdateForm);
 
+	// 예약 상세정보 room_id에 따른 체크인,아웃 기간 조회
+	List<RoomRev> getPeriodByNo(int revNo);
+
+	// 선택된 예약정보 삭제
+	void deleteCheckedByNo(String revNo);
+
 
 	
 }

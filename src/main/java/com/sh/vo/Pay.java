@@ -17,6 +17,6 @@ public class Pay {
 	private String cardType;
 	private String cardNumber;
 	private Date validDate;
-	private RoomRev roomRev;
+	private RoomRev roomRev; //room_rev_no
 	
 }

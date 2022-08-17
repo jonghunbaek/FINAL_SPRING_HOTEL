@@ -75,12 +75,12 @@
           <li class="nav-item" id="hotel">
             <a class="nav-link" href="#" role="button" id="rev">
               <i class="bi bi-building"></i>
-              &nbsp;호텔현황
+              &nbsp;호텔관리
             </a>
             <ul class="sub-list" id="hotel-list">
-	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>객실</a></li>
+	            <li class="sub"><a href="room"><span data-feather="chevron-right"></span>객실</a></li>
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>레스토랑</a></li>
-	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>부대시설</a></li>
+	            <!-- <li class="sub"><a href=""><span data-feather="chevron-right"></span>부대시설</a></li> -->
             </ul>
           </li>
           <li class="nav-item">
@@ -89,12 +89,8 @@
               매출현황
             </a>
            	<ul class="sub-list" id="sell-list">
-              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>총매출</a></li>
-              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>서울점</a></li>
-              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>제주점</a></li>
-              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>부산점</a></li>
-              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>광주점</a></li>
-              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>강릉점</a></li>
+              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>지역별</a></li>
+              	<li class="sub"><a href=""><span data-feather="chevron-right"></span>기간별</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -103,7 +99,7 @@
               캘린더(근무스케쥴표)
             </a>
           </li>
-          <li class="nav-item">
+  <!--         <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="edit"></span>
               todo
@@ -132,7 +128,7 @@
               <span data-feather="message-square"></span>
               메신저
             </a>
-          </li>
+          </li> -->
         </ul>
 
         <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
@@ -153,7 +149,7 @@
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>직원 근태 관리</a></li>
             </ul>
           </li>
-          <li class="nav-item">
+ <!--          <li class="nav-item">
             <a class="nav-link" href="#">
               <span data-feather="file-text"></span>
               전자결재
@@ -164,19 +160,7 @@
               <span data-feather="file-text"></span>
               보고서 결재
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
-            </a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -189,19 +173,19 @@
 $(function() {
 	
 	$("#rev").click(function() {
-		$("#rev-list").slideToggle('slow');
+		$("#rev-list").slideToggle('fast');
 	})
 	
 	$("#sell").click(function() {
-		$("#sell-list").slideToggle('slow');
+		$("#sell-list").slideToggle('fast');
 	})
 	
 	$("#hotel").click(function() {
-		$("#hotel-list").slideToggle('slow');
+		$("#hotel-list").slideToggle('fast');
 	})
 	
 	$("#emp").click(function() {
-		$("#emp-list").slideToggle('slow');
+		$("#emp-list").slideToggle('fast');
 	})
 	
 })

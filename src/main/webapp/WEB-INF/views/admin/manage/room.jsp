@@ -270,8 +270,8 @@
 <div class="container-fluid">
 	<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 pb-3">
 		<p id="keymap">
-			<span data-feather="monitor"></span>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span data-feather="home"></span>
-			&nbsp;<strong style="font-size:13px;">객실 예약현황</strong>
+			<i class="bi bi-building" style="font-weight:bold; font-size:16px;"></i></span>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span data-feather="home"></span>
+			&nbsp;<strong style="font-size:13px;">객실 관리</strong>
 		</p>
 		<!-- 조건설정하는 헤드부분 -->
 		<div class="row" id="title">
@@ -407,37 +407,21 @@
 							</tr>
 						</thead>
 						<tbody id="body">
-							<c:forEach var="roomRev" items="${roomRevs }">
-								<tr id="${roomRev.no }">
+							<c:forEach var="room" items="${rooms }">
+								<tr id="${room.id }">
 									<th scope="row">
 										<label class="form-check-label" for="flexCheckDefault">
-											<input type="checkbox" name="checkedNo" value="${roomRev.no }"style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">
+											<input type="checkbox" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">
 										</label>
 									</th>
-									<td>${roomRev.no }</td>
-									<td><a href="">${roomRev.user.name }</a><small class="d-block">${roomRev.user.tel }</small></td>
-									<td>${roomRev.room.location.name }</td>				
-									<td>${roomRev.room.no }(${roomRev.room.roomCategory.name })</td>
-									<c:choose>
-										<c:when test="${roomRev.status eq 'O'}">
-											<td style="color:RGBa(255, 56, 92, 0.7); font-weight:bold;">임박</td>
-										</c:when>	
-										<c:when test="${roomRev.status eq 'I'}">
-											<td style="color:RGBA(0, 0, 255, 0.6); font-weight:bold;">체크인</td>
-										</c:when>
-										<c:when test="${roomRev.status eq 'T'}">
-											<td style="font-weight:bold;">체크아웃</td>
-										</c:when>
-										<c:when test="${roomRev.status eq 'R'}">
-											<td style="color:RGBa(0, 128, 128, 0.7); font-weight:bold;">예약중</td>
-										</c:when>
-										<c:when test="${roomRev.status eq 'D'}">
-											<td>예약취소</td>
-										</c:when>							
-									</c:choose>						
-									<td><fmt:formatDate value="${roomRev.checkinTime }" pattern="yyyy-MM-dd" /></td>
-									<td><fmt:formatDate value="${roomRev.checkoutTime }" pattern="yyyy-MM-dd" /></td>
-									<td><button type="button" class="btn btn-table" id="btn-table-${roomRev.no }" data-tag="${roomRev.no }"><i class="bi bi-box-arrow-in-right"></i></button></td>
+									<td>${room.id }</td>
+									<td><a href="">${room.name }</a><small class="d-block">${room.roomCategory.name }</small></td>
+									<td>${room.location.name }</td>				
+									<td>${room.no }(${room.roomCategory.name })</td>						
+									<td>${room.rev }</td>
+									<%-- <td><fmt:formatDate value="${roomRev.checkinTime }" pattern="yyyy-MM-dd" /></td>
+									<td><fmt:formatDate value="${roomRev.checkoutTime }" pattern="yyyy-MM-dd" /></td> --%>
+									<td><button type="button" class="btn btn-table" id="btn-table-${room.id}" data-tag="${room.id }"><i class="bi bi-box-arrow-in-right"></i></button></td>
 								</tr>
 							</c:forEach> 
 						</tbody>
@@ -456,7 +440,7 @@
 				      </a>
 				    </li>
 				    <c:forEach var="pageNo" begin="${pagination.beginPage}" end="${pagination.endPage}">		
-					    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" id="page-${pageNo }" data-tag="${pageNo }" ><a class="page-link" href="roomrev?page=${pageNo }">${pageNo }</a></li>
+					    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" id="page-${pageNo }" ><a class="page-link" href="roomrev?page=${pageNo }">${pageNo }</a></li>
 				    </c:forEach>
 				    <li class="page-item">
 				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="roomrev?page=${pagination.currentPage + 1}" aria-label="Next">
@@ -572,35 +556,6 @@
 <script>
 $(function() {
 	
-	// 선택삭제 클릭
-	$("#delete").on("click", function() {
-		
-		let roomRevNo = $(":checkbox[name=checkedNo]:checked");
-		let roomRevNoLength = roomRevNo.length;
-		if (roomRevNoLength == 0) {
-			alert("선택항목을 하나이상 선택하세요");
-			return false;
-		}
-		deleteChecked(roomRevNo) 
-		
-		let currentPage = $(".pagination .active").attr("data-tag");
-		console.log(currentPage);
-		filterRev(currentPage);  
-	})
-	
-	// 선택삭제 ajax
-	function deleteChecked(revNo) {
-		let queryString = '';
-		$(":checkbox[name=checkedNo]:checked").each(function(e){
-		       if (e == 0) {
-		    	   queryString += "revNo=" + $(this).val(); 
-		       }
-				queryString += "&revNo=" + $(this).val();
-		 	 })
-		$.getJSON("/admin/roomrev/delete", queryString)
-		
-	}
-	
 	// 예약상세 클릭
 	$("#body").on("click",".btn-table", function() {
 		let roomRevNo= $(this).attr("data-tag");
@@ -698,6 +653,7 @@ $(function() {
 					}); 
 	}
 	
+	
 	// 숙박기간(모달)
 	/* let input = $("#checkin-modal");
 	let flat = 	flatpickr(input, {
@@ -789,32 +745,20 @@ $(function() {
 						content +='<tr>';
 						content +='	 <th scope="row">';
 						content +='		 <label class="form-check-label" for="flexCheckDefault">'; 
-						content +='		 	 <input type="checkbox" name="checkedNo" value="'+ rev.no +'" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">';
+						content +='		 	 <input type="checkbox" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">';
 						content +='		 </label>';
 						content +='	 </th>';
 						content +='	 <td>'+ rev.no +'</td>';
 						content +='	 <td><a href="">'+ rev.user.name +'</a><small class="d-block">'+ rev.user.tel +'</small></td>';
 						content +='	 <td>'+ rev.room.location.name +'</td>';				
 						content +='	 <td>'+ rev.room.no +'('+ rev.room.roomCategory.name +')</td>';
-						
-						if (rev.status == 'O') {
-							content +='	 <td style="color:RGBa(255, 56, 92, 0.7); font-weight:bold;">임박</td>';							
-						} else if (rev.status == 'I'){						
-							content +='	 <td style="color:RGBA(0, 0, 255, 0.6); font-weight:bold;">체크인</td>';
-						} else if (rev.status == 'T'){						
-							content +='	 <td style="font-weight:bold;">체크아웃</td>';
-						} else if (rev.status == 'D'){						
-							content +='	 <td>예약취소</td>';
-						} else {						
-							content +='	 <td style="color:RGBa(0, 128, 128, 0.7); font-weight:bold;">예약중</td>';
-						}
+						content +='	 <td>'+ rev.status +'</td>';
 						content +='	 <td>'+ rev.checkinTime +'</td>';
 						content +='	 <td>'+ rev.checkoutTime +'</td>';
 						content +='	 <td><button type="button" class="btn btn-table" id="btn-table-'+rev.no+'" data-tag="'+rev.no+'"><i class="bi bi-box-arrow-in-right"></i></button></td>';
 						content +='</tr>';
 						
 					$body.append(content);
-					
 				})
 				let content = '';
 					content +='<div class="col-3">';

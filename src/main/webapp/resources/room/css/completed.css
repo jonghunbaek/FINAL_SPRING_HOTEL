@@ -1,0 +1,336 @@
+@charset "UTF-8";
+
+html a {
+	text-decoration: none;
+	color: #74522ead
+}
+
+.contain .container {
+	margin-top: 60px;
+	border: 1px solid orange;
+	height: 1000px;
+	min-width: 1150px;
+	max-width: 1150px;
+}
+
+.contain .container .rev-step {
+	text-align: center;
+	padding-bottom: 35px;
+	border-bottom: 2px #7b6f4bf2 solid;
+}
+
+#form-rev .rev-main-search {
+	display: flex;
+	padding-inline: 20px;
+	height: 60px;
+	margin-top: 20px;
+}
+
+/* form2 */
+
+/* 정보입력 */
+.que1 {
+	font-weight: bold;
+	position: relative;
+	padding: 17px 0;
+	cursor: pointer;
+	font-size: 18px;
+	border-bottom: 1px solid #dddddd;
+}
+
+
+.que1.on>span {
+	font-weight: bold;
+}
+
+.anw1 {
+	font-size: 14px;
+}
+
+.anw1::before {
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	color: #666;
+	margin: 0 5px;
+}
+
+.arrow-wrap1 {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translate(0, -50%);
+}
+
+.que1 .arrow-top1 {
+	display: block;
+    color: #41464b;
+	font-weight: 300;
+	font-size: 13px;
+}
+
+/* 고객 정보 */
+.c-info-title, .ckin-title, .request-title {
+	font-size :16px;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+
+.t-box {
+	column-gap: 10px;
+}
+.option-c {
+	row-gap: 15px;
+}
+
+.count {
+	column-gap: 20px;
+}
+
+.count a {
+	margin-inline: 20px;
+}
+/* Accordion_wrap2 */
+/*체크인 예정시간*/
+.que2:first-child {
+	border-top: 1px solid #dddddd;
+}
+
+.que2 {
+	font-weight: bold;
+	position: relative;
+	padding: 17px 0;
+	cursor: pointer;
+	font-size: 18px;
+	border-bottom: 1px solid #dddddd;
+}
+
+.que2::before {
+	display: inline-block;
+	font-size: 15px;
+	color: #006633;
+	margin: 0 5px;
+}
+
+.que2.on>span {
+	font-weight: bold;
+}
+
+.anw2 {
+	display: none;
+	overflow: hidden;
+	font-size: 16px;
+	padding: 27px 0;
+}
+
+.anw2::before {
+	display: inline-block;
+	/* content: 'A'; */
+	font-size: 14px;
+	font-weight: bold;
+	color: #666;
+	margin: 0 5px;
+}
+
+.arrow-wrap2 {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translate(0, -50%);
+}
+
+.que2 .arrow-top2 {
+	display: none;
+	color: gray;
+	font-weight: 100;
+	font-size: 13px;
+}
+
+.que2 .arrow-bottom2 {
+	display: block;
+	color: gray;
+	font-weight: 100;
+	font-size: 13px;
+}
+
+.que2.on .arrow-bottom2 {
+	display: none;
+	color: gray;
+	font-weight: 100;
+	font-size: 13px;
+}
+
+.que2.on .arrow-top2 {
+	display: block;
+	color: gray;
+	font-weight: 100;
+	font-size: 13px;
+}
+
+.text-box .text-gray {
+	margin-top: 7px;
+}
+
+/* 추가 요청사항*/
+.request-form {
+	width: 520px;
+	height: 100px;
+	color: #dee2e6;
+}
+
+/* total zone */
+.que3:first-child {
+	border-top: 1px solid black;
+}
+
+.que3 {
+	position: relative;
+	padding: 17px 0;
+	cursor: pointer;
+	font-size: 17px;
+	border-bottom: 1px solid #dddddd;
+	display: flex;
+	justify-content: center;
+	column-gap: 50px;
+}
+
+.que3.on {
+	position: relative;
+	padding: 17px 0;
+	cursor: pointer;
+	font-size: 17px;
+    border: 1px solid #dddddd;
+    border-top: none;
+	display: flex;
+	justify-content: center;
+	column-gap: 50px;
+}
+
+.que3::before {
+	display: inline-block;
+	font-size: 17px;
+	color: #006633;
+	margin: 0 5px;
+}
+
+.total-text {
+	display: grid;
+	border-left: 0.01em solid #8080809e;
+	margin-right: 150px;
+	padding-left: 10px;
+}
+
+.total-text .text2 {
+	color: gray;
+	font-size: 12px;
+}
+
+.que3 {
+	font-weight: bold;
+}
+
+.anw3 {
+	display: none;
+	overflow: hidden;
+	font-size: 17px;
+	background-color: #f4f4f2;
+	padding: 20px 0;
+}
+/* ////// */
+.anw3::before {
+	display: flex;
+	font-size: 17px;
+	font-weight: bold;
+	color: #666;
+	margin: 0 5px;
+}
+
+.arrow-wrap3 {
+	top: 50%;
+	right: 10px;
+	color: gray;
+	font-size: 13px;
+}
+
+.que3 .arrow-top3 {
+	display: none;
+}
+
+.que3 .arrow-bottom3 {
+	display: block;
+	margin-top: 30px;
+}
+
+.que3.on .arrow-bottom3 {
+	display: none;
+}
+
+.que3.on .arrow-top3 {
+	display: block;
+}
+/* left */
+.total-info img {
+	width: 235px;
+	height: 130px;
+}
+
+.total-title {
+	font-size: 17px;
+	font-weight: 600;
+}
+
+.total-title img {
+	margin-bottom: 20px;
+}
+
+.sub-title {
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.total-sub>span {
+	font-size: 15px;
+	font-weight: 300;
+}
+
+.total-info {
+	margin-bottom: 100px;
+}
+
+.total-info img {
+	margin-bottom: 20px;
+}
+
+.total-sub-a {
+	margin-block: 20px;
+	font-size: 15px;
+	font-weight: 300;
+}
+
+.total-sub2-box {
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.sub2-price {
+	font-size: 15px;
+	font-weight: 300;
+}
+/* right */
+.total-title-box {
+	display: flex;
+	justify-content: space-between;
+}
+
+.total-title-box, .total-sub-box, .total-sub2-box {
+	border-bottom: 0.01em solid gray;
+	padding-block: 10px;
+}
+
+.total-detail span {
+	font-size: 15px;
+}
+/**/
+.gray-box ul>li{
+	column-gap:10px
+}

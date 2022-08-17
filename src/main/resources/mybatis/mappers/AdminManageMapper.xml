@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.mapper.AdminManageMapper">
+
+	<resultMap type="Room" id="RoomResultMap">
+		<id column="room_id" property="id"/>
+		<result column="room_no" property="no"/>
+		<result column="room_name" property="name"/>
+		<result column="room_price" property="price"/>
+		<result column="room_discount_price" property="discountPrice"/>
+		<result column="room_rev" property="rev"/>
+		<result column="room_checkin_period" property="checkinPeriod"/>
+		<result column="room_image" property="image"/>
+		<association property="location" column="location_no" select="com.sh.mapper.DiningMapper.getLocationByNo"></association>
+		<association property="roomCategory" column="room_category_no" select="com.sh.mapper.RoomMapper.getRoomCategoryByNo"></association>
+	</resultMap>
+	
+	<!-- int getRoomManageTotalRows(); -->
+	<select id="getRoomManageTotalRows" resultType="int">
+	 	select count(*)
+	 	from sh_room
+	</select>
+	<!-- List<RoomRev> getAllRoomManageList(Pagination pagination); -->
+	<select id="getAllRoomManageList" parameterType="Pagination" resultMap="RoomResultMap">
+		select *
+		from (select row_number() over (order by room_id desc) row_number, R.*
+			  from sh_room R)
+	    where row_number &gt;= #{beginIndex} and row_number &lt;= #{endIndex}
+	</select>
+	
+</mapper>

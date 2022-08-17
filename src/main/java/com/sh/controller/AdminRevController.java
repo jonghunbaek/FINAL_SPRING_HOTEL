@@ -45,8 +45,6 @@ public class AdminRevController {
 	@GetMapping(path = "/roomrev/filter")
 	@ResponseBody
 	public Map<String, Object> Filter(AdminRoomRevCriteria adminRoomRevCriteria) {
-		
-		System.out.println("===============================test"+adminRoomRevCriteria.getCheckinPeriod());
 		return adminRevService.filterRev(adminRoomRevCriteria);
 	}
 	
@@ -59,8 +57,27 @@ public class AdminRevController {
 	
 	// 객실 예약 상세정보 수정
 	@PostMapping(path = "/roomrev/updateRoomRevDetail")
+	@ResponseBody
 	public void updateRoomRevDetail(AdminRoomRevUpdateForm adminRoomRevUpdateForm) {
 		System.out.println(adminRoomRevUpdateForm.getAdult());
 		adminRevService.updateRoomRevDetailByNo(adminRoomRevUpdateForm);
 	}
+	
+	// 객실 예약 상세정보 체크인 기간 수정시 선택불가 기간 조회
+	@GetMapping(path = "/roomrev/checkPeriod")
+	@ResponseBody
+	public List<RoomRev> checkPeriod(String revNo) {
+		return adminRevService.getPeriodByNo(Integer.parseInt(revNo));
+	}
+	
+	// 체크된 예약정보 삭제
+	@GetMapping(path = "/roomrev/delete")
+	@ResponseBody
+	public void deleteChecked(@RequestParam(name = "revNo") List<String> revNos) {
+		for(int i=0; i<revNos.size(); i++) {
+			System.out.println("test-------------------" + revNos.get(i));
+		}
+		adminRevService.deleteCheckedByNo(revNos);
+	}
+	
 }

@@ -43,4 +43,10 @@ public class RoomController {
 		return "room/roomRev3";
 	}
 	
+	@GetMapping(path="/completed")
+	public String completed() {
+		
+		return "room/completed";
+	}
+	
 }

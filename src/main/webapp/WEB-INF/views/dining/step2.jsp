@@ -76,7 +76,7 @@
 	<div id="must-require">
 		<p>표시 필수 입력사항</p>
 	</div>
-	<form id="form-select" method="get" action="step3">
+	<form id="form-select" method="post" action="step3">
 		<input type="hidden" name="diningNo"/>
 		<div id="seat-choice">
 			<p><strong>좌석 유형 선택</strong></p>
@@ -116,6 +116,7 @@
 					<span id="childScore">0</span>
 					<a href="#" id="increaseChild"><i class="bi bi-plus-lg"></i></a>
 					<input type="hidden" name="child"/>
+					<input type="hidden" name="isMember"/>
 				</div>
 					<div class="col-1">
 					<p>유아</p>
@@ -240,15 +241,34 @@ $(function() {
 	$(":input[name='diningNo']").val(diningNo);
 	$(":input[name=loginDiningNo]").val(diningNo);
 	
+	// 폼제출시 검증
+	$("#form-select").submit(function(){
+		let $baby = $(":input[name=baby]");
+		let $adult = $(":input[name=adult]");
+		let $child = $(":input[name=child]");
+		if(!$adult.val()){
+			$adult.val(0);
+		}
+		if(!$child.val()){
+			$child.val(0);
+		}
+		if(!$baby.val()){
+			$baby.val(0);
+		}
+		
+	});
+	
 	// 비회원 예약버튼 클릭시
 	$("#btn-non-member-rev").click(function(){
-		
+		$(":input[name=isMember]").val("N");
+		$("#form-select").submit();
 	});	
 	
 	// 회원 예약버튼 클릭시
 	$("#btn-member-rev").click(function() {
 		$.getJSON('logInCheck').done(function(result){
 			if(result.isLogined) {
+				$(":input[name=isMember]").val("Y");
 				$("#form-select").submit();
 			}else {
 				logInModal.show();
@@ -257,7 +277,7 @@ $(function() {
 	});
 	
 	// 테이블 , 룸 변경시
-	$("#:radio[name=seat]").change(function(e) {
+	$(":radio[name=seat]").change(function(e) {
 		if((!$("#date-time-select-form").hasClass('d-none'))){
 			e.preventDefault();
 			seatModal.show();
@@ -284,9 +304,6 @@ $(function() {
 		/* $("select[name=visitTime] option:eq(0)").prop("selected", true); */
 	});
 	
-	$("#form-select").submit(function(){
-		
-	});
 
 	// 식사 타임 변경시
 	$("#:radio[name=mealTime]").change(function(){
@@ -333,7 +350,7 @@ $(function() {
 			return;
 		}
 		if(checkedSeatVal === 'table') {
-			if(totalNum < 2) {
+			if(totalNum < 2) { 
 				alert("테이블은 최소인원이 2명이상이어야 합니다.");
 				return;
 			}

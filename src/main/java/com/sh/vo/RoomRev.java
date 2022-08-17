@@ -37,4 +37,6 @@ public class RoomRev {
 	private Date updatedDate;
 	private User user;
 	private Room room;
+
+	private String optionCheckinTime;
 }

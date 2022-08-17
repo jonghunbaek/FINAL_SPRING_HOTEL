@@ -93,6 +93,28 @@ public class AdminRevService {
 
 	public void updateRoomRevDetailByNo(AdminRoomRevUpdateForm adminRoomRevUpdateForm) {
 		
+		String[] period = adminRoomRevUpdateForm.getCheckinPeriod().split("~");
+		List<String> periodTrim = new ArrayList<String>();
+		
+		for (int i=0; i<period.length; i++) {
+			periodTrim.add(period[i].trim());
+		}
+		
+		adminRoomRevUpdateForm.setCheckinDate(periodTrim.get(0));
+		adminRoomRevUpdateForm.setCheckoutDate(periodTrim.get(1));
+		adminRoomRevUpdateForm.setPriceInt(adminRoomRevUpdateForm.getIntPrice());
+		
 		adminRevMapper.updateRoomRevDetailByNo(adminRoomRevUpdateForm);	
+	}
+
+	public List<RoomRev> getPeriodByNo(int revNo) {	
+		return adminRevMapper.getPeriodByNo(revNo);
+	}
+
+	public void deleteCheckedByNo(List<String> revNos) {
+		for (String revNo : revNos) {
+			adminRevMapper.deleteCheckedByNo(revNo);			
+		}
+
 	}
 }
