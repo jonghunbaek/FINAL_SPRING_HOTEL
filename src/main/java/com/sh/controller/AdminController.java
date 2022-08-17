@@ -81,8 +81,12 @@ public class AdminController {
 	@PostMapping(path = "/login")
 	public String login(@RequestParam("email") String email, @RequestParam("password") String password, Model model) {
 		
+		try {
 			Admin admin = adminService.login(email, password);
 			model.addAttribute("LOGIN_ADMIN", admin);
+		} catch (ApplicationException e) {
+			return "redirect:/admin/login?fail=invalid";
+		}
 
 		return "admin/main";
 	}
