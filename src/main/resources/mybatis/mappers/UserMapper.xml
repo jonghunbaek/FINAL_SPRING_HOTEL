@@ -3,8 +3,8 @@
 <mapper namespace="com.sh.mapper.UserMapper">
 
 	<resultMap type="User" id="UserResultMap">
-		<id column="user_id" property="id"/>
-		<result column="user_no" property="no"/>
+		<id column="user_no" property="no"/>
+		<result column="user_id" property="id"/>
 		<result column="user_password" property="password"/>
 		<result column="user_name" property="name"/>
 		<result column="user_email" property="email"/>
@@ -17,6 +17,33 @@
 		<result column="user_updated_date" property="updatedDate"/>
 		<result column="user_point" property="point"/>
 		<result column="user_annual_stay" property="stay"/>
+		<result column="first_name" property="firstName"/>
+		<result column="last_name" property="lastName"/>
+	</resultMap>
+	<resultMap type="Grade" id="GradeResultMap">
+		<id column="grade" property="grade"/>
+		<result column="minPoint" property="minPoint"/>
+		<result column="maxPoint" property="maxPoint"/>
+		<result column="minStay" property="minStay"/>
+		<result column="maxStay" property="maxStay"/>
+		<result column="grade_discount_rate" property="discountRate"/>
+		<result column="grade_point_rate_room" property="pointRateRoom"/>
+		<result column="grade_point_rate_dn" property="pointRateDn"/>
+		<result column="grade_etc" property="etc"/>
+	</resultMap>
+	<resultMap type="UserPoint" id="PointResultMap">
+		<id column="user_point_no" property="no"/>
+		<result column="user_total_point" property="totPoint"/>
+		<result column="user_used_point" property="usedPoint"/>
+		<result column="user_available_point" property="ablePoint"/>
+		<association column="user_id"  property="user" select="com.sh.mapper.UserMapper.getUserById"></association>
+	</resultMap>
+	<resultMap type="PointHistory" id="PointHistoryResultMap">
+		<id column="point_his_no" property="no"/>
+		<result column="point_his_title" property="title"/>
+		<result column="point_his_amount" property="amount"/>
+		<result column="point_his_created_date" property="createdDate"/>
+		<association column="user_id"  property="user" select="com.sh.mapper.UserMapper.getUserById"></association>
 	</resultMap>
 	
 	<!-- User getUserByNo(int no); 관리자페이지 예약현황에서 고객정보 가져오기위한 용도-->
@@ -78,4 +105,39 @@
 			user_updated_date = sysdate
 		where user_id = #{id}
 	</update>
+	
+	<!-- 해당유저 등급정보 조회 -->
+	<select id="getUserGradeByUserId" parameterType="String" resultMap="GradeResultMap">
+		select g.grade, g.min_point, g.max_point, g.min_stay, g.max_stay, g.grade_discount_rate,
+			   g.grade_point_rate_room, g.grade_point_rate_dn, g.grade_etc
+		from sh_users u, sh_grade g 
+		where u.grade = g.grade
+		and u.user_id = #{id}
+	</select>
+	
+	<!-- 해당유저 포인트정보 조회 -->
+	<select id="getUserPointByUserNo" parameterType="String" resultMap="PointResultMap">
+		select p.user_point_no, p.user_total_point, p.user_used_point, p.user_available_point
+		from sh_users u, sh_user_points p
+		where u.user_no = p.user_no
+		and u.user_id = #{no}
+	</select>
+	
+	<!-- 해당유저 포인트 히스토리 내역 조회 -->
+	<select id="getUserPointHistoryByUserNo" parameterType="String" resultMap="PointHistoryResultMap">
+		select h.point_his_no, h.point_his_title, h.point_his_amount, h.point_his_created_date
+		from sh_users u, sh_user_points_his h
+		where u.user_no, h.user_no 
+		and h.user_no = #{no}
+	</select>
+	
+	<!-- 프로필 수정 -->
+	<update id="modifyUser" parameterType="User">
+		update sh_users
+		set 
+			user_email = #{email},
+			user_tel = #{tel}
+		where user_id = #{id}
+	</update>
+	
 </mapper>

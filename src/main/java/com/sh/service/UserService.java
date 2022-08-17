@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 
 import com.sh.exception.ApplicationException;
 import com.sh.mapper.UserMapper;
+import com.sh.vo.Grade;
+import com.sh.vo.PointHistory;
 import com.sh.vo.User;
+import com.sh.vo.UserPoint;
+import com.sh.web.form.UserModifyForm;
 import com.sh.web.form.UserRegisterForm;
 
 import lombok.extern.slf4j.Slf4j;
@@ -63,7 +67,6 @@ public class UserService {
 		return savedUser;
 	}
 
-
 	/** 회원가입
 	 * @param userRegisterForm
 	 */
@@ -98,4 +101,58 @@ public class UserService {
 		System.out.println("check:" + check);
 		return check;
 	}
+	
+	/**
+	 * 등급정보 조회
+	 * @param id
+	 * @return 등급정보
+	 */
+	public Grade getUserGrade(String id) {
+		return userMapper.getUserGradeByUserId(id);
+	}
+	
+	/**
+	 * 포인트 정보 조회
+	 * @param userNo
+	 * @return 포인트정보
+	 */
+	public UserPoint getUserPoint(int userNo) {
+		return userMapper.getUserPointByUserNo(userNo);
+	}
+	
+	/**
+	 * 포인트 이력 조회
+	 * @param userNo
+	 * @return 포인트이력
+	 */
+	public PointHistory getPointHistory(int userNo) {
+		return userMapper.getUserPointHistoryByUserNo(userNo);
+	}
+	
+	/**
+	 * 프로필 수정 비밀번호 확인
+	 * @param id
+	 * @param password
+	 * @return 유저정보
+	 */
+	public User checkPassword(int userNo, String password) {
+		User user = userMapper.getUserByNo(userNo);
+		if (!user.getPassword().equals(password)) {
+			throw new ApplicationException("비밀번호가 올바르지 않습니다.");
+		}
+		return user;
+	}
+	
+	/**
+	 * 프로필 수정 유저정보 업데이트
+	 * @param user
+	 * @return 유저정보 업데이트
+	 */
+	public void modifyUserInfo(UserModifyForm userModifyForm) {
+		User user = new User();
+		user.setEmail(userModifyForm.getEmail());
+		user.setTel(userModifyForm.getTel());
+		userMapper.modifyUser(user);
+	}
+	
 }
