@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sh.mapper.AdminRevMapper">
 
+	<!-- void deleteCheckedByNo(String revNo); -->
+	<delete id="deleteCheckedByNo" parameterType="string">
+		delete from sh_room_rev
+		where room_rev_no = #{revNo}
+	</delete>
+
+	<!-- void updateRoomRevDetailByNo(RoomRev roomRev); -->
+	<update id="updateRoomRevDetailByNo" parameterType="com.sh.web.form.AdminRoomRevUpdateForm">
+		update sh_room_rev
+		set
+			room_rev_adult = to_number(#{adult}),
+			room_rev_child = to_number(#{child}),
+			room_rev_total_price = #{priceInt},
+			room_rev_checkin_time = to_date(#{checkinDate}),
+			room_rev_checkout_time = to_date(#{checkoutDate}),
+			room_rev_request = #{request},
+			room_rev_status = #{status},
+			room_rev_option_checkin_time = #{timeOption},
+			room_rev_updated_date = sysdate
+		where room_rev_no = to_number(#{no})	
+	</update>
+
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>
 		<result column="room_rev_adult" property="adult"/>
@@ -13,26 +35,21 @@
 		<result column="room_rev_checkout_time" property="checkoutTime"/>
 		<result column="room_rev_request" property="request"/>
 		<result column="room_rev_status" property="status"/>
+		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
 		<result column="room_rev_created_date" property="createdDate"/>
 		<result column="room_rev_updated_date" property="updatedDate"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
 	</resultMap>
 	
-	<!-- void updateRoomRevDetailByNo(RoomRev roomRev); -->
-	<update id="updateRoomRevDetailByNo" parameterType="com.sh.web.form.AdminRoomRevUpdateForm">
-		update sh_room_rev
-		set
-			room_rev_adult = to_number(#{adult}),
-			room_rev_child = to_number(#{child}),
-			room_rev_total_price = to_number(#{price}),
-			room_rev_checkin_time = to_date(#{checkinDate}),
-			room_rev_checkout_time = to_date(#{checkoutDate}),
-			room_rev_request = #{request},
-			room_rev_status = #{status},
-			room_rev_updated_date = sysdate
-		where room_rev_no = to_number(#{no})	
-	</update>
+	<!-- List<RoomRev> getPeriodByNo(int revNo); -->
+	<select id="getPeriodByNo" parameterType="int" resultMap="RoomRevResultMap">
+		select *
+		from sh_room_rev
+		where room_id = (select room_id
+                 		 from sh_room_rev
+                 		 where room_rev_no = #{revNo})
+	</select>
 
 	<!-- RoomRev getRoomRevDetailByNo(int no); -->
 	<select id="getRoomRevDetailByNo" parameterType="int" resultMap="RoomRevResultMap">
