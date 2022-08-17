@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sh.mapper.DiningMapper;
+import com.sh.vo.Allergy;
 import com.sh.vo.Dn;
 import com.sh.vo.DnMealTime;
 import com.sh.vo.DnRev;
@@ -51,6 +52,10 @@ public class DiningService {
 	
 	public List<String> getTimeByParaMeters(String week, int diningNo, String mealTime) {
 		return diningMapper.getTimeByParaMeters(week, diningNo, mealTime);
+	}
+	
+	public List<Allergy> getAllAllergies() {
+		return diningMapper.getAllAllergies();
 	}
 
 }
