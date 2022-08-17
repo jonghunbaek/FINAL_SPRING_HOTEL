@@ -631,3 +631,14 @@ border: 2px solid lime;
 .total-detail span {
 	font-size: 15px;
 }
+
+/* 검색 on/off */
+.no2, .no3, .no4{
+	display: none;
+}
+	
+	
+	
+	
+	
+	

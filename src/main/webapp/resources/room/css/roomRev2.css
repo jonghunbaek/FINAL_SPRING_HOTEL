@@ -28,7 +28,7 @@ html a {
 
 /* form2 */
 
-/* 정보입력 */
+/* 객실 */
 .que1 {
 	font-weight: bold;
 	position: relative;
@@ -38,12 +38,19 @@ html a {
 	border-bottom: 1px solid #dddddd;
 }
 
+.que1::before {
+	display: inline-block;
+	font-size: 15px;
+	color: #006633;
+	margin: 0 5px;
+}
 
 .que1.on>span {
 	font-weight: bold;
 }
 
 .anw1 {
+	overflow: hidden;
 	font-size: 14px;
 }
 
@@ -63,22 +70,39 @@ html a {
 }
 
 .que1 .arrow-top1 {
-	display: block;
-    color: #41464b;
-	font-weight: 300;
+	display: none;
+	color: gray;
+	font-weight: 100;
 	font-size: 13px;
 }
 
-/* 고객 정보 */
-.c-info-title, .ckin-title, .request-title {
-	font-size :16px;
+.que1 .arrow-bottom1 {
+	display: block;
+	color: gray;
+	font-weight: 100;
+	font-size: 13px;
+}
+
+.que1.on .arrow-bottom1 {
+	display: none;
+	color: gray;
+	font-weight: 100;
+	font-size: 13px;
+}
+
+.que1.on .arrow-top1 {
+	display: block;
+	color: gray;
+	font-weight: 100;
+	font-size: 13px;
+}
+
+.option-title, .ckin-title, .request-title {
+	font-size: 16px;
 	font-weight: 700;
 	margin-bottom: 20px;
 }
 
-.t-box {
-	column-gap: 10px;
-}
 .option-c {
 	row-gap: 15px;
 }
@@ -175,7 +199,7 @@ html a {
 .request-form {
 	width: 520px;
 	height: 100px;
-	color: #dee2e6;
+	/* color: #dee2e6; */
 }
 
 /* total zone */
@@ -189,18 +213,6 @@ html a {
 	cursor: pointer;
 	font-size: 17px;
 	border-bottom: 1px solid #dddddd;
-	display: flex;
-	justify-content: center;
-	column-gap: 50px;
-}
-
-.que3.on {
-	position: relative;
-	padding: 17px 0;
-	cursor: pointer;
-	font-size: 17px;
-    border: 1px solid #dddddd;
-    border-top: none;
 	display: flex;
 	justify-content: center;
 	column-gap: 50px;
@@ -225,8 +237,9 @@ html a {
 	font-size: 12px;
 }
 
-.que3 {
+.que3.on>span {
 	font-weight: bold;
+	color: #006633;
 }
 
 .anw3 {
