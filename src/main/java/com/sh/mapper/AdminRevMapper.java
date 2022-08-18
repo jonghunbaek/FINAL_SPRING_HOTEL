@@ -33,6 +33,9 @@ public interface AdminRevMapper {
 	// 선택된 예약정보 삭제
 	void deleteCheckedByNo(String revNo);
 
+	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
+	void changeRevStatus();
+
 
 	
 }

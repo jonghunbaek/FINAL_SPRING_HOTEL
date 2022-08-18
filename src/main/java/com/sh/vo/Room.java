@@ -20,6 +20,7 @@ public class Room {
 	private String rev;
 	private Date checkinPeriod;
 	private String image;
+	private String request;
 	private Location location;
 	private RoomCategory roomCategory; 
 

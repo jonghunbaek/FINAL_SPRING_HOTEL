@@ -123,7 +123,7 @@
 		box-shadow: rgba(30, 22, 54, 0.4) 0 80px 0px 2px inset;
 	} 
 	
-	#delete {
+	#fix {
 		position:relative;
 		top:8px;
 		left:5px;
@@ -135,14 +135,14 @@
 		width: 100%;
 	}
 	
-	#delete:hover {
+	#fix:hover {
 		color:RGB(255, 56, 92);
 		font-weight:bold;
 		border: none !important;
 		box-shadow: rgba(220, 220, 220, 0.3) 0 80px 0px 2px inset;
 	} 
 	
-	#add {
+	#complete {
 		position:relative;
 		top:8px;
 		left:5px;
@@ -154,7 +154,7 @@
 		width: 100%;
 	}
 	
-	#add:hover {
+	#complete:hover {
 		color:#008080;
 		font-weight:bold;
 		border: none !important;
@@ -169,18 +169,18 @@
 		color: rgba(30, 22, 54, 0.6);
 	} 
 	
-	#filter-third-1 div label {
+    #filter-third-1 div label {
 		margin:0;
-		font-size:17px;
-		width: 35%;
-		height: 60%;
+		font-size:12px;
+		width: 45%;
+		height: 25%;
 		box-shadow: rgba(255, 255, 255, 0.4) 0 0px 0px 2px inset;
 	}
 	
 	#filter-third-1 div label:hover {
 		color: rgba(255, 255, 255, 1);
 		box-shadow: rgba(30, 22, 54, 0.4) 0 80px 0px 2px inset;
-	} 
+	}  
 	
 	#filter-third-2 div label {
 		margin:0;
@@ -262,7 +262,7 @@
 	}
 
 </style>
-<title>객실 예약현황</title>
+<title>객실 관리</title>
 </head>
 <body>
 <c:set var="menu" value="roomrev"/>
@@ -276,10 +276,10 @@
 		<!-- 조건설정하는 헤드부분 -->
 		<div class="row" id="title">
 			<div class="col-1">
-				<button class="btn" type="button" id="delete" name="delete">선택삭제</button>
-			</div> 
+				<button class="btn" type="button" id="fix" name="delete">보수요청</button>
+			</div>
 			<div class="col-1">
-				<button class="btn" id="add" name="delete">예약추가</button>
+				<button class="btn" id="complete" name="complete">보수완료</button>
 			</div>
 			<div class="col-9">
 			</div>
@@ -288,23 +288,8 @@
 			    <i class="bi bi-gear"></i>
 			  </button>
 			  <input type="hidden" name="page" />
-			  <form class="dropdown-menu" aria-labelledby="dropdownMenuClickableOutside" id="filter-rev-form" style="width: 320%; height:830%;">
-			  	<div class="row" id="filter-title">예약 필터</div><hr/>
-				<div class="row justify-content-center gy-1 px-3">
-					<div class="col-4">
-						<select class="form-select form-select-sm" id="search-condition" name="search">
-							<option value="" selected disabled>검색조건</option>
-							<option value="name">고객명</option>
-							<option value="revNo">예약번호</option>
-						</select>
-					</div>
-					<div class="col-6">
-						<input class="form-control form-control-dark" id="search-text" type="text" name="keyword" placeholder="검색어를 입력하세요" aria-label="Search" />
-					</div>
-					<div class="col-2"> 
-						<button type="button" id="search-keyword" class="btn" style="font-size:13px; width: 100%;"><i class="bi bi-search"></i></button>
-					</div>	
-				</div><hr/>
+			  <form class="dropdown-menu" aria-labelledby="dropdownMenuClickableOutside" id="filter-room-form" style="width: 320%; height:550%;">
+			  	<div class="row" id="filter-title">객실 필터</div><hr/>
 			  	<div class="row justify-content-center gy-1 px-3" id="filter-first">
 			  		<div class="col" id="filter-first-1">
 				  		<label for="location-field" class="form-label">지점</label>
@@ -327,41 +312,24 @@
 						</select>
 					</div>
 					<div class="col" id="filter-first-3">
-						<label for="revStatus-field" class="form-label">예약 상태</label>
-						<select class="form-select form-select-sm" name="revStatus">
+						<label for="revStatus-field" class="form-label">객실 상태</label>
+						<select class="form-select form-select-sm" name="roomStatus">
 							<option value="" selected disabled>=====</option>
-							<option value="O" >임박</option>
-							<option value="I">체크인</option>
-							<option value="T">체크아웃</option>
-							<option value="R">예약중</option>
-							<option value="D">예약취소</option>
+							<option value="C" >숙박</option>
+							<option value="E">공실</option>
+							<option value="F">보수</option>
 						</select>
 					</div>
 			  	</div><hr/>
-			  	<div class="row justify-content-center gy-1 px-3" id="filter-second">
-			  		<div class="col" id="filter-second-1">
-			  			<label for="checkin-field" class="form-label">체크인 기간</label>
-			  			<input type="text" class="form-control" id="datepicker" name="checkinPeriod" />
-			  		</div>
-			  	</div><hr/>
 			  	<div class="row justify-content-center gy-1 px-3" id="filter-third">
 			  		<div class="col" id="filter-third-1">
-			  			<label for="checkout-field" class="form-label">예약번호순</label>
+			  			<label for="checkout-field" class="form-label">정렬</label>
 			  			<div class="row" style="padding-left:10px;">
-			  				<input type="radio" class="btn-check" name="sortRev" id="sort-rev-desc" autocomplete="off" value="desc" >
-							<label class="btn" for="sort-rev-desc"><i class="bi bi-sort-down-alt" selected></i></label>
-							<input type="radio" class="btn-check" name="sortRev" id="sort-rev-asc" autocomplete="off" value="asc">
-							<label class="btn" for="sort-rev-asc"><i class="bi bi-sort-up"></i></label>
+			  				<input type="radio" class="btn-check" name="sort" id="sort-id-desc" autocomplete="off" value="id" >
+							<label class="btn" for="sort-id-desc">아이디순</label>
+							<input type="radio" class="btn-check" name="sort" id="sort-price-desc" autocomplete="off" value="price">
+							<label class="btn" for="sort-price-desc">금액순</label>
 			  			</div>
-			  		</div>
-			  		<div class="col" id="filter-third-2">
-			  			<label for="checkout-field" class="form-label">체크인순</label>
-			  			<div class="row">
-			  				<input type="radio" class="btn-check" name="sortCheckin" id="sort-checkin-desc" autocomplete="off" value="desc">
-							<label class="btn" for="sort-checkin-desc"><i class="bi bi-sort-down-alt"></i></label>
-							<input type="radio" class="btn-check" name="sortCheckin" id="sort-checkin-asc" autocomplete="off" value="asc">
-							<label class="btn" for="sort-checkin-asc"><i class="bi bi-sort-up"></i></label>
-				  		</div>
 			  		</div>
 			  		<div class="col" id="filter-third-3">
 			  			<label for="checkout-field" class="form-label">행 개수</label>
@@ -396,14 +364,14 @@
 										<input type="checkbox" class="js-check-all" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.7;">
 									</label>
 								</th>
-								<th scope="col">예약번호</th>
-								<th scope="col">고객명</th>
+								<th scope="col">객실아이디</th>
+								<th scope="col">객실명</th>
 								<th scope="col">지점</th>
-								<th scope="col">객실번호(타입)</th>
-								<th scope="col">예약상태</th>
-								<th scope="col">체크인</th>
-								<th scope="col">체크아웃</th>
-								<th scope="col">예약상세</th>
+								<th scope="col">객실번호</th>
+								<th scope="col">객실상태</th>
+								<th scope="col">금액</th>
+								<th scope="col">할인금액</th>
+								<th scope="col">객실관리</th>
 							</tr>
 						</thead>
 						<tbody id="body">
@@ -411,17 +379,28 @@
 								<tr id="${room.id }">
 									<th scope="row">
 										<label class="form-check-label" for="flexCheckDefault">
-											<input type="checkbox" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">
+											<input type="checkbox" name="checkedNo" value="${room.id }" data-tag="${room.rev }" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">
 										</label>
 									</th>
 									<td>${room.id }</td>
-									<td><a href="">${room.name }</a><small class="d-block">${room.roomCategory.name }</small></td>
+									<td>${room.name }</td>
 									<td>${room.location.name }</td>				
-									<td>${room.no }(${room.roomCategory.name })</td>						
-									<td>${room.rev }</td>
-									<%-- <td><fmt:formatDate value="${roomRev.checkinTime }" pattern="yyyy-MM-dd" /></td>
-									<td><fmt:formatDate value="${roomRev.checkoutTime }" pattern="yyyy-MM-dd" /></td> --%>
-									<td><button type="button" class="btn btn-table" id="btn-table-${room.id}" data-tag="${room.id }"><i class="bi bi-box-arrow-in-right"></i></button></td>
+									<td>${room.no }호</td>						
+									<c:choose>
+										<c:when test="${room.rev eq 'C'}">
+											<td style="color:RGBA(0, 0, 255, 0.6); font-weight:bold;">숙박</td>
+										</c:when>	
+										<c:when test="${room.rev eq 'E'}">
+											<td style="color:gray; font-weight:bold;">공실</td>
+										</c:when>
+										<c:when test="${room.rev eq 'F'}">
+											<td style="color:RGBA(255, 56, 92, 0.7); font-weight:bold;">보수중</td>
+										</c:when>									
+									</c:choose>	
+									<td><fmt:formatNumber value="${room.price }" type="currency" /></td>
+									<td><fmt:formatNumber value="${room.discountPrice }" type="currency" /></td>
+									<td><button type="button" class="btn btn-table" id="btn-table-${room.id }" data-tag="${room.id }">
+										<i class="bi bi-box-arrow-in-right"></i></button></td>
 								</tr>
 							</c:forEach> 
 						</tbody>
@@ -435,15 +414,15 @@
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination">
 				    <li class="page-item">
-				      <a class="page-link ${pagination.currentPage eq '1' ? 'disabled' : '' }" href="roomrev?page=${pagination.currentPage - 1}" aria-label="Previous">
+				      <a class="page-link ${pagination.currentPage eq '1' ? 'disabled' : '' }" href="room?page=${pagination.currentPage - 1}" aria-label="Previous">
 				        <span aria-hidden="true">&laquo;</span>
 				      </a>
 				    </li>
 				    <c:forEach var="pageNo" begin="${pagination.beginPage}" end="${pagination.endPage}">		
-					    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" id="page-${pageNo }" ><a class="page-link" href="roomrev?page=${pageNo }">${pageNo }</a></li>
+					    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" id="page-${pageNo }" ><a class="page-link" href="room?page=${pageNo }">${pageNo }</a></li>
 				    </c:forEach>
 				    <li class="page-item">
-				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="roomrev?page=${pagination.currentPage + 1}" aria-label="Next">
+				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="room?page=${pagination.currentPage + 1}" aria-label="Next">
 				        <span aria-hidden="true">&raquo;</span>
 				      </a>
 				    </li>
@@ -453,90 +432,29 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="room-rev-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="room-manage-detail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">예약상세</h5>
+        <h5 class="modal-title" id="exampleModalLabel" style="font-weight:bold;">객실관리</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form id="detail-modal-form" method="post">
+        <form id="request-modal-form" method="post">
+          <input type="hidden" name="id" id="id-modal">
           <div class="row">
-	          <div class="col-4 mb-3">
-	            <label for="recipient-name" class="col-form-label">예약번호</label>
-	            <input type="text" class="form-control" id="revNo-modal" disabled>
-	            <input type="hidden" name="no" id="revNo-hidden" />
-	          </div>
-	          <div class="col-3 mb-3">
-	            <label for="recipient-name" class="col-form-label">객실번호</label>
-		        <input type="text" class="form-control" id="roomNo-modal" disabled><span style="position:relative; bottom: 26px; left:70px;">호</span>
-	          </div>
-	          <div class="col-4 mb-3">
-	            <label for="recipient-name" class="col-form-label">고객이름</label>
-	            <input type="text" class="form-control" id="name-modal" disabled>
-	          </div>
-          </div>
-          <div class="row">
-	          <div class="col-3 mb-3">
-	            <label for="recipient-name" class="col-form-label">성인</label>
-	            <input type="text" class="form-control" name="adult" id="adult-modal"><span style="position:relative; bottom: 26px; left:70px;">명</span>
-	          </div>
-	          <div class="col-3 mb-3">
-	            <label for="recipient-name" class="col-form-label">어린이</label>
-	            <input type="text" class="form-control" name="child" id="child-modal"><span style="position:relative; bottom: 26px; left:70px;">명</span>
-	          </div>
 	          <div class="col-6 mb-3">
 	            <label for="recipient-name" class="col-form-label">금액</label>
-	            <input type="text" class="form-control" name="price" id="price-modal"><span style="position:relative; bottom: 26px; left:190px;">원</span>
+	            <input type="text" class="form-control" name="price" id="price-modal"><span style="position:relative; bottom: 28px; left:190px;">원</span>
+	          </div>
+	          <div class="col-6 mb-3">
+	            <label for="recipient-name" class="col-form-label">할인금액</label>
+	            <input type="text" class="form-control" name="discountPrice" id="discountPrice-modal"><span style="position:relative; bottom: 28px; left:190px;">원</span>
 	          </div>
           </div>
           <div class="row">
 	          <div class="col mb-3">
-	            <label for="recipient-name" class="col-form-label">숙박기간</label>
-	            <input type="text" class="form-control" name="checkinPeriod" id="checkin-modal">
-	          </div>
-          </div>
-          <div class="row">
-          	  <div class="col-4 mb-3">
-	            <label for="recipient-name" class="col-form-label">체크인 예정시간</label>
-	            <select class="form-select form-select-sm" name="timeOption" id="timeOption-modal">
-					<option value="14:00" selected >14:00</option>
-					<option value="15:00" >15:00</option>
-					<option value="16:00" >16:00</option>
-					<option value="17:00" >17:00</option>
-					<option value="18:00" >18:00</option>
-					<option value="19:00" >19:00</option>
-					<option value="20:00" >20:00</option>
-					<option value="21:00" >21:00</option>
-				</select>
-	          </div>
-	          <div class="col-4 mb-3">
-	            <label for="recipient-name" class="col-form-label">예약상태</label>
-	            <select class="form-select form-select-sm" name="status" id="status-modal">
-					<option value="" selected disabled>=====</option>
-					<option value="O" >임박</option>
-					<option value="I">체크인</option>
-					<option value="T">체크아웃</option>
-					<option value="R">예약중</option>
-					<option value="D">예약취소</option>
-				</select>
-	          </div>
-	          <div class="col-4 mb-3">
-	            <label for="recipient-name" class="col-form-label">지점</label>
-	            <select class="form-select form-select-sm" id="location-modal" disabled>
-			  		<option value="0" selected disabled>=====</option>
-					<option value="1">서울</option>
-					<option value="2">부산</option>
-					<option value="3">제주</option>
-					<option value="4">강릉</option>
-					<option value="5">광주</option>
-				</select>
-	          </div>
-          </div>
-          <div class="row">
-	          <div class="col mb-3">
-	            <label for="recipient-name" class="col-form-label">고객 요청사항</label>
+	          	<label for="recipient-name" class="col-form-label">특이사항</label>
 	            <textarea cols="50" rows="5" class="form-control" name="request" id="request-modal"></textarea>
 	          </div>
           </div>
@@ -556,172 +474,152 @@
 <script>
 $(function() {
 	
-	// 예약상세 클릭
-	$("#body").on("click",".btn-table", function() {
-		let roomRevNo= $(this).attr("data-tag");
-		modalDetail(roomRevNo);
+	// 보수요청 클릭
+	$("#fix").on("click", function() {
+		
+		let roomId = $(":checkbox[name=checkedNo]:checked");
+		let roomIdLength = roomId.length;
+		if (roomIdLength == 0) {
+			alert("선택항목을 하나이상 선택하세요");
+			return false;
+		}
+		fixChecked(roomId) 
+		
+		let currentPage = $(".pagination .active").attr("data-tag");
+		console.log(currentPage);
+		filterRoom(currentPage);  
 	})
 	
-	// 예약상세정보 수정
-	$("#room-rev-detail").on("click","#update-modal", function() {
-		let roomRevNo= parseInt($("#revNo-modal").val());
-		modalDetailUpdate(roomRevNo);
-		alert("예약 상세정보 수정이 완료됐습니다.");
-		modalDetail(roomRevNo);
+	// 보수요청 ajax
+	function fixChecked(id) {
+		let queryString = '';
+		$(":checkbox[name=checkedNo]:checked").each(function(e) {
+			
+			   if ($(this).attr("data-tag") == 'C' || $(this).attr("data-tag") == 'F') {
+				   alert("숙박,보수 중인 객실은 선택할 수 없습니다.")
+				   return false;
+			   }
+			
+		       if (e == 0) {
+		    	   queryString += "id=" + $(this).val(); 
+		       }
+				queryString += "&id=" + $(this).val();
+		 	 })
+		 	 
+		if (queryString.length == 0) {
+			return;
+		} else {
+			$.getJSON("/admin/room/fix", queryString)
+		}
+	}
+	
+	// 보수완료 클릭
+	$("#complete").on("click", function() {
+		
+		let roomId = $(":checkbox[name=checkedNo]:checked");
+		let roomIdLength = roomId.length;
+		if (roomIdLength == 0) {
+			alert("선택항목을 하나이상 선택하세요");
+			return false;
+		}
+		completeChecked(roomId) 
+		
+		let currentPage = $(".pagination .active").attr("data-tag");
+		console.log(currentPage);
+		filterRoom(currentPage);  
+	})
+	
+	// 보수완료 ajax
+	function completeChecked(id) {
+		let queryString = '';
+		$(":checkbox[name=checkedNo]:checked").each(function(e){
+			   
+			   if ($(this).attr("data-tag") == 'C' || $(this).attr("data-tag") == 'E') {
+				   alert("숙박,공실인 객실은 선택할 수 없습니다.")
+				   return false;
+			   }
+		       if (e == 0) {
+		    	   queryString += "id=" + $(this).val(); 
+		       }
+				queryString += "&id=" + $(this).val();
+		 	 })
+		if (queryString.length == 0) {
+			return;
+		} else {
+			$.getJSON("/admin/room/complete", queryString)
+		}	
+	}
+	
+	// 특이사항 클릭
+	$("#body").on("click",".btn-table", function() {
+		let roomId= $(this).attr("data-tag");
+		modalRequest(roomId);
+	})
+	
+	// 특이사항 수정
+	$("#room-manage-detail").on("click","#update-modal", function() {
+		let id= parseInt($("#id-modal").val());
+		modalRequestUpdate(id);
+		alert("특이사항 수정이 완료됐습니다.");
+		modalRequest(id);
 	} )
+	
+	// 모달창 닫힐때 수정내역 반영한 리스트 재노출
+	$('#room-manage-detail').on('hidden.bs.modal', function () {
+		let currentPage = $(".pagination .active").attr("data-tag");
+		console.log(currentPage);
+		filterRoom(currentPage); 
+	})
 	
 	// 필터검색
 	$("#btn-setting").click(function() {
-		filterRev();
-	})
-	
-	// 키워드 검색
-	$("#search-keyword").click(function() {
-		
-		if($("#search-condition option:selected").val() == null || $("#search-condition option:selected").val() == '') {
-			alert("검색조건을 선택해주세요.");	
-			return false;
-		}
-		if($("#search-text").val() == null || $("#search-text").val() == '') {
-			alert("검색어를 입력해주세요.");	
-			return false;
-		}
-		
-		filterRev();
+		filterRoom();
 	})
 	
 	// 페이지 이동처리 
 	$("#pagination").on('click', '#pre-page', function() {
 		let currentPage = $(".pagination .active").attr("data-tag");
 		console.log(currentPage-1);
-		filterRev(currentPage - 1); 
+		filterRoom(currentPage - 1); 
 	})
 	
 	$("#pagination").on('click', '#next-page', function() {
 		let currentPage = $(".pagination .active").attr("data-tag");
 		console.log(currentPage-0+1);
-		filterRev(currentPage - 0 + 1); 
+		filterRoom(currentPage - 0 + 1); 
 	})
 	
 	$("#pagination").on('click', '.current-page', function() {
 		let currentPage = $(this).attr("data-tag");
 		console.log(currentPage);
-		filterRev(currentPage); 
+		filterRoom(currentPage); 
 	})
 	
-	// 모달창 닫힐때 수정내역 반영한 리스트 재노출
-	$('#room-rev-detail').on('hidden.bs.modal', function () {
-		let currentPage = $(".pagination .active").attr("data-tag");
-		console.log(currentPage);
-		filterRev(currentPage); 
-	})
-	
-	// 예약상세정보 중 날짜 클릭시 기 예약된 날짜 선택 불가
-	let periods = new Array();
-	$('#room-rev-detail').on('click', '#checkin-modal', function() {
-		let roomRevNo= parseInt($("#revNo-modal").val());
-		checkPeriod(roomRevNo);	
-		flat.open();
-	})
-	
-	// 모달창 숙박기간 클릭 시 ajax로 서버에서 해당 room_id의 예약정보 중 체크인,체크아웃 기간을 가져와 선택불가 상태로 만든다.
-	let input = $("#checkin-modal");
-	let	flat;
-	
-	function checkPeriod(revNo) {
-		let queryString = "revNo=" + revNo; 
-		
-		$.getJSON("/admin/roomrev/checkPeriod", queryString, function(results) {
-			$.each(results, function(index, result) {
-				periods.push(result.checkinTime);
-				periods.push(result.checkoutTime);
-			})
-			console.log(periods.length);
-			console.log(periods[0]);
-			
-		})
-	    input = $("#checkin-modal");
-		flat = 	flatpickr(input, {
-					mode: "range",
-					locale: "ko",
-					disable: [
-							{
-								from: periods[0],
-								to: periods[1]
-							}
-						]
-					}); 
+	// 모달창 특이사항 수정
+	function modalRequestUpdate(id) {
+		let queryString = $("#request-modal-form").serialize();
+		$.post("/admin/room/updateRoomRequest", queryString)
 	}
 	
+	// 모달창에 특이사항 정보 넣기
+	let roomManageRequest= new bootstrap.Modal($("#room-manage-detail"), {keyboard: false})
 	
-	// 숙박기간(모달)
-	/* let input = $("#checkin-modal");
-	let flat = 	flatpickr(input, {
-				mode: "range",
-				locale: "ko",
-				disable: [
-						{
-							from: periods[0],
-							to: periods[1]
-						}
-					]
-				});  */
-
-	
-	// 모달창 상세정보 수정
-	function modalDetailUpdate(revNo) {
-		let queryString = $("#detail-modal-form").serialize();
-		$.post("/admin/roomrev/updateRoomRevDetail", queryString)
-	}
-	
-	// 모달창에 예약상세정보 넣기
-	let roomRevDetail= new bootstrap.Modal($("#room-rev-detail"), {keyboard: false})
-	function modalDetail(revNo) {
-		let queryString = "revNo=" + revNo;
+	function modalRequest(id) {
+		let queryString = "id=" + id;
 		
-		$.getJSON("/admin/roomrev/detail", queryString, function(result) {
-			$("#revNo-modal").attr('value', result.no);
-			$("#revNo-hidden").attr('value', result.no);
-			$("#roomNo-modal").attr('value', result.room.no);
-			$("#name-modal").attr('value', result.user.name);
-			$("#adult-modal").attr('value', result.adult);
-			$("#child-modal").attr('value', result.child);
-			$("#price-modal").attr('value', result.totalPrice.toLocaleString());
-			$("#checkin-modal").attr('value', result.checkinTime + " ~ " + result.checkoutTime);
-			
-			let timeOption = result.optionCheckinTime;
-			// 셀렉트박스 옵션값 모두 가져오기
-			let timeOptions = $('#timeOption-modal').find('option').map(function() {return $(this).val();}).get()
-			$.each(timeOptions, function(index, option) {
-				if (timeOption == option) {
-					$("#timeOption-modal option:eq("+index+")").attr('selected', 'selected');
-				}
-			})
-			
-			let status = result.status;
-			let statusOptions = $('#status-modal').find('option').map(function() {return $(this).val();}).get()
-			$.each(statusOptions, function(index, option) {
-				if (status == option) {
-					$("#status-modal option:eq("+index+")").attr('selected', 'selected');
-				}
-			})
-			
-			let location = result.room.location.no;
-			let locationOptions = $('#location-modal').find('option').map(function() {return $(this).val();}).get()
-			$.each(locationOptions, function(index, option) {
-				if (location == option) {
-					$("#location-modal option:eq("+index+")").attr('selected', 'selected');
-				}
-			})
+		$.getJSON("/admin/room/request", queryString, function(result) {
+			$("#id-modal").attr('value', result.id);
+			$("#price-modal").attr('value', result.price.toLocaleString());
+			$("#discountPrice-modal").attr('value', result.discountPrice.toLocaleString());
 			
 			$("#request-modal").val(result.request);
 		})
-		roomRevDetail.show();
+		roomManageRequest.show();
 	}
 	
-	// 예약정보 조건별 조회
-	function filterRev(page) {
-		let queryString = $("#filter-rev-form").serialize();
+	// 객실 조건별 조회
+	function filterRoom(page) {
+		let queryString = $("#filter-room-form").serialize();
 		
 		let pageNo = page || 1;
 		queryString += "&page=" + pageNo;
@@ -729,7 +627,7 @@ $(function() {
 		let $body = $("#body").empty();
 		let $pagination = $("#pagination").empty();
 		
-		$.getJSON("/admin/roomrev/filter", queryString, function(results) {
+		$.getJSON("/admin/room/filter", queryString, function(results) {
 			if (results.length == 0) {
 				let content =
 				   `<div class="col-12">
@@ -737,25 +635,33 @@ $(function() {
 					</div>`;
 					$body.append(content);
 			} else {
-				let roomRev = results.roomRev;
+				let rooms = results.rooms;
 				let pagination = results.pagination;
 				
-				$.each(roomRev, function(index, rev) {
+				$.each(rooms, function(index, room) {
 					let content = '';
 						content +='<tr>';
 						content +='	 <th scope="row">';
 						content +='		 <label class="form-check-label" for="flexCheckDefault">'; 
-						content +='		 	 <input type="checkbox" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">';
+						content +='		 	 <input type="checkbox" name="checkedNo" value="'+room.id+'" data-tag="'+room.rev+'" style="accent-color: RGBa(255, 56, 92, 0.1); zoom:1.3;">';
 						content +='		 </label>';
 						content +='	 </th>';
-						content +='	 <td>'+ rev.no +'</td>';
-						content +='	 <td><a href="">'+ rev.user.name +'</a><small class="d-block">'+ rev.user.tel +'</small></td>';
-						content +='	 <td>'+ rev.room.location.name +'</td>';				
-						content +='	 <td>'+ rev.room.no +'('+ rev.room.roomCategory.name +')</td>';
-						content +='	 <td>'+ rev.status +'</td>';
-						content +='	 <td>'+ rev.checkinTime +'</td>';
-						content +='	 <td>'+ rev.checkoutTime +'</td>';
-						content +='	 <td><button type="button" class="btn btn-table" id="btn-table-'+rev.no+'" data-tag="'+rev.no+'"><i class="bi bi-box-arrow-in-right"></i></button></td>';
+						content +='	 <td>'+ room.id +'</td>';
+						content +='	 <td>'+ room.name +'</td>';
+						content +='	 <td>'+ room.location.name +'</td>';				
+						content +='	 <td>'+ room.no +'호</td>';
+						
+						if (room.rev == 'C') {
+							content +='	 <td style="color:RGBA(0, 0, 255, 0.6); font-weight:bold;">숙박</td>';							
+						} else if (room.rev == 'E'){						
+							content +='	 <td style="color:gray; font-weight:bold;">공실</td>';
+						} else if (room.rev == 'F'){						
+							content +='	 <td style="color:RGBA(255, 56, 92, 0.7); font-weight:bold;">보수중</td>';
+						} 
+						
+						content +='	 <td>'+ room.price.toLocaleString("ko-KR", { style: 'currency', currency: 'KRW' }) +'</td>';
+						content +='	 <td>'+ room.discountPrice.toLocaleString("ko-KR", { style: 'currency', currency: 'KRW' }) +'</td>';
+						content +='	 <td><button type="button" class="btn btn-table" id="btn-table-'+room.id+'" data-tag="'+room.id+'"><i class="bi bi-box-arrow-in-right"></i></button></td>';
 						content +='</tr>';
 						
 					$body.append(content);
@@ -785,19 +691,6 @@ $(function() {
 			}
 		})
 	}
-	
-	// 체크인 기간조회(필터)
-	$("#datepicker").flatpickr({
-		mode: "range",
-		locale: "ko"
-		});
-	
-	// 숙박기간(모달)
-	/*  $("#checkin-modal").flatpickr({
-		mode: "range",
-		locale: "ko"
-		}); */
-	
 	
 })
 </script>
