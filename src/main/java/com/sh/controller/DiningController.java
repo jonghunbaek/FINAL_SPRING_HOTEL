@@ -1,5 +1,6 @@
 package com.sh.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.sh.service.DiningService;
 import com.sh.service.UserService;
@@ -33,6 +36,7 @@ import com.sh.web.form.DiningReservationForm;
 @Controller
 @RequestMapping("/dining")
 @SessionAttributes({"diningReservationForm"})
+
 /*
  * @SessionAttributes Model 객체에 저장되는 객체 중에서 지정된 속성명으로 저장되는 것만 HttpSession객체에
  * 저장시킨다.
@@ -47,9 +51,12 @@ public class DiningController {
 	
 	// 예약페이지 1
 	@GetMapping("/step1")
-	public String step1(Model model) {
+	public String step1(@RequestParam(name="diningNo", required=false) Integer diningNo, Model model) {
+		int dining = Integer.valueOf(diningNo);
 		
 		model.addAttribute("locations", diningService.getAllLocations());
+		model.addAttribute("hotel", diningService.getLocationNoByDiningNo(dining));
+		model.addAttribute("dining", diningService.getDiningByNo(dining));
 		
 		return "dining/step1";
 	}
@@ -71,6 +78,8 @@ public class DiningController {
 	// 예약페이지2
 	@GetMapping("/step2")
 	public String step2(@RequestParam("dining") int diningNo, Model model) {
+		
+		model.addAttribute("dining", diningService.getDiningByNo(diningNo));
 		model.addAttribute("diningRev", diningService.getDiningRevByNo(diningNo));
 		model.addAttribute("mealTimes", diningService.getMealTimeByNo(diningNo));
 		model.addAttribute("diningReservationForm", new DiningReservationForm());
@@ -101,9 +110,11 @@ public class DiningController {
 	}
 	
 	@GetMapping("/logIn")
-	public String logIn() {
+	public String logIn(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model) {
 		
-		return "dining/step3";
+		model.addAttribute("diningReservationForm", diningReservationForm);
+		
+		return "dining/step4";
 	}
 	
 	// 세션상 로그인 유저 체크
@@ -180,7 +191,12 @@ public class DiningController {
 	
 	// 예약페이지4
 	@PostMapping("/step4")
-	public String step4(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model) throws ParseException{
+	public String step4(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model, HttpSession httpSession) throws ParseException{
+		
+		/*
+		 * User user = (User)SessionUtils.getAttribute("LOGIN_USER");
+		 * httpSession.setAttribute("LOGIN_USER", user);
+		 */
 		
 		String dnMealTime = "";
 		if(diningReservationForm.getMealTime().equals("lunch")) {
@@ -231,5 +247,46 @@ public class DiningController {
 		
 		System.out.println(diningReservationForm);
 		return "dining/step4";
+	}
+	
+	@PostMapping("/reservation")
+	public String reservation(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model) throws IOException, ParseException {
+		
+		int leftLimit = 65; // letter 'a'
+		int rightLimit = 90; // letter 'z'
+		int targetStringLength = 6;
+		Random random = new Random();
+		StringBuilder buffer = new StringBuilder(targetStringLength);
+		for (int i = 0; i < targetStringLength; i++) {
+		    int randomLimitedInt = leftLimit + (int)
+		            (random.nextFloat() * (rightLimit - leftLimit + 1));
+		    buffer.append((char) randomLimitedInt);
+		}
+		String generatedString = buffer.toString();
+		
+		int diningNo = diningReservationForm.getDiningNo();
+		int adult = diningReservationForm.getAdult();
+		int baby = diningReservationForm.getBaby();
+		int child = diningReservationForm.getChild();
+		
+		String str = diningNo + generatedString + adult + baby + child;
+		
+		diningReservationForm.setReservationNo(str);
+		
+		diningService.addReservation(diningReservationForm);
+		model.addAttribute("diningReservationForm", diningReservationForm);
+		
+		return "redirect:/dining/complete";
+	}
+	
+	@GetMapping("/complete")
+	public String complete(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model, SessionStatus sessionStatus) {
+		
+		model.addAttribute("diningReservationForm", diningReservationForm);
+		
+		// 세션에 "diningReservation"이름으로 저장된 객체를 clear 시킨다.
+		sessionStatus.setComplete();
+		
+		return "dining/complete";
 	}
 }

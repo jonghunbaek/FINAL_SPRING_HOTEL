@@ -1,31 +1,33 @@
-package com.sh.web.form;
+package com.sh.vo;
 
 import java.util.Date;
-import java.util.List;
+
+import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter @Setter @ToString
-public class DiningReservationForm {
+@Getter @Setter @ToString @Alias("RtRev")
+public class RtRev {
 	
 	private String reservationNo;
-	private String seat;
+	private int no;
 	private int adult;
 	private int child;
 	private int baby;
-	private int diningNo;
-	private String date;
-	private String mealTime;
+	private String isVisit;
 	private String visitTime;
-	private String isMember;
-	private String userId;
-	private String isAllergy;
-	private List<Integer> allergyNos;
-	private String etcAllergy;
+	private Date visitDate;
+	private String seatType;
 	private String request;
-	private String nameTitle;
+	private Date createdDate;
+	private Date updatedDate;
+	private Dn dn;
+	private User user;
+	private String mealTime;
+	private String isMember;
+	private String isAllergy;
 	private String name;
 	private String email;
 	private String tel;
@@ -36,6 +38,4 @@ public class DiningReservationForm {
 	private int cardNum4;
 	private int cardExpiryMonth;
 	private int cardExpiryYear;
-	
-	
 }
