@@ -10,6 +10,7 @@ import lombok.ToString;
 @Getter @Setter @ToString
 public class DiningReservationForm {
 	
+	private String reservationNo;
 	private String seat;
 	private int adult;
 	private int child;
@@ -19,6 +20,7 @@ public class DiningReservationForm {
 	private String mealTime;
 	private String visitTime;
 	private String isMember;
+	private String userId;
 	private String isAllergy;
 	private List<Integer> allergyNos;
 	private String etcAllergy;

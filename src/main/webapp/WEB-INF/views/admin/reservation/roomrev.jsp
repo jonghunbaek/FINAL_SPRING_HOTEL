@@ -662,16 +662,28 @@ $(function() {
 	})
 	
 	// 예약상세정보 중 날짜 클릭시 기 예약된 날짜 선택 불가
+	let	flat;
+	let input = $("#checkin-modal");
 	let periods = new Array();
+	let periodsQuery = '';
+	
 	$('#room-rev-detail').on('click', '#checkin-modal', function() {
 		let roomRevNo= parseInt($("#revNo-modal").val());
 		checkPeriod(roomRevNo);	
-		flat.open();
+		
+		/* setTimeout(function() {
+			flat = 	flatpickr(input, {
+				mode: "range",
+				locale: "ko",
+				disable: [{from: periods[0], to: periods[1]}]
+				}); 
+			flat.open();
+		}, 500)  */
+
+		periods=[];
 	})
 	
 	// 모달창 숙박기간 클릭 시 ajax로 서버에서 해당 room_id의 예약정보 중 체크인,체크아웃 기간을 가져와 선택불가 상태로 만든다.
-	let input = $("#checkin-modal");
-	let	flat;
 	
 	function checkPeriod(revNo) {
 		let queryString = "revNo=" + revNo; 
@@ -681,23 +693,33 @@ $(function() {
 				periods.push(result.checkinTime);
 				periods.push(result.checkoutTime);
 			})
-			console.log(periods.length);
-			console.log(periods[0]);
 			
-		})
-	    input = $("#checkin-modal");
-		flat = 	flatpickr(input, {
-					mode: "range",
-					locale: "ko",
-					disable: [
-							{
-								from: periods[0],
-								to: periods[1]
-							}
-						]
-					}); 
+	 	console.log(periods.length);
+		
+		// 아래방식 왜 안되는지 질문해보자-----------------------------------------------------
+		for(let i=0; i<periods.length; i+=2) {
+			
+			if (i == (periods.length-2)) {
+				periodsQuery += '{from: "'+periods[i]+'", to: "'+periods[i+1]+'"}';
+			} else {				
+				periodsQuery += '{from: "'+periods[i]+'", to: "'+periods[i+1]+'"},';
+			}
+			console.log(periodsQuery);
+		}
+		
+		setTimeout(function() {
+			flat = 	flatpickr(input, {
+				minDate: "today",
+				mode: "range",
+				locale: "ko",
+				dateFormat:"Y-m-d",
+				disable: [periodsQuery]
+				}); 
+			flat.open();
+		}, 500)
+		});
+		periods=[];
 	}
-	
 	// 숙박기간(모달)
 	/* let input = $("#checkin-modal");
 	let flat = 	flatpickr(input, {

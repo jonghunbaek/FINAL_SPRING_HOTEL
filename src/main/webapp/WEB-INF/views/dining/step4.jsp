@@ -12,7 +12,7 @@
 <style>
 #container {width: 1200px; margin: 0 auto;}
 .logo-outer { 
-	margin-top: 100px; border-bottom: solid 2px brown; 
+	margin-top: 100px;
 }
 .logo-inner {
   width : 200px;
@@ -21,7 +21,7 @@
 }
 .logo-inner img { width: 140px; height: 100px;}
 
-.revInfo{ margin:5px; margin-top:25px; padding-bottom:20px; border-bottom: solid 6px #D5D5D5;}
+.revInfo{margin:5px; margin-top:50px; padding-bottom:20px; padding-top: 30px; border-bottom: solid 6px #D5D5D5;  border-top: solid 2px brown; }
 
 .option-container{margin-top: 30px; border: solid 1px #D5D5D5;}
 
@@ -107,11 +107,57 @@ select[name=cardSort] {width:365px; height:70%;}
 		</div>
 	</div>
 	<div class="option-container">
-		<form id="form-step4" method="post" action="reservationComplete">
+		<form id="form-step4" method="post" action="reservation">
 		<div class="title">
 			<strong>정보입력</strong>
 		</div>
+		
 		<div class="row customer-information">
+			<c:if test="${not empty LOGIN_USER }">
+				<div class="col-6 left">
+				<p><strong>고객 정보</strong></p>
+				<div class="row">
+					<div class="col-3">
+						<p>성명(국문)&nbsp;&nbsp;<span class="important">*</span></p>
+					</div>
+					<div class="col-9">
+						<select name="nameTitle">
+							<option selected>선택</option>
+							<option value="Mr.">Mr.</option>
+							<option value="Ms.">Ms.</option>
+							<option value="Dr.">Dr.</option>
+						</select>
+						<input type="text" name="name"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">
+						<p>이메일 &nbsp;&nbsp;<span class="important">*</span></p>
+					</div>
+					<div class="col-9">
+						<input type="email" value="${LOGIN_USER.email }" name="email" disabled/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">
+						<p>연락처(휴대전화) &nbsp;&nbsp;<span class="important">*</span></p>
+					</div>
+					<div class="col-9">
+						<input type="text" name="tel" placeholder="-없이 숫자만 입력"/>
+						<a href="#"><img id="btn-double-check" src="../resources/images/dining/btn-doubleCheck.png"/></a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-3">
+					</div>
+					<div class="col-9" id="alert-double-check">
+						<p>※ 동일한 날짜의 동일한 시간 대에 예약 내역을 확인하는 절차이며 중복된 예약 확인 시 예약이 제한될 수 있습니다.</p>
+						<p>※ 월 기준 다중 예약은 가능하나 최대 예약 가능 횟수는 레스토랑에 따라 상이합니다.</p>
+					</div>
+				</div>
+			</div>
+			</c:if>
+			<c:if test="${empty LOGIN_USER }">
 			<div class="col-6 left">
 				<p><strong>고객 정보</strong></p>
 				<div class="row">
@@ -122,8 +168,8 @@ select[name=cardSort] {width:365px; height:70%;}
 						<select name="nameTitle">
 							<option selected>선택</option>
 							<option value="Mr.">Mr.</option>
-							<option value="Ms.">Mr.</option>
-							<option value="Dr.">Mr.</option>
+							<option value="Ms.">Ms.</option>
+							<option value="Dr.">Dr.</option>
 						</select>
 						<input type="text" name="name"/>
 					</div>
@@ -154,6 +200,7 @@ select[name=cardSort] {width:365px; height:70%;}
 					</div>
 				</div>
 			</div>
+			</c:if>
 			<div class="col-6 right">
 				<p><strong>신용카드 정보</strong></p>
 				<div class="row">
@@ -351,7 +398,8 @@ $(function(){
 			return false;
 		}
 	})
-		
+	
+	// 카드번호 숫자만 입력받게
 	function checkNumber(event) {
 	  if(event.key === '.' 
 	     || event.key === '-'

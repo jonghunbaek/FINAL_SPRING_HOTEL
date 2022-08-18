@@ -23,6 +23,19 @@
 			room_rev_updated_date = sysdate
 		where room_rev_no = to_number(#{no})	
 	</update>
+	
+	<!-- void changeRevStatus(); -->
+	<update id="changeRevStatus">
+		update sh_room_rev
+			set room_rev_status = case
+				when room_rev_status = 'R' then 'O' 
+				when room_rev_status = 'O' then 'O' 
+				when room_rev_status = 'I' then 'I' 
+				when room_rev_status = 'T' then 'T' 
+				when room_rev_status = 'D' then 'D' 
+			end
+			where room_rev_checkin_time &lt;= sysdate+1 and room_rev_checkin_time &gt;=(sysdate-10/(24*60*60));	
+	</update>
 
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>

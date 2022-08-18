@@ -43,9 +43,37 @@
                 </div>
             </div>
         </div>
-        <div class="footer" id="div-footer2">
-    		<hr>
-    		(주)호텔 스프링 서울특별시 중구 동호로 249(우 : 04605) 대표이사 이응수   사업자등록번호123-12-12345 통신판매신고번호 중구00272 
+        <div class="row justify-content-center" style="position:relative; top:50px; left:320px; font-size:11px; color:darkgray; font-weight:bold; height:13px; width:1200px;">
+        	<div class="col text-center" style="border-right:1px solid darkgray; color:black;">
+        		신라리워즈 약관
+        	</div>
+        	<div class="col text-center" style="border-right:1px solid darkgray; color:RGB(178, 147, 123);">
+        		개인정보처리방침
+        	</div>
+        	<div class="col text-center" style="border-right:1px solid darkgray;">
+        		이메일무단수집금지
+        	</div>
+        	<div class="col text-center" style="border-right:1px solid darkgray;">
+        		윤리경영(부정제보)
+        	</div>
+        	<div class="col text-center" style="border-right:1px solid darkgray;">
+        		건축,시설물 안전관리
+        	</div>
+        	<div class="col-2"></div>
+        	<div class="col-2">
+        		ENGLISH&nbsp; 日本語&nbsp; 中國語
+        	</div>
+        </div>
+        <div class="footer" id="div-footer2"><hr/>
+    		<div class="row px-2" style="color:darkgray; font-size:11px;">
+	    		(주)호텔 스프링 서울특별시 중구 동호로 249(우 : 04605) &nbsp;대표이사 이응수 &nbsp;사업자등록번호123-12-12345  &nbsp;통신판매신고번호 중구00272 
+    		</div>
+    		<div class="row px-2" style="color:darkgray; font-size:11px;">
+	    		호스팅서비스제공자 삼성SDS(주) 서울객실예약 sping.reserve@hta.com 제주객실예약 jejuspring@hta.com 
+    		</div>
+    		<div class="row px-2" style="font-size:10px;">
+	    		Copyright (c) HOTEL SPRING CO.,LTD. All Rights Reserved 
+    		</div>
     	</div>
     </div>    
 </footer>

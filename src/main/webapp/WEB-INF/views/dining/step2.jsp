@@ -14,7 +14,7 @@
 <title>스프링 온라인</title>
 <style>
 *{font-family: 돋움, sans-serif, Arial}
-#container {width: 1000px; margin: 0 auto;}
+#container {width: 1200px; margin: 0 auto;}
 .logo-outer { 
 	margin-top: 100px; border-bottom: solid 2px brown; 
 }
@@ -67,7 +67,7 @@
 	</div>
 	<div id="div-hotel-name" class=row>
 		<div class="col-11">
-			<p><strong>더파크뷰</strong>(제주신라호텔)</p>
+			<p><strong>${dining.name }</strong>&nbsp;&nbsp;(${dining.location.name }신라호텔)</p>
 		</div>
 		<div class="col-1">
 			<a href="#"><img src="../resources/images/dining/btn_rsvclear.png"/></a>
@@ -161,7 +161,7 @@
 			<div id="gap"></div>
 			<div class="row" id="submit-button">
 				<div class="col-7">
-					<a href="step1"><img src="../resources/images/dining/이전.png"/></a>
+					<a href="step1?diningNo=${dining.no }"><img src="../resources/images/dining/이전.png"/></a>
 				</div>
 				<div class="col-5 text-end">
 					<a href="#" id="btn-member-rev"><img src="../resources/images/dining/회원예약.png"/></a>
