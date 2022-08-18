@@ -148,11 +148,18 @@ public class UserService {
 	 * @param user
 	 * @return 유저정보 업데이트
 	 */
-	public void modifyUserInfo(UserModifyForm userModifyForm) {
-		User user = new User();
-		user.setEmail(userModifyForm.getEmail());
-		user.setTel(userModifyForm.getTel());
-		userMapper.modifyUser(user);
+	public void modifyUserInfo(User user) {
+		userMapper.updateUser(user);
+	}
+	
+	/**
+	 * 비밀번호 변경 폼 기존 비밀번호 확인
+	 * @param id
+	 * @param password
+	 * @return 0 or 1
+	 */
+	public int passwordCheck(String id, String password) {
+		return userMapper.passwordCheck(id, password); 
 	}
 	
 }
