@@ -7,7 +7,7 @@ html a{
 .contain .container {
     margin-top: 60px;
     border: 1px solid orange;
-    height: 3200px;
+    /* height: 3200px; */
     min-width: 1150px;
     max-width: 1150px;
 }
@@ -108,11 +108,10 @@ html a{
 .city-block {
 	display: inline-flex;
 	font-size: 15px;
-	
-	margin-top: 30px;
+	margin-top: 60px;
 }
 .city-block .city-title1{
-    width: 800px;
+    width: 670px;
     font-size: 19px;
 }
 .city-block .city-title2 {
@@ -148,10 +147,12 @@ html a{
 }
 
 .city-box .city-btn {
-	display: flex;
-	column-gap: 10px;
-	padding-top: 20px;
-	margin-right: 30px;
+    display: flex;
+    column-gap: 10px;
+    padding-top: 20px;
+    margin-right: 30px;
+    width: 600px;
+    justify-content: space-around;
 	
 }
 
@@ -297,6 +298,7 @@ ul li {
 }
 /* part line */
 .part-test {
+	display:none;
 border: 2px solid lime; 
 }
 
@@ -637,8 +639,18 @@ border: 2px solid lime;
 	display: none;
 }
 	
-	
-	
-	
-	
+
+/*지역별 호텔 버튼 */
+.btn1:hover, .btn2:hover, .btn3:hover, .btn4:hover, .btn5:hover{
+	background-color : #654d206e;
+	color: white;
+}
+.city-btn> btn{
+	border: 1px solid #97772b;
+    width: 100px;
+}
+.city-btn >a {
+	border: 1px solid #5c471857;
+    width: 100px;
+}
 	
