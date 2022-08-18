@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,12 @@ public class AdminRevService {
 
 	@Autowired
 	private AdminRevMapper adminRevMapper;
+	
+	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
+	@Scheduled(cron = "0 0 0 * * *")
+	public void changeRevStatus() {
+		adminRevMapper.changeRevStatus();
+	}
 	
 	// 페이징처리에 필요한 전체 개수 
 	public int getTotalRows() {
