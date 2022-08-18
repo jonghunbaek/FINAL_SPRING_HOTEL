@@ -126,7 +126,7 @@ $(function() {
 
 			content += '<ul class="list-inline">'
 			content += '	<li class="list-inline-item"><a href="">객실</a></li><div class="vr" style="position:relative; top:3px;"></div>';
-			content += '	<li class="list-inline-item"><a href="">다이닝</a></li>';
+			content += '	<li class="list-inline-item"><a href="/dining/step1">다이닝</a></li>';
 			content += '</ul>'
 			
 			$revDiv.append(content);

@@ -12,7 +12,7 @@
 <style>
 #container {width: 1200px; margin: 0 auto;}
 .logo-outer { 
-	margin-top: 100px; border-bottom: solid 2px brown; 
+	margin-top: 100px;
 }
 .logo-inner {
   width : 200px;
@@ -21,7 +21,7 @@
 }
 .logo-inner img { width: 140px; height: 100px;}
 
-.revInfo{ margin:5px; margin-top:25px; padding-bottom:20px; border-bottom: solid 6px #D5D5D5;}
+.revInfo{margin:5px; margin-top:50px; padding-bottom:20px; padding-top: 30px; border-bottom: solid 6px #D5D5D5;  border-top: solid 2px brown; }
 
 .option-container{margin-top: 30px; border: solid 1px #D5D5D5;}
 
@@ -128,9 +128,9 @@ $(function(){
 	// 기타 버튼 클릭시 텍스트 활성화
 	$("#etc-check").change(function(){
 		if ($(this).prop('checked')) {
-			$(":input[name=etc]").prop('disabled', false);
+			$(":input[name=etcAllergy]").prop('disabled', false);
 		} else {
-			$(":input[name=etc]").prop('disabled', true);
+			$(":input[name=etcAllergy]").prop('disabled', true);
 		}
 		
 	})
