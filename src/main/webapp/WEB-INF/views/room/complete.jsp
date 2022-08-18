@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- roomRev3 CSS -->
 <link
-	href="${pageContext.request.contextPath}/resources/room/css/completed.css"
+	href="${pageContext.request.contextPath}/resources/room/css/complete.css"
 	rel="stylesheet">
 <!-- total zone -->
 <script

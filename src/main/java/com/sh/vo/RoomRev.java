@@ -39,4 +39,7 @@ public class RoomRev {
 	private Room room;
 
 	private String optionCheckinTime;
+	
+	private Pay pay;
+	private String bedType;
 }

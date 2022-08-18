@@ -41,4 +41,7 @@ public class User {
 		private String loginType;
 		private int age;
 		private String gender;
+		
+		private String title; // roomRevForm에 사용 
+		private String country; // roomRevForm에 사용 
 }

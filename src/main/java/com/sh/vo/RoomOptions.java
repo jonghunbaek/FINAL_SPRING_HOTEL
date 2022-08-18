@@ -15,5 +15,6 @@ public class RoomOptions {
 	private int no;
 	private String name;
 	private int price;
+	private RoomCategory roomCategory;
 	
 }
