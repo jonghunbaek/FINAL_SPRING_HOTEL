@@ -82,7 +82,7 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
-		<form:form action="modifyProfile" method="POST" modelAttribute="userModifyForm">
+		<form action="modifyProfile" method="post">
 			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">프로필 수정</h3>
 			<div id="div-msg">
 				고객님의 정보를 언제든지 확인, 변경하실 수 있습니다.
@@ -91,7 +91,7 @@
 				<h5>기본 정보</h5>
 			</div>
 			<div id="div-table">
-				<table class="table" summary="아이디,비밀번호로 구성된 테이블">
+				<table class="table">
 					<colgroup>
 						<col width="17%" class="col1">
 						<col class="col2">
@@ -124,7 +124,7 @@
 						</tr>
 						<tr class="last">
 							<th>휴대전화</th>
-							<td><input type="text" name="phone" value=""></td>
+							<td><input type="text" name="tel" value="${user.tel }"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -133,7 +133,7 @@
 				<a href="modify" id="btn1">취소</a>
 				<button id="btn2"><span>변경</span></button>
 			</div>
-		</form:form>
+		</form>
 		</div>
 	</div>
 	

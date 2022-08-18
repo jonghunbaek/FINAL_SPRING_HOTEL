@@ -14,12 +14,12 @@ public interface UserMapper {
 	User getUserById(String id);
 	int idCheck(String id);
 	int emailCheck(String email);
+	int passwordCheck(String id, String password);
 	void insertUser(User user);
 	void updateUser(User user);
 	Grade getUserGradeByUserId(String id);
 	UserPoint getUserPointByUserNo(int userNo);
 	PointHistory getUserPointHistoryByUserNo(int userNo);
-	void modifyUser(User user);
 	
 	// 관리자페이지 예약현황에서 고객상세정보 확인용도
 	User getUserByNo(int no);

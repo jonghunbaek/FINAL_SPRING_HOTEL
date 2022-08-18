@@ -33,10 +33,12 @@
 	#div-table th {border-bottom: 1px solid #cdcbbe; background-color: #faf9f4; color: #666; line-height: 20px; vertical-align: middle;}
 	#div-table .last {border-bottom: 1px solid #cdcbbe;}
 	#div-btn {width: 866px; height: 74px; padding-top: 30px; text-align: right; display: block;}
-	#btn1 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-left: 300px;
+	#btn1 {text-decoration: none; display: block; margin-left: 300px;
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: left;}
+    #btn1 span {color: rgb(250,241,208); padding-top: 5px;}
     #btn2 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-right: 300px;
 	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; float: right;}
+    
 		
 </style>
 <title>Spring Hotel</title>
@@ -80,11 +82,11 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
+		<form action="passwordChange" method="post" onsubmit="return submitPasswordCheck();">
 			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">비밀번호 변경</h3>
 			<div class="mb-3 mt-3">
 				<img src="/resources/images/mypage/userInfo2Msg1.gif">
 			</div>
-			<form>
 			<div id="div-table">
 				<table class="table" summary="아이디,비밀번호로 구성된 테이블">
 					<colgroup>
@@ -93,31 +95,34 @@
 					</colgroup>
 					<tbody>
 						<tr class="first">
-							<th scope="row" class="first"><label for="mbrPw" class="pw">현재 비밀번호</label></th>
+							<th scope="row" class="first"><label for="input-password" class="pw">현재 비밀번호</label></th>
 							<td class="first">
-							<input type="password" class="pw uiform password" id="mbrPw" name="mbrPw" maxlength="20" onkeydown="javascript: if(event.keyCode == 13) selectPwCnfm()" autocomplete="off">
+							<input type="password" class="pw uiform password" id="input-password" name="password" maxlength="20" onkeyup="passwordCheck()" autocomplete="off">
+							&nbsp;<span id="passwordCheckMessage"></span>
 							</td>
 						</tr>
 						<tr class="first">
-							<th scope="row" class="last"><label for="mbrPw" class="pw">새 비밀번호</label></th>
+							<th scope="row" class="last"><label for="input-newPassword1" class="pw">새 비밀번호</label></th>
 							<td class="first">
-							<input type="password" class="pw uiform password" id="mbrPw" name="mbrPw" maxlength="20" onkeydown="javascript: if(event.keyCode == 13) selectPwCnfm()" autocomplete="off">
+							<input type="password" class="pw uiform password" id="input-newPassword1" name="password1" maxlength="20" onkeyup="newPasswordCheck()" autocomplete="off">
+							<span><img src="/resources/images/mypage/passwordcheck.png"></span>
 							</td>
 						</tr>
 						<tr class="last">
-							<th scope="row" class="last"><label for="mbrPw" class="pw">새 비밀번호 확인</label></th>
+							<th scope="row" class="last"><label for="input-newPassword2" class="pw">새 비밀번호 확인</label></th>
 							<td class="last">
-							<input type="password" class="pw uiform password" id="mbrPw" name="mbrPw" maxlength="20" onkeydown="javascript: if(event.keyCode == 13) selectPwCnfm()" autocomplete="off">
+							<input type="password" class="pw uiform password" id="input-newPassword2" name="password2" maxlength="20" onkeyup="newPasswordCheck()" autocomplete="off">
+							&nbsp;<span id="newPasswordCheckMessage"></span>
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			</form>
 			<div id="div-btn">
-				<a href="" id="btn1">비밀번호 변경</a>
+				<button type="submit" id="btn1"><span>비밀번호 변경</span></button>
 				<a href="" id="btn2">취소</a>
 			</div>
+		</form>
 		</div>
 	</div>
 	
@@ -126,5 +131,84 @@
 </body>
 <script type="text/javascript">
 
+	function passwordCheck() {
+		let password = document.getElementById('input-password').value;
+		if (password == '') {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		$.ajax({
+			url: 'passwordCheck',
+			type: 'post',
+			data: {password},
+			success:function(check){
+				if(check == 0) {
+					$('#passwordCheckMessage').html("현재 비밀번호가 일치하지 않습니다");       
+					$('#passwordCheckMessage').css('color', 'red'); 
+					$('#passwordCheckMessage').css('font-size', '12px'); 
+				} else {
+					$('#passwordCheckMessage').html("현재 비밀번호와 일치합니다");       
+					$('#passwordCheckMessage').css('color', 'green'); 
+					$('#passwordCheckMessage').css('font-size', '12px');
+				    var passwordCheck = 1;
+				}
+			}, 
+			error:function(){
+				alert("에러입니다.");
+			}
+		})
+	};
+	
+	function newPasswordCheck(){
+        let password1 = $('#input-newPassword1').val();
+        let password2 = $('#input-newPassword2').val();
+        if(password1!=password2){
+            $('#newPasswordCheckMessage').html("비밀번호가 일치하지 않습니다");       
+			$('#newPasswordCheckMessage').css('color', 'red'); 
+			$('#newPasswordCheckMessage').css('font-size', '12px'); 
+		} else {
+			$('#newPasswordCheckMessage').html("");
+		}
+	}
+	
+	function submitPasswordCheck() {
+		let password1 = $('#input-newPassword1').val();
+		let password2 = $('#input-newPassword2').val();
+		let passwordCheck = $('#passwordCheckMessage').html();
+		let num = password1.search(/[0-9]/g);
+		let eng = password1.search(/[a-z]/g);
+		if (passwordCheck == '') {
+			alert("기존 비밀번호를 입력해주세요");
+			return false;
+		}
+		if (passwordCheck == "현재 비밀번호가 일치하지 않습니다") {
+			alert("기존 비밀번호가 일치하지 않습니다.");
+			return false;
+		}
+		if(password1.length < 8 || password1.length > 20 && password2.length < 8 || password2.length > 20){
+			alert("비밀번호는 8~20자 이내여야 합니다");
+			return false;
+		}
+		if (password1.search(/\s/) != -1 && password2.search(/\s/) != -1) {
+			alert("비밀번호는 공백 없이 입력해주세요");
+			return false;
+		}
+		if (num < 0 || eng < 0) {
+			alert("비밀번호는 영문, 숫자를 혼합하여 입력해주세요");
+			return false;
+		}
+		if (password1.length == 0 && password2.length == 0) {
+			alert("새 비밀번호를 입력해주세요");
+			return false;
+		}
+		if (password1 !== password2) {
+			alert("새 비밀번호를 확인해주세요");
+			return false;
+		}
+		alert("비밀번호가 변경되었습니다.");
+		return true;
+	}
+	
+	
 </script>
 </html>

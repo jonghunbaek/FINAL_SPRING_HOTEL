@@ -131,13 +131,12 @@
 		and h.user_no = #{no}
 	</select>
 	
-	<!-- 프로필 수정 -->
-	<update id="modifyUser" parameterType="User">
-		update sh_users
-		set 
-			user_email = #{email},
-			user_tel = #{tel}
-		where user_id = #{id}
-	</update>
+	<!-- 비밀번호 변경 폼 - 기존 비밀번호 체크 -->
+	<select id="passwordCheck"  parameterType="String" resultType="int">
+		select count(user_password)
+		from sh_users
+		where user_id = #{id} 
+		and user_password = #{password}
+	</select>
 	
 </mapper>
