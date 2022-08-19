@@ -6,10 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter@Setter@ToString@Alias("ShopAdditionalImages")
-public class ShopAdditionalImages {
+@Getter@Setter@ToString@Alias("ShopPickupOption")
+public class ShopPickupOption {
 
 	private int no;
-	private String name;
-	private ShopProduct shopProduct;
+	private String time;
 }
