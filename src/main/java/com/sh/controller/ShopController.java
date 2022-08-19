@@ -2,32 +2,36 @@ package com.sh.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/shop")
 public class ShopController {
 
 	//쇼핑몰 홈
-	@GetMapping(path="/shop")
+	@GetMapping(path="/")
 	public String shop() {
-		return "shop/home";
+		return "/home";
 	}
 
 	//카테고리별 상품리스트
-	@GetMapping(path="/shop/productlist")
+	// shop/list?mainCategoryNo=1&subCategoryNo=3&locationNo=4
+	@GetMapping(path="/list")
 	public String productList() {
-		return "shop/productList";
+		return "/list";
 	}
 	
 	//상품상세페이지
-	@GetMapping(path="/shop/productdetail")
-	public String productDetail() {
-		return "shop/productDetail";
+	// shop/detail?productNo=14
+	@GetMapping(path="/detail")
+	public String productDetail(int productNo) {
+		return "/detail";
 	}
 	
 	//비회원주문조회
-	@GetMapping(path="/shop/nomem/orderist")
+	@GetMapping(path="/nomem/orderist")
 	public String nomemOrderList() {
-		return "shop/nomem/nomemOrderList";
+		return "/nomem/nomemOrderList";
 	}
 	
 }

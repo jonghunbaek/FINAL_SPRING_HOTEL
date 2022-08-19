@@ -41,6 +41,16 @@
     width: 300px;
     height: 200px;
 }
+#btn-open-modal-detail{color:brown; margin-bottom: 100px;}
+
+#form-select .btn-outline-secondary{ margin-right: 10px; margin-bottom: 10px;}
+
+#dining-main-image {width: 600px; height:400px;}
+
+.modal-main-img-div{width:600px; heigth:250px;}
+
+#modal-main-img{width:600px; heigth:100px;}
+
 </style>
 <title>Spring Hotel</title>
 </head>
@@ -51,7 +61,6 @@
 	<div class="row border-bottom p-5" >
 		<div class="col text-center">
 			<h4>다이닝 예약</h4>
-			<a href='#' id="btn-open-modal-detail2">레스토랑 상세보기 <i class="bi bi-plus-circle"></i></a>
 		</div>
 	</div>
 		<div class="row p-4 border-bottom">
@@ -60,7 +69,7 @@
 				<label class="form-label">호텔 선택</label>
 				<div>
 					<c:forEach var="location" items="${locations }">
-					<input type="radio" class="btn-check" name="hotel" id="hotel-${location.no }" value="${location.no }" autocomplete="off">
+					<input type="radio" class="btn-check" name="hotel" id="hotel-${location.no }" value="${location.no }" autocomplete="off"   >
 					<label class="btn btn-outline-secondary" for="hotel-${location.no }">${location.name }신라호텔</label>
 					</c:forEach>
 				</div>
@@ -97,7 +106,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 			</div>
 			<div class="modal-body">
-				<div class="row">
+				<div class="row modal-main-img-div">
 					<div class="col" id="modal-main-img">
 						<img src="../resources/images/dining/더파크뷰메인.jpg"/>
 					</div>
@@ -118,12 +127,22 @@
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
+	
+	let params = new URLSearchParams(document.location.search);
+	let diningNo = params.get("diningNo");
+	let hotelNo = '${hotel}'
+	
+	$(":radio[id=hotel-${hotel}]").prop('checked', true)
+
+	/* $(":radio[id=hotel-${hotel}]").click(); */
+	
+	//상세창 모달
 	let detailModal = new bootstrap.Modal(document.getElementById("modal-detail"));
 	
-	$("#holtel-info").on('click', "#btn-open-modal-detail", function() {
+	// json이후 추가된 버튼에서 상세정보 모달창 띄우기
+	$("#container").on('click', "#btn-open-modal-detail", function() {
 		detailModal.show();
 	});
-	
 	
 	$(":radio[name=hotel]").change(function() {
 		searchHotel();
@@ -177,8 +196,8 @@ $(function() {
 				$hotelInfo.append(content);
 			} else {
 				let content = '';
-				content += '<div class="col-6">'
-				content += '<img  src="../resources/images/dining/'+dining.imagename+'"/>'
+				content += '<div class="col-6 text-center">'
+				content += '<img id="dining-main-image" src="../resources/images/dining/'+dining.imagename+'"/>'
 				content += '</div>'
 				content += '<div class="col-6">'
 				content += 	'<h4 class="tit" >'+dining.dnInfo.main+'</h4>'

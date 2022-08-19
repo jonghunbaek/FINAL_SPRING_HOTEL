@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @Alias("Room")
-
 public class Room {
 	
 	private int id;
@@ -21,6 +20,7 @@ public class Room {
 	private String rev;
 	private Date checkinPeriod;
 	private String image;
+	private String request;
 	private Location location;
 	private RoomCategory roomCategory; 
 

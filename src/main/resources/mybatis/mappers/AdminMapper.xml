@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.mapper.AdminMapper">
+
+	<resultMap type="Admin" id="AdminResultMap">
+		<id column="admin_no" property="no"/>
+		<result column="admin_password" property="password"/>
+		<result column="admin_email" property="email"/>
+		<result column="admin_tel" property="tel"/>
+		<result column="admin_grade" property="grade"/>
+		<result column="admin_name" property="name"/>
+		<result column="admin_birth" property="birth"/>
+		<result column="admin_address" property="address"/>
+		<result column="admin_postcode" property="postcode"/>
+		<result column="admin_hire_date" property="hireDate"/>
+		<result column="admin_created_date" property="createdDate"/>
+		<result column="admin_updated_date" property="updatedDate"/>
+	</resultMap>
+	
+	<!-- Admin getAdminByEmail(String email); -->
+	<select id="getAdminByEmail" parameterType="string" resultMap="AdminResultMap">
+		select *
+		from sh_admins
+		where admin_email = #{email}
+	</select>
+	
+	<!-- int checkAdminByEmail(String email); -->
+	<select id="checkAdminByEmail" parameterType="string" resultType="int">
+		select count(admin_email) 
+		from sh_admins 
+		where admin_email = #{email}
+	</select>
+	
+	<!-- void insertAdmin(Admin admin); -->
+	<insert id="insertAdmin" parameterType="Admin">
+		insert into sh_admins
+		(admin_no, admin_password, admin_email, admin_tel, admin_grade, admin_name, admin_birth, admin_address, admin_address_detail,
+		 admin_postcode, admin_hire_date, location_no, admin_gender, admin_profile_image)
+		values
+		(admin_seq.nextval, #{password}, #{email}, #{tel}, #{grade}, #{name}, #{birth}, #{address}, #{addressDetail}, #{postcode}, 
+		#{hireDate}, #{location.no}, #{gender}, #{profileImage})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.mapper.RoomMapper">
+
+	<resultMap type="Room" id="RoomResultMap">
+		<id column="room_id" property="id"/>
+		<result column="room_no" property="no"/>
+		<result column="room_name" property="name"/>
+		<result column="room_price" property="price"/>
+		<result column="room_discount_price" property="discountPrice"/>
+		<result column="room_rev" property="rev"/>
+		<result column="room_checkin_period" property="checkinPeriod"/>
+		<result column="room_image" property="image"/>
+		<association property="location" column="location_no" select="com.sh.mapper.DiningMapper.getLocationByNo"></association>
+		<association property="roomCategory" column="room_category_no" select="com.sh.mapper.RoomMapper.getRoomCategoryByNo"></association>
+	</resultMap>
+
+	<!-- Room getRoomById(int id); -->
+	<select id="getRoomById" parameterType="int" resultMap="RoomResultMap">
+		select *
+		from sh_room
+		where room_id = #{id}
+	</select>
+	
+	<!-- RoomCategory getRoomCategoryByNo(int no); -->
+	<select id="getRoomCategoryByNo" parameterType="int" resultType="RoomCategory">
+		select room_category_no as roomCategory, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		from sh_room_category
+		where room_category_no = #{no}
+	</select>
+	
+	<!-- List<RoomCategory> getAllRoomCategories(); -->
+	<select id="getAllRoomCategories" resultType="RoomCategory">
+		select *
+		from sh_room
+		order by room_category_no asc
+	</select>
+	
+	<!-- List<Location> getAllLocations(); -->
+	<select id="getAllLocations" resultType="Location">
+		select 
+			location_no as no,
+			location_name as name
+		from sh_location
+		order by location_no asc
+	</select>
+	
+	<!-- Location getLocationByNo(int no); -->
+	<select id="getLocationByNo" parameterType="int" resultType="Location">
+		select
+			location_no as no,
+			location_name as name
+		from sh_location
+		where location_name = #{value}
+	</select>
+	
+	<!-- 지역별 모든 객실   -->
+	<!-- List<Room> getRoomByLocationNo(int no); // 지역별 객실 리스트가 같으면? --> 
+	<select id="getRoomByLocationNo" parameterType="int" resultMap="RoomResultMap">
+		select *
+		from sh_room
+		where location_no = #{value}
+		order by room_id asc
+	</select>
+	
+	<!-- 지역별 객실  -->
+	<!-- Room getRoomByLNo(int no); -->
+	<select id="getRoomByLNo" parameterType="int" resultMap="RoomResultMap">
+		select *
+		from sh_room
+		where location_no = #{value}
+	</select>
+	
+	<!-- 객실 유형별 객실 정보 -->
+	<!-- Room getRoomByRoomCategoryNo(int no); -->
+	<select id="getRoomByRoomCategoryNo" parameterType="int" resultMap="RoomResultMap">
+		select *
+		from sh_room
+		where room_category_no = #{value}
+	</select>
+	
+	<!-- 모든 객실 어메니티 --> 
+	<!-- List<RoomAmenity> getAllRoomAmenities(); -->
+	<select id="getAllRoomAmenities" resultType="RoomAmenity">
+		select amenity_type as type, amenity_description as description, room_category_no as roomCategory
+		from sh_room_amenity
+		order by room_category_no asc
+	</select>
+	
+	<!-- 객실별 어메니티 --> 
+	<!-- RoomAmenity getRoomAmenityByRoomNo(int no); -->
+	<select id="getRoomAmenityByRoomNo" parameterType="int" resultType="RoomAmenity">
+		select a.amenity_type as type, a.amenity_description as description, a.room_category_no as roomCategory, r.room_no as no
+		from sh_room_amenity a, sh_room r
+		where r.room_category_no = a.room_category_no
+	</select>
+	
+	<!-- 모든 객실 detail -->
+	<!-- List<RoomInfo> getAllRoomInfo(); -->
+	<select id="getAllRoomInfo" resultType="RoomInfo">
+		select room_info_detail_image as image, room_info_room as room, 
+				room_info_etc as etc, room_info_service as service, room_info_side as side, 
+				room_category_no as roomCategory
+		from  sh_room_info
+		order by room_category_no asc
+	</select>
+	
+	<!-- 객실별 detail -->
+	<!-- RoomInfo getRoomInfoByRoomNo(int no); -->
+	<select id="getRoomInfoByRoomNo" parameterType="int" resultType="RoomInfo">
+		select i.room_info_detail_image as image, i.room_info_room as room, 
+				i.room_info_etc as etc, i.room_info_service as service, i.room_info_side as side, 
+				i.room_category_no as roomCategory, r.room_no as no
+		from  sh_room_info i, sh_room r
+        where i.room_category_no = r.category_no
+	</select>
+	
+	<!-- 모든 룸 옵션 - 조식, 엑스트라 베드 -->
+	<!-- List<RoomOptions> getAllRoomOptions(); -->
+	<select id="getAllRoomOptions" resultType="RoomOptions">
+		select room_option_no as no, room_option_name as name, room_option_price as price
+		from sh_room_options
+		order by room_option_no asc
+	</select>
+	
+	<!-- 객실별 룸 옵션 - id로 받아 roomNo은 중복일 수 있다  -->
+	<!-- RoomOptions getRoomOptionsByRoomId(int id); -->
+	<select id="getRoomOptionsByRoomId" parameterType="int" resultType="RoomOptions">
+		select o.room_option_no as no, o.room_option_name as name, o.room_option_price as price, r.room_id as id
+		from sh_room_options o, sh_room r
+		where o.room_category_no = r.room_category_no
+	</select>
+	
+	<!-- 객실 검색  -->
+	<!-- List<Room> getAllRoomsByRoomId(RoomCriteria roomCriteria);  -->
+	<select id="getAllRoomsByRoomId" parameterType="int" resultMap="RoomResultMap">
+		select *
+		from sh_room
+		where room_id = #{value}
+		order by room_id asc
+	</select> 
+	<!-- 객실 이름으로 조회 -->
+	<!-- Room getRoomByRoomName(String name); -->
+	<select id="getRoomByRoomName" parameterType="String" resultMap="RoomResultMap">
+		select *
+		from sh_room
+		where sh_room_name = #{value}
+	</select>
+	
+	<resultMap type="RoomRev" id="RoomRevResultMap">
+		<id column="room_rev_no" property="no"/>
+		<result column="room_rev_adult" property="adult"/>
+		<result column="room_rev_child" property="child"/>
+		<result column="room_rev_total_price" property="totalPrice"/>
+		<result column="room_rev_checkin" property="checkin"/>
+		<result column="room_rev_checkout" property="checkout"/>
+		<result column="room_rev_checkin_time" property="checkinTime"/>
+		<result column="room_rev_checkout_time" property="checkoutTime"/>
+		<result column="room_rev_request" property="request"/>
+		<result column="room_rev_status" property="status"/>
+		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
+		<result column="room_rev_created_date" property="createdDate"/>
+		<result column="room_rev_updated_date" property="updatedDate"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
+		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
+	</resultMap>
+
+
+<!-- // 객실 예약  -->
+	
+	<!-- void insertRoomRev(RoomReservationForm revForm); -->
+	<insert id="insertRoomRev" parameterType="com.sh.web.form.RoomReservationForm">
+		insert into room_rev
+			(room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time,
+			room_rev_checkout_time, room_name, room_rev_request, room_bedType)
+		values(#{adult}, #{child}, #{price}, #{checkinTime}, #{checkoutTime},
+				 #{roomName}, #{request}, #{bedType});
+				 
+		insert into sh_location
+			(location_name)
+		values (#{locationName});
+		
+		insert into sh_users
+			(user_title, user_name, first_name, last_name, user_email, user_tel, user_country)
+		values (#{locationName}, #{name}, #{firstname}, #{lastname}, #{email}, #{tel}, #{country});
+		
+		insert into sh_room_options
+			(room_option_name, room_option_price)
+		values (#{roomOptionName}, #{roomOptionPrice});
+		
+		insert into sh_pay
+			(pay_card_type, pay_card_number, pay_valid_date)
+		values (#{cardType}, #{cardNumber}, #{cardValidThru})
+	</insert>
+	
+	<!-- 예약번호로 예약정보 가져오기 -->
+	<!-- RoomRev getRoomRevByRoomRevNo(int no); -->
+	<select id="getRoomRevByRoomRevNo" parameterType="int" resultMap="RoomRevResultMap">
+		select *
+		from sh_room_rev
+		where room_rev_no =#{value}
+	</select>
+
+</mapper>
+
+

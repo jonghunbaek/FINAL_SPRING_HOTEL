@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sh.mapper.DiningMapper">
+
+	<!-- void insertReservation(RtRev rtRev); -->
+	<insert id="insertReservation" parameterType="RtRev">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select rt_rev_seq.nextval
+			from dual
+		</selectKey>
+		insert into sh_rt_rev
+		(rt_rev_no, rt_rev_adult, rt_rev_child, rt_rev_baby, rt_rev_visit_time,
+		rt_seat_type, rt_rev_request, rt_rev_created_date, rt_rev_updated_date, dn_no, user_id,
+		rt_rev_visit_date, rt_rev_meal_time, rt_rev_is_member, rt_rev_is_allergy, rt_rev_name,
+		rt_rev_email, rt_rev_tel, rt_rev_card_sort, rt_rev_card_num1, rt_rev_card_num2, rt_rev_card_num3, rt_rev_card_num4,
+		rt_rev_card_expiry_month, rt_rev_card_expiry_year, rt_rev_reservation_no)
+		values
+		(#{no}, #{adult}, #{child}, #{baby}, #{visitTime}, #{seatType}, #{request}, sysdate, sysdate, #{dn.no}, 
+		#{user.id}, #{visitDate}, #{mealTime}, #{isMember}, #{isAllergy}, #{name}, #{email}, #{tel}, #{cardSort}, 
+		#{cardNum1}, #{cardNum2}, #{cardNum3}, #{cardNum4}, 
+		#{cardExpiryMonth}, #{cardExpiryYear}, #{reservationNo})
+	</insert>
+	
+	<!-- void insertAllergySelected(); -->
+	<insert id="insertAllergySelected">
+		insert into SH_RT_ALLERGY_SELECTED
+		(rt_rev_no, allergy_no)
+		values
+		(#{rtRevNo}, #{allergyNo})
+	</insert>
 	
 	<!-- Location getLocationByNo(int no); -->
 	<select id="getLocationByNo" parameterType="int" resultType="Location">
@@ -8,6 +35,15 @@
 			   location_name as name
 		from sh_location
 		where location_no = #{value}
+	</select>
+	
+	<!-- Location getLocationByDnNo(int dnNo); -->
+	<select id="getLocationByDnNo" parameterType="int" resultType="Location">
+		select a.location_no as no,
+			a.location_name as name
+		from sh_location a, sh_dn d
+		where a.location_no = d.location_no
+		and d.dn_no = #{value}
 	</select>
 
 	<!-- List<Location> getAllLocations(); -->
@@ -26,7 +62,7 @@
 	</select>
 	
 	<!-- DiningInfo getDiningInfoByNo(int no); -->
-	<select id="getDiningInfoByNo" parameterType="int"	 resultType="DnInfo">
+	<select id="getDiningInfoByNo" parameterType="int"	resultType="DnInfo">
 		select dn_info_main as main,
 			   dn_info_detail as detail,
 			   dn_info_location as location,
@@ -50,8 +86,15 @@
 		<result column="dn_name" property="name"/>
 		<result column="dn_image" property="imagename"/>
 		<result column="dn_max_count" property="maxCount"/>
-		<association property="location" column="locatino_no" select="getLocationByNo"/>
+		<association property="location" column="dn_no" select="getLocationByDnNo"/>
 		<association property="dnInfo" column="dn_no" select="getDiningInfoByNo"/>
+	</resultMap>
+	
+	<resultMap type="DnRev" id="DiningRevResultMap">
+		<result column="dn_rev_meal_time" property="mealTime"/>
+		<result column="dn_rev_week" property="week"/>
+		<result column="dn_rev_time" property="time"/>
+		<association property="dn" column="dn_no" select="getDiningByNo"/>
 	</resultMap>
 	
 	<!-- Dining getDiningByNo(int no); -->
@@ -61,6 +104,33 @@
 		where dn_no = #{value}
 	</select>
 	
+	<!-- DnRev getDiningRevByNo(int no); -->
+	<select id="getDiningRevByNo" parameterType="int" resultMap="DiningRevResultMap">
+		select *
+		from sh_dn_rev
+		where dn_no = #{value}
+	</select>
 	
+	<!-- String getMealTimeByNo(int no); -->
+	<select id="getMealTimeByNo" parameterType="int" resultType="DnMealTime">
+		select distinct dn_rev_meal_time as mealTime
+		from sh_dn_rev
+		where dn_no = #{value}
+	</select>
 	
+	<select id="getTimeByParaMeters" resultType="String">
+		select dn_rev_time
+		from sh_dn_rev
+		where dn_no = #{no}
+		and dn_rev_meal_time = #{mealTime}
+		and dn_rev_week = #{week}
+	</select>
+	
+	<select id="getAllAllergies" resultType="Allergy">
+		select 
+			allergy_no as no,
+			allergy_type as type
+		from sh_rt_allergy
+		order by allergy_no asc
+	</select>
 </mapper>
