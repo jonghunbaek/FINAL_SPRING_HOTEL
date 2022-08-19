@@ -267,7 +267,7 @@
 <body>
 <c:set var="menu" value="roomrev"/>
 <%@ include file="../common/nav.jsp" %>
-<div class="container-fluid">
+<div class="container-fluid" style="background-color:RGB(245, 246, 250);">
 	<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 pb-3">
 		<p id="keymap">
 			<span data-feather="monitor"></span>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span data-feather="home"></span>
@@ -508,16 +508,14 @@
 	          </div>
           </div>
           <div class="row">
-	          <div class="col mb-3">
+	          <div class="col-8 mb-3">
 	            <label for="recipient-name" class="col-form-label">숙박기간</label>
 	            <input type="text" class="form-control" name="checkinPeriod" id="checkin-modal">
 	          </div>
-          </div>
-          <div class="row">
-          	  <div class="col-4 mb-3">
+	          <div class="col-4 mb-3">
 	            <label for="recipient-name" class="col-form-label">체크인 예정시간</label>
 	            <select class="form-select form-select-sm" name="timeOption" id="timeOption-modal">
-					<option value="14:00" selected >14:00</option>
+					<option value="14:00" >14:00</option>
 					<option value="15:00" >15:00</option>
 					<option value="16:00" >16:00</option>
 					<option value="17:00" >17:00</option>
@@ -527,10 +525,19 @@
 					<option value="21:00" >21:00</option>
 				</select>
 	          </div>
+          </div>
+          <div class="row">
+          	  <div class="col-4 mb-3">
+	            <label for="recipient-name" class="col-form-label">침대 타입</label>
+	            <select class="form-select form-select-sm" name="bedType" id="bedType-modal">
+					<option value="F" >패밀리더블</option>
+					<option value="T">트윈</option>
+					<option value="D">더블</option>
+				</select>
+	          </div>
 	          <div class="col-4 mb-3">
 	            <label for="recipient-name" class="col-form-label">예약상태</label>
 	            <select class="form-select form-select-sm" name="status" id="status-modal">
-					<option value="" selected disabled>=====</option>
 					<option value="O" >임박</option>
 					<option value="I">체크인</option>
 					<option value="T">체크아웃</option>
@@ -541,7 +548,6 @@
 	          <div class="col-4 mb-3">
 	            <label for="recipient-name" class="col-form-label">지점</label>
 	            <select class="form-select form-select-sm" id="location-modal" disabled>
-			  		<option value="0" selected disabled>=====</option>
 					<option value="1">서울</option>
 					<option value="2">부산</option>
 					<option value="3">제주</option>
@@ -597,8 +603,7 @@ $(function() {
 		       }
 				queryString += "&revNo=" + $(this).val();
 		 	 })
-		$.getJSON("/admin/roomrev/delete", queryString)
-		
+		$.getJSON("/admin/roomrev/delete", queryString)	
 	}
 	
 	// 예약상세 클릭
@@ -657,7 +662,6 @@ $(function() {
 	// 모달창 닫힐때 수정내역 반영한 리스트 재노출
 	$('#room-rev-detail').on('hidden.bs.modal', function () {
 		let currentPage = $(".pagination .active").attr("data-tag");
-		console.log(currentPage);
 		filterRev(currentPage); 
 	})
 	
@@ -670,69 +674,45 @@ $(function() {
 	$('#room-rev-detail').on('click', '#checkin-modal', function() {
 		let roomRevNo= parseInt($("#revNo-modal").val());
 		checkPeriod(roomRevNo);	
-		
-		/* setTimeout(function() {
-			flat = 	flatpickr(input, {
-				mode: "range",
-				locale: "ko",
-				disable: [{from: periods[0], to: periods[1]}]
-				}); 
-			flat.open();
-		}, 500)  */
-
-		periods=[];
 	})
 	
 	// 모달창 숙박기간 클릭 시 ajax로 서버에서 해당 room_id의 예약정보 중 체크인,체크아웃 기간을 가져와 선택불가 상태로 만든다.
-	
 	function checkPeriod(revNo) {
 		let queryString = "revNo=" + revNo; 
 		
-		$.getJSON("/admin/roomrev/checkPeriod", queryString, function(results) {
-			$.each(results, function(index, result) {
-				periods.push(result.checkinTime);
-				periods.push(result.checkoutTime);
-			})
-			
+		// getJSON(1)과 ajax차이(2) : 1은 무조건 비동기방식으로 json을 가져옴 2는 사용자에따라 설정을 추가,변경 할수 있음 
+		$.ajax({
+			async: false,
+			type: 'get',
+			url: "/admin/roomrev/checkPeriod", 
+			data: queryString, 
+			success: function(results) {
+		
+				$.each(results, function(index, result) {
+					periods.push(result.checkinTime);
+					periods.push(result.checkoutTime);
+				})
+			}
+		});
 	 	console.log(periods.length);
 		
-		// 아래방식 왜 안되는지 질문해보자-----------------------------------------------------
+		let disabled = [];
 		for(let i=0; i<periods.length; i+=2) {
-			
-			if (i == (periods.length-2)) {
-				periodsQuery += '{from: "'+periods[i]+'", to: "'+periods[i+1]+'"}';
-			} else {				
-				periodsQuery += '{from: "'+periods[i]+'", to: "'+periods[i+1]+'"},';
-			}
+			disabled.push({from: periods[i], to: periods[i+1]});
 			console.log(periodsQuery);
 		}
 		
-		setTimeout(function() {
-			flat = 	flatpickr(input, {
-				minDate: "today",
-				mode: "range",
-				locale: "ko",
-				dateFormat:"Y-m-d",
-				disable: [periodsQuery]
-				}); 
-			flat.open();
-		}, 500)
-		});
+		flat = 	flatpickr(input, {
+			minDate: "today",
+			mode: "range",
+			locale: "ko",
+			dateFormat:"Y-m-d",
+			disable: disabled
+		}); 
+		flat.open();
+		
 		periods=[];
 	}
-	// 숙박기간(모달)
-	/* let input = $("#checkin-modal");
-	let flat = 	flatpickr(input, {
-				mode: "range",
-				locale: "ko",
-				disable: [
-						{
-							from: periods[0],
-							to: periods[1]
-						}
-					]
-				});  */
-
 	
 	// 모달창 상세정보 수정
 	function modalDetailUpdate(revNo) {
@@ -746,6 +726,7 @@ $(function() {
 		let queryString = "revNo=" + revNo;
 		
 		$.getJSON("/admin/roomrev/detail", queryString, function(result) {
+			
 			$("#revNo-modal").attr('value', result.no);
 			$("#revNo-hidden").attr('value', result.no);
 			$("#roomNo-modal").attr('value', result.room.no);
@@ -757,18 +738,28 @@ $(function() {
 			
 			let timeOption = result.optionCheckinTime;
 			// 셀렉트박스 옵션값 모두 가져오기
-			let timeOptions = $('#timeOption-modal').find('option').map(function() {return $(this).val();}).get()
+			let timeOptions = $('#timeOption-modal').find('option').map(function() {return $(this).val();}).get();
 			$.each(timeOptions, function(index, option) {
 				if (timeOption == option) {
-					$("#timeOption-modal option:eq("+index+")").attr('selected', 'selected');
+					$("#timeOption-modal option:eq("+index+")").prop('selected', true);
+				}
+			})
+			
+			let bedType = result.bedType;
+			console.log(bedType);
+			let bedTypes = $('#bedType-modal option').map(function() {return $(this).val();}).get();
+			console.log(bedTypes);
+			$.each(bedTypes, function(index, option) {
+				if (bedType == option) {
+					$("#bedType-modal option:eq("+index+")").prop('selected', true);
 				}
 			})
 			
 			let status = result.status;
-			let statusOptions = $('#status-modal').find('option').map(function() {return $(this).val();}).get()
+			let statusOptions = $('#status-modal').find('option').map(function() {return $(this).val();}).get();
 			$.each(statusOptions, function(index, option) {
 				if (status == option) {
-					$("#status-modal option:eq("+index+")").attr('selected', 'selected');
+					$("#status-modal option:eq("+index+")").prop('selected', true);
 				}
 			})
 			
@@ -776,13 +767,14 @@ $(function() {
 			let locationOptions = $('#location-modal').find('option').map(function() {return $(this).val();}).get()
 			$.each(locationOptions, function(index, option) {
 				if (location == option) {
-					$("#location-modal option:eq("+index+")").attr('selected', 'selected');
+					$("#location-modal option:eq("+index+")").prop('selected', true);
 				}
 			})
 			
 			$("#request-modal").val(result.request);
 		})
 		roomRevDetail.show();
+		
 	}
 	
 	// 예약정보 조건별 조회
@@ -869,14 +861,6 @@ $(function() {
 		mode: "range",
 		locale: "ko"
 		});
-	
-	// 숙박기간(모달)
-	/*  $("#checkin-modal").flatpickr({
-		mode: "range",
-		locale: "ko"
-		}); */
-	
-	
 })
 </script>
 </body>
