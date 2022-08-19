@@ -67,13 +67,6 @@
 		where user_email = #{value}
 	</select>
 	
-	<!-- User getUserByNo(int no); -->
-	<select id="getUserByNo" parameterType="int" resultMap="UserResultMap">
-		select *
-		from sh_users
-		where user_no = #{value}
-	</select>
-	
 	<!-- int idCheck(String id); -->
 	<select id="idCheck" parameterType="String" resultType="int">
 		select count(user_id)

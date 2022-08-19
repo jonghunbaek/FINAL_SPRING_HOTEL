@@ -149,8 +149,8 @@ public class HomeController {
 	
 	// 로그아웃
 	@GetMapping(path = "/logout")
-	public String logout() {
-		SessionUtils.sessionInvlidate();
+	public String logout(SessionStatus sessionStatus) {
+		sessionStatus.setComplete();
 
 		return "redirect:/";
 	}
