@@ -11,8 +11,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Alias("Product")
-public class Product {
+@Alias("ShopProduct")
+public class ShopProduct {
 	
 	private int no;
 	private String name;
@@ -26,9 +26,9 @@ public class Product {
 	private Date maxDate;
 	private Date createdDate;
 	private Date updatedDate;
-	private MainCategory mainCategory;
-	private SubCategory subCategory;
-	private ShopBusiness shopBusiness;
+	private ShopMainCategory mainCategory;
+	private ShopSubCategory subCategory;
+	private ShopBusiness business;
 	private Location location;
 	private int price;
 	private int discountRate;

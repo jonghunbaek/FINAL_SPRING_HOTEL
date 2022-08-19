@@ -9,14 +9,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Alias("ShopInventory")
-public class ShopInventory {
+@Alias("SubCategory")
+public class ShopSubCategory {
 
 	private int no;
-	private Location location;
-	private Product product;
-	private String onSell;
-	private int stock;
-	
-	
+	private String name;
+	private ShopMainCategory maincategory;
 }
