@@ -13,7 +13,6 @@ public interface UserMapper {
 
 	User getUserByEmail(String email);
 	User getUserById(String id);
-	User getUserByNo(int no);
 	int idCheck(String id);
 	int emailCheck(String email);
 	int passwordCheck(String id, String password);

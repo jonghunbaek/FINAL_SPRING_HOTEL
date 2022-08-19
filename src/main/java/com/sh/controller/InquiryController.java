@@ -24,8 +24,6 @@ public class InquiryController {
 
 	@Autowired
 	private InquiryService inquiryService;
-	@Autowired
-	private UserService userService;
 	
 		/** 문의내역 입력
 		 * @param inquiryForm
