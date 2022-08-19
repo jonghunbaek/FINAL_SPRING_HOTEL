@@ -17,6 +17,7 @@ public class AdminRoomRevUpdateForm {
 	private String status;
 	private String request;
 	private String timeOption;
+	private String bedType;
 	
 	private String checkinDate;
 	private String checkoutDate;
