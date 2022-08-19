@@ -11,6 +11,6 @@ import lombok.Getter;
 @Alias("Location")
 
 public class Location {
-	private int no;
+	private Integer no;
 	private String name;
 }

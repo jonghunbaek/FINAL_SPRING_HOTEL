@@ -4,9 +4,10 @@
 
 	<resultMap type="User" id="UserResultMap">
 		<id column="user_id" property="id"/>
+		<result column="user_no" property="no"/>
 		<result column="user_password" property="password"/>
 		<result column="user_name" property="name"/>
-		<result column="user_eamil" property="email"/>
+		<result column="user_email" property="email"/>
 		<result column="user_tel" property="tel"/>
 		<result column="user_postcode" property="postcode"/>
 		<result column="user_address" property="totalAddress"/>
@@ -22,7 +23,7 @@
 		<select id="getUserById" parameterType="string" resultMap="UserResultMap">
 			select *
 			from sh_users
-			where user_id = #{id}
+			where user_id = #{value}
 		</select>
 		
 	<!-- User getUserByEmail(String email); -->
@@ -30,6 +31,13 @@
 		select *
 		from sh_users
 		where user_email = #{value}
+	</select>
+	
+	<!-- User getUserByNo(int no); -->
+	<select id="getUserByNo" parameterType="int" resultMap="UserResultMap">
+		select *
+		from sh_users
+		where user_no = #{value}
 	</select>
 	
 	<!-- int idCheck(String id); -->
@@ -40,7 +48,7 @@
 	</select>
 	
 	<!-- int emailCheck(String email); -->
-	<select id="emailCheck"  parameterType="String" resultType="int">
+	<select id="emailCheck"  parameterType="string" resultType="int">
 		select count(user_email)
 		from sh_users
 		where user_email = #{email}
@@ -70,4 +78,22 @@
 			user_updated_date = sysdate
 		where user_id = #{id}
 	</update>
+	
+	<!-- String fineId(@Param("name") String name, @Param("email")String email); 
+		 mapper 인터페이스에서 parameter 설정 parameterType 설정을 하지 않아도 된다.
+	-->
+	<select id="fineId" resultType="string">
+		select user_id
+		from sh_users
+		where user_name = #{name} 
+		and user_email = #{email}
+	</select>
+	
+	<!-- String finePw(@Param("id") String id, @Param("email")String email); -->
+	<select id="finePw" resultType="string">
+		select user_password
+		from sh_users
+		where user_id = #{id} 
+		and user_email = #{email}
+	</select>
 </mapper>

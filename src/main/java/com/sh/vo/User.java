@@ -19,7 +19,7 @@ import lombok.ToString;
 @Builder
 public class User {
 		
-		private int no;
+		private Integer no;
 		private String id;
 		private String password;
 		private String name;

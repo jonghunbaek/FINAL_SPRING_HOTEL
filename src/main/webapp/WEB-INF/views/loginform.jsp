@@ -44,10 +44,9 @@
 			<!--  로그인 폼 -->
 			<div class="tabForm">
 				<div class="loginheader">
-					<div class="loginimage"><a href="#"><img src="resources/images/login_mem_on.jpg" alt="회원"></a></div>
-					<div class="loginimage"><a href="#"><img src="resources/images/login_nomem_off.jpg" alt="비회원"></a></div>
+				<p><strong>회원</strong></p>
+					<!-- <div class="loginimage"><a href="#"><img src="resources/images/login_mem_on.jpg" alt="회원"></a></div> -->
 				</div>
-				
 				<div class="tabContent">
 					<div class="allBox">
 						<div class="box">
@@ -56,30 +55,35 @@
 									<div class="inputForm">
 										<div class="inputId">
 											<input type="text" class="id" name="id" id="id-field"
-												onkeydown="javascript: if(event.keyCode == 13) loginSubmit()"
-												placeholder="스프링리워즈 번호 또는 아이디 입력" onfocus="this.placeholder = ''"
-												onblur="this.placeholder = '스프링리워즈 번호 또는 아이디 입력'">
+												placeholder="스프링리워즈 아이디 입력" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = '스프링리워즈 아이디 입력'">
 										</div>
+										<input class="mainBtn" type="image" src="resources/images/loginBtnLogin.gif"/>
 										<div class="inputPw">
 											<input type="password" class="pw" name="password" id="password-field" maxlength="20"
-												onkeydown="javascript: if(event.keyCode == 13) loginSubmit()"
 												placeholder="비밀번호 입력" onfocus="this.placeholder = ''"
 												onblur="this.placeholder = '비밀번호 입력'">
 										</div>
+										<c:if test="${param.fail eq 'invalid'}">
+								        	<div class="alert alert-danger">
+								        		<string>로그인 실패</string>아이디 혹은 비밀번호가 올바르지 않습니다.
+								        	</div>
+							        	</c:if>
+									</div>
+								</form>
 										<div class="loginBtn">
-										<input type="image" src="resources/images/loginBtnLogin.gif"/>
 							    		<%-- 
 							    			카카오 로그인 처리중 중 오류가 발생하면 아래 경고창에 표시된다.
 							    			카카오 로그인 오류는 스크립트에서 아래 경고창에 표시합니다.
 							    		 --%>
 							    			<div class="alert alert-danger d-none" id="alert-kakao-login">오류 메세지</div>
 							    			<a id="btn-kakao-login" href="kakao/login">
-							  					<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="150" height="60" alt="카카오 로그인 버튼"/>
+							  					<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="190" height="60" alt="카카오 로그인 버튼"/>
+											</a>
+											<a id="btn-naver-login" href="#">
+												<img src="resources/images/btnG_완성형.png" width="190" height="60" alt="네이버 로그인 버튼"/>
 											</a>
 										</div>
-									</div>
-								</form>
-								
 								<form id="form-kakao-login" method="post" action="kakao-login">
 						    		<input type="hidden" name="id" />
 						    		<input type="hidden" name="nickname" />
@@ -88,16 +92,10 @@
 						    		<input type="hidden" name="gender" />
 						    	</form>
 						    	
-								<div>
-									<button class="btnJoin">
-									<a href="/register">스프링리워즈 가입</a> 
-									</button>
-									<button class="btnLostId">
-									<a href="javascript:popForId('mem');" id="popForIdButton">아이디 찾기</a>
-									</button>
-									<button class="btnLostPw">
-									<a href="javascript:popForPw('mem');" id="popForPwButton">비밀번호찾기</a>
-									</button>
+								<div class="button">
+									<button type="button" onclick="location.href='/register'" >스프링리워즈 가입</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#fineId">아이디 찾기</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#finePw">비밀번호찾기</button>
 								</div>
 							</div>
 						</div>
@@ -106,7 +104,70 @@
 					<div class="loginT">
 						<p>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</p>
 					</div>
+		
+					<!-- fineIdModal -->
+					<div class="modal fade" id="fineId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel"><strong>스프링리워즈 아이디 찾기</strong></h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+				        	<table class="table finedId">
+						      	<tr>
+							    	<td><label>성명</label></td>
+							    	<td><input type="text" class="form-control" id="name" name="name" placeholder="스프링리워즈 이름 입력"
+							    		onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'"></td>
+						      	</tr>
+						      	<tr>
+							        <td><label>이메일</label></td>
+							        <td><input type="text" class="form-control" id="email" name="email" placeholder="스프링리워즈 이메일 입력"
+							        onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 입력'"></td>
+						      	</tr>
+					      	</table>
+					      	<div class="showId"> 
+					      	</div>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="button" class="btn text-white" style="background-color:#856F5D;" onclick="findId()">확인</button>
+					        <button type="button" class="btn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 					
+					<!-- finePwModal -->
+					<div class="modal fade" id="finePw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel"><strong>스프링리워즈 비밀번호 찾기</strong></h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+					      	<table class="table finedPw" >
+						      	<tr>
+							    	<td><label>아이디</label></td>
+							    	<td><input type="text" class="form-control" id="id" name="id" placeholder="스프링리워즈 아이디 입력"
+							    		onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'"></td>
+						      	</tr>
+						      	<tr>
+							        <td><label>이메일</label></td>
+							        <td><input type="text" class="form-control" id="email2" name="email" placeholder="스프링리워즈 이메일 입력"
+							        onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 입력'"></td>
+						      	</tr>
+					      	</table>
+					      	<div class="showPw"> 
+					      	</div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn text-white" style="background-color:#856F5D;" onclick="findPw()">확인</button>
+					        <button type="button" class="btn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -218,6 +279,54 @@
 					   -->
 <%@ include file="common/footer.jsp"%>
 <script>
+//아이디 찾기
+function findId() {
+	let name = document.getElementById('name').value;
+	let email = document.getElementById('email').value;
+	
+	$.ajax({
+		url: '/findId',
+		type: 'post',
+		data: {"name":name, "email":email},
+		success:function(data){
+			if(data == 0) {
+				alert("아이디가 존재하지 않습니다.");
+			} else {
+				$(".finedId").css('display','none');
+				let content = '<p class="text-center">아이디는 <strong>'+data+'</strong> 입니다.</p>';
+				$(".showId").append(content);
+			}
+		}, 
+		error:function(){
+			alert("에러입니다.");
+		}
+	})
+};
+
+//비밀번호 찾기
+function findPw() {
+	let id = document.getElementById('id').value;
+	let email = document.getElementById('email2').value;
+	
+	$.ajax({
+		url: '/findPw',
+		type: 'post',
+		data: {"id":id, "email":email},
+		success:function(data){
+			if(data == 0) {
+				alert("아이디 혹은 이메일이 잘못되었습니다.");
+			} else {
+				$(".finedPw").css('display','none');
+				let content = '<p class="text-center">비밀번호는 <strong>'+data+'</strong> 입니다.</p>';
+				$(".showPw").append(content);
+			}
+		}, 
+		error:function(){
+			alert("에러입니다.");
+		}
+	})
+};
+
 $(function() {
 	$("#loginForm").submit(function() {
 		let emailValue = $("#id-field").val();  
@@ -232,6 +341,34 @@ $(function() {
 			return false;
 		}
 	});
+	
+	
+	function findId_click(){
+		let name=$('#name').val()
+		let email=$('#email').val()
+		
+		$.ajax({
+			url:"./find_id",
+			type:"POST",
+			data:{"name":name, "email":email} ,
+			success:function(data){
+				if(data == 0){
+					$('#id_value').text("회원 정보를 확인해주세요!");
+					$('#name').val('');
+					$('#email').val('');
+				} else {
+					$('#id_value').text(data);
+					$('#name').val('');
+					$('#email').val('');
+					
+				}
+			},
+			 error:function(){
+	                alert("에러입니다");
+	            }
+		});
+	};
+	
 	
 	// 카카오 로그인 버튼을 클릭할 때 실행할 이벤트 핸들러 함수를 등록한다.
 	$('#btn-kakao-login').click(function(event){
