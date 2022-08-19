@@ -140,6 +140,7 @@
 		where room_id = #{value}
 		order by room_id asc
 	</select> 
+	
 	<!-- 객실 이름으로 조회 -->
 	<!-- Room getRoomByRoomName(String name); -->
 	<select id="getRoomByRoomName" parameterType="String" resultMap="RoomResultMap">
@@ -171,19 +172,19 @@
 	
 	<!-- void insertRoomRev(RoomReservationForm revForm); -->
 	<insert id="insertRoomRev" parameterType="com.sh.web.form.RoomReservationForm">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select room_rev_seq.nextval 
+			from dual
+		</selectKey>
 		insert into room_rev
-			(room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time,
-			room_rev_checkout_time, room_name, room_rev_request, room_bedType)
-		values(#{adult}, #{child}, #{price}, #{checkinTime}, #{checkoutTime},
-				 #{roomName}, #{request}, #{bedType});
-				 
-		insert into sh_location
-			(location_name)
-		values (#{locationName});
+			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time,
+			room_rev_checkout_time, room_name, room_rev_request, room_bedType, location_name)
+		values(#{no}, #{adult}, #{child}, #{totalPrice}, #{checkinTime}, #{checkoutTime},
+				 #{roomName}, #{request}, #{bedType}, #{locationName});
 		
 		insert into sh_users
 			(user_title, user_name, first_name, last_name, user_email, user_tel, user_country)
-		values (#{locationName}, #{name}, #{firstname}, #{lastname}, #{email}, #{tel}, #{country});
+		values (#{title}, #{name}, #{firstname}, #{lastname}, #{email}, #{tel}, #{country});
 		
 		insert into sh_room_options
 			(room_option_name, room_option_price)
@@ -199,7 +200,7 @@
 	<select id="getRoomRevByRoomRevNo" parameterType="int" resultMap="RoomRevResultMap">
 		select *
 		from sh_room_rev
-		where room_rev_no =#{value}
+		where room_rev_no = #{value}
 	</select>
 
 </mapper>
