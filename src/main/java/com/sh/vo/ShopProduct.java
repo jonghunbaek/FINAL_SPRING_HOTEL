@@ -5,9 +5,10 @@ import java.util.Date;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString
@@ -16,7 +17,7 @@ public class ShopProduct {
 	
 	private int no;
 	private String name;
-	private String imgName;
+	private String imageName;
 	private String detail;
 	private String composition;
 	private String caution;
@@ -33,4 +34,11 @@ public class ShopProduct {
 	private int price;
 	private int discountRate;
 	private String deleted;
+	
+	public ShopProduct(int no, String businessName) {
+		this.mainCategory = new ShopMainCategory(no);
+		this.business = new ShopBusiness(businessName);
+	};
+
+
 }

@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -32,7 +34,7 @@
 <!-- PRODUCT IMAGE THUMBNAIL -->
 		<div class="col" style="float:left; width:560px; height:680px; ">
 			<div class="image-input" style="margin: 0 0 34px; height:75%;">
-				<img id="thumb-img" src="../resources/images/shop/product/lh_product_021.jpg" style="width:100%; height:100%; object-fit: cover;">
+				<img id="thumb-img" src="../resources/images/shop/product/${product.imageName }.jpg" style="width:100%; height:100%; object-fit: cover;">
 			</div>
 			<div class="thumb-list" style=" height:15%; text-align: center;">
 				<span style="display: inline-block; overflow: hidden;opacity: 1;border:1px solid transparent; width: 80px;height: 80px;"><img src="../resources/images/shop/product/lh_product_021.jpg" onmouseenter="changeImage(this);" style="width:100%; height:100%;"></span>
@@ -55,8 +57,8 @@
 	<!-- PRODUCT TITLE AND PRICE -->
 			<div class="row" style="">
 				<h1 class="title" style="margin-top:25px;font-size: 40px;font-weight: 400;">
-					<span style="margin-bottom: 10px;font-size: 16px;display: block;color: #666;word-spacing: 2px;">[선택한 하위 카테고리 ex)스프링호텔 어디지점]</span>
-					프리미엄 애플망고 빙수
+					<span style="margin-bottom: 10px;font-size: 16px;display: block;color: #666;word-spacing: 2px;">[스프링호텔 ${product.location.name } ${product.business.name }]</span>
+					${product.name }
 				</h1>
 				<p class="txt-blank" style="margin: 10px 0 40px;"></p>
 			</div>
@@ -68,7 +70,7 @@
 					<p style="font-weight:500;vertical-align:middle;font-size: 28px;display:inline-block;">
 						<span style="margin-right:10px;width:35px;font-size: 16px;display:inline-block; font-weight:400;vertical-align:middle;">
 						KRW</span>
-						<span id="productPrice">49000</span>
+						<span id="productPrice"><fmt:formatNumber value="${product.price }"/></span>
 					</p>
 				</div> 
 			</div>
@@ -209,22 +211,23 @@
 			<h5>상품소개</h5>
 		</div>
 		<div class="col-8" style="padding-left:6px; vertical-align:top;color: #666;margin-inline-start: 20px;">
-			<div class="productcategory-caution">
+			<div class="product-detail">
 				<ul>
-					<li style="line-height:2;">롯데호텔의 마스터 셰프의 요리를 집에서 편하게 즐기세요.</li>
-					<li style="line-height:2;">셰프들의 정성이 담긴 드라이브 스루 제품은 소중한 자리에 특별함을 더해드립니다. </li>
+					<li style="line-height:2;">${product.detail }</li>
 				</ul>
 			</div>
-			<div class="productcategory-caution">
+		</div>
+	</div>
+	<div class="row" style="border-top: 1px solid #DCDCDC; padding: 25px 50px;">
+		<div class="col-3" style=" font-size: 18px;text-align:center;display:table-cell;vertical-align:top;font-weight: 500;">
+			<h5>상품구성</h5>
+		</div>
+		<div class="col-8" style="padding-left:6px; vertical-align:top;color: #666;margin-inline-start: 20px;">
+			<div class="product-composition">
 				<ul>
-					<li style="line-height:2;">• 상품 구성 : 핫승+생선구이+스키야키+튀김+밥+과일</li>
+					<li style="line-height:2;">${product.composition }</li>
 				</ul>
 			</div>
-			<p style=" line-height: 2;"><span>• 원산지 정보
-												<p>- 소고기 : 국내산 한우</p>
-												<p>- 민물장어 : 국내산</p>
-												<p>- 콩(두부) : 국내산</p>
-												<p>- 쌀 : 국내산</span></p>
 		</div>
 	</div>
 	<div class="row" style="border-top: 1px solid #DCDCDC; padding: 25px 50px;">
@@ -232,14 +235,9 @@
 			<h5>상품안내</h5>
 		</div>
 		<div class="col-8" style="padding-left:25px; vertical-align:top;color: #666;">
-			<div class="productcategory-caution">
+			<div class="product-caution">
 				<ul>
-					<li style="line-height:2;">• 픽업 위치 : 롯데호텔 서울 1층 도어 데스크 앞 드라이브 스루 존 또는 판매처 (롯데호텔 서울 모모야마)에서 픽업할 수 있습니다.</li>
-					<li style="line-height:2;">• 문의전화 : 02-317-7031~2</li>
-					<li style="line-height:2;">• 당일 예약은 불가합니다.</li>
-					<li style="line-height:2;">• 다중 이용시설 권고 사항에 따라 출입 명부 작성 및 마스크 착용 바랍니다.</li>
-					<li style="line-height:2;">• 정부의 사회적 거리두기 지침에 따라 영업시간이 변동될 수 있습니다.</li>
-					<li style="line-height:2;">• 할인 제외 상품입니다.</li>
+					<li style="line-height:2;">${product.caution}</li>
 				</ul>
 			</div>
 		</div>
@@ -251,12 +249,7 @@
 		<div class="col-8" style="padding-left:25px; vertical-align:top;color: #666;">
 			<div class="productcategory-caution">
 				<ul>
-					<li style="line-height:2;">• 판매자 : ㈜호텔롯데 롯데호텔 이숍 </li>
-					<li style="line-height:2;">• 유효기간, 이용조건 (유효기간 경과 시 보상 기준 포함) : 발행일로부터 93일</li>
-					<li style="line-height:2;">• 유효기간 경과 시 자동 취소, 100% 환불</li>
-					<li style="line-height:2;">• 이용 가능 매장 : 롯데호텔 서울 모모야마</li>
-					<li style="line-height:2;">• 환불 조건 및 방법 : 롯데호텔 이숍 홈페이지 취소/환불 규정 참조</li>
-					<li style="line-height:2;">• 소비자 상담 관련 전화번호 : 02-759-7700</li>
+					<li style="line-height:2;">${product.additionalInfo } </li>
 				</ul>
 			</div>
 		</div>
