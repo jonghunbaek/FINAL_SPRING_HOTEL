@@ -6,17 +6,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@Alias("ShopBusiness")
-public class ShopBusiness {
+@Alias("ShopMainCategory")
+public class ShopMainCategory {
 
 	private int no;
 	private String name;
+	private int categoryNo;
 	
-	public ShopBusiness(String name) {
+	public ShopMainCategory(String name) {
 		this.name = name;
 	}
+	
+	public ShopMainCategory(int no) {
+		this.no = no;
+	}
+	
 }

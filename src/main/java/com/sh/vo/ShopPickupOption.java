@@ -6,13 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@Getter
-@Setter
-@ToString
-@Alias("SubCategory")
-public class SubCategory {
+@Getter@Setter@ToString@Alias("ShopPickupOption")
+public class ShopPickupOption {
 
 	private int no;
-	private String name;
-	private MainCategory maincategory;
+	private String time;
 }

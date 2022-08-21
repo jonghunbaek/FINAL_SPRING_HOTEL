@@ -29,7 +29,7 @@
 	<div class="row">
 		<div class="col">
 			<div>
-				<h1><strong>카테고리 이름(푸드/비회원주문조회)</strong></h1>
+				<h1><strong><c:out value="${shopList[0].mainCategory.name }"/> (서브카테고리도 넣기)</strong></h1>
 			</div>
 		</div>
 	</div>
