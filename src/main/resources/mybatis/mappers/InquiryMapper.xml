@@ -15,18 +15,43 @@
 		<result column="qna_content" property="content"/>
 		<result column="qna_answer_state" property="answerState"/>
 		<result column="qna_answer_content" property="answerContent"/>
+		<result column="qna_answer_created_date" property="answerCreatedDate"/>
+		<result column="qna_answer_created_date" property="answerUpdatedDate"/>
 		<result column="qna_created_date" property="createdDate"/>
+		<result column="qna_created_date" property="updatedDate"/>
 		<result column="qna_author" property="qnaAuthor"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 		<association property="qnaCategory" column="qna_category_no" select="com.sh.mapper.InquiryMapper.getQnaCategoryByNo"></association>
 		<association property="location" column="location_no" select="getLocationByNo"></association>
 	</resultMap>
 	
-	<!-- List<Qna> getAllInquiry(); -->
-	<select id="getAllInquiry" resultMap="inquiryResultMap">
-		select *
+	<!-- int getQnaTotalRows(); -->
+	<select id="getQnaTotalRows" resultType="int" >
+		select count(*)
 		from sh_qna
-		order by qna_no desc
+		where qna_deleted ='N'
+		<!-- and user_no = #{value} -->
+	</select>
+	
+	<!-- List<Qna> getAllInquiry(); -->
+	 <select id="getAllInquiry"  parameterType="Pagination" resultMap="inquiryResultMap">
+		select *
+		from (SELECT Q.*,
+      		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER
+			  FROM SH_QNA Q
+			  WHERE QNA_DELETED = 'N')	
+		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
+	</select>
+	
+	<!-- List<Qna> getInquiryByUserNo(Pagination pagination, int userNo) -->
+	<select id="getInquiryByUserNo" parameterType="Pagination" resultMap="inquiryResultMap">
+		select *
+		from (SELECT Q.*,
+      		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER
+			  FROM SH_QNA Q
+			  WHERE QNA_DELETED = 'N' 
+			  AND WHERE USER_NO = #{userNo})	
+		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
 	</select>
 	
 	<!-- Qna getInquiryByNo(int no); -->
@@ -56,12 +81,23 @@
 		where qna_no = #{no}
 	</update>
 	
-	<!-- void deleteInquiry(int no ); -->
-	<delete id="deleteInquiry" parameterType="int">
-		delete 
-		from sh_qna
+	<!-- void updateAnswer(Qna qna); -->
+	<update id="updateAnswer" parameterType="Qna">
+		update sh_qna
+		set
+			qna_answer_content = #{answerContent},
+			qna_answer_state = 'Y',
+			qna_answer_created_date = sysdate
 		where qna_no = #{no}
-	</delete>
+	</update>
+	
+	<!-- void deleteInquiry(Qna qna ); -->
+	<update id="deleteInquiry" parameterType="Qna">
+		update sh_qna 
+		set 
+			qna_deleted = 'Y'
+		where qna_no = #{no}
+	</update>
 	
 	<!-- List<QnaCategory> getAllQnaCategory(); -->
 	<select id="getAllQnaCategory" resultType="QnaCategory"> 

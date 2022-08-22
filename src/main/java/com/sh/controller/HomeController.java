@@ -68,14 +68,7 @@ public class HomeController {
 	
 	// 고객문의
 	@GetMapping(path="/contact")
-	public String contact(@LoginUser User loginUser, Model model) {
-		User user = userService.getUserDetail(loginUser.getId());
-		List<QnaCategory> category = inquiryService.getAllQnaCategory();
-		List<Location> location = inquiryService.getAllLocation();
-		
-		model.addAttribute("user", user);
-		model.addAttribute("category", category);
-		model.addAttribute("location",location);
+	public String contact() {
 		return "contactus";
 	}
 	

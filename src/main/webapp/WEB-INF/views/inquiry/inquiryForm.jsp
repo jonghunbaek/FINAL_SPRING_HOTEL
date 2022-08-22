@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="common/tags.jsp" %>
+<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +16,7 @@
 <title>Spring Hotel</title>
 </head>
 <body>
-<%@ include file="common/nav.jsp" %>
+<%@ include file="../common/nav.jsp" %>
 <div class="container-fluid" id="container">
 	<div id="div-sidebar">
 		<h3 class="fs-7 border-dark border-bottom border-5 pb-3"><strong>고객 문의</strong></h3>
@@ -24,115 +24,20 @@
 		<c:if test="${empty LOGIN_USER }">
 		<ul class="menu">
 			<li><a href="/contact" class="contact"><span>연락처</span></a></li>
-			<li><a href="/inquiry/inquiryForm"" class="inquiry"><span>문의하기</span></a></li>
+			<li><a href="/inquiry/inquiryForm" class="inquiry"><span>문의하기</span></a></li>
 		</ul>
 		</c:if>		
 		<c:if test="${not empty LOGIN_USER }">
 		<ul class="menu">
 			<li><a href="/contact" class="contact"><span>연락처</span></a></li>
-			<li><a href="/inquiry/inquiryForm"" class="inquiry"><span>문의하기</span></a></li>
+			<li><a href="/inquiry/inquiryForm" class="inquiry"><span>문의하기</span></a></li>
 			<li><a href="/inquiry/list?page=1" class="inquiry"><span>문의내역</span></a></li>
 		</ul>
 		</c:if>		
 	</div>
 	<div class="contacts">
-		<!-- 연락처 -->
-		<div id="content1">
-			<div class="location rgt">
-				<font class="list">
-					<span class="crPosit"></span> &gt; 고객문의 > <strong>연락처</strong>
-				</font>
-			</div>
-			<div class="headTit">
-				<h3><strong>연락처</strong></h3>
-			</div>
-			
-			<p>호텔 이용에 관련된 문의는 해당 호텔의 대표전화를 이용하면 더욱 빠르게 답변을 받으실 수 있습니다.</p>
-			
-			<div>
-				<table class="table">
-				<p>SPRING REWARDS<p>
-					<tr>
-						<td col width=20%><strong>스프링리워즈</strong></td>
-						<td col width=80%>
-						<span>대표전화</span> 
-						<strong>02-1111-1111</strong><br>
-						* 평일(월~금요일) 09:00~18:00, 주말 및 공휴일 휴무</td>
-					</tr>
-				</table>
-				<p>THE SPRING<p>
-				<table class="table">
-					<tr>
-						<td col width=20% rowspan="2"><strong>서울스프링호텔</strong></td>
-						<td col width=80%>
-						<span>대표전화</span> 
-					    <strong>02-1111-1111</strong><br>
-						</td>
-					</tr>
-					<tr>
-						<td col width=80%>
-						<span>객실예약</span>
-						<strong>(대표)1588-0000</strong>
-						<br>* 평일(월~금요일) 09:00~18:00, 주말 및 공휴일 휴무</td>
-					</tr>
-					<tr>
-						<td col width=20% rowspan="2"><strong>부산스프링호텔</strong></td>
-						<td col width=80%>
-						<span>대표전화</span> 
-					    <strong>02-1111-1111</strong><br>
-						</td>
-					</tr>
-					<tr>
-						<td col width=80%>
-						<span>객실예약</span>
-						<strong>(대표)1588-0000</strong>
-						<br>* 평일(월~금요일) 09:00~18:00, 주말 및 공휴일 휴무</td>
-					</tr>
-					<tr>
-						<td col width=20% rowspan="2"><strong>제주스프링호텔</strong></td>
-						<td col width=80%>
-						<span>대표전화</span> 
-					    <strong>02-1111-1111</strong><br>
-						</td>
-					</tr>
-					<tr>
-						<td col width=80%>
-						<span>객실예약</span>
-						<strong>(대표)1588-0000</strong>
-						<br>* 평일(월~금요일) 09:00~18:00, 주말 및 공휴일 휴무</td>
-					</tr>
-					<tr>
-						<td col width=20% rowspan="2"><strong>강릉스프링호텔</strong></td>
-						<td col width=80%>
-						<span>대표전화</span> 
-					    <strong>02-1111-1111</strong><br>
-						</td>
-					</tr>
-					<tr>
-						<td col width=80%>
-						<span>객실예약</span>
-						<strong>(대표)1588-0000</strong>
-						<br>* 평일(월~금요일) 09:00~18:00, 주말 및 공휴일 휴무</td>
-					</tr>
-					<tr>
-						<td col width=20% rowspan="2"><strong>광주스프링호텔</strong></td>
-						<td col width=80%>
-						<span>대표전화</span> 
-					    <strong>02-1111-1111</strong>
-						</td>
-					</tr>
-					<tr>
-						<td col width=80%>
-						<span>객실예약</span>
-						<strong>(대표)1588-0000</strong>
-						<br>* 평일(월~금요일) 09:00~18:00, 주말 및 공휴일 휴무</td>
-					</tr>
-				</table>
-				<font size="2"> * 객실예약 운영시간 : 평일(월~금요일) 09:00~20:00, 주말(토~일요일) 및 공휴일 09:00~18:00</font>
-			</div>
-		</div>
 		<!-- 문의하기 -->
-		<div id="content2" style="display:none">
+		<div id="content2">
 			<div class="location rgt">
 				<p class="list">
 					<span class="crPosit"></span> &gt; 고객문의 > <strong>문의하기</strong
@@ -327,23 +232,16 @@
 		</div>
 	</div>
 </div>
-<%@ include file="common/footer.jsp" %>
+<%@ include file="../common/footer.jsp" %>
 <script>
-function contact() {
-	document.querySelector('#container').style.height = "800px";
-	document.querySelector("#content1").classList.add('active');
-	document.querySelector("#content1").style.display = "block";
-	document.querySelector("#content2").style.display = "none";
-}
-function inquire() {
-	document.querySelector('#container').style.height = "1000px";
-	document.querySelector("#content1").style.display = "none";
+$(function() {
+	document.querySelector('#container').style.height = "900px";
 	document.querySelector("#content2").style.display = "block"
 	document.querySelector('#localhotel').style.display ="none";
 	document.querySelector('#hotelinquiry').style.display="none";
 	document.querySelector('#finedining').style.display="none";
 	document.querySelector('#shop').style.display="none";
-}
+	});
 
 $("input[name=category]").change(function() {
 	let category=this.value;

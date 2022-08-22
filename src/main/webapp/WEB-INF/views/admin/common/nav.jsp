@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,6 +55,11 @@
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" style="background-color: RGBa(226, 226, 226,0.8) !important;">
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
+        <c:if test="${not empty LOGIN_ADMIN}">
+          <li class="nav-item">
+            <a class="nav-link"> ${LOGIN_ADMIN.name}님 환영합니다.</a>
+          </li>
+        </c:if>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="main" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
               <span data-feather="home"></span>
@@ -80,6 +86,12 @@
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>레스토랑</a></li>
 	            <!-- <li class="sub"><a href=""><span data-feather="chevron-right"></span>부대시설</a></li> -->
             </ul>
+          </li>
+          <li class="nav-item" id="inquiry">
+            <a class="nav-link" href="inquiry" role="button" id="rev">
+              <i class="bi bi-building"></i>
+              &nbsp;고객문의 관리
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" role="button" id="emp" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
