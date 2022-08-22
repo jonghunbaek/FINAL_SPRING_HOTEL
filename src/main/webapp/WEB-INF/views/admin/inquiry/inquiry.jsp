@@ -325,7 +325,7 @@
 									<td class="answerReady">답변대기</td>
 									</c:if>
 									<c:if test="${'Y' eq inquiry.answerState }">
-									<td class="answerSuccess"><strong>답변완료</strong></td>
+									<td class="answerSuccess"><a>답변완료</a></td>
 									</c:if>			
 								</tr>
 							</c:forEach> 

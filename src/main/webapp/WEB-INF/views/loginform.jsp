@@ -104,8 +104,8 @@
 						    	
 								<div class="button">
 									<button type="button" onclick="location.href='/register'" >스프링리워즈 가입</button>
-									<button type="button" data-bs-toggle="modal" data-bs-target="#fineId">아이디 찾기</button>
-									<button type="button" data-bs-toggle="modal" data-bs-target="#finePw">비밀번호찾기</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#findId">아이디 찾기</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#findPw">비밀번호찾기</button>
 								</div>
 							</div>
 						</div>
@@ -115,8 +115,8 @@
 						<p>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</p>
 					</div>
 		
-					<!-- fineIdModal -->
-					<div class="modal fade" id="fineId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<!-- findIdModal -->
+					<div class="modal fade" id="findId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered">
 					    <div class="modal-content">
 					      <div class="modal-header">
@@ -124,7 +124,8 @@
 					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div>
 					      <div class="modal-body">
-				        	<table class="table finedId">
+				        	<table class="table find
+				        	Id">
 						      	<tr>
 							    	<td><label>성명</label></td>
 							    	<td><input type="text" class="form-control" id="name" name="name" placeholder="스프링리워즈 이름 입력"
@@ -147,8 +148,8 @@
 					  </div>
 					</div>
 					
-					<!-- finePwModal -->
-					<div class="modal fade" id="finePw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<!-- findPwModal -->
+					<div class="modal fade" id="findPw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					  <div class="modal-dialog modal-dialog-centered">
 					    <div class="modal-content">
 					      <div class="modal-header">
@@ -156,7 +157,7 @@
 					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div>
 					      <div class="modal-body">
-					      	<table class="table finedPw" >
+					      	<table class="table findPw" >
 						      	<tr>
 							    	<td><label>아이디</label></td>
 							    	<td><input type="text" class="form-control" id="id" name="id" placeholder="스프링리워즈 아이디 입력"
@@ -302,7 +303,8 @@ function findId() {
 			if(data == 0) {
 				alert("아이디가 존재하지 않습니다.");
 			} else {
-				$(".finedId").css('display','none');
+				$(".findId").css('display','none');
+				$(".findbtn").css('display','none');
 				let content = '<p class="text-center">아이디는 <strong>'+data+'</strong> 입니다.</p>';
 				$(".showId").append(content);
 			}
@@ -326,7 +328,7 @@ function findPw() {
 			if(data == 0) {
 				alert("아이디 혹은 이메일이 잘못되었습니다.");
 			} else {
-				$(".finedPw").css('display','none');
+				$(".findPw").css('display','none');
 				let content = '<p class="text-center">비밀번호는 <strong>'+data+'</strong> 입니다.</p>';
 				$(".showPw").append(content);
 			}
@@ -391,6 +393,7 @@ $(function() {
 		});		
 	})
 });	
+
 	var naver_id_login = new naver_id_login("ULeHM_EeBcaEqPfusaeF", "http://localhost/");
  	var state = naver_id_login.getUniqState();
  	naver_id_login.setButton("green",2,60);

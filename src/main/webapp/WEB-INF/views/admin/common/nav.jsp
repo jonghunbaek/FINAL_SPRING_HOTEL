@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,9 +88,9 @@
             </ul>
           </li>
           <li class="nav-item" id="inquiry">
-            <a class="nav-link" href="inquiry" role="button" id="rev">
-              <i class="bi bi-building"></i>
-              &nbsp;고객문의 관리
+            <a class="nav-link" href="inquiry" role="button" id="rev" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
+              <span data-feather="clipboard"></span>
+              고객문의 관리
             </a>
           </li>
           <li class="nav-item">
