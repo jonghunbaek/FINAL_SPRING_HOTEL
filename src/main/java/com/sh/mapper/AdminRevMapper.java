@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.vo.Pagination;
 import com.sh.vo.RoomRev;
+import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
 
 @Mapper
@@ -32,10 +33,13 @@ public interface AdminRevMapper {
 
 	// 선택된 예약정보 삭제
 	void deleteCheckedByNo(String revNo);
-
+	
+	// 신규 객실예약 등록
+	void insertNewRoomRev(AdminAddRevForm adminAddRevForm);
+	
 	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
 	void changeRevStatus();
 
-
 	
+
 }

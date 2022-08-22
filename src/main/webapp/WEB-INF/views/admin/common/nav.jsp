@@ -57,38 +57,39 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="main" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
               <span data-feather="home"></span>
-              메인페이지
+              Home
             </a>
           </li>
           <li class="nav-item" id="room">
             <a class="nav-link" href="#" role="button" id="rev" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
               <span data-feather="monitor"></span>
-              예약현황
+              Bookings
             </a>
             <ul class="sub-list" id="rev-list">
-	            <li class="sub"><a href="roomrev"><span data-feather="chevron-right"></span>객실</a></li>
-	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>레스토랑</a></li>
+            	<li class="sub"><a href="addrev"><span data-feather="chevron-right"></span>Add Bookings</a></li>
+	            <li class="sub"><a href="roomrev"><span data-feather="chevron-right"></span>Room</a></li>
+	            <li class="sub"><a href="diningrev"><span data-feather="chevron-right"></span>Dining</a></li>
             </ul>
           </li>
           <li class="nav-item" id="hotel">
             <a class="nav-link" href="#" role="button" id="rev" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
               <i class="bi bi-building"></i>
-              &nbsp;호텔관리
+              &nbsp;Hotel
             </a>
             <ul class="sub-list" id="hotel-list">
-	            <li class="sub"><a href="room"><span data-feather="chevron-right"></span>객실</a></li>
-	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>레스토랑</a></li>
+	            <li class="sub"><a href="room"><span data-feather="chevron-right"></span>Room</a></li>
+	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>Dining</a></li>
 	            <!-- <li class="sub"><a href=""><span data-feather="chevron-right"></span>부대시설</a></li> -->
             </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" role="button" id="emp" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
               <span data-feather="user"></span>
-              직원관리 시스템
+              Staff Management
             </a>
             <ul class="sub-list" id="emp-list">
-	            <li class="sub"><a href="register"><span data-feather="chevron-right"></span>신규 직원 등록</a></li>
-	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>주소록</a></li>
+	            <li class="sub"><a href="register"><span data-feather="chevron-right"></span>Add Staff</a></li>
+	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>Address Book</a></li>
 	            <!-- <li class="sub"><a href=""><span data-feather="chevron-right"></span>직원 근태 관리</a></li> -->
             </ul>
           </li>
@@ -176,7 +177,7 @@
   </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js" integrity="sha256-+8RZJua0aEWg+QVVKg4LEzEEm/8RFez5Tb4JBNiV5xA=" crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/resources/admincss/dashboard.js"></script>
 <script type="text/javascript">
 $(function() {

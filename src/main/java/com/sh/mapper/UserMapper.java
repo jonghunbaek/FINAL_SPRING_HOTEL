@@ -1,5 +1,7 @@
 package com.sh.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,8 @@ public interface UserMapper {
 	
 	// 관리자페이지 예약현황에서 고객상세정보 확인용도
 	User getUserByNo(int no);
+	
+	// 관리자페이지 예약등록 고객검색
+	List<User> getUserByName(String keyword);
+	Grade getGrade(String keyword);
 }

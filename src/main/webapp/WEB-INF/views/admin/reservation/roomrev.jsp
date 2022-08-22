@@ -8,7 +8,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"> -->
 
 <!-- 테이블 스타일 라이브러리 -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
@@ -267,7 +267,7 @@
 <body>
 <c:set var="menu" value="roomrev"/>
 <%@ include file="../common/nav.jsp" %>
-<div class="container-fluid" style="background-color:RGB(245, 246, 250);">
+<div class="container-fluid">
 	<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 pb-3">
 		<p id="keymap">
 			<span data-feather="monitor"></span>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span data-feather="home"></span>
@@ -279,7 +279,7 @@
 				<button class="btn" type="button" id="delete" name="delete">선택삭제</button>
 			</div> 
 			<div class="col-1">
-				<button class="btn" id="add" name="delete">예약추가</button>
+				<a href="addrev" class="btn" id="add" style="text-decoration: none;">신규예약</a>
 			</div>
 			<div class="col-9">
 			</div>
