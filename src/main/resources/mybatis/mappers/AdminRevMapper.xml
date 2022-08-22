@@ -20,6 +20,7 @@
 			room_rev_request = #{request},
 			room_rev_status = #{status},
 			room_rev_option_checkin_time = #{timeOption},
+			room_bedtype = #{bedType},
 			room_rev_updated_date = sysdate
 		where room_rev_no = to_number(#{no})	
 	</update>
@@ -49,6 +50,7 @@
 		<result column="room_rev_request" property="request"/>
 		<result column="room_rev_status" property="status"/>
 		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
+		<result column="room_bedtype" property="bedType"/>
 		<result column="room_rev_created_date" property="createdDate"/>
 		<result column="room_rev_updated_date" property="updatedDate"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>

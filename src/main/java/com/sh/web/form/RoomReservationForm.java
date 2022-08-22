@@ -14,6 +14,7 @@ import lombok.ToString;
 @ToString
 public class RoomReservationForm {
 
+	private int revNo; // 예약번호  
 	private String locationName; //location_no
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -26,21 +27,35 @@ public class RoomReservationForm {
 	private String bedType;
 	
 	private String roomName;
-	private String roomOptionName; // 옵션 - 성인조식, 엑스트라베드, 어린이 조식 
-	private int roomOptionPrice; 
+	private int optionAdultBf; // 옵션 - 성인조식
+	private int optionChildBf; // 옵션 - 어린이 조식 
+	private int extraBed; // 옵션 - 엑스트라베드 
+	private int optionTotalPrice; // 옵션  총 가격 
 	private String optionCheckinTime; // 체크인시간 요청시 사용 
 	private String request;
 	
-	private String title; // mr ms dr : vo 추가하기 
-	private String name; 
-	private String firstname; // 영문이름 ? ㄱ?
-	private String lastname; // 영문이름 ? ㄱ?
+	private String title; // mr ms dr 
+	private String userName; // 한글이름 
+	private String firstName; // 영문이름 
+	private String lastName; // 영문이름 
 	private String email;
 	private String tel;
-	private String country;
+	private String country; // 여권 나라 
 	
 	private String cardType;
-	private String cardNumber; // 카드 번호 암호화 
-	private String cardValidThru; // 카드 유효기간 
+	private int cardNumber1; // 카드 번호 암호화 
+	private int cardNumber2; // 카드 번호 암호화 
+	private int cardNumber3; // 카드 번호 암호화 
+	private int cardNumber4; // 카드 번호 암호화 
+	private int cardValidMonth; // 카드 유효기간 
+	private int cardValidYear;
+	
+	private int totalPrice; // 총 금액  
+	
+	private int userNo; 
+	private String isM; // 회/비회
+	
+	
+	//27
 	
 }
