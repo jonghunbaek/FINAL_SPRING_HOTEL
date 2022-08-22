@@ -57,6 +57,9 @@
       <div class="position-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
+            <a class="nav-link"> ${LOGIN_ADMIN.name}님 환영합니다.</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="main">
               <span data-feather="home"></span>
               메인페이지
@@ -82,6 +85,12 @@
 	            <li class="sub"><a href=""><span data-feather="chevron-right"></span>레스토랑</a></li>
 	            <!-- <li class="sub"><a href=""><span data-feather="chevron-right"></span>부대시설</a></li> -->
             </ul>
+          </li>
+          <li class="nav-item" id="inquiry">
+            <a class="nav-link" href="inquiry" role="button" id="rev">
+              <i class="bi bi-building"></i>
+              &nbsp;고객문의 관리
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" role="button" id="sell">

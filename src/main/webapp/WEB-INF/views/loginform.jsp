@@ -13,6 +13,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 카카오 로그인 라이브러리 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<!-- 네이버 로그인 라이브러리 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/home.css" rel="stylesheet">
 <title>Spring Hotel</title>
 </head>
@@ -64,13 +67,19 @@
 												placeholder="비밀번호 입력" onfocus="this.placeholder = ''"
 												onblur="this.placeholder = '비밀번호 입력'">
 										</div>
-										<c:if test="${param.fail eq 'invalid'}">
-								        	<div class="alert alert-danger">
-								        		<string>로그인 실패</string>아이디 혹은 비밀번호가 올바르지 않습니다.
-								        	</div>
-							        	</c:if>
 									</div>
 								</form>
+										<c:if test="${param.fail eq 'invalid'}">
+								        	<div class="alert alert-danger">
+								        		<string>로그인 실패</string><br>
+								        		아이디 혹은 비밀번호가 올바르지 않습니다.
+								        	</div>
+							        	</c:if>
+							        	<c:if test="${param.fail eq 'deny'}">
+								        	<div class="alert alert-danger">
+								        		<string>로그인 후 이용가능한 서비스입니다.</string>
+								        	</div>
+							        	</c:if>
 										<div class="loginBtn">
 							    		<%-- 
 							    			카카오 로그인 처리중 중 오류가 발생하면 아래 경고창에 표시된다.
@@ -80,7 +89,8 @@
 							    			<a id="btn-kakao-login" href="kakao/login">
 							  					<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="190" height="60" alt="카카오 로그인 버튼"/>
 											</a>
-											<a id="btn-naver-login" href="#">
+											<!-- 네이버로그인 -->
+											<a id="naver_id_login" href="#">
 												<img src="resources/images/btnG_완성형.png" width="190" height="60" alt="네이버 로그인 버튼"/>
 											</a>
 										</div>
@@ -343,33 +353,6 @@ $(function() {
 	});
 	
 	
-	function findId_click(){
-		let name=$('#name').val()
-		let email=$('#email').val()
-		
-		$.ajax({
-			url:"./find_id",
-			type:"POST",
-			data:{"name":name, "email":email} ,
-			success:function(data){
-				if(data == 0){
-					$('#id_value').text("회원 정보를 확인해주세요!");
-					$('#name').val('');
-					$('#email').val('');
-				} else {
-					$('#id_value').text(data);
-					$('#name').val('');
-					$('#email').val('');
-					
-				}
-			},
-			 error:function(){
-	                alert("에러입니다");
-	            }
-		});
-	};
-	
-	
 	// 카카오 로그인 버튼을 클릭할 때 실행할 이벤트 핸들러 함수를 등록한다.
 	$('#btn-kakao-login').click(function(event){
 		// a태그는 클릭이벤트가 발생하면 페이지를 이동하는 기본동작이 수행되는데, 그 기본동작이 실행되지 않게 한다.
@@ -408,6 +391,25 @@ $(function() {
 		});		
 	})
 });	
+	var naver_id_login = new naver_id_login("ULeHM_EeBcaEqPfusaeF", "http://localhost/");
+ 	var state = naver_id_login.getUniqState();
+ 	naver_id_login.setButton("green",2,60);
+ 	naver_id_login.setDomain("http://localhost/login");
+ 	naver_id_login.setState(state);
+ 	naver_id_login.setPopup();
+ 	naver_id_login.init_naver_id_login();
+ 	
+ 	var naver_id_login = new naver_id_login("ULeHM_EeBcaEqPfusaeF", "http://localhost/");
+   // 접근 토큰 값 출력
+   alert(naver_id_login.oauthParams.access_token);
+   // 네이버 사용자 프로필 조회
+   naver_id_login.get_naver_userprofile("naverSignInCallback()");
+   // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+   function naverSignInCallback() {
+     alert(naver_id_login.getProfileData('email'));
+     alert(naver_id_login.getProfileData('nickname'));
+     alert(naver_id_login.getProfileData('age'));
+   }
 </script>
 </body>
 </html>
