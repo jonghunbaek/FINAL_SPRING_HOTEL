@@ -43,16 +43,24 @@
 	
 	<!-- RoomCategory getRoomCategoryByNo(int no); -->
 	<select id="getRoomCategoryByNo" parameterType="int" resultType="RoomCategory">
-		select room_category_no as roomCategory, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
 		from sh_room_category
-		where room_category_no = #{no}
+		where room_category_no = #{value}
 	</select>
 	
 	<!-- List<RoomCategory> getAllRoomCategories(); -->
 	<select id="getAllRoomCategories" resultType="RoomCategory">
-		select *
-		from sh_room
+		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		from sh_room_category
+		where room_group_no is not null
 		order by room_category_no asc
+	</select>
+	
+	<!-- List<Room> getAllRooms() 객실 이름 중복 제외 -->
+	<select id="getAllRooms" resultMap="RoomResultMap">
+	select *
+	from sh_room
+	where rowid in(select min(rowid) from sh_room group by room_name)
 	</select>
 	
 	<!-- List<Location> getAllLocations(); -->
@@ -74,12 +82,20 @@
 	</select>
 	
 	<!-- 지역별 모든 객실   -->
-	<!-- List<Room> getRoomByLocationNo(int no); // 지역별 객실 리스트가 같으면? --> 
-	<select id="getRoomByLocationNo" parameterType="int" resultMap="RoomResultMap">
+	<!-- Room getRoomByLocationNo(int no); // 지역별 객실 리스트가 같으면? --> 
+	<select id="getRoomByLocationNo" parameterType="int" resultType="Location">
 		select *
 		from sh_room
 		where location_no = #{value}
 		order by room_id asc
+	</select>
+	
+	<!--  -->
+	<!-- List<String> getRoomCategories(); -->
+	<select id="getRoomCategories" resultType="String">
+		select *
+		from sh_room_category
+		where room_group_no is not null
 	</select>
 	
 	<!-- 지역별 객실  -->
@@ -90,6 +106,14 @@
 		where location_no = #{value}
 	</select>
 	
+	<!-- // 지역이름으로 객실리스트  -->
+	<!-- Room getRoomByLocationName(String name); -->
+	<select id="getRoomByLocationName" parameterType="String" resultMap="RoomResultMap">
+		select * 
+		from sh_room
+		where location_name = #{value}
+	</select>
+	
 	<!-- 객실 유형별 객실 정보 -->
 	<!-- Room getRoomByRoomCategoryNo(int no); -->
 	<select id="getRoomByRoomCategoryNo" parameterType="int" resultMap="RoomResultMap">
@@ -98,7 +122,7 @@
 		where room_category_no = #{value}
 	</select>
 	
-	<!-- 모든 객실 어메니티 --> 
+	<!-- 모든 객실 어메니티 x --> 
 	<!-- List<RoomAmenity> getAllRoomAmenities(); -->
 	<select id="getAllRoomAmenities" resultType="RoomAmenity">
 		select amenity_type as type, amenity_description as description, room_category_no as roomCategory
@@ -107,11 +131,11 @@
 	</select>
 	
 	<!-- 객실별 어메니티 --> 
-	<!-- RoomAmenity getRoomAmenityByRoomNo(int no); -->
-	<select id="getRoomAmenityByRoomNo" parameterType="int" resultType="RoomAmenity">
-		select a.amenity_type as type, a.amenity_description as description, a.room_category_no as roomCategory, r.room_no as no
-		from sh_room_amenity a, sh_room r
-		where r.room_category_no = a.room_category_no
+	<!-- RoomAmenity getRoomAmenityByRoomCategoryNo(int no); -->
+	<select id="getRoomAmenityByCategoryNo" parameterType="int" resultType="RoomAmenity">
+		select amenity_type as type, amenity_description as description, room_category_no as roomCategory
+		from sh_room_amenity
+		where room_category_no = #{value}
 	</select>
 	
 	<!-- 모든 객실 detail -->
@@ -124,14 +148,22 @@
 		order by room_category_no asc
 	</select>
 	
+	<!-- 객실 그룹번호로 모든 객실 카테고리 조회  -->
+	<!-- List<RoomCategory> getRoomCategoryNameByRoomGroupNo(int no); -->
+	<select id="getRoomCategoryNameByRoomGroupNo" parameterType="int" resultType="RoomCategory">
+		select room_category_no as no, room_category_name as name, room_group_no as roomGroupNo, category_no as category
+		from sh_room_category
+		where room_group_no = #{value}
+	</select>
+	
 	<!-- 객실별 detail -->
-	<!-- RoomInfo getRoomInfoByRoomNo(int no); -->
-	<select id="getRoomInfoByRoomNo" parameterType="int" resultType="RoomInfo">
-		select i.room_info_detail_image as image, i.room_info_room as room, 
-				i.room_info_etc as etc, i.room_info_service as service, i.room_info_side as side, 
-				i.room_category_no as roomCategory, r.room_no as no
-		from  sh_room_info i, sh_room r
-        where i.room_category_no = r.category_no
+	<!-- RoomInfo getRoomInfoByRoomCategoryNo(int no); -->
+	<select id="getRoomInfoByRoomCategoryNo" parameterType="int" resultType="RoomInfo">
+		select room_info_detail_image as image, room_info_room as room, 
+				room_info_etc as etc, room_info_service as service, room_info_side as side, 
+				room_category_no as roomCategory
+		from  sh_room_info 
+        where i.room_category_no = #{value}
 	</select>
 	
 	<!-- 모든 룸 옵션 - 조식, 엑스트라 베드 -->
@@ -148,15 +180,26 @@
 		select o.room_option_no as no, o.room_option_name as name, o.room_option_price as price, r.room_id as id
 		from sh_room_options o, sh_room r
 		where o.room_category_no = r.room_category_no
+		and r.room_id = #{value}
 	</select>
 	
 	<!-- 객실 검색  -->
-	<!-- List<Room> getAllRoomsByRoomId(RoomCriteria roomCriteria);  -->
-	<select id="getAllRoomsByRoomId" parameterType="int" resultMap="RoomResultMap">
+	<!-- List<Room> getAllRoomsByCriteria(RoomCriteria roomCriteria);  -->
+	<select id="getAllRoomsByCriteria" parameterType="RoomCriteria" resultMap="RoomResultMap">
 		select *
 		from sh_room
-		where room_id = #{value}
-		order by room_id asc
+		where location_no = #{value}
+		<choose>
+			<when test="sort == 'day'">
+				order by room_id desc
+			</when>		
+			<when test="sort == 'lowPrice'">
+				order by room_price asc
+			</when>	
+			<when test="sort == 'highPrice'">
+				order by room_id desc
+			</when>	
+		</choose>
 	</select> 
 	
 	<!-- 객실 이름으로 조회 -->
@@ -179,8 +222,30 @@
 		<result column="room_rev_request" property="request"/>
 		<result column="room_rev_status" property="status"/>
 		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
+		<result column="room_bedtype" property="bedType"/>
 		<result column="room_rev_created_date" property="createdDate"/>
 		<result column="room_rev_updated_date" property="updatedDate"/>
+		<result column="room_rev_room_name" property="roomName"/>
+		<result column="room_rev_location_name" property="locationName"/>
+		<result column="room_rev_user_title" property="userTitle"/>
+		<result column="room_rev_first_name" property="firstName"/>
+		<result column="room_rev_last_name" property="lastName"/>
+		<result column="room_rev_email" property="email"/>
+		<result column="room_rev_tel" property="tel"/>
+		<result column="room_rev_country" property="country"/>
+		<result column="room_rev_option_adult_bf" property="optionAdultBf"/>
+		<result column="room_rev_option_child_bf" property="optionChildBf"/>
+		<result column="room_rev_option_extra_bed" property="extraBed"/>
+		<result column="room_rev_option_total_price" property="optionTotalPrice"/>
+		<result column="room_rev_card_type" property="cardType"/>
+		<result column="room_rev_card_number1" property="cardNumber1"/>
+		<result column="room_rev_card_number2" property="cardNumber2"/>
+		<result column="room_rev_card_number3" property="cardNumber3"/>
+		<result column="room_rev_card_number4" property="cardNumber4"/>
+		<result column="room_rev_card_type" property="cardType"/>
+		<result column="room_rev_card_valid_month" property="validMonth"/>
+		<result column="room_rev_card_valid_year" property="validYear"/>
+		<result column="is_m" property="isMem"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
 	</resultMap>
@@ -188,30 +253,29 @@
 
 <!-- // 객실 예약  -->
 	
-	<!-- void insertRoomRev(RoomReservationForm revForm); -->
+	<!-- void insertRoomRev(RoomReservationForm roomReservationForm) -->
 	<insert id="insertRoomRev" parameterType="com.sh.web.form.RoomReservationForm">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE">
 			select room_rev_seq.nextval 
 			from dual
 		</selectKey>
-		insert into room_rev
+		insert into sh_room_rev
 			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time,
-			room_rev_checkout_time, room_name, room_rev_request, room_bedType, location_name)
-		values(#{no}, #{adult}, #{child}, #{totalPrice}, #{checkinTime}, #{checkoutTime},
-				 #{roomName}, #{request}, #{bedType}, #{locationName});
-		
-		insert into sh_users
-			(user_title, user_name, first_name, last_name, user_email, user_tel, user_country)
-		values (#{title}, #{name}, #{firstname}, #{lastname}, #{email}, #{tel}, #{country});
-		
-		insert into sh_room_options
-			(room_option_name, room_option_price)
-		values (#{roomOptionName}, #{roomOptionPrice});
-		
-		insert into sh_pay
-			(pay_card_type, pay_card_number, pay_valid_date)
-		values (#{cardType}, #{cardNumber}, #{cardValidThru})
+			room_rev_checkout_time, room_rev_room_name, room_rev_request, room_rev_bedType, 
+			room_rev_location_name, room_rev_user_title, room_rev_first_name, room_rev_option_checkin_time, 
+			room_rev_last_name, room_rev_email,	room_rev_tel, room_rev_country, room_rev_option_extra_bed,
+			room_rev_option_adult_bf, room_rev_option_child_bf, 
+			room_rev_option_total_price, room_rev_card_type, room_rev_card_n1, room_rev_card_n2, room_rev_card_n3, room_rev_card_n4,
+			 room_rev_card_valid_month, 
+			room_rev_valid_year, room_rev_user_name, is_m, room_rev_created_date, room_rev_updated_date, user_no)
+		values
+			(#{revNo}, #{adult}, #{child}, #{totalPrice}, #{checkinTime}, #{checkoutTime},
+			 #{roomName}, #{request}, #{bedType}, #{location.name}, #{title}, #{firstName}, 
+			 #{optionCheckinTime}, #{lastName}, #{email}, #{tel}, #{country}, #{extraBed}, 
+			 #{optionAdultBf}, #{optionChildBf}, #{optionTotalPrice}, #{cardType}, #{cardNumber1}, #{cardNumber2}, #{cardNumber3}, #{cardNumber4}, #{cardValidMonth}, 
+			  #{cardValidYear}, #{userName}, #{isM}, sysdate, sysdate, #{user.no});
 	</insert>
+	
 	
 	<!-- 예약번호로 예약정보 가져오기 -->
 	<!-- RoomRev getRoomRevByRoomRevNo(int no); -->

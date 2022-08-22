@@ -1,6 +1,5 @@
 package com.sh.vo;
 
-import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
@@ -16,7 +15,7 @@ public class Pay {
 
 	private String cardType;
 	private String cardNumber;
-	private Date validDate;
+	private String validDate;
 	private RoomRev roomRev; //room_rev_no
 	
 }

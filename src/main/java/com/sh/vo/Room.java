@@ -1,6 +1,7 @@
 package com.sh.vo;
 
 import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +24,9 @@ public class Room {
 	private String request;
 	private Location location;
 	private RoomCategory roomCategory; 
+	
+	// 검색 
+	private int minPrice;
+	private int maxPrice;
 
 }

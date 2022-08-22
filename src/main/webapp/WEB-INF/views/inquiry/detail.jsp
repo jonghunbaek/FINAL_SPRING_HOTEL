@@ -56,7 +56,7 @@
 						<tbody>
 							<tr>
 								<td width="120px">제목</td>
-								<td>${inquiry.title}</a></td>
+								<td>${inquiry.title}</td>
 							</tr>
 							<c:if test="${empty inquiry.location.name}">
 							<tr>
@@ -93,10 +93,29 @@
 							</tr>
 						</tbody>
 					</table>	
-					<c:if test="${not empty inquiry}">
+					<c:if test="${inquiry.answerState eq 'Y'}">
+					<div class="headTit">
+						<h3><strong>문의답변</strong></h3>
+					</div>
+					<table class="table">
+						<tr>
+							<td width="120px">작성자</td>
+							<td>관리자</td>
+						</tr>
+						<tr>
+							<td>답변일</td>
+							<td><fmt:formatDate value="${inquiry.answerCreatedDate}" pattern="yyyy-M-d"/></td>
+						</tr>
+						<tr>
+							<td>내용</td>
+							<td colspan="3" style="padding:10px;" height="200">${inquiry.answerContent}</td>
+						</tr>
+					</table>
 					</c:if>
+					<c:if test="${inquiry.answerState eq 'N' }">
 					<button type="button" onclick="location.href='/inquiry/modify?no=${inquiry.no}'">수정</button>
 					<button type="button" onclick="location.href='/inquiry/delete?no=${inquiry.no}'">삭제</button>
+					</c:if>
 					<button style="float:right" type="button" onclick="location.href='/inquiry/list'">목록</button>
 			</div>
 		</div>

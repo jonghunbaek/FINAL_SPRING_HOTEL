@@ -146,6 +146,32 @@ readonly {
 	margin: auto;
 	margin-top: 50px;
 }
+
+.pagination {
+   justify-content: center;
+}
+
+.page-item.active .page-link {
+ z-index: 1;
+ color: #555;
+ font-weight:bold;
+ background-color: #f1f1f1;
+ border-color: #ccc;
+ 
+}
+
+a {text-decoration:none;}
+a:hover {text-decoration:underline;}
+a:focus {outline:0;}
+
+.answerReady{
+	color:#AA9C8C;
+}
+.answerSuccess {
+	font-weight: bolder;
+	color:#693E15;
+}
+
 #detail button {
 	display:block;
 	float:left;
@@ -164,4 +190,7 @@ readonly {
 	text-align: center;
     font-weight: bold;
 }
+
+
+
 
