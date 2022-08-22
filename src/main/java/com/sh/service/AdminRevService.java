@@ -12,8 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.mapper.AdminRevMapper;
+import com.sh.mapper.RoomMapper;
+import com.sh.mapper.UserMapper;
 import com.sh.vo.Pagination;
+import com.sh.vo.Room;
 import com.sh.vo.RoomRev;
+import com.sh.vo.User;
+import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
 
 @Service
@@ -23,12 +28,24 @@ public class AdminRevService {
 	@Autowired
 	private AdminRevMapper adminRevMapper;
 	
+	@Autowired
+	private UserMapper userMapper;
+	
+	@Autowired
+	private RoomMapper roomMapper;
+	
 	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
 	@Scheduled(cron = "0 0 0 * * *")
 	public void changeRevStatus() {
 		adminRevMapper.changeRevStatus();
 	}
 	
+	// ------------------------------------------객실, 다이닝 예약추가 ----------------------------------------------
+	public List<User> getUserByName(String keyword) {
+		return userMapper.getUserByName(keyword);
+	}
+	
+	// ------------------------------------------객실, 다이닝 예약현황 ----------------------------------------------
 	// 페이징처리에 필요한 전체 개수 
 	public int getTotalRows() {
 		int totalRows = adminRevMapper.getTotalRows();
@@ -123,5 +140,35 @@ public class AdminRevService {
 			adminRevMapper.deleteCheckedByNo(revNo);			
 		}
 
+	}
+
+	public List<Room> getAllRoomByFilter(AdminRoomRevCriteria adminRoomRevCriteria) {
+		
+		String[] period = adminRoomRevCriteria.getCheckinPeriod().split("~");
+		List<String> periodTrim = new ArrayList<String>();
+		
+		for (int i=0; i<period.length; i++) {
+			periodTrim.add(period[i].trim());
+		}
+		
+		adminRoomRevCriteria.setInStartDate(periodTrim.get(0));
+		adminRoomRevCriteria.setInEndDate(periodTrim.get(1));
+		
+		return roomMapper.getAllRoomByFilter(adminRoomRevCriteria);
+	}
+
+	public void insertNewRoomRev(AdminAddRevForm adminAddRevForm) {
+		
+		String[] period = adminAddRevForm.getCheckinPeriod().split("~");
+		List<String> periodTrim = new ArrayList<String>();
+		
+		for (int i=0; i<period.length; i++) {
+			periodTrim.add(period[i].trim());
+		}
+	
+		adminAddRevForm.setStartDate(periodTrim.get(0));
+		adminAddRevForm.setEndDate(periodTrim.get(1));
+		
+		adminRevMapper.insertNewRoomRev(adminAddRevForm);
 	}
 }

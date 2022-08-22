@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.criteria.RoomCriteria;
 import com.sh.vo.Location;
 import com.sh.vo.Pay;
@@ -71,15 +72,23 @@ public interface RoomMapper {
 	List<Room> getAllRoomsByCriteria(RoomCriteria roomCriteria); 
 	
 	// 객실 예약 
+	void insertRoomRev(RoomReservationForm revForm);
+
 	void insertRoomRev(RoomReservationForm roomReservationForm);
+
 
 	// 예약번호로 예약정보 가져오기
 	RoomRev getRoomRevByRoomRevNo(int no);
 	
+
+	// 관리자 페이지 객실 신규예약 객실 검색
+	List<Room> getAllRoomByFilter(AdminRoomRevCriteria adminRoomRevCriteria);
+
 	// 로케 번호로 모든 객실 반환 
 	List<Room> getAllRoomByLocationNo(int no);
 	
 	// 객실 종류 반환 
 	List<String> getRoomCategories();
 	
+
 }

@@ -19,6 +19,7 @@
 		<result column="user_annual_stay" property="stay"/>
 		<result column="first_name" property="firstName"/>
 		<result column="last_name" property="lastName"/>
+		<result column="user_country" property="country"/>
 	</resultMap>
 	<resultMap type="Grade" id="GradeResultMap">
 		<id column="grade" property="grade"/>
@@ -46,12 +47,35 @@
 		<association column="user_id"  property="user" select="com.sh.mapper.UserMapper.getUserById"></association>
 	</resultMap>
 	
+	<!-- ========================관리자페이지용======================= -->
+	<resultMap type="User" id="UserWithGradeResultMap" extends="UserResultMap">
+		<association column="{no=user_no,stay=user_annual_stay,point=user_point}" property="grade" select="com.sh.mapper.UserMapper.getGrade"></association>
+	</resultMap>
+	
 	<!-- User getUserByNo(int no); 관리자페이지 예약현황에서 고객정보 가져오기위한 용도-->
 	<select id="getUserByNo" parameterType="int" resultMap="UserResultMap">
 		select *
 		from sh_users
 		where user_no = #{no}
 	</select>
+	
+	<!-- List<User> getUserByName(String keyword); 관리자페이지 예약등록에서 고객정보조회 -->
+	<select id="getUserByName" parameterType="string" resultMap="UserWithGradeResultMap">
+		select *
+		from sh_users
+		where user_name like '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- Grade getGrade(); -->
+	<select id="getGrade" resultMap="GradeResultMap">
+		select distinct last_value(g.grade) over() as grade
+		from sh_users u, sh_grade g
+		where u.user_no = #{no}
+		and (#{stay} &gt;= g.min_stay and #{stay} &lt;=g.max_stay
+		or #{point} &gt;= g.min_point and #{point} &lt;=g.max_point)
+
+	</select>
+	<!-- ========================관리자페이지용(여기까지)======================= -->
 	
 	<!-- User getUserById(String id); -->
 	<select id="getUserById" parameterType="string" resultMap="UserResultMap">

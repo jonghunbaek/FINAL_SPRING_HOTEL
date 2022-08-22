@@ -2,6 +2,8 @@ package com.sh.vo;
 
 import java.util.Date;
 import org.apache.ibatis.type.Alias;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,7 +38,10 @@ public class User {
 		private double point;
   	    private int stay;
 	    private Grade grade;
+	    
+	    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	    private Date birthDay;
+	    
 	    // 로그인 구분 - 본 사이트에서 가입한 경우:normal, 카카오 로그인으로 가입한 경우: kakao다.
 		private String loginType;
 		private int age;

@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.service.AdminRevService;
 import com.sh.vo.Pagination;
+import com.sh.vo.Room;
 import com.sh.vo.RoomRev;
+import com.sh.vo.User;
+import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
 
 @Controller
@@ -27,6 +30,48 @@ public class AdminRevController {
 	@Autowired
 	private AdminRevService adminRevService;
 	
+	// ------------------------------------------신규예약 등록---------------------------------------------------
+	// 예약 종류 선택페이지
+	@GetMapping(path = "/addrev")
+	public String addRev() {
+		return "admin/reservation/addrev";
+	}
+	
+	// 예약등록 페이지 고객 검색
+	@PostMapping(path = "/addrev/user")
+	@ResponseBody
+	public List<User> searchUser(String keyword) {
+		return adminRevService.getUserByName(keyword);
+	}
+		
+	// 객실 예약등록 페이지
+	@GetMapping(path = "/addrevroom")
+	public String addRevRoom() {
+		return "admin/reservation/addrevroom";
+	}
+	
+	// 객실 예약등록 페이지 객실 검색
+	@GetMapping(path = "/addrevroom/room")
+	@ResponseBody
+	public List<Room> searchRoom(AdminRoomRevCriteria adminRoomRevCriteria) {
+		return adminRevService.getAllRoomByFilter(adminRoomRevCriteria);
+	}
+	
+	// 객실 예약등록 페이지 신규 객실 예약등록
+	@PostMapping(path = "/addrevroom/addrevroomform")
+	public String addRevRoom(AdminAddRevForm adminAddRevForm) {
+		adminRevService.insertNewRoomRev(adminAddRevForm);
+		return "admin/reservation/complete";
+	}
+	
+	// 다이닝 예약등록 페이지
+	@GetMapping(path = "/addrevdining")
+	public String addRevDining() {
+		
+		return "admin/reservation/addrevdining";
+	}
+	
+	// ------------------------------------------객실예약조회관련---------------------------------------------------
 	// 객실 예약현황 페이지 요청
 	@GetMapping(path = "/roomrev")
 	public String roomRev(@RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
@@ -80,4 +125,20 @@ public class AdminRevController {
 		adminRevService.deleteCheckedByNo(revNos);
 	}
 	
+	// ------------------------------------------다이닝예약조회관련---------------------------------------------------
+	// 다이닝예약현황 페이지
+	@GetMapping(path = "/diningrev")
+	public String diningRev(@RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
+
+		/*
+		 * int totalRows = adminRevService.getTotalRows(); Pagination pagination = new
+		 * Pagination(totalRows, Integer.parseInt(pageNo));
+		 * 
+		 * List<RoomRev> roomRevs = adminRevService.getAllRoomRevList(pagination);
+		 * model.addAttribute("roomRevs", roomRevs); model.addAttribute("pagination",
+		 * pagination);
+		 */
+		
+		return "admin/reservation/diningrev";
+	}
 }
