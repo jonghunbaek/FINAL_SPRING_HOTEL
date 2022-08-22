@@ -27,13 +27,14 @@ public class ShopProduct {
 	private Date maxDate;
 	private Date createdDate;
 	private Date updatedDate;
+	private int price;
+	private int discountRate;
+	private String deleted;
+	
 	private ShopMainCategory mainCategory;
 	private ShopSubCategory subCategory;
 	private ShopBusiness business;
 	private Location location;
-	private int price;
-	private int discountRate;
-	private String deleted;
 	
 	public ShopProduct(int no, String businessName) {
 		this.mainCategory = new ShopMainCategory(no);

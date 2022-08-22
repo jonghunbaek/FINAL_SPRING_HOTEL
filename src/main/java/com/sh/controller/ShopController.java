@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.sh.criteria.ShopProductListCriteria;
 import com.sh.service.ShopService;
 import com.sh.vo.ShopProduct;
 
@@ -24,14 +25,23 @@ public class ShopController {
 		return "shop/home";
 	}
 
-	//카테고리별 상품리스트
-	// shop/list?no=?
+//	//카테고리별 상품리스트
+//	// shop/list?no=?
+//	@GetMapping(path="/list")
+//	public String mainList(int mainCategoryNo, Model model) {
+//		List<ShopProduct> products = shopService.getAllProductsByMainCategoryNo(mainCategoryNo);
+//		model.addAttribute("shopList", products);
+//		return "shop/list";
+//	}
+	
+	//상품리스트
 	@GetMapping(path="/list")
-	public String mainList(int mainCategoryNo, Model model) {
-		List<ShopProduct> products = shopService.getAllProductsByMainCategoryNo(mainCategoryNo);
+	public String mainSubList(Model model, ShopProductListCriteria shoplistCriteria) {
+		System.out.println(shoplistCriteria);
+		List<ShopProduct> products = shopService.getAllProductsByParameters(shoplistCriteria);
 		model.addAttribute("shopList", products);
 		return "shop/list";
-	}
+	}	
 	
 	//상품상세페이지
 	// shop/detail?no=14

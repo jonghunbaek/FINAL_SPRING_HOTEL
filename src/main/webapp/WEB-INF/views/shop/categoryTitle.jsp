@@ -29,7 +29,13 @@
 	<div class="row">
 		<div class="col">
 			<div>
-				<h1><strong><c:out value="${shopList[0].mainCategory.name }"/> (서브카테고리도 넣기)</strong></h1>
+				<h1><strong>
+				<c:if test="${empty shopList[0].subCategory }">
+					<c:out value="${shopList[0].mainCategory.name }"/>
+				</c:if>
+				<c:if test="${not empty shopList[0].subCategory }">
+					<c:out value="${shopList[0].subCategory.subCategoryName }"/>
+				</c:if>
 			</div>
 		</div>
 	</div>

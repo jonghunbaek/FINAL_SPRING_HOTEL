@@ -14,7 +14,7 @@ import lombok.ToString;
 @Alias("ShopMainCategory")
 public class ShopMainCategory {
 
-	private int no;
+	private int mainCategoryNo;
 	private String name;
 	private int categoryNo;
 	
@@ -22,8 +22,8 @@ public class ShopMainCategory {
 		this.name = name;
 	}
 	
-	public ShopMainCategory(int no) {
-		this.no = no;
+	public ShopMainCategory(int mainCategoryNo) {
+		this.mainCategoryNo = mainCategoryNo;
 	}
 	
 }
