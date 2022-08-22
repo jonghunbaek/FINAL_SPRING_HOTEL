@@ -12,11 +12,10 @@ import lombok.ToString;
 @Setter
 @ToString
 @Alias("RoomCategory")
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class RoomCategory {
 
-	private RoomCategory roomCategory;
+	private int no;
 	private String name;
 	private Category category;
 	private int roomGroupNo;
