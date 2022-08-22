@@ -23,6 +23,7 @@
 </head>
 <body>
 <%@ include file="header.jsp" %>
+
 <%@ include file="categoryTitle.jsp" %>
 
 <!-- CATEGORY ITEMS TOP-->
@@ -30,7 +31,7 @@
 	<div class="row row-cols-2" style="height:40px;">
 			<div class="col-9" style=" float:left;">
 				<p style="font-size:18px; margin-left:15px; vertical-align:middle;">총
-				<span style="color: #998465;"><strong>${shopList.size() }</strong></span>
+				<span style="color: #998465;"><strong>${shopList.size() } </strong></span>
 				개의 상품이 있습니다.</p>
 			</div>
 			<div class="col-3" style="float:right;">
