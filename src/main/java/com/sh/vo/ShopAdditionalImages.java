@@ -5,14 +5,11 @@ import org.apache.ibatis.type.Alias;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-@Getter
-@Setter
-@ToString
-@Alias("MainCategory")
-public class MainCategory {
+
+@Getter@Setter@ToString@Alias("ShopAdditionalImages")
+public class ShopAdditionalImages {
 
 	private int no;
 	private String name;
-	private Category category;
-	
+	private ShopProduct shopProduct;
 }

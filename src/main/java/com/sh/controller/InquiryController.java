@@ -1,6 +1,5 @@
 package com.sh.controller;
 
-import java.io.Console;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.sh.annotation.LoginUser;
 import com.sh.service.InquiryService;
 import com.sh.service.UserService;
+import com.sh.vo.Location;
+import com.sh.vo.Pagination;
 import com.sh.vo.Qna;
+import com.sh.vo.QnaCategory;
 import com.sh.vo.User;
-import com.sh.web.form.InquiryForm;
 
 @Controller
 @RequestMapping(path="/inquiry")
@@ -24,27 +25,56 @@ public class InquiryController {
 
 	@Autowired
 	private InquiryService inquiryService;
+	@Autowired
+	private UserService userService;
 	
+		/** 고객문의
+		 * @param loginUser
+		 * @param model
+		 * @return
+		 */
+		@GetMapping(path="/inquiryForm")
+		public String inquiryForm(@LoginUser User loginUser, Model model) {
+			User user = userService.getUserDetail(loginUser.getId());
+			List<QnaCategory> category = inquiryService.getAllQnaCategory();
+			List<Location> location = inquiryService.getAllLocation();
+			
+			model.addAttribute("user", user);
+			model.addAttribute("category", category);
+			model.addAttribute("location",location);
+			return "inquiry/inquiryForm";
+		}
+		
 		/** 문의내역 입력
-		 * @param inquiryForm
+		 * @param
 		 * @return
 		 */
 		@PostMapping(path ="/addInquiry")
 		public String addInquiry(@LoginUser User loginUser, Qna qna) {
-			System.out.println(loginUser);
 			inquiryService.insertInquiry(qna);
 			
 			return "redirect:list";
 		}
 		
 		/** 문의내역 리스트
+		 * @param loginUser
+		 * @param pageNo
 		 * @param model
 		 * @return
 		 */
 		@GetMapping(path = "/list")
-		public String inquiryList(Model model) {
-			List<Qna> inquiries = inquiryService.getAllQna();
+		public String inquiryList(@LoginUser User loginUser, @RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
+			
+			if (loginUser == null) {
+				return "redirect:/login?fail=deny";					
+			}
+			int totalRows = inquiryService.getTotalRows();
+			Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
+			List<Qna> inquiries = inquiryService.getAllQna(pagination);
+			
 			model.addAttribute("inquiries",inquiries);
+			model.addAttribute("pagination",pagination);
+			
 			return "inquiry/list";
 		}
 		
@@ -81,6 +111,7 @@ public class InquiryController {
 			inquiryService.updateInquiry(qna);
 			return "redirect:detail?no="+qna.getNo();
 		}
+		
 
 		/** 삭제
 		 * @param no
@@ -88,8 +119,10 @@ public class InquiryController {
 		 * @return
 		 */
 		@GetMapping(path="/delete")
-		public String delete(@RequestParam("no") int no) {
-			inquiryService.deleteInquiryByNo(no);
+		public String delete(Qna qna) {
+			inquiryService.deleteInquiry(qna);
 			return "redirect:list";
 		}
+		
+		
 }

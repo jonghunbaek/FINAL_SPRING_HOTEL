@@ -23,15 +23,15 @@
 		
 		<c:if test="${empty LOGIN_USER }">
 		<ul class="menu">
-			<li><a href="#" class="contact" onclick="contact()"><span>연락처</span></a></li>
-			<li><a href="#" class="inquiry" onclick="inquire()"><span>문의하기</span></a></li>
+			<li><a href="/contact" class="contact"><span>연락처</span></a></li>
+			<li><a href="/inquiry/inquiryForm"" class="inquiry"><span>문의하기</span></a></li>
 		</ul>
 		</c:if>		
 		<c:if test="${not empty LOGIN_USER }">
 		<ul class="menu">
-			<li><a href="#" class="contact" onclick="contact()"><span>연락처</span></a></li>
-			<li><a href="#" class="inquiry" onclick="inquire()"><span>문의하기</span></a></li>
-			<li><a href="/inquiry/list" class="inquiry"><span>문의내역</span></a></li>
+			<li><a href="/contact" class="contact"><span>연락처</span></a></li>
+			<li><a href="/inquiry/inquiryForm"" class="inquiry"><span>문의하기</span></a></li>
+			<li><a href="/inquiry/list?page=1" class="inquiry"><span>문의내역</span></a></li>
 		</ul>
 		</c:if>		
 	</div>

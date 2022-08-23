@@ -1,5 +1,6 @@
 package com.sh.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.sh.mapper.InquiryMapper;
 import com.sh.vo.Location;
+import com.sh.vo.Pagination;
 import com.sh.vo.Qna;
 import com.sh.vo.QnaCategory;
 import com.sh.web.form.InquiryForm;
@@ -21,10 +23,19 @@ public class InquiryService {
 	/** 모든 문의사항 조회
 	 * @return
 	 */
-	public List<Qna> getAllQna() {
-		return inquiryMapper.getAllInquiry();
+	public List<Qna> getAllQna(Pagination pagination) {
+		return inquiryMapper.getAllInquiry(pagination);
 	}
 	
+	/** 페이징처리에 필요한 전체 개수 
+	 * @return
+	 */
+	public int getTotalRows() {
+		int totalRows = inquiryMapper.getQnaTotalRows();
+		return totalRows;
+	}
+		
+		
 	/** 모든 문의사항 카테고리 조회
 	 * @return
 	 */
@@ -44,9 +55,6 @@ public class InquiryService {
 	 * @throws Exception
 	 */
 	public void insertInquiry(Qna qna) {
-		//na qna = new Qna();
-		// BeanUtils.copyProperties(inquiryForm, qna);
-		System.out.println(qna);
 		inquiryMapper.insertInquiry(qna);
 	}
 	
@@ -62,8 +70,9 @@ public class InquiryService {
 	/** 문의사항 삭제
 	 * @param no 문의사항 번호
 	 */
-	public void deleteInquiryByNo(int no) {
-		inquiryMapper.deleteInquiry(no);
+	public void deleteInquiry(Qna qna) {
+		qna.setDeleted("Y");
+		inquiryMapper.deleteInquiry(qna);
 	}
 	
 	
@@ -71,6 +80,7 @@ public class InquiryService {
 	 * @param qna 
 	 */
 	public void updateInquiry(Qna qna) {
+		qna.setUpdatedDate(new Date());
 		inquiryMapper.updateInquiry(qna);
 	}
 }

@@ -30,7 +30,7 @@
 		<ul class="menu">
 			<li><a href="/contact" class="contact" onclick="contact()"><span>연락처</span></a></li>
 			<li><a href="/contact" class="inquiry" onclick="inquire()"><span>문의하기</span></a></li>
-			<li><a href="/inquiry/list" class="inquiry" onclick="inquire()"><span>문의내역</span></a></li>
+			<li><a href="/inquiry/list?page=1" class="inquiry" onclick="inquire()"><span>문의내역</span></a></li>
 		</ul>
 		</c:if>	
 	</div>
@@ -77,13 +77,35 @@
 											</c:when>
 										</c:choose>
 										<td><fmt:formatDate value="${inquiry.createdDate}" pattern="yyyy-M-d"/></td>
-										<td>${inquiry.answerState}</td>
+										<c:if test="${'N' eq inquiry.answerState }">
+										<td class="answerReady">답변대기</td>
+										</c:if>
+										<c:if test="${'Y' eq inquiry.answerState }">
+										<td class="answerSuccess">답변완료</td>
+										</c:if>
 									</tr>
 								</tbody>
 						</c:forEach>
 							</table>	
 					</c:otherwise>
 				</c:choose>
+				<nav aria-label="Page navigation">
+				  <ul class="pagination pagination-sm">
+				    <li class="page-item ${pagination.currentPage eq '1' ? 'disabled' : ''}">
+				      <a class="page-link" href="list?page=${pagination.currentPage - 1 }" aria-label="Previous">
+				        <span aria-hidden="true">이전</span>
+				      </a>
+				    </li>
+				    <c:forEach var="pageNo" begin="${pagination.beginPage}" end="${pagination.endPage}">
+				    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" ><a class="page-link" href="/inquiry/list?page=${pageNo}">${pageNo}</a></li>
+				    </c:forEach>
+				    <li class="page-item">
+				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="list?page=${pagination.currentPage + 1 }" aria-label="Next">
+				        <span aria-hidden="true">다음</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
 			</div>
 		</div>
 	</div>

@@ -14,6 +14,25 @@
 		<association property="location" column="location_no" select="com.sh.mapper.DiningMapper.getLocationByNo"></association>
 		<association property="roomCategory" column="room_category_no" select="com.sh.mapper.RoomMapper.getRoomCategoryByNo"></association>
 	</resultMap>
+	
+	<!-- 관리자페이지 예약추가 객실 검색 -->
+	<!-- List<Room> getAllRoomByFilter(AdminRoomRevCriteria adminRoomRevCriteria); -->
+	<select id="getAllRoomByFilter" parameterType="AdminRoomRevCriteria" resultMap="RoomResultMap">
+		select *
+		from sh_room 
+		where room_id not in (select room_id
+		                      from sh_room_rev
+		                      where room_rev_checkin_time in (select room_rev_checkin_time
+                                                              from sh_room_rev
+                                                              where room_rev_checkin_time between TO_DATE(#{inStartDate}) and TO_DATE(#{inEndDate}))
+                    		  or(room_rev_checkout_time in (select room_rev_checkout_time
+                                                            from sh_room_rev
+                                                            where room_rev_checkout_time between TO_DATE(#{inStartDate}) and TO_DATE(#{inEndDate}))))
+        and location_no = #{location}
+        and room_category_no = #{roomCategory}
+        and room_rev not in 'F'
+        order by room_id asc
+	</select>
 
 	<!-- Room getRoomById(int id); -->
 	<select id="getRoomById" parameterType="int" resultMap="RoomResultMap">
