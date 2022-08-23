@@ -8,21 +8,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Alias("PointHistory")
-public class PointHistory {
+@Alias("Coupon")
+public class Coupon {
 
 	private int no;
 	private String title;
-	private int earned;
-	private int used;
 	private Date createdDate;
+	private Date useableDate;
 	private int userNo;
 	
 }

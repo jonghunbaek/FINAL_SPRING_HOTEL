@@ -7,7 +7,7 @@ html a {
 
 .contain .container {
 	margin-top: 60px;
-	border: 1px solid orange;
+	/* border: 1px solid orange; */
 	height: 1000px;
 	min-width: 1150px;
 	max-width: 1150px;

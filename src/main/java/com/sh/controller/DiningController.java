@@ -3,7 +3,6 @@ package com.sh.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +29,7 @@ import com.sh.service.DiningService;
 import com.sh.service.UserService;
 import com.sh.utils.SessionUtils;
 import com.sh.vo.Dn;
+import com.sh.vo.RtRevCount;
 import com.sh.vo.User;
 import com.sh.web.form.DiningReservationForm;
 
@@ -52,11 +52,11 @@ public class DiningController {
 	// 예약페이지 1
 	@GetMapping("/step1")
 	public String step1(@RequestParam(name="diningNo", required=false) Integer diningNo, Model model) {
-		int dining = Integer.valueOf(diningNo);
+//		int dining = Integer.valueOf(diningNo);
 		
 		model.addAttribute("locations", diningService.getAllLocations());
-		model.addAttribute("hotel", diningService.getLocationNoByDiningNo(dining));
-		model.addAttribute("dining", diningService.getDiningByNo(dining));
+//		model.addAttribute("hotel", diningService.getLocationNoByDiningNo(dining));
+//		model.addAttribute("dining", diningService.getDiningByNo(dining));
 		
 		return "dining/step1";
 	}
@@ -101,48 +101,35 @@ public class DiningController {
 		}
 	}
 	
+	// 잔여좌석조회
+	@GetMapping("/lookUpSeat")
+	@ResponseBody
+	public Map<String, String> lookUpSeat(@DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @RequestParam("diningNo") int diningNo, @RequestParam("seat") String seatType, @RequestParam("adult") int adult, @RequestParam("child") int child, @RequestParam("baby") int baby) {
+		
+		Map<String, String> seatImPossible = diningService.lookUpSeat(date, diningNo, seatType, adult, child, baby);
+		
+		return seatImPossible;
+	}
+	
+	
 	// 예약페이지2_로그인
 	@PostMapping("/logIn")
-	public String logIn(@RequestParam("id") String id, @RequestParam("password") String password, @RequestParam("loginDiningNo") int diningNo, Model model, HttpSession httpSession) {
+	public String logIn(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, @RequestParam("id") String id, @RequestParam("password") String password, @RequestParam("diningNo") int diningNo, Model model, HttpSession httpSession) throws ParseException{
 		User user = userService.login(id, password);
 		httpSession.setAttribute("LOGIN_USER", user);
-		return "redirect:/dining/step2?dining=" + diningNo;
-	}
-	
-	@GetMapping("/logIn")
-	public String logIn(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model) {
-		
 		model.addAttribute("diningReservationForm", diningReservationForm);
 		
-		return "dining/step4";
-	}
-	
-	// 세션상 로그인 유저 체크
-	@GetMapping("logInCheck")
-	@ResponseBody	
-	public Map<String, Boolean> logInCheck() {
-		User user = (User)SessionUtils.getAttribute("LOGIN_USER");
-		Map<String, Boolean> map = new HashMap<String, Boolean>();
-		
-		map.put("isLogined", user != null ? true : false);
-		
-		return map;
-	}
-	
-	// 예약페이지3
-	@PostMapping("/step3")
-	public String step3(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model, @RequestParam("diningNo") int diningNo, @RequestParam("adult") int adult, @RequestParam("child") int child, @RequestParam("baby") int baby, @RequestParam("date") String date, @RequestParam("visitTime") String visitTime, @RequestParam("mealTime") String mealTime) throws java.text.ParseException {
 		String dnMealTime = "";
-		if(mealTime.equals("lunch")) {
+		if(diningReservationForm.getMealTime().equals("lunch")) {
 			dnMealTime = "런치";
-		} else if(mealTime.equals("dinner")){
+		} else if(diningReservationForm.getMealTime().equals("dinner")){
 			dnMealTime = "디너";
 		} else {
 			dnMealTime = "브런치";
 		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date nDate = new Date(sdf.parse(date).getTime());
+		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
 		String day = "";
 		
 		Calendar cal = Calendar.getInstance();
@@ -173,19 +160,87 @@ public class DiningController {
 	          break ;
 		}
 		
-		model.addAttribute("allergies", diningService.getAllAllergies());
+		model.addAttribute("dining", diningService.getDiningByNo(diningReservationForm.getDiningNo()));
 		model.addAttribute("diningReservationForm", diningReservationForm);
-		model.addAttribute("location", diningService.getDiningByNo(diningNo).getLocation());
-		model.addAttribute("adult", adult);
-		model.addAttribute("child", child);
-		model.addAttribute("baby", baby);
-		model.addAttribute("mealTime", dnMealTime);
-		model.addAttribute("date", date);
 		model.addAttribute("day", day);
-		model.addAttribute("visitTime", visitTime);
-		model.addAttribute("dining",diningService.getDiningByNo(diningNo));
+		model.addAttribute("mealTime", dnMealTime);
+		model.addAttribute("allergies", diningService.getAllAllergies());
 		
-		System.out.println(diningReservationForm);
+		return "/dining/step3";
+	}
+	
+//	// 예약페이지2_로그인
+//	@GetMapping("/logIn")
+//	public String logIn(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model) {
+//		
+//		model.addAttribute("diningReservationForm", diningReservationForm);
+//		
+//		return "dining/step3";
+//	}
+	
+	// 세션상 로그인 유저 체크
+	@GetMapping("logInCheck")
+	@ResponseBody	
+	public Map<String, Boolean> logInCheck() {
+		User user = (User)SessionUtils.getAttribute("LOGIN_USER");
+		Map<String, Boolean> map = new HashMap<String, Boolean>();
+		
+		map.put("isLogined", user != null ? true : false);
+		
+		return map;
+	}
+	
+	// 예약페이지3
+	@PostMapping("/step3")
+	public String step3(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model) throws java.text.ParseException {
+		String dnMealTime = "";
+		if(diningReservationForm.getMealTime().equals("lunch")) {
+			dnMealTime = "런치";
+		} else if(diningReservationForm.getMealTime().equals("dinner")){
+			dnMealTime = "디너";
+		} else {
+			dnMealTime = "브런치";
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
+		String day = "";
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(nDate);         
+		int dayNum = cal.get(Calendar.DAY_OF_WEEK);         
+		
+		switch(dayNum){
+	      case 1:
+	          day = "일";  
+	          break ;
+	      case 2:
+	          day = "월";
+	          break ;
+	      case 3:
+	          day = "화";
+	          break ;
+	      case 4:
+	          day = "수";
+	          break ;
+	      case 5:
+	          day = "목";
+	          break ;
+	      case 6:
+	          day = "금";
+	          break ;
+	      case 7:
+	          day = "토";
+	          break ;
+		}
+		
+		
+		model.addAttribute("dining", diningService.getDiningByNo(diningReservationForm.getDiningNo()));
+		model.addAttribute("diningReservationForm", diningReservationForm);
+		model.addAttribute("day", day);
+		model.addAttribute("mealTime", dnMealTime);
+		model.addAttribute("allergies", diningService.getAllAllergies());
+		
 		return "dining/step3";
 	}
 	
@@ -245,7 +300,6 @@ public class DiningController {
 		model.addAttribute("day", day);
 		model.addAttribute("mealTime", dnMealTime);
 		
-		System.out.println(diningReservationForm);
 		return "dining/step4";
 	}
 	
@@ -280,13 +334,64 @@ public class DiningController {
 	}
 	
 	@GetMapping("/complete")
-	public String complete(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model, SessionStatus sessionStatus) {
+	public String complete(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model, SessionStatus sessionStatus) throws ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
+		String day = "";
+		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(nDate);         
+		int dayNum = cal.get(Calendar.DAY_OF_WEEK);         
+		
+		switch(dayNum){
+	      case 1:
+	          day = "일";  
+	          break ;
+	      case 2:
+	          day = "월";
+	          break ;
+	      case 3:
+	          day = "화";
+	          break ;
+	      case 4:
+	          day = "수";
+	          break ;
+	      case 5:
+	          day = "목";
+	          break ;
+	      case 6:
+	          day = "금";
+	          break ;
+	      case 7:
+	          day = "토";
+	          break ;
+		}
+		
+		RtRevCount rtRevCount = new RtRevCount();
+		rtRevCount.setCount(diningReservationForm.getAdult() + diningReservationForm.getChild() + diningReservationForm.getBaby());
+		rtRevCount.setDate(nDate);
+		rtRevCount.setDn(diningService.getDiningByNo(diningReservationForm.getDiningNo()));
+		rtRevCount.setMealTime(diningReservationForm.getMealTime());
+		rtRevCount.setSeatType(diningReservationForm.getSeat());
+		
+		diningService.addRtRevCount(rtRevCount);
 		
 		model.addAttribute("diningReservationForm", diningReservationForm);
+		model.addAttribute("dining", diningService.getDiningByNo(diningReservationForm.getDiningNo()));
+		model.addAttribute("day", day);
 		
 		// 세션에 "diningReservation"이름으로 저장된 객체를 clear 시킨다.
 		sessionStatus.setComplete();
 		
 		return "dining/complete";
 	}
+	
+	// 주문확인
+	@GetMapping("/confirmRev")
+	public String confirmRev() {
+		return "dining/loginForm";
+	}
+	
+	
 }

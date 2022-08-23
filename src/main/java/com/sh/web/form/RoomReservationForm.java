@@ -51,6 +51,7 @@ public class RoomReservationForm {
 	private int cardValidYear;
 	
 	private int totalPrice; // 총 금액  
+	private int roomPrice;
 	
 	private int userNo; 
 	private String isM; // 회/비회

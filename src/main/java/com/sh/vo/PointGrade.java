@@ -1,7 +1,5 @@
 package com.sh.vo;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -15,14 +13,17 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Alias("PointHistory")
-public class PointHistory {
+@Alias("PointGrade")
+public class PointGrade {
 
-	private int no;
-	private String title;
-	private int earned;
-	private int used;
-	private Date createdDate;
-	private int userNo;
+	private int userPoint;
+	private int annualStay;
+	private String grade;
+	private int minPoint;
+	private int maxPoint;
+	private int minStay;
+	private int maxStay;
+	private int remainPoint;
+	private int remainStay;
 	
 }

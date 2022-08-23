@@ -106,7 +106,7 @@
     				<a href="#" id="decreaseAdult"><i class="bi bi-dash-lg"></i></a>
 					<span id="adultScore">0</span>
 					<a href="#" id="increaseAdult"><i class="bi bi-plus-lg"></i></a>
-					<input type="hidden" name="adult"/>
+					<input id="input-adult" type="hidden" name="adult"/>
 				</div>
 				<div class="col-1">
 					<p>어린이</p>
@@ -115,7 +115,7 @@
     				<a href="#" id="decreaseChild"><i class="bi bi-dash-lg"></i></a>
 					<span id="childScore">0</span>
 					<a href="#" id="increaseChild"><i class="bi bi-plus-lg"></i></a>
-					<input type="hidden" name="child"/>
+					<input id="input-child" type="hidden" name="child"/>
 					<input type="hidden" name="isMember"/>
 				</div>
 					<div class="col-1">
@@ -125,7 +125,7 @@
     				<a href="#" id="decreaseBaby"><i class="bi bi-dash-lg"></i></a>
 					<span id="babyScore">0</span>
 					<a href="#" id="increaseBaby"><i class="bi bi-plus-lg"></i></a>
-					<input type="hidden" name="baby"/>
+					<input id="input-baby" type="hidden" name="baby"/>
 				</div>
 				<div class="col-1" id="date-choice">
 					<a href="#" id="btn-date-choice"><img src="../resources/images/dining/날짜선택.png"></a>
@@ -153,7 +153,7 @@
 					</div>
 					<div>
 						<select class="form-select form-select-sm" name="visitTime" id="time-select">
-							<option selected>방문예정시간을 선택해주세요.</option>
+							<option value='0' selected>방문예정시간을 선택해주세요.</option>
 						</select>
 					</div>
 				</div>
@@ -164,15 +164,15 @@
 					<a href="step1?diningNo=${dining.no }"><img src="../resources/images/dining/이전.png"/></a>
 				</div>
 				<div class="col-5 text-end">
+					<a href="#" class="${!empty LOGIN_USER ? 'd-none' : '' }" id="btn-non-member-rev"><img src="../resources/images/dining/비회원예약.png"/></a>
 					<a href="#" id="btn-member-rev"><img src="../resources/images/dining/회원예약.png"/></a>
-					<a href="#" id="btn-non-member-rev"><img src="../resources/images/dining/비회원예약.png"/></a>
 				</div>
 			</div>
 		</div>
 	</form>
 </div>
 
-<div class="modal" tabindex="-1" id="modal-logIn" data-bs-backdrop="static" data-bs-keyboard="false">
+<div class="modal" tabindex="-1" id="modal-login" data-bs-backdrop="static" data-bs-keyboard="false">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -180,7 +180,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <form id="modal-login" method="post" action="logIn">
+      <form id="form-modal-login" method="post" action="logIn">
 	        <div class="row">
 	        	<div class="col-8">
 			        <div class="inputId">
@@ -189,7 +189,15 @@
 			        <div class="inputPw">
 			        	<input type="password" class="password" name="password" id="pw-field">
 			        </div>
-			        <input type="hidden" name="loginDiningNo">
+			        <input type="hidden" id="modal-diningNo" name="diningNo">
+			        <input type="hidden" id="modal-seat" name="seat">
+			        <input type="hidden" id="modal-adult" name="adult">
+			        <input type="hidden" id="modal-child" name="child">
+			        <input type="hidden" id="modal-baby" name="baby">
+			        <input type="hidden" id="modal-isMember" name="isMember">
+			        <input type="hidden" id="modal-date" name="date">
+			        <input type="hidden" id="modal-mealTime" name="mealTime">
+			        <input type="hidden" id="modal-visitTime" name="visitTime">
 	        	</div>	
 	        	<div class="col-4">
 	        		<button>로그인</button>
@@ -233,13 +241,32 @@
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 $(function() {
-	let logInModal = new bootstrap.Modal(document.getElementById("modal-logIn"));
+	let loginModal = new bootstrap.Modal(document.getElementById("modal-login"));
 	let seatModal = new bootstrap.Modal(document.getElementById("modal-seat_change"));
 	
 	let params = new URLSearchParams(document.location.search);
 	let diningNo = params.get("dining"); 
+	let seat = $(":input[name=seat]").val();
+	let adult = $(":input[name=adult]").val();
+	let child = $(":input[name=child]").val();
+	let baby = $(":input[name=baby]").val();
+	let isMember = $(":input[name=isMember]").val();
+	let date = $(":input[name=date]").val();
+	let mealTime = $(":input[name=mealTime]").val();
+	let visitTime = $(":input[name=visitTime]").val(); 
+	
 	$(":input[name='diningNo']").val(diningNo);
-	$(":input[name=loginDiningNo]").val(diningNo);
+	$("#modal-diningNo").val(diningNo);
+	$("#modal-seat").val(seat);
+	$("#modal-adult").val(adult);
+	$("#modal-child").val(child);
+	$("#modal-baby").val(baby);
+	$("#modal-isMember").val(isMember);
+	$("#modal-date").val(date);
+	$("#modal-mealTime").val(mealTime);
+	$("#modal-visitTime").val(visitTime);
+	
+	
 	
 	// 폼제출시 검증
 	$("#form-select").submit(function(){
@@ -256,6 +283,20 @@ $(function() {
 			$baby.val(0);
 		}
 		
+		if(!$(":input[name=date]").val()) {
+			alert("날짜를 선택해주세요");
+			return false;
+		}
+		
+		if(!$(":input[name=mealTime]:checked").val()){
+			alert("식사타임을 선택해주세요.");
+			return false;
+		}
+		
+		if($("select[name=visitTime]:selected").val() == '0' || $("select[name=visitTime]:selected").val()) {
+			alert("방문시간을 설정해주세요");
+			return false;
+		}
 	});
 	
 	// 비회원 예약버튼 클릭시
@@ -271,9 +312,52 @@ $(function() {
 				$(":input[name=isMember]").val("Y");
 				$("#form-select").submit();
 			}else {
-				logInModal.show();
+				loginModal.show();
 			}
 		});
+	});
+	
+	// 모달창 로그인
+	$("#form-modal-login").submit(function() {
+		let idValue = $("#id-field").val();  
+		if (idValue === "") {
+			alert("아이디는 필수입력값입니다.");
+			return false;
+		}
+		
+		let passwordValue = $("#pw-field").val();
+		if (passwordValue === "") {
+			alert("비밀번호는 필수입력값입니다.");
+			return false;
+		}
+		
+		let seat = $(":input[name=seat]").val();
+		let adult = $(":input[name=adult]").val();
+		let child = $(":input[name=child]").val();
+		let baby = $(":input[name=baby]").val();
+		let isMember = $(":input[name=isMember]").val();
+		let date = $(":input[name=date]").val();
+		let visitTime = $(":input[name=visitTime]").val();
+		
+		$("#modal-seat").val(seat);
+		$("#modal-adult").val(adult);
+		$("#modal-child").val(child);
+		$("#modal-baby").val(baby);
+		$("#modal-isMember").val('Y');
+		$("#modal-date").val(date);
+		$("#modal-mealTime").val(mealTime);
+		$("#modal-visitTime").val(visitTime);
+		
+		if(!$("#modal-adult").val()){
+			$("#modal-adult").val(0);
+		}
+		if(!$("#modal-child").val()){
+			$("#modal-child").val(0);
+		}
+		if(!$("#modal-baby").val()){
+			$('#modal-baby').val(0);
+		}
+		
 	});
 	
 	// 테이블 , 룸 변경시
@@ -290,10 +374,13 @@ $(function() {
 		seatModal.hide();
 		$("#babyScore").text(0);
 		$(":input[name=adult]").val(0);
+		/* $("#modal-adult").val(0); */
 		$("#adultScore").text(0);
 		$(":input[name=child]").val(0);
+		/* $("#modal-child").val(0); */
 		$("#childScore").text(0);
 		$(":input[name=baby]").val(0);
+		/* $("#modal-baby").val(0); */
 		
 		let $mealTimeEls = $("#:radio[name=mealTime]");
 		for(var i=0; i<$mealTimeEls.length; i++) {
@@ -314,21 +401,6 @@ $(function() {
 	$("#:radio[name=mealTime]").click(function(){
 		if($("#input-date").val() == '') {
 			alert("날짜를 먼저 선택해주세요");
-			return false;
-		}
-	});
-	
-	// 모달창 로그인
-	$("#modal-login").submit(function() {
-		let idValue = $("#id-field").val();  
-		if (idValue === "") {
-			alert("아이디는 필수입력값입니다.");
-			return false;
-		}
-		
-		let passwordValue = $("#pw-field").val();
-		if (passwordValue === "") {
-			alert("비밀번호는 필수입력값입니다.");
 			return false;
 		}
 	});
@@ -355,7 +427,7 @@ $(function() {
 				return;
 			}
 		} else {
-			if(totalNum<10) {
+			if(totalNum<8) {
 				alert("룸은 최소인원이 8명이상이어야 합니다.");
 				return;
 			}
@@ -366,6 +438,7 @@ $(function() {
 	
 	// 날짜변경 클릭시
 	$("#datepicker").click(function(){
+		searchSeat();
 		if($(":radio[name=mealTime]:checked").length > 0 ) {
 			searchTime();
 		} else {
@@ -390,8 +463,23 @@ $(function() {
 		
 	});
 	
+	//특정일 막기
+	
+	/* var disabledDays = ["2022-8-30","2022-8-24","2022-8-27"];
+	function disableAllTheseDays(date) {
+	    var m = date.getMonth(), d = date.getDate(), y = date.getFullYear();
+	    for (i = 0; i < disabledDays.length; i++) {
+	        if($.inArray(y + '-' +(m+1) + '-' + d,disabledDays) != -1) {
+	            return [false];
+	        }
+	    }
+	    return [true];
+	} */
+	
 	
 	$('#decreaseAdult').click(function(e){
+		resetTime();
+		
 		let adultStat = $('#adultScore').text();
 		let adultNum = parseInt(adultStat,10);
 		let childStat = $('#childScore').text();
@@ -420,6 +508,8 @@ $(function() {
 	});
 	
 	$('#increaseAdult').click(function(){
+		resetTime();
+		
 		let adultStat = $('#adultScore').text();
 		let adultNum = parseInt(adultStat,10);
 		let childStat = $('#childScore').text();
@@ -453,6 +543,8 @@ $(function() {
 		$(":input[name=adult]").val(adultNum);
 	});
 	$('#decreaseChild').click(function(e){
+		resetTime();
+		
 		let adultStat = $('#adultScore').text();
 		let adultNum = parseInt(adultStat,10);
 		let childStat = $('#childScore').text();
@@ -476,6 +568,8 @@ $(function() {
 	});
 	
 	$('#increaseChild').click(function(e){
+		resetTime();
+		
 		let adultStat = $('#adultScore').text();
 		let adultNum = parseInt(adultStat,10);
 		let childStat = $('#childScore').text();
@@ -510,6 +604,8 @@ $(function() {
 		$(":input[name=child]").val(childNum);
 	});
 	$('#decreaseBaby').click(function(e){
+		resetTime();
+		
 		let adultStat = $('#adultScore').text();
 		let adultNum = parseInt(adultStat,10);
 		let childStat = $('#childScore').text();
@@ -535,6 +631,8 @@ $(function() {
 		$(":input[name=baby]").val(babyNum);
 	});
 	$('#increaseBaby').click(function(e){
+		resetTime();
+		
 		let adultStat = $('#adultScore').text();
 		let adultNum = parseInt(adultStat,10);
 		let childStat = $('#childScore').text();
@@ -585,6 +683,44 @@ $(function() {
 				$select.append(content);
 			})
 		})
+	}
+	
+	function searchSeat() {
+		$(":input[name=mealTime]").each(function(index, el) {
+			el.disabled = false;
+			el.checked = false;
+		})
+		
+		if(!$("#input-adult").val()){
+			!$("#input-adult").val(0)
+		}
+		if(!$("#input-child").val()){
+			!$("#input-child").val(0)
+		}
+		if(!$("#input-baby").val()){
+			!$("#input-baby").val(0)
+		}
+		let queryString = $("#form-select").serialize();
+		/* let $select = $("#meal-type-select").empty(); */
+		let $seat = $(":input[name=seat]:checked").val();
+		
+		
+		$.getJSON("/dining/lookUpSeat", queryString, function(results){
+			$.each(results, function(index, result){
+				let $btn = $('#'+result+'-select');
+				$btn.prop('disabled', true);
+			})
+		})
+	}
+	
+	//시간 세팅 초기화
+	function resetTime() {
+		if((!$("#date-time-select-form").hasClass('d-none'))){
+			$(":input[name=mealTime]").each(function(index, el){
+				el.checked = false;
+			})
+			$("#date-time-select-form").addClass('d-none');
+		}
 	}
 });
 </script>
