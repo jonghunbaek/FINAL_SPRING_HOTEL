@@ -59,7 +59,14 @@
 							</tr>
 							<tr>
 								<td>작성자</td>
+								<c:if test="${empty inquiry.user }">
+								<td> ${inquiry.author }
+								</c:if>
+								<c:if test="${not empty inquiry.user }">
 								<td width="40%">${inquiry.user.name}</td>
+								</c:if>
+							</tr>
+							<tr>
 								<td width="15%">작성일</td>
 								<td><fmt:formatDate value="${inquiry.createdDate}" pattern="yyyy-M-d"/></td>
 							</tr>

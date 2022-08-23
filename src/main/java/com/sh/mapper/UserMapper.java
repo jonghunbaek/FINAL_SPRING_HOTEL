@@ -22,7 +22,9 @@ public interface UserMapper {
 	void updateUser(User user);
 	String fineId(@Param("name") String name, @Param("email")String email);
 	String finePw(@Param("id") String id, @Param("email")String email);
-
+	void updatePw(User user);
+	int finePwCheck(@Param("id") String id, @Param("email")String email);
+	
 	Grade getUserGradeByUserId(String id);
 	UserPoint getUserPointByUserNo(int userNo);
 	PointHistory getUserPointHistoryByUserNo(int userNo);

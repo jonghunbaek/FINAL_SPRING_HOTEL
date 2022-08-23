@@ -9,8 +9,15 @@ import lombok.ToString;
 @ToString
 public class QnaCriteria {
 	
+	private String search;
+	private String page;
 	private Integer userNo;
 	private String answerState;
-	private String searchKeyword;
+	private String keyword;
 	private String author;
+	private String sort;
+	private String rows;
+	
+	private int beginIndex;			
+	private int endIndex;
 }

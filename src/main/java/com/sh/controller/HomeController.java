@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -205,11 +206,35 @@ public class HomeController {
 	}
 	
 	// 비밀번호 찾기
+	/* 
 	@PostMapping(path ="/findPw")
 	@ResponseBody
 	public String findPw(@RequestParam("id") String id, @RequestParam("email") String email) {
 		String findPw = userService.findPw(id, email);
 		return findPw;
+	} 
+	*/
+	/*
+	@GetMapping(path="/findPw")
+	public String find() {
+		return "findPw";
+	}
+	*/
+	
+	@PostMapping(path="/findPw")
+	@ResponseBody
+	public String findPw(@RequestParam("id") String id, @RequestParam("email") String email) throws Exception{
+		String result = userService.findPw(id,email);
+		try {
+			if ("success".equals(result)) {
+				return result; // 성공
+			} else {
+				return "fail"; // 실패
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; //에러
+		}
 	}
 	
 	// 구글 reCapptcha
