@@ -4,14 +4,19 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.sh.criteria.AdminDnRevCriteria;
 import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.vo.Pagination;
 import com.sh.vo.RoomRev;
+import com.sh.vo.RtRevCount;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
 
 @Mapper
 public interface AdminRevMapper {
+	
+	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
+	void changeRevStatus();
 
 	List<RoomRev> getAllRoomRevList(Pagination pagination);
 	
@@ -37,8 +42,20 @@ public interface AdminRevMapper {
 	// 신규 객실예약 등록
 	void insertNewRoomRev(AdminAddRevForm adminAddRevForm);
 	
-	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
-	void changeRevStatus();
+	// 다이닝예약가능 날짜 조회
+	List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria);
+
+	// 선택된 날짜가 sh_rt_rev_count에 존재하는지 확인
+	String getRevDateBySelectedDate(AdminDnRevCriteria adminDnRevCriteria);
+
+	// 선택된 날짜가 없을때 mealtime을 가져온다.
+	List<String> getMealTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria);
+	// 선택된 날짜가 있을때 mealtime을 가져온다.
+	List<String> getMealTimeByRevIs(AdminDnRevCriteria adminDnRevCriteria);
+
+	// 선택될 날짜가 없을때 visittime을 가져온다. ---------> 일단 보류
+	List<String> getVisitTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria);
+	
 
 	
 

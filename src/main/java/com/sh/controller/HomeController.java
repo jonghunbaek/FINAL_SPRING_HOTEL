@@ -26,6 +26,8 @@ import com.sh.exception.ApplicationException;
 import com.sh.service.InquiryService;
 import com.sh.service.UserService;
 import com.sh.utils.SessionUtils;
+import com.sh.vo.Coupon;
+import com.sh.vo.PointHistory;
 import com.sh.utils.VerifyRecaptcha;
 import com.sh.vo.Location;
 import com.sh.vo.QnaCategory;
@@ -178,6 +180,21 @@ public class HomeController {
 			System.out.println("error:" + e);
 			return "registerform";
 		}
+		
+		// 회원가입시 쿠폰, 포인트 지급
+		Coupon coupon = new Coupon();
+		PointHistory pointHistory = new PointHistory();
+		User user = userService.getUserInfoByRownum(1);
+		coupon.setTitle("회원가입 축하 쿠폰 (숙박 예약시 30% 할인");
+		coupon.setUserNo(user.getNo());
+		pointHistory.setTitle("회원가입 축하");
+		pointHistory.setEarned(50);
+		pointHistory.setUsed(0);
+		pointHistory.setUserNo(user.getNo());
+		userService.insertCouponInfo(coupon);
+		userService.insertPointInfo(pointHistory);
+		userService.updateUserPointInfo(user.getNo(), 50);
+		
 		return "redirect:/completed";
 	}
 

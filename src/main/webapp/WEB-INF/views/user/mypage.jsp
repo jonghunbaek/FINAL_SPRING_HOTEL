@@ -98,7 +98,7 @@
 			<div id="div-info">
 				<div id="div-userInfo1">
 					<p><span>${user.name } </span> 님은</p>
-					<p><strong>${grade.grade } </strong> 회원입니다.</p>
+					<p><strong>${pg.grade } </strong> 회원입니다.</p>
 				</div>
 				<div id="div-userInfo2">
 					<ul class="ms-3" style="float: left;">
@@ -107,7 +107,7 @@
 					</ul>
 					<ul class="me-5" style="float: right;">
 						<li><span id="span-color">포인트</span></li>
-						<li class="ms-5"><strong>${user.point } <b> P</b></strong></li>
+						<li class="ms-5"><strong><fmt:parseNumber var="userPoint" value="${user.point }" integerOnly="true"/>${userPoint }<b> P</b></strong></li>
 					</ul>
 				</div>
 			</div>
@@ -124,14 +124,14 @@
 					<p><img src="/resources/images/mypage/graphTit1.gif"></p>
 					<canvas class="mb-3" id="myChart1" width="200" height="200"></canvas>
 					<p>
-						<c:if test="${grade.grade eq 'Brown' }">
-							<strong>SILVER</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						<c:if test="${pg.grade eq 'Brown' }">
+							<strong>SILVER</strong> 등급까지 <span id="span-red">${pg.remainStay }박</span> 남았습니다.
 						</c:if>
-						<c:if test="${grade.grade eq 'Gold' }">
-							<strong>GOLD</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						<c:if test="${pg.grade eq 'Silver' }">
+							<strong>GOLD</strong> 등급까지 <span id="span-red">${pg.remainStay }박</span> 남았습니다.
 						</c:if>
-						<c:if test="${grade.grade eq 'Gold' }">
-							<strong>DIAMOND</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						<c:if test="${pg.grade eq 'Gold' }">
+							<strong>DIAMOND</strong> 등급까지 <span id="span-red">${pg.remainStay }박</span> 남았습니다.
 						</c:if>
 					</p>
 					<div id="div-img1"><img src="/resources/images/mypage/night_icon.png"></div>
@@ -140,11 +140,14 @@
 					<p><img src="/resources/images/mypage/graphTit2.gif"></p>
 					<canvas class="mb-3" id="myChart2" width="200" height="200"></canvas>
 					<p>
-						<c:if test="${grade.grade eq 'Brown' }">
-							<strong>SILVER</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						<c:if test="${pg.grade eq 'Brown' }">
+							<strong>SILVER</strong> 등급까지 <span id="span-red">${pg.remainPoint }P</span> 남았습니다.
 						</c:if>
-						<c:if test="${grade.grade eq 'Gold' }">
-							<strong>GOLD</strong> 등급까지 <span id="span-red">1박</span> 남았습니다.
+						<c:if test="${pg.grade eq 'Silver' }">
+							<strong>GOLD</strong> 등급까지 <span id="span-red">${pg.remainPoint }P</span> 남았습니다.
+						</c:if>
+						<c:if test="${pg.grade eq 'Gold' }">
+							<strong>DIAMOND</strong> 등급까지 <span id="span-red">${pg.remainPoint }P</span> 남았습니다.
 						</c:if>
 					</p>
 					<div id="div-img2"><img src="/resources/images/mypage/points_icon.png"></div>
@@ -163,7 +166,7 @@
 					</div>
 				</div>
 				<div id="div-table">
-					<table class="table background-color" summary="호텔,구분,이용금액(원),적립포인트,사용포인트,이용날짜로 구성된 게시물 리스트 표">
+					<table class="table background-color">
 						<colgroup>
 							<col width="25%" class="col1">
 							<col width="25%" class="col2">
@@ -180,18 +183,18 @@
 						</thead>
 						<tbody>
 						<c:choose>
-							<c:when test="${empty points }">
+							<c:when test="${empty pointHis }">
 								<tr class="first last">
 									<td colspan="6">자료가 없습니다.</td>
 								</tr>
 							</c:when>					
 							<c:otherwise>
-								<c:forEach var="point" items="${points }">
+								<c:forEach var="his" items="${pointHis }">
 									<tr class="first last">
-										<td>${point.no }</td>
-										<td>${point.title }</td>
-										<td>${point.amount }</td>
-										<td>${point.createdDate }</td>
+										<td>${his.title }</td>
+										<td>${his.earned }</td>
+										<td>${his.used }</td>
+										<td><fmt:formatDate value="${his.createdDate}" pattern="yyyy년 MM월 dd일"/></td>
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -208,23 +211,29 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-	data = {
-	        datasets: [{
-	            backgroundColor: ['brown', '#e3d6c6'],
-	            data: [10,90]
-	        }],       
-	    };
+	data1 = {
+	        	datasets: [{
+	            	backgroundColor: ['brown', '#e3d6c6'],
+	            	data: [${pg.annualStay},${pg.maxStay - pg.annualStay}],
+	            	hoverOffset : 5
+	        	}],       
+	    	};
+	data2 = {
+        	datasets: [{
+            	backgroundColor: ['brown', '#e3d6c6'],
+            	data: [${pg.userPoint},${pg.maxPoint - pg.userPoint}],
+            	hoverOffset : 5
+        	}],       
+    	};
 	let ctx1 = document.getElementById("myChart1");
 	let myDoughnutChart1 = new Chart(ctx1, {
 	    type: 'doughnut',
-	    data: data,
-	    options: {}
+	    data: data1
 	});
 	let ctx2 = document.getElementById("myChart2");
 	let myDoughnutChart2 = new Chart(ctx2, {
 	    type: 'doughnut',
-	    data: data,
-	    options: {}
+	    data: data2
 	}); 
 </script>
 </html>

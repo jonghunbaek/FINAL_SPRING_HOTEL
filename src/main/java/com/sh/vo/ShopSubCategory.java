@@ -19,10 +19,8 @@ public class ShopSubCategory {
 	private ShopMainCategory mainCategory;
 	
 
-	public ShopSubCategory(int subCategoryNo, String subCategoryName, String mainCategoryName) {
+	public ShopSubCategory(int subCategoryNo) {
 		this.subCategoryNo = subCategoryNo;
-		this.subCategoryName = subCategoryName;
-		this.mainCategory = new ShopMainCategory(mainCategoryName);
 	}
 	
 	

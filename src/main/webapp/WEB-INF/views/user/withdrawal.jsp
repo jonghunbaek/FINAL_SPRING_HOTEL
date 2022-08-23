@@ -34,8 +34,9 @@
 	#div-table th {border-bottom: 1px solid #cdcbbe; background-color: #faf9f4; color: #666; line-height: 20px; vertical-align: middle;}
 	#div-table .last {border-bottom: 1px solid #cdcbbe;}
 	#div-btn {width: 866px; height: 58px; padding-top: 30px; text-align: right; display: block;}
-	#btn1 {text-decoration: none; display: block; color: rgb(250,241,208); padding-top: 5px; margin-left: 300px;
-	       background-color: rgb(62,43,44); width:130px; height:32px; text-align: center; font-size: 14px; display: block; margin: auto;}
+	#btn1 {text-decoration: none; display: block; margin-left: 300px; background-color: rgb(62,43,44);
+		   width:130px; height:32px; text-align: center; font-size: 14px; display: block; margin: auto;}
+    #btn1 span {color: rgb(250,241,208); padding-top: 5px;}
 		
 </style>
 <title>Spring Hotel</title>
@@ -79,11 +80,11 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
+		<form action="withdrawalform" method="POST">
 			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">탈퇴 요청</h3>
 			<div id="div-msg">
-				ㅇㅇㅇ 님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인합니다.
+				${user.name } 님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인합니다.
 			</div>
-			<form>
 			<div id="div-table">
 				<table class="table" summary="아이디,비밀번호로 구성된 테이블">
 					<colgroup>
@@ -93,21 +94,21 @@
 					<tbody>
 						<tr class="first">
 							<th scope="row" class="first">스프링리워즈 번호</th>
-							<td class="first">2121525</td>
+							<td class="first">${user.no }</td>
 						</tr>
 						<tr class="last">
 							<th scope="row" class="last"><label for="mbrPw" class="pw">비밀번호</label></th>
 							<td class="last">
-							<input type="password" class="pw uiform password" id="mbrPw" name="mbrPw" maxlength="20" onkeydown="javascript: if(event.keyCode == 13) selectPwCnfm()" autocomplete="off">
+							<input type="password" class="pw uiform password" id="mbrPw" name="password" maxlength="20" autocomplete="off">
 							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			</form>
 			<div id="div-btn">
-				<a href="" id="btn1">확인</a>
+				<button id="btn1"><span>확인</span></button>
 			</div>
+		</form>
 		</div>
 	</div>
 	
