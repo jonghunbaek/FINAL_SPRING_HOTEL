@@ -19,6 +19,7 @@
 		<result column="user_annual_stay" property="stay"/>
 		<result column="first_name" property="firstName"/>
 		<result column="last_name" property="lastName"/>
+		<association column="grade" property="grade" select="com.sh.mapper.UserMapper.getUserGradeByUserId"></association>
 	</resultMap>
 	<resultMap type="Grade" id="GradeResultMap">
 		<id column="grade" property="grade"/>
@@ -36,28 +37,46 @@
 		<result column="user_total_point" property="totPoint"/>
 		<result column="user_used_point" property="usedPoint"/>
 		<result column="user_available_point" property="ablePoint"/>
-		<association column="user_id"  property="user" select="com.sh.mapper.UserMapper.getUserById"></association>
+		<association column="user_no"  property="user" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 	</resultMap>
 	<resultMap type="PointHistory" id="PointHistoryResultMap">
 		<id column="point_his_no" property="no"/>
 		<result column="point_his_title" property="title"/>
-		<result column="point_his_amount" property="amount"/>
+		<result column="point_his_earned_amount" property="earned"/>
+		<result column="point_his_used_amount" property="used"/>
 		<result column="point_his_created_date" property="createdDate"/>
-		<association column="user_id"  property="user" select="com.sh.mapper.UserMapper.getUserById"></association>
+	</resultMap>
+	<resultMap type="PointGrade" id="PointGradeResultMap">
+		<id column="user_point" property="userPoint" />
+		<result column="user_annual_stay" property="annualStay"/>
+		<result column="grade" property="grade"/>
+		<result column="min_point" property="minPoint"/>
+		<result column="max_point" property="maxPoint"/>
+		<result column="min_stay" property="minStay"/>
+		<result column="max_stay" property="maxStay"/>
+		<result column="remain_point" property="remainPoint"/>
+		<result column="remain_stay" property="remainStay"/>
+	</resultMap>
+	<resultMap type="Coupon" id="CouponResultMap">
+		<id column="coupon_no" property="no" />
+		<result column="coupon_title" property="title"/>
+		<result column="coupon_created_date" property="createdDate"/>
+		<result column="coupon_useable_date" property="useableDate"/>
+		<result column="user_no" property="userNo"/>
 	</resultMap>
 	
 	<!-- User getUserByNo(int no); 관리자페이지 예약현황에서 고객정보 가져오기위한 용도-->
 	<select id="getUserByNo" parameterType="int" resultMap="UserResultMap">
 		select *
 		from sh_users
-		where user_no = #{no}
+		where user_no = #{value}
 	</select>
 	
 	<!-- User getUserById(String id); -->
 	<select id="getUserById" parameterType="string" resultMap="UserResultMap">
 		select *
 		from sh_users
-		where user_id = #{id}
+		where user_id = #{value}
 	</select>
 		
 	<!-- User getUserByEmail(String email); -->
@@ -68,17 +87,17 @@
 	</select>
 	
 	<!-- int idCheck(String id); -->
-	<select id="idCheck" parameterType="String" resultType="int">
+	<select id="idCheck" parameterType="string" resultType="int">
 		select count(user_id)
 		from sh_users
-		where user_id = #{id}
+		where user_id = #{value}
 	</select>
 	
 	<!-- int emailCheck(String email); -->
-	<select id="emailCheck"  parameterType="String" resultType="int">
+	<select id="emailCheck"  parameterType="string" resultType="int">
 		select count(user_email)
 		from sh_users
-		where user_email = #{email}
+		where user_email = #{value}
 	</select>
 	
 	<!-- void insertUser(User user); -->
@@ -106,37 +125,91 @@
 		where user_id = #{id}
 	</update>
 	
-	<!-- 해당유저 등급정보 조회 -->
-	<select id="getUserGradeByUserId" parameterType="String" resultMap="GradeResultMap">
+	<!-- void deleteUser(int userNo); -->
+	<delete id="deleteUser" parameterType="int">
+		delete from sh_users
+		where user_no = #{value}
+	</delete>
+	
+	<!-- 가장 최근에 가입한 회원정보 반환 -->
+	<select id="getUserByRownum" parameterType="int" resultMap="UserResultMap">
+		select * 
+		from (select *
+			  from sh_users
+			  order by user_created_date desc)
+	    where rownum = #{value}
+	</select>
+	
+	<!-- 가입시 쿠폰 지급 -->
+	<insert id="insertCoupon" parameterType="Coupon">
+		insert into sh_coupon
+		(coupon_no, coupon_title, user_no)
+		values
+		(coupon_seq.nextval, #{title}, #{userNo})
+	</insert>
+	
+	<!-- 가입시 포인트 지급 -->
+	<insert id="insertPointHistory" parameterType="PointHistory">
+		insert into sh_user_points_his
+		(point_his_no, point_his_title, point_his_earned_amount, point_his_used_amount, user_no)
+		values
+		(point_his_seq.nextval, #{title}, #{earned}, #{used}, #{userNo})
+	</insert>
+	
+	<!-- 회원 포인트정보 업데이트 -->
+	<update id="updateUserPoint" parameterType="int">
+		update sh_users
+		set user_point = #{point}
+		where user_no = #{userNo}
+	</update>
+	
+	<!-- 해당회원 등급정보 조회 -->
+	<select id="getUserGradeByUserId" parameterType="string" resultMap="GradeResultMap">
 		select g.grade, g.min_point, g.max_point, g.min_stay, g.max_stay, g.grade_discount_rate,
 			   g.grade_point_rate_room, g.grade_point_rate_dn, g.grade_etc
 		from sh_users u, sh_grade g 
 		where u.grade = g.grade
-		and u.user_id = #{id}
+		and u.user_id = #{value}
 	</select>
 	
-	<!-- 해당유저 포인트정보 조회 -->
-	<select id="getUserPointByUserNo" parameterType="String" resultMap="PointResultMap">
+	<!-- 해당회원 포인트정보 조회 -->
+	<select id="getUserPointByUserNo" parameterType="int" resultMap="PointResultMap">
 		select p.user_point_no, p.user_total_point, p.user_used_point, p.user_available_point
 		from sh_users u, sh_user_points p
 		where u.user_no = p.user_no
-		and u.user_id = #{no}
+		and u.user_no = #{value}
 	</select>
 	
-	<!-- 해당유저 포인트 히스토리 내역 조회 -->
-	<select id="getUserPointHistoryByUserNo" parameterType="String" resultMap="PointHistoryResultMap">
-		select h.point_his_no, h.point_his_title, h.point_his_amount, h.point_his_created_date
+	<!-- 해당회원 포인트 히스토리 내역 조회 -->
+	<select id="getUserPointHistoryByUserNo" parameterType="int" resultMap="PointHistoryResultMap">
+		select u.user_point, h.point_his_title, h.point_his_earned_amount, h.point_his_used_amount, h.point_his_created_date
 		from sh_users u, sh_user_points_his h
-		where u.user_no, h.user_no 
-		and h.user_no = #{no}
+		where u.user_no = h.user_no
+		and u.user_no = #{value}
+	</select>
+	
+	<!-- 마이페이지 포인트, 등급정보 -->
+	<select id="getPointAndGradeByUserNo" parameterType="int" resultMap="PointGradeResultMap">
+		select u.user_point, u.user_annual_stay,  g.grade, (g.max_point - u.user_point) remain_point, 
+		       (g.max_stay - u.user_annual_stay) remain_stay, g.max_point, g.max_stay
+		from sh_users u, sh_grade g
+		where u.user_no = #{value}
+		and u.user_point &gt;= g.min_point and u.user_point &lt;= g.max_point
 	</select>
 	
 	<!-- 비밀번호 변경 폼 - 기존 비밀번호 체크 -->
-	<select id="passwordCheck"  parameterType="String" resultType="int">
+	<select id="passwordCheck"  parameterType="string" resultType="int">
 		select count(user_password)
-		from sh_users
+		from sh_users	
 		where user_id = #{id} 
 		and user_password = #{password}
+	</select>
+	
+	<!-- 해당회원의 쿠폰정보 반환 -->
+	<select id="getCouponInfoByUserNo" parameterType="int" resultMap="CouponResultMap">
+		select *
+		from sh_coupon
+		where user_no = #{value}
 	</select>
 	
 </mapper>

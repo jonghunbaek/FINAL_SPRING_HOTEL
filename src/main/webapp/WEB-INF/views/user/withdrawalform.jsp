@@ -11,15 +11,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style type="text/css">
 
 	#container {padding-top: 65px; width: 1200px; height:1500px; margin: auto; padding-left: 0px; padding-right: 0px;}
-	#container a {text-decoration: none; color: rgb(99, 62, 16);}
-	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
+	#div-sidebar a {text-decoration: none; color: rgb(99, 62, 16);}
+	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86); margin-bottom: 0;}
 	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
-	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px;}
+	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px; margin-bottom: 30px;}
 	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
@@ -30,12 +29,14 @@
 	#list-border {border-top: 1px dotted rgb(206,194,168); padding-top: 5px; margin-top: 5px;}
 	#div-contents {float: right; margin: auto; width: 866px; height: 100%;}
 	#span-color {color:rgb(118,118,118)}
-	#div-topmsg {margin: 20px 0px;}
-	#div-tableBox {margin: 20px 0 26px;}
-	#div-table {border: none; border-top: 1px solid #cdcbbe; width: 100%; border-collapse: collapse;}
-	.table {text-align: center; font-size: 13px;}
-	.table th {border-bottom: 1px solid #cdcbbe; color: #666666; line-height: 20px;}
-	
+	#div-msg {border: 1px solid #e9e9e9; background-color: #fbfbfb; color:#666; padding: 15px; margin: 0 0 20px 0; font-size: 15px;}
+	#div-box {border: 1px solid #eceae1; background-color: #faf9f4; padding: 10px 20px;  margin-top: 10px; font-size: 13px; text-align: left;}
+	#div-box li {margin-top: 10px;}
+	#div-btn {width: 866px; height: 58px; padding-top: 30px; text-align: right; display: block;}
+	#btn1 {text-decoration: none; display: block; margin-left: 300px; background-color: rgb(62,43,44);
+		   width:130px; height:32px; text-align: center; font-size: 14px; display: block; margin: auto;}
+    #btn1 span {color: rgb(250,241,208); padding-top: 5px;}
+		
 </style>
 <title>Spring Hotel</title>
 </head>
@@ -78,50 +79,22 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
-			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">쿠폰함</h3>
-			<div id="div-topmsg">
-				<img src="/resources/images/mypage/couponTopMsg.gif">
+		<form action="withdrawalform" method="POST">
+			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">탈퇴 요청</h3>
+			<div id="div-msg">
+				탈퇴를 신청하시기 전에 아래의 유의사항을 한 번 더 확인해 주시기 바랍니다.
 			</div>
-			<div class="fs-7">
-				<p>※ 총 사용 가능한 쿠폰은 총 <span id="span-num"> 0 </span> 건 있습니다.</p>
+			<div id="div-box">
+				<ul style="padding:0;">
+					<li>- 탈퇴를 신청하시면 번복이 불가능하며 보유하신 모든 포인트는 소멸됩니다.</li>
+					<li>- 개인정보보호법에 따라 고객님의 호텔 이용기록, 개인정보 및 문의내역 기록도 모두 삭제됩니다</li>
+					<li>- 탈퇴 신청이 완료되면 즉시 홈페이지 로그인이 제한됩니다.</li>
+				</ul>
 			</div>
-			<div id="div-tableBox">
-				<div class="mt-3" id="div-table">
-					<table class="table background-color">
-						<colgroup>
-							<col width="50%" class="col1">
-							<col width="25%" class="col2">
-							<col width="25%" class="col3">
-						</colgroup>
-						<thead>
-							<tr style="background-color: #faf9f4;">
-								<th>쿠폰명</th>
-								<th>발급날짜</th>
-								<th>사용기간</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:choose>
-								<c:when test="${empty coupons }">
-									<tr class="first last">
-										<td colspan="3">사용 가능한 쿠폰이 없습니다.</td>
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="coupon" items="${coupons }">
-										<tr id="tr-data">
-											<td>${coupon.title }</td>
-											<td><fmt:formatDate value="${coupon.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
-											<td><fmt:formatDate value="${coupon.useableDate }" pattern="~ yyyy년 MM월 dd일"/></td>
-										</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						</tbody>
-					</table>
-				</div>
+			<div id="div-btn">
+				<button id="btn1"><span>신청</span></button>
 			</div>
-	
+		</form>
 		</div>
 	</div>
 	
@@ -129,9 +102,6 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-$(function () {
-	let tr = $('#tr-data').length;
-	$('#span-num').html(tr);
-})
+
 </script>
 </html>

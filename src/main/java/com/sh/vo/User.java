@@ -33,7 +33,7 @@ public class User {
 		private Date updatedDate;
 		private String deleted;
 		private Date deletedDate;
-		private double point;
+		private int point;
   	    private int stay;
 	    private Grade grade;
 	    private Date birthDay;
