@@ -18,7 +18,8 @@ public class RoomRev {
 	private int no;
 	private int adult;
 	private int child;
-	private int totalPrice;
+	private int totalPrice; // 예약 총 금액
+	private int roomPrice; // 객실 가격
 	private String checkin;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")

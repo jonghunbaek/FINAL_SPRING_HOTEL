@@ -31,7 +31,7 @@
 			<div class="rev-step">
 				<img alt="" src="../resources/images/room/rev/revTitle3.png">
 			</div>
-			<form id="form-rev" action="#" method="get">
+			<form id="form-rev" name="form-rev" action="insert" method="post">
 				<!-- action 1 -->
 				<div id="Accordion_wrap1" style="border: 0.01em solid #80808063;">
 					<div class="que1">
@@ -71,7 +71,7 @@
 										<!-- 성명 kor -->
 										<div class="row">
 											<div class="col-3">
-												<select class="input name-select"
+												<select class="input name-select" name="title"
 													style="width: 90px; height: 40px;">
 													<option selected="selected">선택</option>
 													<option>Ms.</option>
@@ -80,18 +80,18 @@
 												</select>
 											</div>
 											<div class="col-9">
-												<input class="input name-kor" type="text"
+												<input class="input name-kor" type="text" name="userName"
 													style="width: 278px; height: 40px;">
 											</div>
 										</div>
 										<!-- 성명 en -->
 										<div class="row" style="margin-block: 15px;">
 											<div class="col-6">
-												<input type="text" placeholder="FIRST NAME(이름)"
+												<input type="text" placeholder="FIRST NAME(이름)" name="firstName"
 													style="width: 185px; height: 40px;">
 											</div>
 											<div class="col-6" style="padding-left: 5px;">
-												<input type="text" placeholder="LAST NAME(성)"
+												<input type="text" placeholder="LAST NAME(성)" name="lastName"
 													style="width: 185px; height: 40px;">
 											</div>
 										</div>
@@ -107,12 +107,12 @@
 												</select>
 											</div>
 											<div class="col-9">
-												<input class="input name-kor" type="text"
+												<input class="input-tel" type="text" name="tel"
 													style="width: 278px; height: 40px;">
 											</div>
 										</div>
 										<!-- 지역(여권기준) -->
-										<select style="width: 383px; height: 40px;">
+										<select name="country" style="width: 383px; height: 40px;">
 											<option selected="selected">선택</option>
 											<!-- 나라 목록 가져오기!!!!  -->
 											<option value="AF">Afghanistan</option>
@@ -383,8 +383,8 @@
 										</div>
 									</div>
 									<div class="col-9">
-										<!-- 카드종류 -->
-										<select class="card-sort" style="width: 383px; height: 40px;">
+										<!-- 카드종류  onchange="this.form.submit()" -->
+										<select class="card-sort" name="cardType" style="width: 383px; height: 40px;">
 											<option value="AX">AMEX CARD</option>
 											<option value="BC">BC CARD</option>
 											<option value="CB">CITIBANK CARD</option>
@@ -403,26 +403,26 @@
 										<!-- 카드번호 -->
 										<div class="card-num row" style="margin-block: 15px;">
 											<div class="col-3" style="padding-right: 0px;">
-												<input type="text" id="cardNo1"
+												<input type="text" id="cardNo1" name="cardNumber1"
 													style="width: 70px; height: 40px; margin-right: 8px;" maxlength="4" >
 											<span>-</span></div>
 											<div class="col-3" style="padding-right: 0px;">
-												<input type="password" id="cardNo2"
+												<input type="password" id="cardNo2" name="cardNumber2"
 													style="width: 70px; height: 40px; margin-right: 8px;" maxlength="4" >
 											<span>-</span></div>
 											<div class="col-3" style="padding-right: 0px;">
-												<input type="password" id="cardNo3"
+												<input type="password" id="cardNo3" name="cardNumber3"
 													style="width: 70px; height: 40px; margin-right: 8px;" maxlength="4">
 											<span>-</span></div>
 											<div class="col-3">
-												<input type="password" id="cardNo4"
+												<input type="password" id="cardNo4" name="cardNumber4"
 													style="width: 71px; height: 40px;" maxlength="4">
 											</div>
 										</div>
 										<!-- 유효기간 -->
 										<div class="card-exp-date row" style="margin-block: 15px;">
 											<div class="col-6" style="padding-right: 10px;">
-												<select style="width: 180px; height: 40px;">
+												<select name="cardValidMonth" style="width: 180px; height: 40px;">
 													<option selected="selected">월</option>
 													<option>1</option>
 													<option>2</option>
@@ -439,7 +439,7 @@
 												</select>
 											</div>
 											<div class="col-6" style="padding-left: 10px;">
-												<select style="width: 180px; height: 40px;">
+												<select name="cardValidYear" style="width: 180px; height: 40px;">
 													<option selected="selected">년</option>
 													<option value="2022">2022</option>
 													<option>2023</option>
@@ -552,7 +552,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="que3"
+					<div class="que4"
 						style="align-content: center; justify-content: center; height: 60px; background-color: #e0d9b396; color: #664d03b8;">
 						<span class="form-check"> <input class="form-check-input"
 							type="checkbox" value="" style="margin-left: 20px;"
@@ -619,14 +619,14 @@
 							<div class="radio-form" style="column-gap: 20px; display: flex; justify-content: end;">
 								<div class="radio">
 									<input class="form-check-input" type="radio"
-										name="radio2" id="check-a1" value="Y"> <label
-										class="form-check-label" for="check-a1">
+										name="radio2" id="check-a2" value="Y"> <label
+										class="form-check-label" for="check-a2">
 										동의함</label>
 								</div>
 								<div class="radio">
 									<input class="form-check-input" type="radio"
-										name="radio2" id="check-d1" value="N" checked>
-									<label class="form-check-label" for="check-d1">
+										name="radio2" id="check-d2" value="N" checked>
+									<label class="form-check-label" for="check-d2">
 										동의하지 않음</label>
 								</div>
 							</div>
@@ -645,7 +645,7 @@
 							<div class="total-title">예약정보</div>
 							<div>
 								<img alt="호텔사진"
-									src="../resources/images/room/location/seoul.jpg">
+									src="../resources/images/room/location/서울.jpg">
 							</div>
 							<div class="total-sub">
 								<div class="sub-title">체크인-체크아웃</div>
@@ -695,7 +695,7 @@
 						<a href="../room/roomRev2" style="margin-right: 250px;"><img alt=""
 							src="../resources/images/room/rev/prev.gif"></a>
 						<div class="arrow-top3">↑</div>
-						<div class="arrow-bottom3">상세보기</div>
+						<div class="arrow-bottom3"></div>
 					</div>
 					<div class="r-box" style="display: flex;">
 						<div class="total-text" style="margin-right: 230px;">
@@ -703,9 +703,10 @@
 								포함</span>
 						</div>
 						<div class="total-price" style="margin-right: 20px; margin-top: 10px;">616,000원</div>
-						<a href="../room/completed" class="nm-btn"><img alt="선택"
+						<a href="#" class="m-btn" id="submit"><img alt="예약하기"
 							src="../resources/images/room/rev/btn-rev.gif"></a>
 					</div>
+						
 				</div>
 			</div>
 			<!-- rev2 total accordion -->
@@ -713,6 +714,20 @@
 	</div>
 	<%@ include file="../common/footer.jsp"%>
 	<script>
+	
+	$(".r-box a").click(function(){
+		return false;
+	})
+	/* 비회원 버튼을 누르면 */
+	$("#submit").click(function(){
+		$("#form-rev").trigger("submit");
+		return false;
+	});
+	
+	$("#rev-complete").click(function(){
+		$("#form-rev").trigger("submit");
+		return false;
+	});
 
 		// 아코디언 2
 		$(".que2").click(function() {
@@ -722,10 +737,83 @@
 		});
 
 		// 아코디언 3
-		$(".que3").click(function() {
+		 $(".que3").click(function() {
 			$(this).prev(".anw3").stop().slideToggle(300);
 			$(this).toggleClass('on').siblings().removeClass('on');
 			$(this).prev(".anw3").siblings(".anw3").slideUp(300);
+		}); 
+		
+		$(function(){
+			$("#form-rev").submit(function() {
+				if($(".form-check-input").val() === 'N') { // 유의사항 동의 
+					alert("유의사항, 취소 환불 동의는 필수 선택항목입니다.");
+					return false;
+				}
+				
+				if($("select[name=title]").val() === '선택') {
+					alert("칭호는 필수 선택항목입니다.");
+					return false;
+				}
+				
+				if($(":input[name=userName]").val() === '') {
+					alert("이름은 입력항목입니다.");
+					return false;
+				}
+				
+				if($(":input[name=firstName]").val() === '') {
+					alert("영문 이름은 필수 입력항목입니다.");
+					return false;
+				}
+				
+				if($(":input[name=lastName]").val() === '') {
+					alert("영문 이름은 입력항목입니다.");
+					return false;
+				}
+				
+				if($(":input[name=email]").val() === '') {
+					alert("이메일은 필수 입력항목입니다.");
+					return false;
+				}
+				
+				if($(":input[name=tel]").val() === '') {
+					alert("전화번호는 필수 입력항목입니다.");
+					return false;
+				}
+				
+				if($("select[name=country]").val() === '') {
+					alert("국가는 필수 선택항목입니다.");
+					return false;
+				}
+				
+				if($("select[name=cardType]").val() === '') {
+					alert("카드 타입은 필수 선택항목입니다.");
+					return false;
+				}
+				if($(":input[name=cardNumber1]").val() === '' || $(":input[name=cardNumber2]").val() === '' || $(":input[name=cardNumber3]").val() === '' || $(":input[name=cardNumber4]").val() === '') {
+					alert("카드 번호는 필수 입력항목입니다.");
+					return false;
+				}
+				
+				if($("select[name=cardValidMonth]").val() === '월') {
+					alert("카드 유효기간은 필수 선택항목입니다.");
+					return false;
+				}
+				
+				if($("select[name=cardValidYear]").val() === '년') {
+					alert("카드 유효기간은 필수 선택항목입니다.");
+					return false;
+				}
+				
+				if($("#radio1").prop('checked')){
+					alert("항목 동의는 필수입니다.")
+					return false;
+				}
+				if($("#radio2").prop('checked')){
+					alert("항목 동의는 필수입니다.")
+					return false;
+				}
+			
+			})
 		});
 	</script>
 </body>
