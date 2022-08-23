@@ -1,19 +1,21 @@
 package com.sh.mapper;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.sh.vo.Allergy;
-import com.sh.vo.AllergySelected;
 import com.sh.vo.Dn;
 import com.sh.vo.DnInfo;
 import com.sh.vo.DnMealTime;
 import com.sh.vo.DnRev;
+import com.sh.vo.DnSeatCountOfDate;
 import com.sh.vo.Location;
 import com.sh.vo.RtRev;
+import com.sh.vo.RtRevCount;
 
 @Mapper
 public interface DiningMapper {
@@ -32,4 +34,10 @@ public interface DiningMapper {
 	List<Dn> getDiningByLocationNo(int no);
 	void insertAllergySelected(@Param("rtRevNo") int rtRevNo, @Param("allergyNo") int allergyNo);
 	void insertReservation(RtRev rtRev);
+	
+	void insertRtRevCount(RtRevCount rtRevCount);
+	
+	List<DnSeatCountOfDate> getDnSeatCountOfDate(@Param("no") int no, @Param("date") Date date, @Param("seatType") String seatType);
+	int getTotalSeatByNo(int no);
+	int getTotalRoomByNo(int no);
 }

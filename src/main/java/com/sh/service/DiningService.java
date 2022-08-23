@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sh.mapper.DiningMapper;
 import com.sh.mapper.UserMapper;
 import com.sh.vo.Allergy;
-import com.sh.vo.AllergySelected;
 import com.sh.vo.Dn;
 import com.sh.vo.DnMealTime;
 import com.sh.vo.DnRev;
+import com.sh.vo.DnSeatCountOfDate;
 import com.sh.vo.Location;
 import com.sh.vo.RtRev;
+import com.sh.vo.RtRevCount;
 import com.sh.web.form.DiningReservationForm;
 
 @Service
@@ -105,6 +107,7 @@ public class DiningService {
 		diningMapper.insertReservation(rtRev);
 		
 		if(diningReservationForm.getIsAllergy().equals("Y")) {
+			rtRev.setEtcAllergy(diningReservationForm.getEtcAllergy());
 			List<Integer> allergyNos = diningReservationForm.getAllergyNos();
 			for(Integer allergyNo : allergyNos) {
 				int rtRevNo = rtRev.getNo();
@@ -120,6 +123,39 @@ public class DiningService {
 		
 		return locationNo;
 	}
-
+	
+	public void addRtRevCount(RtRevCount rtRevCount) {
+		diningMapper.insertRtRevCount(rtRevCount);
+	}
+	
+	// 잔여좌석 조회 결과
+	public Map<String, String> lookUpSeat(Date date, int diningNo, String seatType, int adult, int child, int baby){
+		
+		Map<String, String> result = new HashMap<>();
+		int totalCount = adult + child + baby;
+		int totalSeat = 0;
+		List<DnSeatCountOfDate> seatCountList = diningMapper.getDnSeatCountOfDate(diningNo, date, seatType);
+		
+		if(seatType.equals("table")) {
+			totalSeat = diningMapper.getTotalSeatByNo(diningNo);
+			for(DnSeatCountOfDate seatCount : seatCountList) {
+				if((totalSeat -(totalCount + seatCount.getCount()))< 0) {
+					result.put("mealTime", seatCount.getMealTime());
+				}
+			}
+		} else {
+			totalSeat = diningMapper.getTotalRoomByNo(diningNo);
+			for(DnSeatCountOfDate seatCount : seatCountList) {
+				if((totalSeat -(1 + seatCount.getCount()))< 0) {
+					result.put("mealTime", seatCount.getMealTime());
+				}
+			}
+		}
+		
+		
+		
+		return result;
+	}
+	
 
 }
