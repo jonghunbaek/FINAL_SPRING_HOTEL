@@ -1,6 +1,7 @@
 package com.sh.service;
 
 
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import java.util.UUID;
 import org.springframework.beans.BeanUtils;
@@ -10,11 +11,12 @@ import org.springframework.stereotype.Service;
 
 import com.sh.exception.ApplicationException;
 import com.sh.mapper.UserMapper;
+import com.sh.vo.Coupon;
 import com.sh.vo.Grade;
+import com.sh.vo.PointGrade;
 import com.sh.vo.PointHistory;
 import com.sh.vo.User;
 import com.sh.vo.UserPoint;
-import com.sh.web.form.UserModifyForm;
 import com.sh.web.form.UserRegisterForm;
 
 import lombok.extern.slf4j.Slf4j;
@@ -124,6 +126,39 @@ public class UserService {
 	}
 
 	/**
+	 * 가장 최근에 가입한 유저정보 반환
+	 * @param num
+	 * @return 최근에 가입한 유저정보
+	 */
+	public User getUserInfoByRownum (int num) {
+		return userMapper.getUserByRownum(num);
+	}
+	
+	/**
+	 * 회원가입시 쿠폰 지급
+	 * @param coupon
+	 */
+	public void insertCouponInfo(Coupon coupon) {
+		userMapper.insertCoupon(coupon);
+	}
+	
+	/**
+	 * 회원가입시 포인트 지급
+	 * @param pointHistory
+	 */
+	public void insertPointInfo(PointHistory pointHistory) {
+		userMapper.insertPointHistory(pointHistory);
+	}
+	
+	/**
+	 * user 테이블 포인트정보 업데이트
+	 * @param userNo
+	 */
+	public void updateUserPointInfo(int userNo, int point) {
+		userMapper.updateUserPoint(userNo, point);
+	}
+	
+	/**
 	 * 등급정보 조회
 	 * @param id
 	 * @return 등급정보
@@ -146,8 +181,17 @@ public class UserService {
 	 * @param userNo
 	 * @return 포인트이력
 	 */
-	public PointHistory getPointHistory(int userNo) {
+	public List<PointHistory> getPointHistory(int userNo) {
 		return userMapper.getUserPointHistoryByUserNo(userNo);
+	}
+	
+	/**
+	 * 쿠폰 지급 내역 조회
+	 * @param userNo
+	 * @return 쿠폰 정보
+	 */
+	public List<Coupon> getCouponInfo(int userNo) {
+		return userMapper.getCouponInfoByUserNo(userNo);
 	}
 	
 	/**
@@ -156,8 +200,8 @@ public class UserService {
 	 * @param password
 	 * @return 유저정보
 	 */
-	public User checkPassword(int userNo, String password) {
-		User user = userMapper.getUserByNo(userNo);
+	public User checkPassword(int no, String password) {
+		User user = userMapper.getUserByNo(no);
 		if (!user.getPassword().equals(password)) {
 			throw new ApplicationException("비밀번호가 올바르지 않습니다.");
 		}
@@ -182,4 +226,22 @@ public class UserService {
 	public int passwordCheck(String id, String password) {
 		return userMapper.passwordCheck(id, password); 
 	}
+  
+	/**
+	 * 마이페이지 포인트, 등급정보 반환
+	 * @param userNo
+	 * @return 포인트, 등급정보
+	 */
+	public PointGrade getUserPointAndGrade(int userNo) {
+		return userMapper.getPointAndGradeByUserNo(userNo);
+	}
+	
+	/**
+	 * 회원탈퇴
+	 * @param userNo
+	 */
+	public void deleteUser(int userNo) {
+		userMapper.deleteUser(userNo);
+	}
+	
 }
