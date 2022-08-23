@@ -278,7 +278,7 @@
 <div class="container-fluid">
 	<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 pb-3">
 		<p id="keymap">
-			<i class="bi bi-building" style="font-weight:bold; font-size:16px;"></i></span>&nbsp;&nbsp;&gt;&nbsp;&nbsp;<span data-feather="home"></span>
+			</span>&nbsp;&nbsp;&nbsp;&nbsp;<span data-feather="clipboard"></span>
 			&nbsp;<strong style="font-size:13px;">고객문의 관리</strong>
 		</p>
 		<!-- 조건설정하는 헤드부분 -->

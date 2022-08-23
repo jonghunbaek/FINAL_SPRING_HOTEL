@@ -126,14 +126,13 @@
 					<label class="required">아이디</label>
 					<form:input path="id"/>
 					<button type="button" id="btn" onclick="idCheck()">아이디 중복확인</button>
-					<span id="ex">5~12자 이내 영문 또는 영문/숫자 조합</span><br>
+					<span id="ex" class="idCheck">5~12자 이내 영문 또는 영문/숫자 조합</span><br>
 					<form:errors path="id" class="text-danger small fst-italic"></form:errors>
 				</li>
 				<li>
 					<label class="required">비밀번호</label>
 					<form:password path="password"/>
-					<span id="ex">비밀번호입력안내</span>
-					<span id="ex">8~20자 이내 영문/숫자 조합(특수문자 입력가능)</span><br>
+					<span id="ex">비밀번호입력안내 8~20자 이내 영문/숫자 조합(특수문자 입력가능)</span><br>
 					<form:errors path="password" class="text-danger small fst-italic"></form:errors>
 				</li>
 				<li class="end">
@@ -160,8 +159,12 @@
 			success:function(check){
 				if(check == 0) {
 					alert("사용 가능한 아이디입니다.");
-				} else {
+					$(".idCheck").html("사용 가능한 아이디입니다.");
+					$(".idCheck").css('color','green')
+					} else {
 					alert("이미 사용중인 아이디입니다.");
+					$(".idCheck").html("이미 사용중인 아이디입니다.");
+					$(".idCheck").css('color', 'red');
 				}
 			}, 
 			error:function(){
@@ -194,7 +197,7 @@
 	};
 	
 	// 비밀번호 확인 
-	$(":input[name=passwordCheck]").keyup(function() {
+	$(":input[name=passwordCheck]").focusout(function() {
 		let p1 = document.getElementById('password').value;
 		let p2 = document.getElementById('passwordCheck').value;
 		

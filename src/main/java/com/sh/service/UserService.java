@@ -1,16 +1,18 @@
 package com.sh.service;
 
 
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import java.util.UUID;
-import org.springframework.beans.BeanUtils;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sh.exception.ApplicationException;
 import com.sh.mapper.UserMapper;
+import com.sh.utils.MailUtil;
 import com.sh.vo.Coupon;
 import com.sh.vo.Grade;
 import com.sh.vo.PointGrade;
@@ -119,10 +121,53 @@ public class UserService {
 	 * @param id
 	 * @param email
 	 * @return 사용자 비밀번호
-	 */
+	 
 	public String findPw(String id, String email) {
 		String finePw = userMapper.finePw(id, email);
 		return finePw;
+	}
+	*/
+	
+	public int findPwCheck(String id, String email) {
+		int check = userMapper.finePwCheck(id, email);
+		return check;
+	}
+		
+	//비밀번호 찾기
+	public String findPw(String id, String email) throws Exception{
+		
+		String result = null;
+		
+		System.out.println("email 확인 : " + email);
+		//아이디&이메일 정보 확인
+		int check = userMapper.finePwCheck(id, email);
+		//회원정보 불러오기
+		User user = userMapper.getUserByEmail(email);
+		
+		//가입된 이메일이 존재한다면 이메일 발송
+		if(check == 1) {
+			
+			//임시 비밀번호 생성(UUID 이용 - 특수문자는 못넣음 ㅠㅠ)
+			String tempPw = UUID.randomUUID().toString().replace("-", ""); // -를 제거
+			tempPw = tempPw.substring(0,10); //tempPw를 앞에서부터 10자리 잘라줌
+			
+			System.out.println("임시 비밀번호 확인 : " + tempPw);
+			
+			//user객체에 임시 비밀번호 담기
+			user.setPassword(tempPw);
+			
+			//메일 전송
+			MailUtil mail = new MailUtil();
+			mail.sendMail(user);
+			
+			//비밀번호 변경
+			userMapper.updatePw(user);
+			
+			result = "success";
+		} else {
+			result = "fail";
+		}
+		return result;
 	}
 
 	/**
@@ -226,7 +271,7 @@ public class UserService {
 	public int passwordCheck(String id, String password) {
 		return userMapper.passwordCheck(id, password); 
 	}
-  
+
 	/**
 	 * 마이페이지 포인트, 등급정보 반환
 	 * @param userNo
@@ -243,5 +288,5 @@ public class UserService {
 	public void deleteUser(int userNo) {
 		userMapper.deleteUser(userNo);
 	}
-	
+
 }

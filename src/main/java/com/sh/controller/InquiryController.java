@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sh.annotation.LoginUser;
+import com.sh.criteria.QnaCriteria;
 import com.sh.service.InquiryService;
 import com.sh.service.UserService;
 import com.sh.vo.Location;
@@ -35,11 +37,13 @@ public class InquiryController {
 		 */
 		@GetMapping(path="/inquiryForm")
 		public String inquiryForm(@LoginUser User loginUser, Model model) {
+			if (loginUser != null) {
 			User user = userService.getUserDetail(loginUser.getId());
+			model.addAttribute("user", user);
+			}
 			List<QnaCategory> category = inquiryService.getAllQnaCategory();
 			List<Location> location = inquiryService.getAllLocation();
 			
-			model.addAttribute("user", user);
 			model.addAttribute("category", category);
 			model.addAttribute("location",location);
 			return "inquiry/inquiryForm";
@@ -50,10 +54,18 @@ public class InquiryController {
 		 * @return
 		 */
 		@PostMapping(path ="/addInquiry")
-		public String addInquiry(@LoginUser User loginUser, Qna qna) {
+		public String addInquiry(@LoginUser User loginUser,Qna qna) {
 			inquiryService.insertInquiry(qna);
 			
+			if (loginUser == null) {
+				return "redirect:/inquiry/complete";
+			}
 			return "redirect:list";
+		}
+		
+		@GetMapping(path="/complete")
+		public String complete() {
+			return "inquiry/complete";
 		}
 		
 		/** 문의내역 리스트
@@ -64,10 +76,10 @@ public class InquiryController {
 		 */
 		@GetMapping(path = "/list")
 		public String inquiryList(@LoginUser User loginUser, @RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
+			if (loginUser == null) { 
+			   return "redirect:/login?fail=deny"; 
+			} 
 			
-			if (loginUser == null) {
-				return "redirect:/login?fail=deny";					
-			}
 			int totalRows = inquiryService.getTotalRows();
 			Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
 			List<Qna> inquiries = inquiryService.getAllQna(pagination);
@@ -77,6 +89,17 @@ public class InquiryController {
 			
 			return "inquiry/list";
 		}
+		
+		/** 필터적용 
+		 * @param qnaCriteria
+		 * @return
+		 */
+		@GetMapping("/search")
+	    @ResponseBody
+	    public List<Qna> search(QnaCriteria qnaCriteria) {
+			return inquiryService.searchQna(qnaCriteria);
+	    }
+		
 		
 		/** 문의내역 상세페이지
 		 * @param no
