@@ -31,7 +31,7 @@
 			<div class="rev-step">
 				<img alt="" src="../resources/images/room/rev/revTitle2.png">
 			</div>
-			<form id="form-rev" action="#" method="get">
+			<form id="form-rev" name="form-rev" action="roomRev3" method="post">
 				<!-- action 1 -->
 				<div id="Accordion_wrap1" style="border: 0.01em solid #80808063;">
 					<div class="que1">
@@ -48,35 +48,69 @@
 								<div class="option-c">
 									<!-- 성인 조식 -->
 									<div class="row">
-										<div class="adult-breakfast col-8">성인 조식 / 45,454원</div>
+										<div class="adult-breakfast col-8">성인 조식 / 50,000원</div>
 										<div class="count col-4">
-											<a href=""> <img alt="dec"
-												src="../resources/images/room/rev/dec_btn.png">
-											</a>0 <a href=""> <img alt="inc"
-												src="../resources/images/room/rev/inc_btn.png">
-											</a><input type="hidden" id="adultMeal" />
+											<a href="" id="dec-a-meal"> <svg
+														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														fill="currentColor" class="bi bi-dash-lg"
+														viewBox="0 0 16 16">
+	  												<path fill-rule="evenodd"
+															d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+												</svg>
+												</a> <span id="updown-a1">0</span> <a href="" id="inc-a-meal"> <svg
+														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														fill="currentColor" class="bi bi-plus-lg"
+														viewBox="0 0 16 16">
+	  											<path fill-rule="evenodd"
+															d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+												</svg>
+												</a>
+												<input type="text" id="adultMeal" name="optionAdultBf" value="0"/>
 										</div>
 									</div>
 									<!-- 엑스트라 베드 -->
 									<div class="row" style="margin-block: 30px;">
-										<div class="extra-bed col-8">엑스트라 베드 / 45,454원</div>
+										<div class="extra-bed col-8">엑스트라 베드 / 33,000원</div>
 										<div class="count col-4">
-											<a href=""> <img alt="dec"
-												src="../resources/images/room/rev/dec_btn.png">
-											</a>0 <a href=""> <img alt="inc"
-												src="../resources/images/room/rev/inc_btn.png">
-											</a><input type="hidden" id="extraBed" />
+											<a href="" id="dec-bed"> <svg
+														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														fill="currentColor" class="bi bi-dash-lg"
+														viewBox="0 0 16 16">
+	  												<path fill-rule="evenodd"
+															d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+												</svg>
+												</a> 
+												<span id="updown-a2">0</span> 
+											<a href="" id="inc-bed"> <svg
+													xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+													fill="currentColor" class="bi bi-plus-lg"
+													viewBox="0 0 16 16">
+  											<path fill-rule="evenodd"
+														d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+											</svg>
+											</a>
+											<input type="text" id="extraBed" name="extraBed" value="0"/>
 										</div>
 									</div>
 									<!-- 어린이 조식 -->
 									<div class="row">
-										<div class="minor-breakfast col-8">어린이 조식 / 45,454원</div>
+										<div class="minor-breakfast col-8">어린이 조식 / 30,000원</div>
 										<div class="count col-4">
-											<a href=""> <img alt="dec"
-												src="../resources/images/room/rev/dec_btn.png">
-											</a>0 <a href=""> <img alt="inc"
-												src="../resources/images/room/rev/inc_btn.png">
-											</a><input type="hidden" id="minorMeal" />
+											<a href="" id="dec-c-meal"> <svg
+														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														fill="currentColor" class="bi bi-dash-lg"
+														viewBox="0 0 16 16">
+	  												<path fill-rule="evenodd"
+															d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z" />
+												</svg>
+												</a> <span id="updown-a3">0</span> <a href="" id="inc-c-meal"> <svg
+														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														fill="currentColor" class="bi bi-plus-lg"
+														viewBox="0 0 16 16">
+	  											<path fill-rule="evenodd"
+															d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+												</svg>
+												</a><input type="text" id="childMeal" name="optionChildBf"  value="0"/>
 										</div>
 									</div>
 								</div>
@@ -105,9 +139,9 @@
 								<div class="time-select">
 									<!-- 신청하기 체크시에만 available -->
 									<select
-										style="width: 490px; height: 30px; margin-bottom: 10px;">
+										style="width: 490px; height: 30px; margin-bottom: 10px;" name="optionCheckinTime" >
 										<option>선택</option>
-										<option>14:00</option>
+										<option selected="selected">14:00</option>
 										<option>15:00</option>
 										<option>16:00</option>
 										<option>17:00</option>
@@ -129,9 +163,8 @@
 						<div class="request col-6"
 							style="border-left: 1px dotted #dee2e6;">
 							<div class="request-title">추가 요청사항</div>
-							<input class="request-form" type="text"
-								placeholder="공항교통편 문의 또는 호텔 이용 시 문의하실 사항이 있으시면 입력해 주십시오."
-								onkeyup="길이체크">
+							<input class="request-form" type="text" name="request" value=""
+								placeholder="공항교통편 문의 또는 호텔 이용 시 문의하실 사항이 있으시면 입력해 주십시오.">
 							<div class="text-gray" style="color: gray; margin-top: 25px;">※
 								특수문자 또는 이모티콘 사용이 제한되오니, 텍스트만 입력해주시기 바랍니다.</div>
 							<div class="text-gray" style="color: gray; margin-top: 10px;">※
@@ -233,7 +266,7 @@
     font-weight: 600;
     color: #9a877a;">22,800P</span>가 적립됩니다.
 				</div>
-				<a href=""><img alt="신라리워즈가입버튼" src="../resources/images/room/rev/rewards.gif"></a>
+				<a href="/register"><img alt="신라리워즈가입버튼" src="../resources/images/room/rev/rewards.gif"></a>
 			</div>
 			<div class="gray-info"
 				style="color: gray; font-size: 14px; margin-block: 10px; margin-bottom: 90px;">
@@ -248,7 +281,7 @@
 							<div class="total-title">예약정보</div>
 							<div>
 								<img alt="호텔사진"
-									src="../resources/images/room/location/seoul.jpg">
+									src="../resources/images/room/location/서울.jpg">
 							</div>
 							<div class="total-sub">
 								<div class="sub-title">체크인-체크아웃</div>
@@ -298,15 +331,20 @@
 						<div class="arrow-top3">↑</div> <div class="arrow-bottom3">상세보기</div>
 					</div>
 					<div class="r-box" style="display: flex;">
-						<div class="total-text" style="    margin-right: 130px;">
+						<div class="total-text" style="margin-right: 130px;">
 							<span class="text1">요금합계</span> <span class="text2">부가가치세
 								포함</span>
 						</div>
-						<div class="total-price" style="margin-right: 20px; margin-top: 10px;">616,000원</div>
-						<a href="../room/roomRev3" class="nm-btn"><img alt="비회원예약"
+						<div class="total-price"
+							style="margin-right: 20px; margin-top: 10px;">616,000원</div>
+						<a href="#" id="btn-rev-1" class="nm-btn"><img alt="비회원예약"
 							src="../resources/images/room/rev/nonmember.gif"></a>
-							<a href="#" class="m-btn"><img alt="회원예약"
+						<a href="#" class="m-btn"><img alt="회원예약"
 							src="../resources/images/room/rev/member_rev.gif"></a>
+							<!-- <button type="submit" id="submit"
+							style="background-color: #a9937d; border: none; width: 140px; color: white; font-size: 14px; height: 50px;">비회원예약</button>
+						<button type="submit" id="submit"
+							style="background-color: #3e2b2c; border: none; width: 140px; color: white; font-size: 14px; height: 50px;">회원예약</button> -->
 					</div>
 				</div>
 			</div>
@@ -315,6 +353,99 @@
 	</div>
 <%@ include file="../common/footer.jsp"%>
 <script>
+
+$(function(){
+	
+	$(".total-price a").click(function(){
+		return false;
+	})
+	/* 비회원 버튼을 누르면 */
+	$("#btn-rev-1").click(function(){
+		$("#form-rev").trigger("submit");
+		return false;
+	});
+	/* 조식 엑스트라베드 증 감 */
+		$('#dec-a-meal').click(function(e){
+			e.preventDefault();
+			var stat = $('#updown-a1').text();
+			var num = parseInt(stat,10);
+			num--;
+			if(num<=0){
+				alert('더이상 줄일수 없습니다.');
+				num =0;
+			}
+			$('#updown-a1').text(num);
+			$('#adultMeal').val(num);
+		});
+		$('#inc-a-meal').click(function(e){
+			e.preventDefault();
+			var stat = $('#updown-a1').text();
+			var num = parseInt(stat,10);
+			num++;
+			
+			if(num>5){
+				alert('더이상 늘릴수 없습니다.');
+				num=5;
+			}
+			$('#updown-a1').text(num);
+			$('#adultMeal').val(num);
+			});
+			
+			$('#dec-bed').click(function(e){
+				e.preventDefault();
+				var stat = $('#updown-a2').text();
+				var num = parseInt(stat,10);
+				num--;
+				if(num<=0){
+					alert('더이상 줄일수 없습니다.');
+					num =0;
+				}
+				$('#updown-a2').text(num);
+				$('#extraBed').val(num);
+			});
+			$('#inc-bed').click(function(e){
+				e.preventDefault();
+				var stat = $('#updown-a2').text();
+				var num = parseInt(stat,10);
+				num++;
+				
+				if(num>5){
+					alert('더이상 늘릴수 없습니다.');
+					num=5;
+				}
+				
+				$('#updown-a2').text(num);
+				$('#extraBed').val(num);
+			});
+			
+				$('#dec-c-meal').click(function(e){
+					e.preventDefault();
+					var stat = $('#updown-a3').text();
+					var num = parseInt(stat,10);
+					num--;
+					if(num<=0){
+						alert('더이상 줄일수 없습니다.');
+						num =0;
+					}
+					$('#updown-a3').text(num);
+					$('#childMeal').val(num);
+				});
+				
+				$('#inc-c-meal').click(function(e){
+					e.preventDefault();
+					var stat = $('#updown-a3').text();
+					var num = parseInt(stat,10);
+					num++;
+					
+					if(num>5){
+						alert('더이상 늘릴수 없습니다.');
+						num=5;
+					}
+					
+					$('#updown-a3').text(num);
+					$('#childMeal').val(num);
+		});
+
 // 아코디언 1
 $(".que1").click(function() {
 $(this).next(".anw1").stop().slideToggle(300);
@@ -335,6 +466,15 @@ $(this).prev(".anw3").stop().slideToggle(300);
 $(this).toggleClass('on').siblings().removeClass('on');
 $(this).prev(".anw3").siblings(".anw3").slideUp(300);
 });
+
+/* $("nm-btn").click(function() {
+	$("form-rev").submit();
+});
+ */
+
+});
+
+
 </script>
 </body>
 </html>

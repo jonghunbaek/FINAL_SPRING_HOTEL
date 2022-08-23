@@ -6,7 +6,7 @@ html a{
 }
 .contain .container {
     margin-top: 60px;
-    border: 1px solid orange;
+    /* border: 1px solid orange; */
     /* height: 3200px; */
     min-width: 1150px;
     max-width: 1150px;
@@ -653,4 +653,14 @@ border: 2px solid lime;
 	border: 1px solid #5c471857;
     width: 100px;
 }
-	
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

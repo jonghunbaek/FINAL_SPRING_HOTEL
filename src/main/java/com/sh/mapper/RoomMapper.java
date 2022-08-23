@@ -68,7 +68,7 @@ public interface RoomMapper {
 	RoomOptions getRoomOptionsByRoomId(int id);
 	
 	//검색 조건에 맞는 모든 객실 
-	List<Room> getAllRoomsByCriteria(RoomCriteria roomCriteria); 
+	List<Room> getRoomsByCriteria(RoomCriteria roomCriteria); 
 	
 	// 객실 예약 
 	void insertRoomRev(RoomReservationForm roomReservationForm);
@@ -81,5 +81,6 @@ public interface RoomMapper {
 	
 	// 객실 종류 반환 
 	List<String> getRoomCategories();
+	
 	
 }
