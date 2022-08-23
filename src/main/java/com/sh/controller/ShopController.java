@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sh.criteria.ShopProductListCriteria;
 import com.sh.service.ShopService;
+import com.sh.vo.ShopAdditionalImages;
+import com.sh.vo.ShopPickOrShip;
 import com.sh.vo.ShopProduct;
 
 @Controller
@@ -21,7 +23,12 @@ public class ShopController {
 
 	//쇼핑몰 홈
 	@GetMapping(path="")
-	public String shop() {
+	public String shop(Model model) {
+		List<ShopProduct> populars = shopService.getSixPopulars();
+		List<ShopProduct> discounts = shopService.getProductsWithDiscount();
+		model.addAttribute("popularlist", populars);
+		model.addAttribute("discountedlist", discounts);
+//		System.out.println(populars);
 		return "shop/home";
 	}
 
@@ -37,7 +44,7 @@ public class ShopController {
 	//상품리스트
 	@GetMapping(path="/list")
 	public String mainSubList(Model model, ShopProductListCriteria shoplistCriteria) {
-		System.out.println(shoplistCriteria);
+//		System.out.println(shoplistCriteria);
 		List<ShopProduct> products = shopService.getAllProductsByParameters(shoplistCriteria);
 		model.addAttribute("shopList", products);
 		return "shop/list";
@@ -49,6 +56,16 @@ public class ShopController {
 	public String productDetail(int no, Model model) {
 		ShopProduct product = shopService.getProductDetail(no);
 		model.addAttribute("product", product);
+		
+		List<ShopProduct> options = shopService.getProductOptions(no);
+		model.addAttribute("optionsList", options);
+		
+		List<ShopAdditionalImages> images = shopService.getAdditionalImages(no);
+		model.addAttribute("imageList", images);
+		
+		List<ShopPickOrShip> methods = shopService.getGettingMethods(no);
+		model.addAttribute("methodList", methods);
+		
 		return "shop/detail";
 	}
 	
