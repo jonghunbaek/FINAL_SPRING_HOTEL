@@ -16,11 +16,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Alias("Location")
 public class Location {
-	private int no;
+	private Integer no;
 	private String name;
 	
-	public Location(int no) {
-		super();
-		this.no = no;
+	public Location(String name) {
+		this.name = name;
 	}
 }

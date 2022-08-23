@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.mapper.InquiryMapper">
+	<!-- void insertInquiry(Qna qna); -->
+	<insert id="insertInquiry" parameterType="Qna">
+		insert into sh_qna
+		(qna_no, qna_title, qna_content, user_no, qna_author, qna_category_no, location_no)
+		values
+		(qna_seq.nextval, #{title}, #{content}, #{userNo}, #{qnaAuthor},#{qnaCategoryNo}, #{locationNo})
+	</insert>
+	
+	<resultMap type="Qna" id="inquiryResultMap">
+		<id column="qna_no" property="no"/>
+		<result column="qna_title" property="title"/>
+		<result column="qna_content" property="content"/>
+		<result column="qna_answer_state" property="answerState"/>
+		<result column="qna_answer_content" property="answerContent"/>
+		<result column="qna_answer_created_date" property="answerCreatedDate"/>
+		<result column="qna_answer_created_date" property="answerUpdatedDate"/>
+		<result column="qna_created_date" property="createdDate"/>
+		<result column="qna_created_date" property="updatedDate"/>
+		<result column="qna_author" property="qnaAuthor"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
+		<association property="qnaCategory" column="qna_category_no" select="com.sh.mapper.InquiryMapper.getQnaCategoryByNo"></association>
+		<association property="location" column="location_no" select="getLocationByNo"></association>
+	</resultMap>
+	
+	<!-- int getQnaTotalRows(); -->
+	<select id="getQnaTotalRows" resultType="int" >
+		select count(*)
+		from sh_qna
+		where qna_deleted ='N'
+		<!-- and user_no = #{value} -->
+	</select>
+	
+	<!-- List<Qna> getAllInquiry(); -->
+	 <select id="getAllInquiry"  parameterType="Pagination" resultMap="inquiryResultMap">
+		select *
+		from (SELECT Q.*,
+      		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER
+			  FROM SH_QNA Q
+			  WHERE QNA_DELETED = 'N')	
+		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
+	</select>
+	
+	<!-- List<Qna> getInquiryByUserNo(Pagination pagination, int userNo) -->
+	<select id="getInquiryByUserNo" parameterType="Pagination" resultMap="inquiryResultMap">
+		select *
+		from (SELECT Q.*,
+      		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER
+			  FROM SH_QNA Q
+			  WHERE QNA_DELETED = 'N' 
+			  AND WHERE USER_NO = #{userNo})	
+		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
+	</select>
+	
+	<!-- Qna getInquiryByNo(int no); -->
+	<select id="getInquiryByNo" parameterType="int" resultMap="inquiryResultMap">
+		select *
+		from sh_qna
+		where qna_no = #{value}
+	</select>
+	
+	<!-- QnaCategory getQnaCategoryByNo(int no); -->
+	<select id="getQnaCategoryByNo" parameterType="int" resultType="QnaCategory">
+		select 
+			qna_category_no as no,
+			qna_category_name as name,
+			category_no as "category.no",
+			qna_group_no as groupNo
+		from sh_qna_category	
+		where qna_category_no = #{value}	
+	</select> 
+	
+	<!-- void updateInquiry(Qna qna); -->
+	<update id="updateInquiry" parameterType="Qna">
+		update sh_qna
+		set
+			qna_title = #{title},
+			qna_content = #{content}
+		where qna_no = #{no}
+	</update>
+	
+	<!-- void updateAnswer(Qna qna); -->
+	<update id="updateAnswer" parameterType="Qna">
+		update sh_qna
+		set
+			qna_answer_content = #{answerContent},
+			qna_answer_state = 'Y',
+			qna_answer_created_date = sysdate
+		where qna_no = #{no}
+	</update>
+	
+	<!-- void deleteInquiry(Qna qna ); -->
+	<update id="deleteInquiry" parameterType="Qna">
+		update sh_qna 
+		set 
+			qna_deleted = 'Y'
+		where qna_no = #{no}
+	</update>
+	
+	<!-- List<QnaCategory> getAllQnaCategory(); -->
+	<select id="getAllQnaCategory" resultType="QnaCategory"> 
+		select 
+			qna_category_no as no,
+			qna_category_name as name,
+			category_no as "category.no",
+			qna_group_no as groupNo
+		from sh_qna_category	
+	</select>
+	
+	<!-- List<Location> getAllLocation(); -->
+	<select id="getAllLocation" resultType="Location">
+		select 
+			location_no as no,
+			location_name as name
+		from sh_location
+		order by location_no asc
+	</select>
+	
+	<!-- Location getLocationByNo; -->
+	<select id="getLocationByNo" parameterType="int" resultType="Location">
+		select 
+			location_no as no,
+			location_name as name
+		from sh_location
+		where location_no = #{no}
+	</select>
+</mapper>

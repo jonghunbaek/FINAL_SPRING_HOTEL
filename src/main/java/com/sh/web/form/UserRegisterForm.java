@@ -4,9 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -33,7 +38,7 @@ public class UserRegisterForm {
 	@Pattern(regexp="^[가-힣]{2,}$",message="이름은 한글로 2글자 이상만 허용됩니다.")
 	private String name;
 	
-	//@NotBlank(message="전화번호는 필수입력값입니다.")
+	@NotEmpty(message="전화번호는 필수입력값입니다.")
 	//@Pattern(regexp ="^\\d{2,3}-\\d{3,4}-\\d{4}$", message ="유효한 전화번호 형식이 아닙니다.")
 	private String tel;
 	private String tel1;
@@ -47,10 +52,14 @@ public class UserRegisterForm {
 	private String totalAddress;
 	private String address;
 	private String detailAddress;
-	
+
+	@DateTimeFormat(pattern = "yyyyMMdd")
+	@Past()
     private Date birthDay;
+    @Pattern(regexp = "^\\d{4}$", message = "")
     private String year;
 	private String month;
+	@Pattern(regexp = "^\\d{2}$", message = "")
 	private String day;
     
     @NotEmpty
@@ -86,7 +95,11 @@ public class UserRegisterForm {
 	
 	@NotEmpty
 	public String getTel() {
-		tel=tel1+"-"+tel2+"-"+tel3;
+		if (tel1=="" || tel2=="" || tel3==""){
+			tel="";
+		} else {
+			tel=tel1+"-"+tel2+"-"+tel3;
+		}
 		return tel;
 	}
 	public void setTel(String tel) {

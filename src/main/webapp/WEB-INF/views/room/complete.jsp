@@ -14,7 +14,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- roomRev3 CSS -->
 <link
-	href="${pageContext.request.contextPath}/resources/room/css/completed.css"
+	href="${pageContext.request.contextPath}/resources/room/css/complete.css"
 	rel="stylesheet">
 <!-- total zone -->
 <script
@@ -31,7 +31,8 @@
 			<div class="rev-step">
 				<div style="color: #7b6f4bf2; font-size: 30px; font-weight: 300; margin-block: 10px;">예약이 완료되었습니다.</div>
 				<div style="font-size: 30px; color:#7b6f4bf2 ">
-					<span style="font-size: 13px; color: gray;">예약번호</span> 28002900
+					<span style="font-size: 13px; color: gray;">예약번호</span>
+					${roomReservationForm.revNo }
 				</div>
 			</div>
 			<!-- action 1 -->
@@ -45,10 +46,10 @@
 					<div class="hotel-info col-3">
 						<strong class="title-bold" >호텔정보</strong>
 						<div class="col" style="margin-top: 10px;">
-							<img class="row-6" alt="호텔사진" src="../resources/images/room/location/seoul.jpg" style="width: 150px;">
+							<img class="row-6" alt="호텔사진" src="../resources/images/room/location/${roomReservationForm.locationName }.jpg" style="width: 150px;">
 							<div class="row-6" style="margin-top: 10px;">
-								<div class="title-bold" style="font-weight: 700;">서울 신라호텔</div>
-								<div style="color: gray; font-size:13px; margin-top: 5px; ">서울특별시 중구 장충동 동호로 249</div>
+								<div class="title-bold" style="font-weight: 700;">${roomReservationForm.locationName} 신라호텔</div>
+								<!-- <div style="color: gray; font-size:13px; margin-top: 5px; ">서울특별시 중구 장충동 동호로 249</div> -->
 							</div>
 						</div>
 					</div>
@@ -62,9 +63,9 @@
 								<li>투숙인원</li>
 							</ul>
 							<ul class="col-8" style="list-style: none; margin-top: 10px;">
-								<li>2022.10.12-2022.10.13(1박)</li>
-								<li style="margin-block: 10px;">디럭스 / 더블</li>
-								<li>성인 2, 어린이 1</li>
+								<li>${roomReservationForm.checkinTime }-${roomReservationForm.checkoutTime }</li>
+								<li style="margin-block: 10px;">${roomReservationForm.roomName } / ${roomReservationForm.bedType }</li>
+								<li>성인 <fmt:formatNumber value="${roomReservationForm.adult }"/>, 어린이 <fmt:formatNumber value="${roomReservationForm.child }"/></li>
 							</ul>
 						</div>
 					</div>
@@ -77,9 +78,9 @@
 								<li>이메일</li>
 							</ul>
 								<ul class="col-6" style="list-style: none; margin-top: 10px;">
-								<li>NANA KIM</li>
-								<li style="margin-block:10px; ">010-1111-2222</li>
-								<li>nana@gmail.com</li>
+								<li>${roomReservationForm.lastName }&nbsp;${roomReservationForm.firstName }</li>
+								<li style="margin-block:10px; ">${roomReservationForm.tel }</li>
+								<li>${roomReservationForm.email }</li>
 							</ul>
 						</div>
 					</div>
@@ -110,21 +111,22 @@
 							<div class="col-2">합계</div>
 						</div>
 						<div class="box-2-2 row" style="text-align: center; padding-block: 10px; border-block: 1px dashed #8080805c;">
-							<div class="col-2">2022.10.12(수)</div>
-							<div class="col-2">350,000원</div>
-							<div class="col-2">45,454원</div>
-							<div class="col-2">-</div>
-							<div class="col-2">33,000원</div>
-							<div class="col-2">428,454원</div>
+							<div class="col-2">${roomReservationForm.checkinTime }</div>
+							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.roomPrice }"/>원</div>
+							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.optionAdultBf }"/>명</div>
+							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.optionChildBf}"/>명</div>
+							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.extraBed}"/>개</div>
+							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.optionTotalPrice}"/>원</div>
 						</div>
 						<div class="box-2-3 row" style="padding-block:10px; border-bottom: 1px solid #7b6f4bf2;">
 							<div class="col-10" style="text-align: end;">부가가치세</div>
-							<div class="col-2" style="text-align: center;">42,845원</div>
+							<div class="col-2" style="text-align: center; font-size: 13px;">전체 금액의 10%</div>
 						</div>
 					</div>
 				</div>
 				<div class="que3" style="align-content: center;justify-content: space-between;height: 60px;background-color: #664d03a6;color: #f9fafb;">
-					<strong class="title-bold" style="margin-left: 30px;">요금 합계<span style="font-size: 13px; font-weight: 400;">(부가가치세 포함)</span></strong><span class="form-check" style="margin-right: 30px;">471,299원</span>
+					<strong class="title-bold" style="margin-left: 30px;">요금 합계<span style="font-size: 13px; font-weight: 400;">(부가가치세 포함)</span></strong>
+					<span class="form-check" style="margin-right: 30px;"><fmt:formatNumber value="${roomReservationForm.totalPrice}"/>원</span>
 				</div>
 			</div>
 			
@@ -141,7 +143,7 @@
 				</ul>
 			</div>
 			<div class="ok-btn1" style="text-align: center; margin-top: 40px;">
-				<a href="#"><img alt="확인" src="../resources/images/room/rev/ok.gif"></a>
+				<a href="/"><img alt="확인" src="../resources/images/room/rev/ok.gif"></a>
 			</div>
 		</div>
 	</div>

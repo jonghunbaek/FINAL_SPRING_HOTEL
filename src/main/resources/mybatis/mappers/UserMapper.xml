@@ -20,6 +20,7 @@
 		<result column="first_name" property="firstName"/>
 		<result column="last_name" property="lastName"/>
 		<association column="grade" property="grade" select="com.sh.mapper.UserMapper.getUserGradeByUserId"></association>
+		<result column="user_country" property="country"/>
 	</resultMap>
 	<resultMap type="Grade" id="GradeResultMap">
 		<id column="grade" property="grade"/>
@@ -65,12 +66,35 @@
 		<result column="user_no" property="userNo"/>
 	</resultMap>
 	
+	<!-- ========================관리자페이지용======================= -->
+	<resultMap type="User" id="UserWithGradeResultMap" extends="UserResultMap">
+		<association column="{no=user_no,stay=user_annual_stay,point=user_point}" property="grade" select="com.sh.mapper.UserMapper.getGrade"></association>
+	</resultMap>
+	
 	<!-- User getUserByNo(int no); 관리자페이지 예약현황에서 고객정보 가져오기위한 용도-->
 	<select id="getUserByNo" parameterType="int" resultMap="UserResultMap">
 		select *
 		from sh_users
 		where user_no = #{value}
 	</select>
+	
+	<!-- List<User> getUserByName(String keyword); 관리자페이지 예약등록에서 고객정보조회 -->
+	<select id="getUserByName" parameterType="string" resultMap="UserWithGradeResultMap">
+		select *
+		from sh_users
+		where user_name like '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- Grade getGrade(); -->
+	<select id="getGrade" resultMap="GradeResultMap">
+		select distinct last_value(g.grade) over() as grade
+		from sh_users u, sh_grade g
+		where u.user_no = #{no}
+		and (#{stay} &gt;= g.min_stay and #{stay} &lt;=g.max_stay
+		or #{point} &gt;= g.min_point and #{point} &lt;=g.max_point)
+
+	</select>
+	<!-- ========================관리자페이지용(여기까지)======================= -->
 	
 	<!-- User getUserById(String id); -->
 	<select id="getUserById" parameterType="string" resultMap="UserResultMap">
@@ -163,8 +187,26 @@
 		where user_no = #{userNo}
 	</update>
 	
-	<!-- 해당회원 등급정보 조회 -->
-	<select id="getUserGradeByUserId" parameterType="string" resultMap="GradeResultMap">
+	<!-- String fineId(@Param("name") String name, @Param("email")String email); 
+		 mapper 인터페이스에서 parameter 설정 parameterType 설정을 하지 않아도 된다.
+	-->
+	<select id="fineId" resultType="string">
+		select user_id
+		from sh_users
+		where user_name = #{name} 
+		and user_email = #{email}
+	</select>
+	
+	<!-- String finePw(@Param("id") String id, @Param("email")String email); -->
+	<select id="finePw" resultType="string">
+		select user_password
+		from sh_users
+		where user_id = #{id} 
+		and user_email = #{email}
+	</select>
+
+	<!-- 해당유저 등급정보 조회 -->
+	<select id="getUserGradeByUserId" parameterType="String" resultMap="GradeResultMap">
 		select g.grade, g.min_point, g.max_point, g.min_stay, g.max_stay, g.grade_discount_rate,
 			   g.grade_point_rate_room, g.grade_point_rate_dn, g.grade_etc
 		from sh_users u, sh_grade g 

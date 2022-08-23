@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -21,6 +23,7 @@
 </head>
 <body>
 <%@ include file="header.jsp" %>
+
 <%@ include file="categoryTitle.jsp" %>
 
 <!-- CATEGORY ITEMS TOP-->
@@ -28,7 +31,7 @@
 	<div class="row row-cols-2" style="height:40px;">
 			<div class="col-9" style=" float:left;">
 				<p style="font-size:18px; margin-left:15px; vertical-align:middle;">총
-				<span style="color: #998465;"><strong>8</strong></span>
+				<span style="color: #998465;"><strong>${shopList.size() } </strong></span>
 				개의 상품이 있습니다.</p>
 			</div>
 			<div class="col-3" style="float:right;">
@@ -49,188 +52,51 @@
 			
 <!-- CATEGORY ITEMS CONTENT-->
 	<div class="row row-cols-3" style="">
+		<c:forEach var="product" items="${shopList }">
 		<div class="col position-relative" style="margin:40px 0px; ">
 			<div class="row" style="height:70%;position:relative; padding:0px 5px;">
-				<img src="../resources/images/shop/product/lh_product_013.jpg" style="width:100%;">
+				<img src="../resources/images/shop/product/${product.imageName }.jpg" style="width:100%;">
 			</div>
 			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-					<span class="sub-title" style=" color: #666; height: 24px; font-size: 16px;">[스프링호텔 서울]</span>
-					<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
+					<span class="sub-title" style=" color: #666; height: 24px; font-size: 16px;">[스프링호텔 ${product.location.name } ${product.business.name }]</span>
+					<h2><a href="/shop/detail?no=${product.no }" class="stretched-link" style="font-size: 22px;">${product.name }</a></h2>
 			</div>
 			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
 				<p class="price" style="font-size: 28px; ">
 					<span><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></span>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
+					<span class="discountprice-box" id="productDiscountPrice" style="font-size: 28px;font-weight: 500; margin-right: 10px; letter-spacing: -0.05em;vertical-align: middle;"><fmt:formatNumber value="${product.price*(1 - product.discountRate/100) }"/></span>
+					<span class="price-box" id="productPrice" style="margin-right: 10px;font-size: 16px;line-height: 24px;color: #999;font-weight: 500;text-decoration: line-through;letter-spacing: -0.05em;vertical-align: middle;letter-spacing: -0.05em;vertical-align: middle;"><fmt:formatNumber value="${product.price }"/></span>
+					<span class="discountRate-box" id="productDiscountRate" style="font-size: 22px;line-height: 33px;color: #ff7a00;font-weight: 500;letter-spacing: -0.05em;vertical-align: middle;">${product.discountRate }%</span>
 				</p>
 			</div>
 		</div>
-		
-		<div class="col position-relative" style="margin:40px 0px; ">
-			<div class="row" style="height:70%;position:relative; padding:0px 5px;">
-				<img src="../resources/images/shop/product/lh_product_014.jpg" style="width:100%;">
-			</div>
-			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span>
-					<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
-			</div>
-			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
-				<p class="price" style="font-size: 28px; ">
-					<em><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></em>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
-				</p>
-			</div>
-		</div>
-		
-		<div class="col position-relative" style="margin:40px 0px; ">
-			<div class="row" style="height:70%;position:relative; padding:0px 5px;">
-				<img src="../resources/images/shop/product/lh_product_019.jpg" style="width:100%;">
-			</div>
-			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span>
-					<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></h2>
-			</div>
-			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
-				<p class="price" style="font-size: 28px; ">
-					<em><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></em>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
-				</p>
-			</div>
-		</div>
-		
-		
-		<div class="col position-relative" style="/* margin:0px 20px 0px 0px;  */">
-			<div class="row" style="height:70%;position:relative; padding:0px 10px;">
-				<img src="../resources/images/shop/product/lh_product_016.jpg" style="height:100%;">
-			</div>
-			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-				<p class="title" style="">
-					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
-				</p>
-			</div>
-			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
-				<p class="price" style="font-size: 28px; ">
-					<em><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></em>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
-				</p>
-			</div>
-		</div>
-		
-		<div class="col position-relative" style="/* margin:0px 20px 0px 0px;  */">
-			<div class="row" style="height:70%;position:relative; padding:0px 10px;">
-				<img src="../resources/images/shop/product/lh_product_017.jpg" style="height:100%;">
-			</div>
-			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-				<p class="title" style="">
-					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
-				</p>
-			</div>
-			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
-				<p class="price" style="font-size: 28px; ">
-					<em><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></em>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
-				</p>
-			</div>
-		</div>
-		<div class="col position-relative" style="/* margin:0px 20px 0px 0px;  */">
-			<div class="row" style="height:70%;position:relative; padding:0px 10px;">
-				<img src="../resources/images/shop/product/lh_product_020.jpg" style="height:100%;">
-			</div>
-			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-				<p class="title" style="">
-					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
-				</p>
-			</div>
-			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
-				<p class="price" style="font-size: 28px; ">
-					<em><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></em>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
-				</p>
-			</div>
-		</div>
-		<div class="col position-relative" style="/* margin:0px 20px 0px 0px;  */">
-			<div class="row" style="height:70%;position:relative; padding:0px 10px;">
-				<img src="../resources/images/shop/product/lh_product_022.jpg" style="height:100%;">
-			</div>
-			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-				<p class="title" style="">
-					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
-				</p>
-			</div>
-			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
-				<p class="price" style="font-size: 28px; ">
-					<em><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></em>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
-				</p>
-			</div>
-		</div>
-		<div class="col position-relative" style="/* margin:0px 20px 0px 0px;  */">
-			<div class="row" style="height:70%;position:relative; padding:0px 10px;">
-				<img src="../resources/images/shop/product/lh_product_024.jpg" style="height:100%;">
-			</div>
-			<div class="row" style="height:12%; margin: 20px 0px 15px 0px; padding:0px;">
-				<p class="title" style="">
-					<span class="sub-title" style=" height: 24px; font-size: 16px;">[스프링호텔 서울]</span></br>
-					<span><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px;">애플망고 빙수</a></span>
-				</p>
-			</div>
-			<div class="row" style="height:8%; border-top: 1px solid #DCDCDC;margin: 10px 0 18px 0px;">
-				<p class="price" style="font-size: 28px; ">
-					<em><strong style="font-size: 16px; width: 30px;vertical-align: middle;">KRW</strong></em>
-					<span class="price-box" style="font-size: 28px;font-weight: 500; letter-spacing: -0.05em;vertical-align: middle;">54,000</span>
-				</p>
-			</div>
-		</div>
-
-		
+		</c:forEach>
 	</div>
 </div>
 
 
 
-<!-- 		<div class="row">
-			<div class="col-4">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p><img id="card-img" class="card-img-top" src="../resources/images/shop/product/lh_product_023.jpg"></p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">스프링호텔 패스트리</p>
-						<p class="textBold"><strong>애플망고 빙수</strong></p>
-						<p><small class="productExplain"><a href="">&gt;자세히보기</a></small></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p><img id="card-img" class="card-img-top" src="../resources/images/shop/product/lh_product_025.jpg"></p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">스프링호텔 패스트리</p>
-						<p class="textBold"><strong>애플망고 빙수</strong></p>
-						<p><small class="productExplain"><a href="">&gt;자세히보기</a></small></p>
-					</div>
-				</div>
-			</div>
-			<div class="col-4">
-				<div class="card">
-					<div style="border: 1px solid #eee; margin: 25px;">					
-						<p><img id="card-img" class="card-img-top" src="../resources/images/shop/product/lh_product_027.jpg"></p>
-					</div>
-					<div class="card-body">
-						<p class="textBold">스프링호텔 패스트리</p>
-						<p class="textBold"><strong>애플망고 빙수</strong></p>
-						<p><small class="productExplain"><a href="">&gt;자세히보기</a></small></p>
-					</div>
-				</div>
-			</div>
-		</div> -->
-
 
 <%@ include file="footer.jsp" %>
 </body>
+<script type="text/javascript">
+	// 즉시실행함수 for 가격
+	(function() {
+		var discountRateEls = document.querySelectorAll("#productDiscountRate");
+		var productPriceEls = document.querySelectorAll("#productPrice");
+		 
+		for (let index = 0 ; index < discountRateEls.length ; index++) {
+			let discountRate = discountRateEls[index];
+			if (discountRate.textContent == '0%') {
+				discountRate.setAttribute("hidden", true);
+				productPriceEls[index].setAttribute("hidden", true);
+			
+			} else {
+				discountRate.removeAttribute("hidden");
+				productPriceEls[index].removeAttribute("hidden");
+			};
+		};
+		
+	}) ();
+</script>
 </html>

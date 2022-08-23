@@ -13,6 +13,9 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- 카카오 로그인 라이브러리 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<!-- 네이버 로그인 라이브러리 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <link href="${pageContext.request.contextPath}/resources/css/home.css" rel="stylesheet">
 <title>Spring Hotel</title>
 </head>
@@ -44,10 +47,9 @@
 			<!--  로그인 폼 -->
 			<div class="tabForm">
 				<div class="loginheader">
-					<div class="loginimage"><a href="#"><img src="resources/images/login_mem_on.jpg" alt="회원"></a></div>
-					<div class="loginimage"><a href="#"><img src="resources/images/login_nomem_off.jpg" alt="비회원"></a></div>
+				<p><strong>회원</strong></p>
+					<!-- <div class="loginimage"><a href="#"><img src="resources/images/login_mem_on.jpg" alt="회원"></a></div> -->
 				</div>
-				
 				<div class="tabContent">
 					<div class="allBox">
 						<div class="box">
@@ -56,30 +58,42 @@
 									<div class="inputForm">
 										<div class="inputId">
 											<input type="text" class="id" name="id" id="id-field"
-												onkeydown="javascript: if(event.keyCode == 13) loginSubmit()"
-												placeholder="스프링리워즈 번호 또는 아이디 입력" onfocus="this.placeholder = ''"
-												onblur="this.placeholder = '스프링리워즈 번호 또는 아이디 입력'">
+												placeholder="스프링리워즈 아이디 입력" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = '스프링리워즈 아이디 입력'">
 										</div>
+										<input class="mainBtn" type="image" src="resources/images/loginBtnLogin.gif"/>
 										<div class="inputPw">
 											<input type="password" class="pw" name="password" id="password-field" maxlength="20"
-												onkeydown="javascript: if(event.keyCode == 13) loginSubmit()"
 												placeholder="비밀번호 입력" onfocus="this.placeholder = ''"
 												onblur="this.placeholder = '비밀번호 입력'">
 										</div>
+									</div>
+								</form>
+										<c:if test="${param.fail eq 'invalid'}">
+								        	<div class="alert alert-danger">
+								        		<string>로그인 실패</string><br>
+								        		아이디 혹은 비밀번호가 올바르지 않습니다.
+								        	</div>
+							        	</c:if>
+							        	<c:if test="${param.fail eq 'deny'}">
+								        	<div class="alert alert-danger">
+								        		<string>로그인 후 이용가능한 서비스입니다.</string>
+								        	</div>
+							        	</c:if>
 										<div class="loginBtn">
-										<input type="image" src="resources/images/loginBtnLogin.gif"/>
 							    		<%-- 
 							    			카카오 로그인 처리중 중 오류가 발생하면 아래 경고창에 표시된다.
 							    			카카오 로그인 오류는 스크립트에서 아래 경고창에 표시합니다.
 							    		 --%>
 							    			<div class="alert alert-danger d-none" id="alert-kakao-login">오류 메세지</div>
 							    			<a id="btn-kakao-login" href="kakao/login">
-							  					<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="150" height="60" alt="카카오 로그인 버튼"/>
+							  					<img src="//k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="190" height="60" alt="카카오 로그인 버튼"/>
+											</a>
+											<!-- 네이버로그인 -->
+											<a id="naver_id_login" href="#">
+												<img src="resources/images/btnG_완성형.png" width="190" height="60" alt="네이버 로그인 버튼"/>
 											</a>
 										</div>
-									</div>
-								</form>
-								
 								<form id="form-kakao-login" method="post" action="kakao-login">
 						    		<input type="hidden" name="id" />
 						    		<input type="hidden" name="nickname" />
@@ -88,16 +102,10 @@
 						    		<input type="hidden" name="gender" />
 						    	</form>
 						    	
-								<div>
-									<button class="btnJoin">
-									<a href="/register">스프링리워즈 가입</a> 
-									</button>
-									<button class="btnLostId">
-									<a href="javascript:popForId('mem');" id="popForIdButton">아이디 찾기</a>
-									</button>
-									<button class="btnLostPw">
-									<a href="javascript:popForPw('mem');" id="popForPwButton">비밀번호찾기</a>
-									</button>
+								<div class="button">
+									<button type="button" onclick="location.href='/register'" >스프링리워즈 가입</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#findId">아이디 찾기</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#findPw">비밀번호찾기</button>
 								</div>
 							</div>
 						</div>
@@ -106,7 +114,71 @@
 					<div class="loginT">
 						<p>이메일, 연락처 등의 정보가 변경되면 웹사이트에서 회원정보를 수정해주시기 바랍니다.</p>
 					</div>
+		
+					<!-- findIdModal -->
+					<div class="modal fade" id="findId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel"><strong>스프링리워즈 아이디 찾기</strong></h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+				        	<table class="table find
+				        	Id">
+						      	<tr>
+							    	<td><label>성명</label></td>
+							    	<td><input type="text" class="form-control" id="name" name="name" placeholder="스프링리워즈 이름 입력"
+							    		onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'"></td>
+						      	</tr>
+						      	<tr>
+							        <td><label>이메일</label></td>
+							        <td><input type="text" class="form-control" id="email" name="email" placeholder="스프링리워즈 이메일 입력"
+							        onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 입력'"></td>
+						      	</tr>
+					      	</table>
+					      	<div class="showId"> 
+					      	</div>
+					      </div>
+					      <div class="modal-footer">
+					      	<button type="button" class="btn text-white" style="background-color:#856F5D;" onclick="findId()">확인</button>
+					        <button type="button" class="btn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 					
+					<!-- findPwModal -->
+					<div class="modal fade" id="findPw" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog modal-dialog-centered">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel"><strong>스프링리워즈 비밀번호 찾기</strong></h5>
+					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					      </div>
+					      <div class="modal-body">
+					      	<table class="table findPw" >
+						      	<tr>
+							    	<td><label>아이디</label></td>
+							    	<td><input type="text" class="form-control" id="id" name="id" placeholder="스프링리워즈 아이디 입력"
+							    		onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'"></td>
+						      	</tr>
+						      	<tr>
+							        <td><label>이메일</label></td>
+							        <td><input type="text" class="form-control" id="email2" name="email" placeholder="스프링리워즈 이메일 입력"
+							        onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 입력'"></td>
+						      	</tr>
+					      	</table>
+					      	<div class="showPw"> 
+					      	</div>
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn text-white" style="background-color:#856F5D;" onclick="findPw()">확인</button>
+					        <button type="button" class="btn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
+					      </div>
+					    </div>
+					  </div>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -218,6 +290,55 @@
 					   -->
 <%@ include file="common/footer.jsp"%>
 <script>
+//아이디 찾기
+function findId() {
+	let name = document.getElementById('name').value;
+	let email = document.getElementById('email').value;
+	
+	$.ajax({
+		url: '/findId',
+		type: 'post',
+		data: {"name":name, "email":email},
+		success:function(data){
+			if(data == 0) {
+				alert("아이디가 존재하지 않습니다.");
+			} else {
+				$(".findId").css('display','none');
+				$(".findbtn").css('display','none');
+				let content = '<p class="text-center">아이디는 <strong>'+data+'</strong> 입니다.</p>';
+				$(".showId").append(content);
+			}
+		}, 
+		error:function(){
+			alert("에러입니다.");
+		}
+	})
+};
+
+//비밀번호 찾기
+function findPw() {
+	let id = document.getElementById('id').value;
+	let email = document.getElementById('email2').value;
+	
+	$.ajax({
+		url: '/findPw',
+		type: 'post',
+		data: {"id":id, "email":email},
+		success:function(data){
+			if(data == 0) {
+				alert("아이디 혹은 이메일이 잘못되었습니다.");
+			} else {
+				$(".findPw").css('display','none');
+				let content = '<p class="text-center">비밀번호는 <strong>'+data+'</strong> 입니다.</p>';
+				$(".showPw").append(content);
+			}
+		}, 
+		error:function(){
+			alert("에러입니다.");
+		}
+	})
+};
+
 $(function() {
 	$("#loginForm").submit(function() {
 		let emailValue = $("#id-field").val();  
@@ -232,6 +353,7 @@ $(function() {
 			return false;
 		}
 	});
+	
 	
 	// 카카오 로그인 버튼을 클릭할 때 실행할 이벤트 핸들러 함수를 등록한다.
 	$('#btn-kakao-login').click(function(event){
@@ -271,6 +393,26 @@ $(function() {
 		});		
 	})
 });	
+
+	var naver_id_login = new naver_id_login("ULeHM_EeBcaEqPfusaeF", "http://localhost/");
+ 	var state = naver_id_login.getUniqState();
+ 	naver_id_login.setButton("green",2,60);
+ 	naver_id_login.setDomain("http://localhost/login");
+ 	naver_id_login.setState(state);
+ 	naver_id_login.setPopup();
+ 	naver_id_login.init_naver_id_login();
+ 	
+ 	var naver_id_login = new naver_id_login("ULeHM_EeBcaEqPfusaeF", "http://localhost/");
+   // 접근 토큰 값 출력
+   alert(naver_id_login.oauthParams.access_token);
+   // 네이버 사용자 프로필 조회
+   naver_id_login.get_naver_userprofile("naverSignInCallback()");
+   // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+   function naverSignInCallback() {
+     alert(naver_id_login.getProfileData('email'));
+     alert(naver_id_login.getProfileData('nickname'));
+     alert(naver_id_login.getProfileData('age'));
+   }
 </script>
 </body>
 </html>

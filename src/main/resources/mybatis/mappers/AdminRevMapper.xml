@@ -20,6 +20,7 @@
 			room_rev_request = #{request},
 			room_rev_status = #{status},
 			room_rev_option_checkin_time = #{timeOption},
+			room_bedtype = #{bedType},
 			room_rev_updated_date = sysdate
 		where room_rev_no = to_number(#{no})	
 	</update>
@@ -34,8 +35,19 @@
 				when room_rev_status = 'T' then 'T' 
 				when room_rev_status = 'D' then 'D' 
 			end
-			where room_rev_checkin_time &lt;= sysdate+1 and room_rev_checkin_time &gt;=(sysdate-10/(24*60*60));	
+			where room_rev_checkin_time &lt;= sysdate+1 and room_rev_checkin_time &gt;=(sysdate-10/(24*60*60))	
 	</update>
+	
+	<!-- ======================객실,다이닝 예약추가========================= -->
+	<!-- void insertNewRoomRev(AdminAddRevForm adminAddRevForm); -->
+	<insert id="insertNewRoomRev" parameterType="com.sh.web.form.AdminAddRevForm">
+			insert into sh_room_rev
+			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time, room_rev_checkout_time, room_rev_request,
+			 room_rev_option_checkin_time, room_bedtype, user_no, room_id) 
+			values 
+			(room_rev_seq.nextval, #{adult}, #{child}, #{totalPrice}, #{startDate}, #{endDate}, #{request},
+			 #{timeOption}, #{bedType}, #{no}, #{id});
+	</insert>
 
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>
@@ -49,12 +61,14 @@
 		<result column="room_rev_request" property="request"/>
 		<result column="room_rev_status" property="status"/>
 		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
+		<result column="room_bedtype" property="bedType"/>
 		<result column="room_rev_created_date" property="createdDate"/>
 		<result column="room_rev_updated_date" property="updatedDate"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
 	</resultMap>
 	
+	<!-- ======================객실,다이닝 예약현황========================= -->
 	<!-- List<RoomRev> getPeriodByNo(int revNo); -->
 	<select id="getPeriodByNo" parameterType="int" resultMap="RoomRevResultMap">
 		select *

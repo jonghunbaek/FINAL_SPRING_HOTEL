@@ -1,6 +1,9 @@
 package com.sh.controller;
 
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +13,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.sh.annotation.LoginUser;
+import com.sh.exception.ApplicationException;
+import com.sh.service.InquiryService;
 import com.sh.service.UserService;
 import com.sh.utils.SessionUtils;
 import com.sh.vo.Coupon;
 import com.sh.vo.PointHistory;
+import com.sh.utils.VerifyRecaptcha;
+import com.sh.vo.Location;
+import com.sh.vo.QnaCategory;
 import com.sh.vo.User;
 import com.sh.web.form.KakaoLoginForm;
 import com.sh.web.form.UserRegisterForm;
@@ -27,10 +38,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @SessionAttributes("LOGIN_USER")
-/*
- * @SessionAttributes Model 객체에 저장되는 객체 중에서 지정된 속성명으로 저장되는 것만 HttpSession객체에
- * 저장시킨다.
- */
 @Slf4j
 public class HomeController {
 	
@@ -39,6 +46,9 @@ public class HomeController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private InquiryService inquiryService;
 	
 	// 홈
 	@GetMapping(path = "/")
@@ -94,8 +104,14 @@ public class HomeController {
 	@PostMapping(path = "/login")
 	public String login(@RequestParam("id") String id, @RequestParam("password") String password, Model model) {
 
-		User user = userService.login(id, password);
-		SessionUtils.addAttribute("LOGIN_USER", user);
+		try {
+			User user = userService.login(id, password);
+			model.addAttribute("LOGIN_USER", user);
+			
+		} catch (ApplicationException e) {
+			return "redirect:/login?fail=invalid";
+		}
+		
 
 		return "redirect:/";
 	}
@@ -128,8 +144,8 @@ public class HomeController {
 	
 	// 로그아웃
 	@GetMapping(path = "/logout")
-	public String logout() {
-		SessionUtils.sessionInvlidate();
+	public String logout(SessionStatus sessionStatus) {
+		sessionStatus.setComplete();
 
 		return "redirect:/";
 	}
@@ -153,11 +169,6 @@ public class HomeController {
 	@PostMapping(path = "/register")
 	public String register(@ModelAttribute("userRegisterForm") @Valid UserRegisterForm userRegisterForm,
 			BindingResult errors) throws Exception {
-		System.out.println(userRegisterForm.getTel());
-		System.out.println(userRegisterForm.getEmail());
-		System.out.println(userRegisterForm.getAddress());
-		System.out.println(userRegisterForm.getBirthDay());
-		
 		if (errors.hasErrors()) {
 			System.out.println("error:" +errors);
 			return "registerform";
@@ -200,6 +211,39 @@ public class HomeController {
 	public int emailCheck(@RequestParam("email") String email) {
 		int check = userService.emailCheck(email);
 		return check;
+	}
+	
+	// 아이디 찾기
+	@PostMapping(path ="/findId")
+	@ResponseBody
+	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
+		String findId = userService.findId(name, email);
+		return findId;
+	}
+	
+	// 비밀번호 찾기
+	@PostMapping(path ="/findPw")
+	@ResponseBody
+	public String findPw(@RequestParam("id") String id, @RequestParam("email") String email) {
+		String findPw = userService.findPw(id, email);
+		return findPw;
+	}
+	
+	// 구글 reCapptcha
+	@ResponseBody
+	@RequestMapping(value = "VerifyRecaptcha", method = RequestMethod.POST)
+	public int VerifyRecaptcha(HttpServletRequest request) {
+		// 시크릿 키를 캡챠를 받아올수 있는 Class에 보내서 그곳에서 값을 출력한다
+	    VerifyRecaptcha.setSecretKey("6LfBUF0hAAAAAPZzzeT5b3KLYQomP2q25LfMU_XV");
+	    String gRecaptchaResponse = request.getParameter("recaptcha");
+	    try {
+	       if(VerifyRecaptcha.verify(gRecaptchaResponse))
+	          return 0; // 성공
+	       else return 1; // 실패
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return -1; //에러
+	    }
 	}
 	
 }

@@ -92,10 +92,10 @@
         	<div class="col-6">
         		<div class="d-flex justify-content-between">
 	               <div class="gnb" id="rev"><a href="">예약</a><div class="snb" id="rev-div"></div></div><div class="vr" id="vr-1"></div>
-	               <div class="gnb" id="room"><a href="../room/roomHome">객실</a><div class="snb" id="room-div"></div></div><div class="vr" id="vr-2"></div>
+	               <div class="gnb" id="room"><a href="../room">객실</a><div class="snb" id="room-div"></div></div><div class="vr" id="vr-2"></div>
 	               <div class="gnb" id="dining"><a href="">다이닝</a><div class="snb" id="dining-div"></div></div><div class="vr" id="vr-3"></div>
 		           <div class="gnb" id="info"><a href="">호텔소개</a><div class="snb" id="info-div"></div></div><div class="vr" id="vr-4"></div>
-	               <div class="gnb" id="rewards"><a href="">스프링리워즈</a><div class="snb" id="rewards-div"></div></div><div class="vr" id="vr-5"></div>
+	               <div class="gnb" id="rewards"><a href="/rewards">스프링리워즈</a><div class="snb" id="rewards-div"></div></div><div class="vr" id="vr-5"></div>
 	               <div class="gnb" id="store"><a href="../shop" target="_blink">스프링스토어</a><div class="snb" id="store-div"></div></div>
         		</div>
     		</div> 
@@ -125,8 +125,11 @@ $(function() {
 			let content = '';
 
 			content += '<ul class="list-inline">'
-			content += '	<li class="list-inline-item"><a href="">객실</a></li><div class="vr" style="position:relative; top:3px;"></div>';
+
+
+			content += '	<li class="list-inline-item"><a href="../room/roomRev1">객실</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="/dining/step1">다이닝</a></li>';
+
 			content += '</ul>'
 			
 			$revDiv.append(content);
@@ -143,7 +146,7 @@ $(function() {
 			let content = '';
 
 			content += '<ul class="list-inline">'
-			content += '	<li class="list-inline-item"><a href="../room/roomDetail">스탠다드</a></li><div class="vr" style="position:relative; top:3px;"></div>';
+			content += '	<li class="list-inline-item"><a href="../room/roomDetail?${category.no}">스탠다드</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">이그제큐티브</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">스위트</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">더 이그제큐티브 라운지</a></li><div class="vr" style="position:relative; top:3px;"></div>';

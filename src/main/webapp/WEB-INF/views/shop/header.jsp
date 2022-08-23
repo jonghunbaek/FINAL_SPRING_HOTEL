@@ -107,19 +107,19 @@
 			<div class="col-7" >
 				<div class="row row-cols-5" >
 						<div class="level1" id="big-category-no-1" onmouseover="dropping(1);" onmouseout="collapsing(1);">
-							<a href="/shop/productlist" ><span>스프링 TO-GO</span></a>
+							<a href="/shop/list?mainCategoryNo=1" ><span>스프링 TO-GO</span></a>
 						</div>
 						<div class="level1" id="big-category-no-2" onmouseover="dropping(2);" onmouseout="collapsing(2);">
-							<a href="/shop/productlist" ><span>푸드</span></a>
+							<a href="/shop/list?mainCategoryNo=2" ><span>푸드</span></a>
 						</div>
 						<div class="level1" id="big-category-no-3" onmouseover="dropping(3);" onmouseout="collapsing(3);">
-							<a href="/shop/productlist" ><span>기념일 선물</span></a>
+							<a href="/shop/list?mainCategoryNo=3" ><span>기념일 선물</span></a>
 						</div>
 						<div class="level1" id="big-category-no-4" onmouseover="dropping(4);" onmouseout="collapsing(4);">
-							<a href="/shop/productlist" ><span>프리미엄 베딩</span></a>
+							<a href="/shop/list?mainCategoryNo=4" ><span>프리미엄 베딩</span></a>
 						</div>
 						<div class="level1" id="big-category-no-5" >
-							<a href="/shop/productlist" ><span>지류 상품권</span></a>
+							<a href="/shop/list?mainCategoryNo=5" ><span>지류 상품권</span></a>
 						</div>
 				</div>
 			</div>
@@ -140,55 +140,70 @@
 		<div class="dropmenu" id="category-no-1" onmouseover="dropping(1);" onmouseout="collapsing(1);">
 			<div class="col-3" >
 							<div class="category-name" >
-								<a href="/shop/productlist" ><span>스프링 TO-GO &gt;</span></a>
+								<a href="/shop/list?mainCategoryNo=1" ><span>스프링 TO-GO &gt;</span></a>
 							</div>
 			</div>
 			<div class="col-7" >
 				<div class="row row-cols-3">
+				
+				
 							<div class="col">
-								<a href="/shop/productlist"><span>스프링 서울 TO-GO</span></a>
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=1"><span>시즌 상품</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>스프링 제주 TO-GO</span></a>
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=2"><span>도시락</span></a>
+								<ul>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=2&locationNo=1"><span>스프링 서울</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=2&locationNo=3"><span>스프링 제주</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=2&locationNo=2"><span>스프링 부산</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=2&locationNo=5"><span>스프링 광주</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=2&locationNo=4"><span>스프링 강릉</span></a></li>
+								</ul>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>스프링 부산 TO-GO</span></a>
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=3"><span>미드나잇 플렉스</span></a>
+							</div>
+<!-- 							<div class="col">
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=1&locationNo=3"><span>스프링 서울 TO-GO</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>스프링 광주 TO-GO</span></a>
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=2"><span>스프링 제주 TO-GO</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>스프링 강릉 TO-GO</span></a>
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=3"><span>스프링 부산 TO-GO</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span></span></a>
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=4"><span>스프링 광주 TO-GO</span></a>
 							</div>
+							<div class="col">
+								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=5"><span>스프링 강릉 TO-GO</span></a>
+							</div> -->
 				</div>
 			</div>
 		</div>
 		<div class="dropmenu" id="category-no-2" onmouseover="dropping(2);" onmouseout="collapsing(2);">
 			<div class="col-3" >
 							<div class="category-name" >
-								<a href="/shop/productlist" ><span>푸드 &gt;</span></a>
+								<a href="/shop/list?mainCategoryNo=2" ><span>푸드 &gt;</span></a>
 							</div>
 			</div>
 			<div class="col-7" >
 				<div class="row row-cols-3">
 							<div class="col">
-								<a href="/shop/productlist"><span>시즌 상품</span></a>
+								<a href="/shop/list?mainCategoryNo=2&subCategoryNo=4"><span>시즌 상품</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>케이크</span></a>
+								<a href="/shop/list?mainCategoryNo=2&subCategoryNo=5"><span>케이크</span></a>
 								<ul>
-									<li><a href="/shop/productlist"><span>스프링 서울</span></a></li>
-									<li><a href="/shop/productlist"><span>스프링 제주</span></a></li>
-									<li><a href="/shop/productlist"><span>스프링 부산</span></a></li>
-									<li><a href="/shop/productlist"><span>스프링 광주</span></a></li>
-									<li><a href="/shop/productlist"><span>스프링 강릉</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=2&subCategoryNo=5&locationNo=1"><span>스프링 서울</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=2&subCategoryNo=5&locationNo=3"><span>스프링 제주</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=2&subCategoryNo=5&locationNo=2"><span>스프링 부산</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=2&subCategoryNo=5&locationNo=5"><span>스프링 광주</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=2&subCategoryNo=5&locationNo=4"><span>스프링 강릉</span></a></li>
 								</ul>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>선물 세트</span></a>
+								<a href="/shop/list?mainCategoryNo=2&subCategoryNo=6"><span>선물 세트</span></a>
 							</div>
 				</div>
 			</div>
@@ -196,19 +211,19 @@
 		<div class="dropmenu" id="category-no-3" onmouseover="dropping(3);" onmouseout="collapsing(3);">
 			<div class="col-3" >
 							<div class="category-name" >
-								<a href="/shop/productlist" ><span>기념일 선물 &gt;</span></a>
+								<a href="/shop/list?mainCategoryNo=3" ><span>기념일 선물 &gt;</span></a>
 							</div>
 			</div>
 			<div class="col-7" >
 				<div class="row row-cols-3">
 							<div class="col">
-								<a href="/shop/productlist"><span>와인&치즈</span></a>
+								<a href="/shop/list?mainCategoryNo=3&subCategoryNo=7"><span>와인&치즈</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>과일바구니</span></a>
+								<a href="/shop/list?mainCategoryNo=3&subCategoryNo=8"><span>과일바구니</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>꽃</span></a>
+								<a href="/shop/list?mainCategoryNo=3&subCategoryNo=9"><span>꽃</span></a>
 							</div>
 				</div>
 			</div>
@@ -216,19 +231,19 @@
 		<div class="dropmenu" id="category-no-4" onmouseover="dropping(4);" onmouseout="collapsing(4);">
 			<div class="col-3" >
 							<div class="category-name" >
-								<a href="/shop/productlist" ><span>프리미엄 베딩 &gt;</span></a>
+								<a href="/shop/list?mainCategoryNo=4" ><span>프리미엄 베딩 &gt;</span></a>
 							</div>
 			</div>
 			<div class="col-7" >
 				<div class="row row-cols-3">
 							<div class="col">
-								<a href="/shop/productlist"><span>침구류</span></a>
+								<a href="/shop/list?mainCategoryNo=4&subCategoryNo=10"><span>침구류</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span>타월류</span></a>
+								<a href="/shop/list?mainCategoryNo=4&subCategoryNo=11"><span>타월류</span></a>
 							</div>
 							<div class="col">
-								<a href="/shop/productlist"><span></span></a>
+								<a href="#"><span></span></a>
 							</div>
 				</div>
 			</div>

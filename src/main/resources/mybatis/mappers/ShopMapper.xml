@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sh.mapper.ShopMapper">
+
+	<!-- ShopProduct getProductByNo(int no); -->
+	<select id="getProductByNo" resultType="com.sh.vo.ShopProduct" parameterType="int">
+			SELECT P.PRODUCT_NO as no,
+				P.PRODUCT_NAME as name,
+				P.PRODUCT_IMAGE_NAME as imageName, 
+                P.PRODUCT_DETAIL as detail,
+                P.PRODUCT_COMPOSITION as composition,
+                P.PRODUCT_CAUTION as caution,
+                P.PRODUCT_ADDITIONAL_INFO as additionalInfo,
+                P.PRODUCT_ONSALE_MIN_DATE as minDate,
+                P.PRODUCT_ONSALE_MAX_DATE as maxDate,
+				B.SHOP_BUSINESS_NAME as "business.name", 
+				L.LOCATION_NAME as "location.name", 
+				P.PRODUCT_PRICE as price, 
+				P.PRODUCT_DISCOUNT_RATE as discountRate
+		FROM SH_SHOP_PRODUCT P, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L
+		WHERE P.PRODUCT_NO = #{value}
+		AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
+		AND P.LOCATION_NO = L.LOCATION_NO
+	</select>
+	
+	<!--List<ShopProduct> getAllProductsByMainCategoryNo(int mainCategoryNo); -->
+	<select id="getAllProductsByMainCategoryNo" resultType="com.sh.vo.ShopProduct" parameterType="int">
+    	SELECT P.PRODUCT_NO as no,
+				P.PRODUCT_NAME as name,
+				P.PRODUCT_IMAGE_NAME as imageName, 
+				B.SHOP_BUSINESS_NAME as "business.name", 
+				L.LOCATION_NAME as "location.name", 
+				P.PRODUCT_PRICE as price, 
+				P.PRODUCT_DISCOUNT_RATE as discountRate,
+				M.SHOP_MAINCATEGORY_NAME as "mainCategory.name"
+		FROM SH_SHOP_PRODUCT P, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L, SH_SHOP_MAINCATEGORY M
+		WHERE P.SHOP_MAINCATEGORY_NO = #{value}
+		AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
+		AND P.LOCATION_NO = L.LOCATION_NO
+        AND P.SHOP_MAINCATEGORY_NO = M.SHOP_MAINCATEGORY_NO
+		AND PRODUCT_ISONSALE = 'Y'
+		AND PRODUCT_ISDELETED = 'N'
+		ORDER BY PRODUCT_UPDATED_DATE DESC
+	</select>
+
+	<!-- List<ShopProduct> getProductsByParameters(ShopProductListCriteria shoplistCriteria); -->
+	<select id="getProductsByParameters" resultType="com.sh.vo.ShopProduct" parameterType="com.sh.criteria.ShopProductListCriteria">
+		SELECT P.PRODUCT_NO as no,
+		        P.PRODUCT_NAME as name,
+		        P.PRODUCT_IMAGE_NAME as imageName,
+		        B.SHOP_BUSINESS_NAME as "business.name", 
+		        L.LOCATION_NAME as "location.name", 
+		        P.PRODUCT_PRICE as price, 
+				P.PRODUCT_DISCOUNT_RATE as discountRate,
+				P.SHOP_MAINCATEGORY_NO as "mainCategory.mainCategoryNo",
+				M.SHOP_MAINCATEGORY_NAME as "mainCategory.name",
+		        S.SHOP_SUBCATEGORY_NAME as "subCategory.subCategoryName"
+		FROM SH_SHOP_PRODUCT P, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L, SH_SHOP_MAINCATEGORY M, SH_SHOP_SUBCATEGORY S
+		WHERE P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
+		AND P.LOCATION_NO = L.LOCATION_NO
+		AND P.SHOP_MAINCATEGORY_NO = M.SHOP_MAINCATEGORY_NO
+		AND P.SHOP_SUBCATEGORY_NO = S.SHOP_SUBCATEGORY_NO
+		<if test="locationNo > 0">
+			AND P.LOCATION_NO = #{locationNo}
+		</if>
+		<if test="subCategoryNo > 0">
+			AND P.SHOP_SUBCATEGORY_NO = #{subCategoryNo}
+		</if>
+		<if test="mainCategoryNo > 0">
+			AND P.SHOP_MAINCATEGORY_NO = #{mainCategoryNo}
+		</if>
+		ORDER BY PRODUCT_UPDATED_DATE DESC
+	</select>
+
+
+
+</mapper>

@@ -41,7 +41,9 @@
 	width: 80px;
 	height: auto;
 }
-
+a {
+	text-decoration:none;
+}
 /* 로그인 헤더 */
 .contents .location {
 	float: right;
@@ -123,6 +125,33 @@
 	pading: 0;
 }
 
+.loginheader {
+	border: 1px solid #F2F1EC;
+	border-bottom: 3px solid #A1886D;
+	width: 600px;
+	height: 47px;
+	text-align:center;
+}
+.loginheader p{
+	vertical-align:middle;
+	padding: auto;
+	margin: auto;
+	color: #865009;
+	font-size:18px;
+}
+
+.inputId, .inputPw {
+	display:block;
+	float:left;
+}
+
+.inputForm{
+	display:block;
+}
+.mainBtn {
+	float:right;
+}
+
 .loginBox .box {
 	background: #f1ebd6;
 	padding: 30px 0 30px 0;
@@ -145,23 +174,23 @@
 	display:inline-flex;
 }
 
-.loginimage {
-	float:left;
-}
-
 button{
 	background-color: #856f56;
 	color: #fff;
 	border: 0px;
 	pading: 2px;
-	margin: 0;
+	margin-top: 10px;
 }
 
 button a{
 	color: white;
 	font-size: 13px;
-	hover: none;
+	hover: white;
+	text-decoration: none;
 }
+a:hover {
+	color: white;
+	}
 
 .loginT {
 	background: none repeat scroll 0 0 #FBFBFB;
@@ -185,21 +214,26 @@ button a{
 	margin: 10px auto;
 	font-size: 13px;
 }
-
-.loginBtn input{
-	margin: 10px 0 0 0;
+.inputForm{
+	width:400px;
+	height:70px;
+	margin:auto;
+}
+.loginBtn{
+	margin: auto;
+	display:block;
 }
 .loginBtn img{
-	position: relative;
+	margin: 8px;
 	bottom: 25px;
 }
 
 /* 회원가입 */
-.registerBox ul {
+.register ul{
 	list-style-type: none;
 }
 
-.registerBox.contents .headTit {
+.headTit {
     border-bottom: #432c10 solid 5px;
     height: 47px;
     width: 866px;
@@ -210,6 +244,7 @@ button a{
 	color: #865009;
 	font-weight: 550;
 } 
+
 #registerForm p {
 	text-align: left;
 	font-weight: bolder;
@@ -271,4 +306,51 @@ button a{
 	border: 0px;
 	padding: 5px 10px;
 	font-size: 15px;
+}
+
+input[type=checkbox] {
+	width:18px;
+	height:18px;
+	margin-right:6px;
+	vertical-align: middle;
+}
+/* 약관동의 */
+
+.termsContent {
+	float:left;
+}
+.clauseBox {
+    border: #CCC solid 1px;
+    font-size: 14px;
+    height: 80px;
+    overflow: auto;
+    overflow-x: hidden;
+    padding: 10px;
+    margin: 0 0 5px 0;
+}
+
+/* 모달 */
+.modal-header {
+	border-bottom: 3px solid #A0886E;
+	color: #865009;
+}
+
+.modal table th,td{
+	border-bottom: none;;
+	vertical-align:middle;
+}
+.modal label{
+    font-weight: bolder;
+}
+
+.modal-body {
+	margin-bottom:0;
+	padding-bottom:0;
+	background-color: #F1EBD6;
+}
+
+.modal-footer {
+	border-top: none;
+	padding-top: 0;
+	background-color: #F1EBD6;
 }

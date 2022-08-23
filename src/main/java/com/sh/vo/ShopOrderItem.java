@@ -16,7 +16,7 @@ public class ShopOrderItem {
 
 	private ShopOrder shopOrder;
 	//추후 DB 변경 필요: product로부터 상품번호를 가져온다.
-	private Product product;
+	private ShopProduct product;
 	private int price;
 	private int quantity;
 	// 주문아이템 생성일과 업데이트일은 추후 DB에서 제거

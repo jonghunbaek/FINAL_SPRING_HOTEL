@@ -67,17 +67,17 @@
 			  		</div>
 			  	<div class="carousel-inner">
 			    	<div class="carousel-item active" data-bs-interval="10000">
-			    		<a href="/shop/food/season">
+			    		<a href="/shop/list?mainCategoryNo=2&subCategoryNo=4">
 			    			<img src="../resources/images/shop/banner/shop-banner-1.jpg" class="d-block w-100" alt="슬라이드 이미지1">
 			    		</a>
 			    	</div>
 			    	<div class="carousel-item" data-bs-interval="2000">
-			      		<a href="/shop/food/bakery">
+			      		<a href="/shop/list?mainCategoryNo=2&subCategoryNo=5">
 			    			<img src="../resources/images/shop/banner/shop-banner-2.jpg" class="d-block w-100" alt="슬라이드 이미지2">
 			    		</a>
 			    	</div>
 			    	<div class="carousel-item" data-bs-interval="3000">
-			      		<a href="/shop/bedding">
+			      		<a href="/shop/list?mainCategoryNo=4">
 			    			<img src="../resources/images/shop/banner/shop-banner-3.jpg" class="d-block w-100" alt="슬라이드 이미지3">
 			    		</a>
 			    	</div>

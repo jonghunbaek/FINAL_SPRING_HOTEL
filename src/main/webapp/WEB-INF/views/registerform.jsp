@@ -22,7 +22,32 @@
 <%@ include file="common/nav.jsp"%>
 <div class="container" id="container">
 		<div class="registerBox contents" id="contents">
-	        <!-- 회원가입 헤더 -->
+		
+		 	<!-- 약관동의 -->
+			<div class="terms" style="display:none">
+				<div class="location rgt">
+					<p class="list">
+						<span class="crPosit"></span> &gt; <strong>약관동의</strong>
+					</p>
+				</div>
+				<div class="headTit">
+					<h4 class="registerTit">약관동의</h4>
+				</div>
+				<div class="top">
+					<h1 class="logo">
+						<span><p>스프링리워즈에 오신 것을 환영합니다</p></span>
+					</h1>
+					<div class="info">
+						<p>※ 약관 및 개인정보 수집·이용 사항을 확인하시고 동의여부에 체크해주시기 바랍니다.</p>
+					</div>
+				</div>
+			
+				<div class="termsContent">
+				<label><input type="checkbox" name="allcheck">스프링리워즈 가입 약관 전체 동의</label>
+				</div>
+			</div>
+	        <!-- 회원가입 -->
+			<div class="register" style="display:block">
 			<div class="location rgt">
 				<p class="list">
 					<span class="crPosit"></span> &gt; <strong>회원가입</strong>
@@ -48,28 +73,29 @@
 					&nbsp; First name(이름) <form:input path="firstName"/> 
 					Last name(성) <form:input path="lastName"/>
 				</li>
-				<li><label class="required">생년월일</label>
-					<form:input path="year" cssStyle="width:80px" placeholder="년(4자)"/>
-					<form:select path="month" cssStyle="width:60px" placeholder="월">
-						<form:option value="" label="월" />
-						<form:option value="01" label="1" />
-						<form:option value="02" label="2" />
-						<form:option value="03" label="3" />
-						<form:option value="04" label="4" />
-						<form:option value="05" label="5" />
-						<form:option value="06" label="6" />
-						<form:option value="07" label="7" />
-						<form:option value="08" label="8" />
-						<form:option value="09" label="9" />
-						<form:option value="10" label="10" />
-						<form:option value="11" label="11" />
-						<form:option value="12" label="12" />
+				<li><label class="required">생년월일</label>&nbsp;
+					<form:select path="year" cssStyle="width:80px" placeholder="년(4자)">
+							<form:option value="" label="년도" />
+							<c:forEach var="num" begin="1900" end="2022">
+								<form:option value="${num}" label="${num }" />					
+							</c:forEach>					
 					</form:select>
-					<form:input path="day" cssStyle="width:60px" placeholder="일"/>
+					<form:select path="month" cssStyle="width:60px" placeholder="월">
+							<form:option value="" label="월" />
+							<c:forEach var="num" begin="1" end="12">
+								<form:option value="${num < 10 ? '0'+=''+= num : num }" label="${num }" />					
+							</c:forEach>					
+					</form:select>
+					<form:select path="day" cssStyle="width:60px" placeholder="일">
+							<form:option value="" label="일" />
+							<c:forEach var="num" begin="1" end="31">
+								<form:option value="${num < 10 ? '0'+=''+=num : num }" label="${num }" />
+							</c:forEach>					
+					</form:select>
 				</li>
 				<li><label class="required">이메일</label>
 					<form:input path="email1"/>@
-					<form:input path="email2"/>
+					<form:input path="email2" cssStyle="width:150px"/>
 					<button type="button" id="btn" onclick="emailCheck()">이메일 중복확인</button>
 					<form:errors path="email" class="text-danger small fst-italic"></form:errors>
 				</li>
@@ -118,6 +144,7 @@
 					<button id="registerbutton" type="submit" >가입 신청</button>
 			</ul>
 			</form:form>
+			</div>
 		</div>
 </div>
 <%@ include file="common/footer.jsp"%>
@@ -148,7 +175,7 @@
 		let email = '' 
 		let email1	= document.getElementById('email1').value;
 		let email2	= document.getElementById('email2').value;
-			email = email1 + "@"+ email2;
+			email = email1+"@"+email2;
 		$.ajax({
 			url: '/emailCheck',
 			type: 'post',

@@ -2,6 +2,7 @@ package com.sh.service;
 
 
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 
@@ -80,7 +81,6 @@ public class UserService {
 		
 		user = new User();
 		BeanUtils.copyProperties(userRegisterForm, user);
-		
 		userMapper.insertUser(user);
 	}
 	
@@ -104,6 +104,27 @@ public class UserService {
 		return check;
 	}
 	
+
+	/** 아이디 찾기
+	 * @param name
+	 * @param email
+	 * @return 사용자 아이디
+	 */
+	public String findId(String name, String email) {
+		String fineId = userMapper.fineId(name, email);
+		return fineId;
+	}
+	
+	/** 비밀번호 찾기
+	 * @param id
+	 * @param email
+	 * @return 사용자 비밀번호
+	 */
+	public String findPw(String id, String email) {
+		String finePw = userMapper.finePw(id, email);
+		return finePw;
+	}
+
 	/**
 	 * 가장 최근에 가입한 유저정보 반환
 	 * @param num
@@ -205,7 +226,7 @@ public class UserService {
 	public int passwordCheck(String id, String password) {
 		return userMapper.passwordCheck(id, password); 
 	}
-	
+  
 	/**
 	 * 마이페이지 포인트, 등급정보 반환
 	 * @param userNo
