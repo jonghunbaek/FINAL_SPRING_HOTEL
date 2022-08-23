@@ -669,7 +669,6 @@ $(function() {
 	let	flat;
 	let input = $("#checkin-modal");
 	let periods = new Array();
-	let periodsQuery = '';
 	
 	$('#room-rev-detail').on('click', '#checkin-modal', function() {
 		let roomRevNo= parseInt($("#revNo-modal").val());
@@ -699,7 +698,6 @@ $(function() {
 		let disabled = [];
 		for(let i=0; i<periods.length; i+=2) {
 			disabled.push({from: periods[i], to: periods[i+1]});
-			console.log(periodsQuery);
 		}
 		
 		flat = 	flatpickr(input, {
