@@ -74,7 +74,6 @@ public interface RoomMapper {
 	// 객실 예약 
 	void insertRoomRev(RoomReservationForm revForm);
 
-	void insertRoomRev(RoomReservationForm roomReservationForm);
 
 
 	// 예약번호로 예약정보 가져오기
