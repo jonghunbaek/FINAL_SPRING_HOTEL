@@ -28,6 +28,7 @@ public class RtRev {
 	private String mealTime;
 	private String isMember;
 	private String isAllergy;
+	private String etcAllergy;
 	private String name;
 	private String email;
 	private String tel;

@@ -10,80 +10,43 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+*{font-family: 돋움, sans-serif, Arial}
+
 #container {width: 1200px; margin: 0 auto;}
-.logo-outer { 
-	margin-top: 100px;
-}
-.logo-inner {
-  width : 200px;
-  height : 100px;
-  margin: auto;
-}
-.logo-inner img { width: 140px; height: 100px;}
 
-.revInfo{margin:5px; margin-top:50px; padding-bottom:20px; padding-top: 30px; border-bottom: solid 6px #D5D5D5;  border-top: solid 2px brown; }
+.complete-text h2{font-weight:800;}
 
-.option-container{margin-top: 30px; border: solid 1px #D5D5D5;}
+.complete-text {margin-top:80px}
 
-.option-container .title {background: #EAEAEA; padding:10px;}
+.complete-text span{margin-top :30px;}
 
-.option-container .title strong { margin:20px;}
+#reservation-no {font-size: 200%; color: #9f876b;}
 
-.customer-information .left{ border-right: solid 1px #D5D5D5;}
+.complete-text p {margin-top: 30px;}
 
-.customer-information > div{padding: 30px;}
+#rev-info {padding: 10px;}
 
-.customer-information .left {border-right : solid 1px #D5D5D5;}
+#img-res{width:140px; height: 75px;}
 
-.customer-information .row p{font-size: 80%;}
+#btn-print{ width: 80px; height: 30px;}
 
-select[name=nameTitle] {width:130px;}
+#rev-info {margin-top: 80px; border: solid #D5D5D5 1px; border-top: solid #9f876b 3px;}
 
-.important {color: red;}
+.st-text {font-size: 120%; font-weight:800;}
 
-input[name=name] {width: 230px; height: 70%;}
+.st-text2 {font-size: 100%; font-weight:800;}
 
-input[name=email] {width: 365px; height: 70%;}
+.nor-text {font-size: 85%; font-weight:200; }
 
-input[name=tel] {width: 280px; height: 70%;}
+#text-rev-info {padding: 10px; border-bottom:solid #9f876b 1px;}
 
-#btn-double-check{width: 80px; height: 25px;}
+#restaurant-info{padding:20px; border-right: dotted #D5D5D5 1px;}
 
-#alert-double-check{padding-top: 20px;}
+#rev-more-info{padding: 20px; border-right: dotted #D5D5D5 1px;}
 
-select[name=cardSort] {width:365px; height:70%;}
+#rev-guest-info{padding: 20px;}
 
-#card-number input {width: 83px; height:70%;}
-
-#expiration-date select {width:180px; height:70%;}
-
-#alert-card p{font-size: 70%;}
-
-#alert-card {padding-top: 20px;}
-
-#notice-container{margin-top: 40px; border: solid 1px #D5D5D5;}
-
-#notice-title{background: #EAEAEA; padding:10px; border-bottom:solid 1px #D5D5D5; }
-
-#notice-title p{margin: 10px;}
-
-#notice-text{padding: 30px;}
-
-#notice-text li{margin-top: 10px; font-size: 70%;}
-
-#notice-checkbox{padding:20px; background:  rgb(241, 227, 196); border-top: solid 1px #D5D5D5;}
-
-#privacy-container{margin-top: 40px; border: solid 1px #D5D5D5;}
-
-#privacy-title{background: #EAEAEA; padding:10px; border-bottom:solid 1px #D5D5D5; }
-
-#privacy-title p{margin: 10px;}
-
-#privacy-text{padding: 30px;}
-
-#privacy-text p{overflow:auto; width:1100px; height: 100px; border:solid 1px #D5D5D5;}
-
-#privacy-radio {margin-right: 30px; margin-bottom: 30px;}
+#rev-notice{margin-top: 50px;}
 </style>
 <title>Spring Hotel</title>
 </head>
@@ -91,8 +54,67 @@ select[name=cardSort] {width:365px; height:70%;}
 <c:set var="menu" value="home"/>
 <%@ include file="../common/nav.jsp" %>
 <div class="container-fluid " id="container">
-<h1 class="text center">예약이완료 되었습니다</h1>
-<p>${diningReservationForm.reservationNo }</p>
+	<div class="complete-text text-center">
+		<h2>예약이완료 되었습니다</h2>
+		<p>예약번호 <span id="reservation-no">${diningReservationForm.reservationNo }</span></p>
+		<span>예약하신 내용이 예약 시 입력하신 이메일과 문자(알림톡)로 발송되었습니다. &nbsp;&nbsp;&nbsp;</span>
+		<span></span><a href="#"><img id="btn-print" class="text-end" src="../resources/images/dining/btn-print.png"/></a></span>
+	</div>
+	<div id="rev-info">
+		<div id="text-rev-info">
+			<p class="st-text">예약정보</p>
+		</div>
+		<div class="row">
+			<div id="restaurant-info" class="col-4">
+				<p class="st-text">레스토랑정보</p>
+				<div class="row">
+					<div class="col-6 text-center">
+						<img id="img-res" src="../resources/images/dining/더파크뷰메인.jpg">
+					</div>
+					<div class="col-6">
+						<p><strong>${dining.name}</strong></p>
+						<p class="nor-text">${dining.location.name }신라호텔</p>
+						<p class="nor-text">${dining.dnInfo.location }</p>
+						<p class="nor-text">${dining.dnInfo.tel }</p>
+					</div>
+				</div>
+			</div>
+			<div id="rev-more-info" class="col-4">
+				<div class="row">
+					<p class="st-text">예약 상세정보</p>
+					<div class="col-6">
+						<p class="st-text2">예약일</p>
+						<p class="st-text2">예약인원</p>
+					</div>
+					<div class="col-6 text-end">
+						<p class="nor-text"> ${diningReservationForm.date }(${day }) &nbsp;${diningReservationForm.visitTime }</p>
+						<p class="nor-text"> 성인 ${diningReservationForm.adult }, 어린이 ${diningReservationForm.child }, 유아 ${diningReservationForm.baby }</p>
+					</div>
+				</div>
+			</div>
+			<div id="rev-guest-info" class="col-4">
+				<div class="row">
+					<p class="st-text">고객 정보</p>
+					<div class="col-6">
+						<p class="st-text2">예약자명</p>
+						<p class="st-text2">연락처</p>
+						<p class="st-text2">이메일</p>
+					</div>
+					<div class="col-6 text-end">
+						<p class="nor-text">${diningReservationForm.name }</p>
+						<p class="nor-text">${diningReservationForm.tel }</p>
+						<p class="nor-text">${diningReservationForm.email }</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="rev-notice">
+		<p class="nor-text">※방문 예정일 1일전까지는 변경 및 취소가 가능합니다.</p>
+		<p class="nor-text">※방문 당일 취소 및 변경은 불가하며, 예약 인원 식사 금액의 10%가 위약금으로 부과됩니다.
+		<p class="nor-text">※방문 당일 취소 및 변경시, 전화 문의 바랍니다.</p>
+		<p class="nor-text">※예약 내역과 상이할 시, 이용이 제한되거나 변경될 수 있습니다.</p>
+	</div>
 </div>
 
 <%@ include file="../common/footer.jsp" %>

@@ -133,4 +133,52 @@
 		from sh_rt_allergy
 		order by allergy_no asc
 	</select>
+	
+	<!-- void insertRtRevCount(RtRevCount rtRevCount); -->
+	<insert id="insertRtRevCount" parameterType="RtRevCount">
+		insert into sh_rt_rev_count
+		(rt_rev_count, rt_rev_count_date, dn_no, rt_rev_count_meal_time, rt_rev_count_seat_type) 
+		values
+		(#{count}, #{date}, #{dn.no}, #{mealTime}, #{seatType})
+	</insert>
+	
+	<!-- int getDnSeatCountOfDay(@Param("no") int no, @Param("date") Date date, @Param("seatType") String seatType); -->
+	<select id="getDnSeatCountOfDate" resultType="DnSeatCountOfDate">
+		select 
+			sum(rt_rev_count) as count, 
+			rt_rev_count_meal_time as mealTime
+		from 
+			sh_rt_rev_count
+		where
+			dn_no = #{no} 
+			 and
+			rt_rev_count_date = #{date}
+		 	 and 
+			rt_rev_count_seat_type = #{seatType}
+		group by rt_rev_count_meal_time
+	</select>
+	
+	<!-- int getTotalSeatByNo(Dn dn); -->
+	<select id="getTotalSeatByNo" parameterType="int" resultType="int">
+		select 
+			dn_info_seat
+		from 
+			sh_dn_info
+		where
+			dn_no = #{value}
+	</select>
+	
+	<!-- int getTotalRoomByNo(Dn dn); -->
+	<select id="getTotalRoomByNo" parameterType="int" resultType="int">
+		select
+			dn_info_room
+		from 
+			sh_dn_info
+		where
+			dn_no = #{value}
+	</select>
+	
+	
+	
+	
 </mapper>

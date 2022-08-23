@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 #container {width: 1200px; margin: 0 auto;}
+
 .logo-outer { 
 	margin-top: 100px;
 }
@@ -127,7 +128,7 @@ select[name=cardSort] {width:365px; height:70%;}
 							<option value="Ms.">Ms.</option>
 							<option value="Dr.">Dr.</option>
 						</select>
-						<input type="text" name="name"/>
+						<input type="text" name="name" value="${LOGIN_USER.name }"/>
 					</div>
 				</div>
 				<div class="row">

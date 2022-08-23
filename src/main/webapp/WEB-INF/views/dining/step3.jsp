@@ -10,6 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+
 #container {width: 1200px; margin: 0 auto;}
 .logo-outer { 
 	margin-top: 100px;
@@ -64,9 +65,9 @@
 	</div>
 	<div class="row revInfo">
 		<div class="col-11">
-			<h6><strong>${dining.name }</strong>&nbsp;&nbsp;&nbsp;${location.name}신라호텔<strong>&nbsp;&nbsp;&nbsp;&nbsp;${date }(${day })&nbsp;&nbsp;&nbsp;|
-			&nbsp;&nbsp;&nbsp;${mealTime }&nbsp;&nbsp;&nbsp;&nbsp;${visitTime }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;성인&nbsp;${adult == 0 ? '' : adult }&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
-			어린이 ${child }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;유아 ${baby }&nbsp;&nbsp;&nbsp;&nbsp;</strong></h6>
+			<h6><strong>${dining.name }</strong>&nbsp;&nbsp;&nbsp;${dining.location.name }신라호텔<strong>&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.date }(${day})&nbsp;&nbsp;&nbsp;|
+			&nbsp;&nbsp;&nbsp;${mealTime }&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.visitTime }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;성인&nbsp;${diningReservationForm.adult }&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
+			어린이 ${diningReservationForm.child }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;유아 ${diningReservationForm.baby }&nbsp;&nbsp;&nbsp;&nbsp;</strong></h6>
 		</div>
 		<div class="col-1">
 			<span><a href="#"><img src="../resources/images/dining/btn_rsvclear.png"/></a></span>
