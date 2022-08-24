@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -20,6 +22,8 @@ public class RtRev {
 	private int baby;
 	private String isVisit;
 	private String visitTime;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date visitDate;
 	private String seatType;
 	private String request;

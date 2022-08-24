@@ -6,10 +6,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.sh.criteria.AdminDnRevCriteria;
 import com.sh.criteria.AdminRoomRevCriteria;
+import com.sh.criteria.AdminRtRevCriteria;
+import com.sh.vo.AllergySelected;
 import com.sh.vo.Dn;
 import com.sh.vo.DnCategory;
 import com.sh.vo.Pagination;
 import com.sh.vo.RoomRev;
+import com.sh.vo.RtRev;
 import com.sh.vo.RtRevCount;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
@@ -21,30 +24,11 @@ public interface AdminRevMapper {
 	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
 	void changeRevStatus();
 
-	List<RoomRev> getAllRoomRevList(Pagination pagination);
-	
-	// 페이징처리 전체 개수 
-	int getTotalRows();
-	int getTotalRowsByFilter(AdminRoomRevCriteria adminRoomRevCriteria);
-	
-	// 조건별 예약정보 조회
-	List<RoomRev> filterRev(AdminRoomRevCriteria adminRoomRevCriteria);
-
-	// 예약정보 상세조회
-	RoomRev getRoomRevDetailByNo(int revNo);
-
-	// 예약 상세정보 수정
-	void updateRoomRevDetailByNo(AdminRoomRevUpdateForm adminRoomRevUpdateForm);
-
-	// 예약 상세정보 room_id에 따른 체크인,아웃 기간 조회
-	List<RoomRev> getPeriodByNo(int revNo);
-
-	// 선택된 예약정보 삭제
-	void deleteCheckedByNo(String revNo);
-	
+	/*----------------------------- 객실신규 예약관련---------------------------- */
 	// 신규 객실예약 등록
 	void insertNewRoomRev(AdminAddRevForm adminAddRevForm);
 	
+	/*----------------------------- 다이닝 신규 예약관련---------------------------- */
 	// 다이닝예약가능 날짜 조회
 	List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria);
 
@@ -69,6 +53,43 @@ public interface AdminRevMapper {
 
 	// 신규 다이닝예약 등록
 	void insertNewDiningRev(DiningReservationForm diningReservationForm);
+	
+	/*----------------------------- 객실예약 조회 관련---------------------------- */
+	List<RoomRev> getAllRoomRevList(Pagination pagination);
+	
+	// 페이징처리 전체 개수 
+	int getTotalRows();
+	int getTotalRowsByFilter(AdminRoomRevCriteria adminRoomRevCriteria);
+	
+	// 조건별 예약정보 조회
+	List<RoomRev> filterRev(AdminRoomRevCriteria adminRoomRevCriteria);
+
+	// 예약정보 상세조회
+	RoomRev getRoomRevDetailByNo(int revNo);
+
+	// 예약 상세정보 수정
+	void updateRoomRevDetailByNo(AdminRoomRevUpdateForm adminRoomRevUpdateForm);
+
+	// 예약 상세정보 room_id에 따른 체크인,아웃 기간 조회
+	List<RoomRev> getPeriodByNo(int revNo);
+
+	// 선택된 예약정보 삭제
+	void deleteCheckedByNo(String revNo);
+
+	/*----------------------------- 다이닝 예약조회관련---------------------------- */
+	// 다이닝예약 조회 총 행수
+	int getTotalRowsDn();
+	int getTotalRowsByFilterRt(AdminRtRevCriteria adminRtRevCriteria);
+	
+	// 다이닝예약 전체 목록가져오기
+	List<RtRev> getAllRtRevList(Pagination pagination);
+	List<RtRev> filterRevRt(AdminRtRevCriteria adminRtRevCriteria);
+
+	// 다이닝예약 상세정보 가져오기
+	RtRev getRtRevDetailByNo(int revNo);
+	// 예약번호로 저장된 알레르기번호를 가져온다.
+	List<AllergySelected> getAllergySelectedByNo(int revNo);
+
 
 	
 

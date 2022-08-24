@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.sh.dto.AdminSaleChartDto;
 import com.sh.exception.ApplicationException;
 import com.sh.service.AdminService;
 import com.sh.utils.SessionUtils;
@@ -31,7 +32,10 @@ public class AdminController {
 	
 	// 관리자 메인페이지 요청
 	@GetMapping(path = "/main")
-	public String main() {
+	public String main(Model model) {
+		
+		model.addAttribute("sale", adminService.getAllSale());    
+		
 		return "admin/main";
 	}
 	

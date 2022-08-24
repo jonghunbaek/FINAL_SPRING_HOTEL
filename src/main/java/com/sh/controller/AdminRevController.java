@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sh.criteria.AdminDnRevCriteria;
 import com.sh.criteria.AdminRoomRevCriteria;
+import com.sh.criteria.AdminRtRevCriteria;
 import com.sh.service.AdminRevService;
 import com.sh.vo.Pagination;
 import com.sh.vo.Room;
 import com.sh.vo.RoomRev;
-import com.sh.vo.RtRevCount;
+import com.sh.vo.RtRev;
 import com.sh.vo.User;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
@@ -155,14 +156,26 @@ public class AdminRevController {
 	@GetMapping(path = "/diningrev")
 	public String diningRev(@RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
 
-		
-		 int totalRows = adminRevService.getTotalRows(); 
+		 int totalRows = adminRevService.getTotalRowsDn(); 
 		 Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
 		 
-		 List<RoomRev> roomRevs = adminRevService.getAllRoomRevList(pagination);
-		 model.addAttribute("roomRevs", roomRevs); model.addAttribute("pagination", pagination);
-
-		
+		 List<RtRev> rtRevs = adminRevService.getAllRtRevList(pagination);
+		 model.addAttribute("rtRevs", rtRevs); model.addAttribute("pagination", pagination);
+	
 		return "admin/reservation/diningrev";
+	}
+	
+	// 다이닝 예약현황 조건 별 페이지 요청
+	@GetMapping(path = "/diningrev/filter")
+	@ResponseBody
+	public Map<String, Object> FilterRevRt(AdminRtRevCriteria adminRtRevCriteria) {
+		return adminRevService.filterRevRt(adminRtRevCriteria);
+	}
+	
+	// 다이닝 예약정보 상세조회
+	@GetMapping(path = "/diningrev/detail")
+	@ResponseBody
+	public Map<String, Object> detailRt(int revNo) {
+		return adminRevService.getRtRevDetailByNo(revNo);
 	}
 }
