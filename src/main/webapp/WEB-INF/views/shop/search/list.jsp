@@ -26,7 +26,7 @@
 
 <!-- SEARCH ITEM BOX-->
 <div class="container" style="margin: 0 auto; padding: 60px 0; ">
-	<div class="" style="margin-bottom: 80px; text-align: center; display: block; ">
+	<div class="row row-cols-1" style="margin-bottom: 80px; text-align: center; display: block; ">
 			<p style="font-size: 40px;"> '${param.keyword }' </p>
 			<p style="margin: 10px 0 40px; font-size: 30px;"> 검색어로 <em style="color: #998465; font-style: normal;">총 ${productList.size() }개</em>의 상품검색</p>
 			<form action="list" id="searchForm" method="get">
@@ -40,7 +40,7 @@
 	</div>
 			
 <!-- SEARCH RESULTS CONTENT-->
-	<div class="row row-cols-3" style="display: block;">
+	<div class="row row-cols-3" style="">
 		<c:forEach var="product" items="${productList }">
 		<div class="col position-relative" style="margin:40px 0px; ">
 			<div class="row" style="height:70%;position:relative; padding:0px 5px;">

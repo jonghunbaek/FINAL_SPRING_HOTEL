@@ -30,11 +30,18 @@
 		select count(*)
 		from sh_qna
 		where qna_deleted ='N'
-		<!-- and user_no = #{value} -->
+	</select>
+	
+	<!-- int getQnaTotalRowsByUserNo(int no); -->
+	<select id="getQnaTotalRowsByUserNo" parameterType="int" resultType="int" >
+		select count(*)
+		from sh_qna
+		where qna_deleted ='N'
+		and user_no = #{no}
 	</select>
 	
 	<!-- int getQnaTotalRowsByFilter(QnaCriteria qnaCriteria); -->
-	<select id="getQnaTotalRowsByFilter" parameterType="QnaCriteria" resultType="int">
+	<!--<select id="getQnaTotalRowsByFilter" parameterType="QnaCriteria" resultType="int">
 		select count(*)
 		from sh_qna
 		<where>
@@ -54,6 +61,7 @@
 			</if>
 		</where>
 	</select>
+	 -->
 	
 	<!-- List<Qna> getAllInquiry(); -->
 	 <select id="getAllInquiry"  parameterType="Pagination" resultMap="inquiryResultMap">
@@ -65,8 +73,19 @@
 		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
 	</select>
 	
+	<!-- List<Qna> getAllInquiryByUserNo(@Param("pagination") Pagination pagination, @Param("userNo")int userNo) -->
+	 <select id="getAllInquiryByUserNo" resultMap="inquiryResultMap">
+		select *
+		from (SELECT Q.*,
+      		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER
+			  FROM SH_QNA Q
+			  WHERE QNA_DELETED = 'N'
+			  AND USER_NO = #{userNo})	
+		where ROW_NUMBER &gt;= #{pagination.beginIndex} and ROW_NUMBER &lt;=#{pagination.endIndex}
+	</select>
+	
 	<!-- List<Qna> getInquiryByCriteria(QnaCriteria qnaCriteria); -->
-	<select id="getInquiryByCriteria" parameterType="QnaCriteria" resultMap="inquiryResultMap">
+	<!-- <select id="getInquiryByCriteria" parameterType="QnaCriteria" resultMap="inquiryResultMap">
 		select *
 		from (SELECT Q.*,
       		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER
@@ -74,13 +93,20 @@
 			  WHERE QNA_DELETED = 'N' 
 			  AND WHERE USER_NO = #{userNo})	
 		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
-	</select>
+	</select> -->
 	
 	<!-- Qna getInquiryByNo(int no); -->
 	<select id="getInquiryByNo" parameterType="int" resultMap="inquiryResultMap">
 		select *
 		from sh_qna
 		where qna_no = #{value}
+	</select>
+	
+	<!-- List<Qna> getQnaByUserNo(int userNo); -->
+	<select id="getQnaByUserNo" parameterType="int" resultMap="inquiryResultMap">
+		select *
+		from sh_qna
+		where user_no = #{value}
 	</select>
 	
 	<!-- QnaCategory getQnaCategoryByNo(int no); -->
@@ -99,7 +125,8 @@
 		update sh_qna
 		set
 			qna_title = #{title},
-			qna_content = #{content}
+			qna_content = #{content},
+			qna_updated_date = sysdate
 		where qna_no = #{no}
 	</update>
 	
@@ -108,8 +135,9 @@
 		update sh_qna
 		set
 			qna_answer_content = #{answerContent},
-			qna_answer_state = 'Y',
-			qna_answer_created_date = sysdate
+			qna_answer_state = #{answerState},
+			qna_answer_created_date = sysdate,
+			qna_answer_updated_date = #{answerUpdatedDate}
 		where qna_no = #{no}
 	</update>
 	
@@ -141,7 +169,7 @@
 	</select>
 	
 	<!-- Location getLocationByNo; -->
-	<select id="getLocationByNo" parameterType="int" resultType="Location">
+    <select id="getLocationByNo" parameterType="int" resultType="Location">
 		select 
 			location_no as no,
 			location_name as name

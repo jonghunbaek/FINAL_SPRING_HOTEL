@@ -66,7 +66,7 @@
 	</div>
 	<div id="div-hotel-name" class=row>
 		<div class="col-11">
-			<p><strong>${dining.name }</strong>&nbsp;&nbsp;(${dining.location.name }신라호텔)</p>
+			<p><strong>${dining.name }</strong>&nbsp;&nbsp;(${dining.location.name }스프링호텔)</p>
 		</div>
 		<div class="col-1">
 			<a href="#"><img src="../resources/images/dining/btn_rsvclear.png"/></a>

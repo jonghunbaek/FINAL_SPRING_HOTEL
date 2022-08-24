@@ -21,6 +21,9 @@ import com.sh.vo.Grade;
 import com.sh.vo.PointGrade;
 import com.sh.vo.PointHistory;
 import com.sh.vo.RtRev;
+import com.sh.vo.Qna;
+import com.sh.vo.RoomRev;
+import com.sh.vo.ShopOrderItem;
 import com.sh.vo.User;
 
 @Controller
@@ -64,6 +67,9 @@ public class UserController {
 		User user = userService.getUserDetail(loginUser.getId());
 		model.addAttribute("user", user);
 		
+		List<RoomRev> roomRevs = userService.getRoomRevInfo(loginUser.getNo());
+		model.addAttribute("roomRevs",roomRevs);
+		
 		return "user/roomReservation";
 	}
 	
@@ -83,6 +89,7 @@ public class UserController {
 		return "user/diningReservation";
 	}
 	
+
 	// 비로그인상태 -> 예약확인 -> 로그인 -> 다이닝
 	@PostMapping("/dining")
 	public String loginDining(Model model, @RequestParam("id") String id, @RequestParam("password") String password, HttpSession httpSession) {
@@ -110,6 +117,19 @@ public class UserController {
 		model.addAttribute("user", user);
 		
 		return "user/diningReservationInfo";
+
+	// 스프링 샵 -> 상품 구매내역
+	@GetMapping("/shop")
+	public String shop(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.getUserDetail(loginUser.getId());
+		model.addAttribute("user", user);
+		
+		List<ShopOrderItem> orderItems = userService.getOrderItemsInfo(loginUser.getNo());
+		model.addAttribute("orderItems",orderItems);
+		
+		return "user/shop";
+
 	}
 	
 	// 포인트	조회
@@ -171,6 +191,20 @@ public class UserController {
 
 		return "redirect:/user/modify";
 	}
+//	// 프로필 수정 폼 - 비밀번호 찾기
+//	@PostMapping(path ="/findPassword")
+//	@ResponseBody
+//	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
+//		String password = userService.findPw(id, email);
+//		return password;
+//	}
+//	// 프로필 수정 폼 -  아이디 찾기
+//	@PostMapping(path ="/findId")
+//	@ResponseBody
+//	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
+//		String id = userService.findId(name, email);
+//		return id;
+//	}
 	
 	// 내 정보 -> 비밀번호 변경
 	@GetMapping("/changePw")
@@ -198,7 +232,13 @@ public class UserController {
 	
 	// 내 정보 -> 문의 내역
 	@GetMapping("/inquery")
-	public String inquery() {
+	public String inquery(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.getUserDetail(loginUser.getId());
+		model.addAttribute("user", user);
+		
+		List<Qna> inquery = userService.getQnaInfo(loginUser.getNo()); 
+		model.addAttribute("inquery",inquery);
 		
 		return "user/inquery";
 	}

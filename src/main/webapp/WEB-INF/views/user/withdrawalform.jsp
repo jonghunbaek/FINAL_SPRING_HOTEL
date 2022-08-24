@@ -19,7 +19,7 @@
 	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
 	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px; margin-bottom: 30px;}
-	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
+	#div-sidebar {float: left; width: 264px; height: 700px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
 	#list {margin-top: 25px; text-align: left;}
@@ -53,17 +53,22 @@
 					<li><a href="dining">다이닝</a></li>
 				</ul>
 			</li>
+			<li id="list"><span>스프링 샵</span>
+				<ul id="list-border">
+					<li><a href="shop">주문내역 조회</a></li>
+				</ul>
+			</li>
 			<li id="list"><span>포인트</span>
 				<ul id="list-border">
 					<li><a href="point">포인트 조회</a></li>
-					<li><a href="#">포인트 조정신청</a></li>
-					<li><a href="#">상품권 교환 신청</a></li>
+					<!-- <li><a href="#">포인트 조정신청</a></li>
+					<li><a href="#">상품권 교환 신청</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>쿠폰</span>
 				<ul id="list-border">
 					<li><a href="coupon">쿠폰함</a></li>
-					<li><a href="#">프로모션 숙박권</a></li>
+					<!-- <li><a href="#">프로모션 숙박권</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>내 정보</span>

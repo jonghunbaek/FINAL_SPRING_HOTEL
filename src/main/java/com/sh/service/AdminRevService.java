@@ -15,6 +15,7 @@ import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.mapper.AdminRevMapper;
 import com.sh.mapper.RoomMapper;
 import com.sh.mapper.UserMapper;
+import com.sh.vo.Dn;
 import com.sh.vo.Pagination;
 import com.sh.vo.Room;
 import com.sh.vo.RoomRev;
@@ -22,6 +23,7 @@ import com.sh.vo.RtRevCount;
 import com.sh.vo.User;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
+import com.sh.web.form.DiningReservationForm;
 
 @Service
 @Transactional
@@ -81,8 +83,17 @@ public class AdminRevService {
 	}
 	
 	// ------------------------------------------다이닝 신규예약추가 ----------------------------------------------
-	public List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria) {
-		return adminRevMapper.getRtSelectableDate(adminDnRevCriteria);
+	public Map<String, Object> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria) {
+		
+		Dn dn = adminRevMapper.getDnByNo(adminDnRevCriteria);
+		List<RtRevCount> selectableDate = adminRevMapper.getRtSelectableDate(adminDnRevCriteria);
+		
+		Map<String, Object> dnDate = new HashMap<String, Object>();
+		
+		dnDate.put("dn", dn);
+		dnDate.put("selectableDate", selectableDate);
+		
+		return dnDate;
 	}
 	
 	public List<String> getMealTime(AdminDnRevCriteria adminDnRevCriteria) {
@@ -99,6 +110,27 @@ public class AdminRevService {
 			return mealTimeIs;
 		}
 		
+	}
+	public void insertNewDiningRev(DiningReservationForm diningReservationForm) {
+	
+		// 선택된 날짜가 sh_rt_rev_count에 존재하는지 체크하여 form에 담는다
+		diningReservationForm.setRevDate(adminRevMapper.getRevDateBySelectedDateInAddRev(diningReservationForm));
+		diningReservationForm.setCheckMeal(adminRevMapper.checkSelectedMeal(diningReservationForm));
+		
+		adminRevMapper.insertNewDiningRev(diningReservationForm);
+		
+		System.out.println("test------------seat-----------" + diningReservationForm.getSeat());
+		System.out.println("test-----------adult------------" + diningReservationForm.getAdult());
+		System.out.println("test-----------child------------" + diningReservationForm.getChild());
+		System.out.println("test-----------baby------------" + diningReservationForm.getBaby());
+		System.out.println("test-----------diningNo------------" + diningReservationForm.getDiningNo());
+		System.out.println("test-----------date------------" + diningReservationForm.getDate());
+		System.out.println("test-----------mealTime------------" + diningReservationForm.getMealTime());
+		System.out.println("test-----------visitTime------------" + diningReservationForm.getVisitTime());
+		System.out.println("test-----------request------------" + diningReservationForm.getRequest());
+		System.out.println("test-----------userNo------------" + diningReservationForm.getUserNo());
+		System.out.println("test-----------isAllergy------------" + diningReservationForm.getIsAllergy());
+		System.out.println("test-----------etcAllergy------------" + diningReservationForm.getEtcAllergy());
 	}
 	
 	// ------------------------------------------객실, 다이닝 예약현황 ----------------------------------------------
@@ -195,7 +227,5 @@ public class AdminRevService {
 		for (String revNo : revNos) {
 			adminRevMapper.deleteCheckedByNo(revNo);			
 		}
-
 	}
-
 }

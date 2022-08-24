@@ -75,9 +75,9 @@ input[name=select] {margin-left: 20px;}
 		<h1><strong>로그인</strong></h1>
 	</div>
 	<div id="div-notice" class="text-center">
-		<h3>신라리워즈에 오신것을 환영합니다.</h3>
-		<p>신라리워즈 번호와 비밀번호를 입력해 주시기 바랍니다.</p>
-		<p>※신라리워즈 회원이 되시면 회원만을 위한 다양한 서비스와 혜택을 받으실 수 있습니다.</p>
+		<h3>스프링리워즈에 오신것을 환영합니다.</h3>
+		<p>스프링리워즈 번호와 비밀번호를 입력해 주시기 바랍니다.</p>
+		<p>※스프링리워즈 회원이 되시면 회원만을 위한 다양한 서비스와 혜택을 받으실 수 있습니다.</p>
 	</div>
 	<div id="div-form-login" class="text-center">
 		<div id="div-btn-choice-member" class="row">
@@ -99,7 +99,7 @@ input[name=select] {margin-left: 20px;}
 					<a id="btn-member-login" href="#"><img id="img-login-member" src="../resources/images/dining/btn-login.png"></a>
 				</div>
 			</div>
-			<input type="checkbox"><label>신라리워즈번호 또는 아이디 저장</label>
+			<input type="checkbox"><label>스프링리워즈번호 또는 아이디 저장</label>
 			<div id="div-btn">
 				<a href="#"><img id="btn-new-member" src="../resources/images/dining/btn-new-member.png"></a>
 				<a href="#"><img id="btn-find-id" src="../resources/images/dining/btn-find-id.png"></a>

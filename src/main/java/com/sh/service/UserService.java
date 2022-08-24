@@ -11,12 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sh.exception.ApplicationException;
+import com.sh.mapper.InquiryMapper;
 import com.sh.mapper.UserMapper;
 import com.sh.utils.MailUtil;
 import com.sh.vo.Coupon;
 import com.sh.vo.Grade;
 import com.sh.vo.PointGrade;
 import com.sh.vo.PointHistory;
+import com.sh.vo.Qna;
+import com.sh.vo.RoomRev;
+import com.sh.vo.ShopOrderItem;
 import com.sh.vo.User;
 import com.sh.vo.UserPoint;
 import com.sh.web.form.UserRegisterForm;
@@ -29,6 +33,9 @@ public class UserService {
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private InquiryMapper inquiryMapper;
 	
 	/** 유저정보 가져오기
 	 * @param userid
@@ -231,6 +238,24 @@ public class UserService {
 	}
 	
 	/**
+	 * room 예약내역 조회
+	 * @param userNo
+	 * @return room 예약내역
+	 */
+	public List<RoomRev> getRoomRevInfo(int userNo) {
+		return userMapper.getRoomRevByUserNo(userNo);
+	}
+	
+	/**
+	 * 스프링 샵 주문내역 조회
+	 * @param userNo
+	 * @return 주문 상품 정보
+	 */
+	public List<ShopOrderItem> getOrderItemsInfo(int userNo) {
+		return userMapper.getOrderItemsByUserNo(userNo);
+	} 
+	
+	/**
 	 * 쿠폰 지급 내역 조회
 	 * @param userNo
 	 * @return 쿠폰 정보
@@ -279,6 +304,15 @@ public class UserService {
 	 */
 	public PointGrade getUserPointAndGrade(int userNo) {
 		return userMapper.getPointAndGradeByUserNo(userNo);
+	}
+	
+	/**
+	 * 문의내역 조회
+	 * @param userNo
+	 * @return 문의내역
+	 */
+	public List<Qna> getQnaInfo(int userNo) {
+		return inquiryMapper.getQnaByUserNo(userNo);
 	}
 	
 	/**
