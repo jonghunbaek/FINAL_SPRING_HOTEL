@@ -1,5 +1,7 @@
 package com.sh.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +75,18 @@ public class ShopController {
 	@GetMapping(path="/nomem/orderist")
 	public String nomemOrderList() {
 		return "shop/nomem/nomemOrderList";
+	}
+	
+	//검색결과
+	@GetMapping(path="/search/list")
+	public String search(String keyword, Model model) {
+//		String chagedKeyword = keyword.replace("\\s", "|");
+//		System.out.println(chagedKeyword);
+		String[] keywords = keyword.split("\\s");
+		System.out.println(Arrays.toString(keywords));
+		List<ShopProduct> searchResults = shopService.getSearchResults(keywords);
+		model.addAttribute("productList", searchResults);
+		return "shop/search/list";
 	}
 	
 }

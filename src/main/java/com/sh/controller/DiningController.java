@@ -25,10 +25,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.sh.exception.ApplicationException;
 import com.sh.service.DiningService;
 import com.sh.service.UserService;
 import com.sh.utils.SessionUtils;
 import com.sh.vo.Dn;
+import com.sh.vo.RtRev;
 import com.sh.vo.RtRevCount;
 import com.sh.vo.User;
 import com.sh.web.form.DiningReservationForm;
@@ -388,10 +390,42 @@ public class DiningController {
 	}
 	
 	// 주문확인
-	@GetMapping("/confirmRev")
-	public String confirmRev() {
+	@PostMapping("/loginNonMember")
+	public String loginNonMember(@RequestParam("reservationNo") String reservationNo, @RequestParam("name") String name, Model model) {
+		
+		try {
+			RtRev rtRev =  diningService.getReservationNonMember(reservationNo, name);
+			model.addAttribute("rtRev", rtRev);
+		} catch(ApplicationException e) {
+			return "redirect:/dining/loginForm?fail=nonMemberInvalid";
+		}
+		
+		return "dining/confirmRev";
+	}
+	
+	// 예약조회로그인폼
+	@GetMapping("/loginForm")
+	public String loginForm() {
 		return "dining/loginForm";
 	}
+	
+	// 예약취소
+	@PostMapping("/deleteRev")
+	public String deleteRev(Model model, @RequestParam("rtRevNo") String rtRevNo, @RequestParam("name") String name, @RequestParam("mealTime") String mealTime, @RequestParam("seatType") String seatType, @RequestParam("revCount") int revCount ) {
+		
+		diningService.deleteRtRev(rtRevNo);
+		diningService.deleteRtRevCount(mealTime, seatType, revCount);
+		
+		try {
+			RtRev rtRev =  diningService.getReservationNonMember(rtRevNo, name);
+			model.addAttribute("rtRev", rtRev);
+		} catch(ApplicationException e) {
+			return "redirect:/dining/loginForm?fail=nonMemberInvalid";
+		}
+		
+		return "dining/confirmRev";
+	}
+	
 	
 	
 }

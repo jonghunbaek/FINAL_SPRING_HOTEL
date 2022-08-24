@@ -178,7 +178,81 @@
 			dn_no = #{value}
 	</select>
 	
+	<!-- RtRev getRtRevByRevNo(String no); -->
+	<select id="getRtRevByRevNo" resultMap="RtRevResultMap" parameterType="String">
+		select	*
+		from sh_rt_rev
+		where rt_rev_reservation_no = #{value}
+	</select>
 	
+	<resultMap type="RtRev" id="RtRevResultMap">
+		<id column="rt_rev_no" property="no"/>
+		<result column="rt_rev_adult" property="adult"/>
+		<result column="rt_rev_child" property="child"/>
+		<result column="rt_rev_baby" property="baby"/>
+		<result column="rt_rev_visit" property="isVisit"/>
+		<result column="rt_rev_visit_time" property="visitTime"/>
+		<result column="rt_rev_visit_date" property="visitDate"/>
+		<result column="rt_seat_type" property="seatType"/>
+		<result column="rt_rev_request" property="request"/>
+		<result column="rt_rev_created_date" property="createdDate"/>
+		<result column="rt_rev_updated_date" property="updatedDate"/>
+		<result column="rt_rev_meal_time" property="mealTime"/>
+		<result column="rt_rev_is_member" property="isMember"/>
+		<result column="rt_rev_is_allergy" property="isAllergy"/>
+		<result column="rt_rev_etc_allergy" property="ectAllergy"/>
+		<result column="rt_rev_name" property="name"/>
+		<result column="rt_rev_email" property="email"/>
+		<result column="rt_rev_tel" property="tel"/>
+		<result column="rt_rev_card_sort" property="cardSort"/>
+		<result column="rt_rev_card_num1" property="cardNum1"/>
+		<result column="rt_rev_card_num2" property="cardNum2"/>
+		<result column="rt_rev_card_num3" property="cardNum3"/>
+		<result column="rt_rev_card_num4" property="cardNum4"/>
+		<result column="rt_rev_card_expiry_month" property="cardExpiryMonth"/>
+		<result column="rt_rev_card_expiry_year" property="cardExpiryYear"/>
+		<result column="rt_rev_reservation_no" property="reservationNo"/>
+		<result column="rt_rev_status" property="status"/>
+		<association property="dn" column="dn_no" select="getDiningByNo"/>
+	</resultMap>
 	
+	<!-- void deleteRtRevCount(@Param("mealTime") String mealTime,@Param("seatType") String seatType, @Param("revCount") int revCount); -->
+	<delete id="deleteRtRevCount">
+		delete from
+			sh_rt_rev_count
+		where rt_rev_count_meal_time = #{mealTime}
+		and rt_rev_count_seat_type = #{seatType}
+		and rt_rev_count = #{revCount}
+	</delete>
 	
+	<update id="updateRtRev" parameterType="RtRev">
+		update sh_rt_rev
+		set
+			rt_rev_adult = #{adult},
+			rt_rev_child = #{child},
+			rt_rev_baby = #{baby},
+			rt_rev_visit = #{isVisit},
+			rt_rev_visit_time = #{visitTime},
+			rt_rev_visit_date = #{visitDate},
+			rt_seat_type = #{seatType},
+			rt_rev_request = #{request},
+			rt_rev_updated_date = sysdate,
+			rt_rev_meal_time = #{mealTime},
+			rt_rev_is_member = #{isMember},
+			rt_rev_is_allergy = #{isAllergy},
+			rt_rev_etc_allergy = #{etcAllergy},
+			rt_rev_name = #{name},
+			rt_rev_email = #{email},
+			rt_rev_tel = #{tel},
+			rt_rev_card_sort = #{cardSort},
+			rt_rev_card_num1 = #{cardNum1},
+			rt_rev_card_num2 = #{cardNum2}, 
+			rt_rev_card_num3 = #{cardNum3}, 
+			rt_rev_card_num4 = #{cardNum4}, 
+			rt_rev_card_expiry_month = #{cardExpiryMonth},
+			rt_rev_card_expiry_year = #{cardExpiryYear},
+			rt_rev_status = #{status},
+			rt_rev_reservation_no = #{reservationNo}
+		where rt_rev_no = #{no}
+	</update>
 </mapper>

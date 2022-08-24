@@ -15,6 +15,10 @@ public interface ShopMapper {
 	//list
 	List<ShopProduct> getAllProductsByMainCategoryNo(int mainCategoryNo);
 	List<ShopProduct> getProductsByParameters(ShopProductListCriteria shoplistCriteria);
+	
+	//search
+	List<ShopProduct> getProductsByKeywords(String[] keywords);
+	
 	//home
 	List<ShopProduct> getPopularProductsbySoldNo();
 	List<ShopProduct> getProductsByDiscountRate();
