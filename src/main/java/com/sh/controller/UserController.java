@@ -148,20 +148,20 @@ public class UserController {
 
 		return "redirect:/user/modify";
 	}
-	// 프로필 수정 폼 - 비밀번호 찾기
-	@PostMapping(path ="/findPassword")
-	@ResponseBody
-	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
-		String password = userService.findPw(id, email);
-		return password;
-	}
-	// 프로필 수정 폼 -  아이디 찾기
-	@PostMapping(path ="/findId")
-	@ResponseBody
-	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
-		String id = userService.findId(name, email);
-		return id;
-	}
+//	// 프로필 수정 폼 - 비밀번호 찾기
+//	@PostMapping(path ="/findPassword")
+//	@ResponseBody
+//	public String findPassword(@RequestParam("id") String id, @RequestParam("email") String email) {
+//		String password = userService.findPw(id, email);
+//		return password;
+//	}
+//	// 프로필 수정 폼 -  아이디 찾기
+//	@PostMapping(path ="/findId")
+//	@ResponseBody
+//	public String findId(@RequestParam("name") String name, @RequestParam("email") String email) {
+//		String id = userService.findId(name, email);
+//		return id;
+//	}
 	
 	// 내 정보 -> 비밀번호 변경
 	@GetMapping("/changePw")
