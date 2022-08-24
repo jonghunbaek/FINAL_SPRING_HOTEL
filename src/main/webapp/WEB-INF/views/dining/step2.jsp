@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 <title>스프링 온라인</title>
 <style>
-*{font-family: 돋움, sans-serif, Arial}
 #container {width: 1200px; margin: 0 auto;}
 .logo-outer { 
 	margin-top: 100px; border-bottom: solid 2px brown; 
@@ -117,6 +116,7 @@
 					<a href="#" id="increaseChild"><i class="bi bi-plus-lg"></i></a>
 					<input id="input-child" type="hidden" name="child"/>
 					<input type="hidden" name="isMember"/>
+					<input type="hidden" name="userId" value="${LOGIN_USER.id }"/>
 				</div>
 					<div class="col-1">
 					<p>유아</p>
@@ -184,7 +184,7 @@
 	        <div class="row">
 	        	<div class="col-8">
 			        <div class="inputId">
-		        		<input type="text" class="id" name="id" id="id-field" placeholder="스프링리워즈 번호 또는 아이디를 입력해주세요">
+		        		<input type="text" class="id" name="userId" id="id-field" placeholder="스프링리워즈 번호 또는 아이디를 입력해주세요">
 			        </div>
 			        <div class="inputPw">
 			        	<input type="password" class="password" name="password" id="pw-field">
@@ -363,13 +363,30 @@ $(function() {
 	// 테이블 , 룸 변경시
 	$(":radio[name=seat]").change(function(e) {
 		if((!$("#date-time-select-form").hasClass('d-none'))){
-			e.preventDefault();
+			$checkedSeat = $(":radio[name=seat]:checked")
+			if($checkedSeat == 'table'){
+				$(":radio#room-select").prop("checked", true);
+				$(":radio#table-select").prop("checked", false);
+			} else {
+				$(":radio#room-select").prop("checked", false);
+				$(":radio#table-select").prop("checked", true);
+			}
+			
 			seatModal.show();
 		}
 	});
 	
 	// 테이블, 룸 리셋 버튼
 	$("#btn-reset-seat").click(function() {
+		$checkedSeat = $(":radio[name=seat]:checked")
+		if($checkedSeat == 'table'){
+			$(":radio#room-select").prop("checked", false);
+			$(":radio#table-select").prop("checked", true);
+		} else {
+			$(":radio#room-select").prop("checked", true);
+			$(":radio#table-select").prop("checked", false);
+		}
+		
 		$("#date-time-select-form").addClass('d-none');
 		seatModal.hide();
 		$("#babyScore").text(0);

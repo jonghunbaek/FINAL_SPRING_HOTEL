@@ -48,7 +48,7 @@ input[name=email] {width: 365px; height: 70%;}
 
 input[name=tel] {width: 280px; height: 70%;}
 
-#btn-double-check{width: 80px; height: 25px;}
+#btn-double-check{width: 80px; height: 25px; margin-bottom:5px;}
 
 #alert-double-check{padding-top: 20px;}
 
@@ -123,12 +123,12 @@ select[name=cardSort] {width:365px; height:70%;}
 					</div>
 					<div class="col-9">
 						<select name="nameTitle">
-							<option selected>선택</option>
-							<option value="Mr.">Mr.</option>
+							<option >선택</option>
+							<option value="Mr." selected disabled>Mr.</option>
 							<option value="Ms.">Ms.</option>
 							<option value="Dr.">Dr.</option>
 						</select>
-						<input type="text" name="name" value="${LOGIN_USER.name }"/>
+						<input type="text" name="name" value="${LOGIN_USER.name }" />
 					</div>
 				</div>
 				<div class="row">
@@ -136,7 +136,7 @@ select[name=cardSort] {width:365px; height:70%;}
 						<p>이메일 &nbsp;&nbsp;<span class="important">*</span></p>
 					</div>
 					<div class="col-9">
-						<input type="email" value="${LOGIN_USER.email }" name="email" disabled/>
+						<input type="email" value="${LOGIN_USER.email }" name="email" />
 					</div>
 				</div>
 				<div class="row">
@@ -144,8 +144,7 @@ select[name=cardSort] {width:365px; height:70%;}
 						<p>연락처(휴대전화) &nbsp;&nbsp;<span class="important">*</span></p>
 					</div>
 					<div class="col-9">
-						<input type="text" name="tel" placeholder="-없이 숫자만 입력"/>
-						<a href="#"><img id="btn-double-check" src="../resources/images/dining/btn-doubleCheck.png"/></a>
+						<input style="width: 365px" type="text" name="tel" value="${LOGIN_USER.tel }" />
 					</div>
 				</div>
 				<div class="row">
@@ -334,6 +333,10 @@ select[name=cardSort] {width:365px; height:70%;}
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 $(function(){
+	
+	/* if($(":input[name=tel]").prop('disabled', true)){
+		$(":input[name=tel]").css("width","365px");
+	} */
 	
 	//동의함 버튼을 누를시
 	$("#privacy-agree").click(function(){

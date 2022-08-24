@@ -16,6 +16,7 @@ import com.sh.vo.DnSeatCountOfDate;
 import com.sh.vo.Location;
 import com.sh.vo.RtRev;
 import com.sh.vo.RtRevCount;
+import com.sh.vo.User;
 
 @Mapper
 public interface DiningMapper {
@@ -44,4 +45,5 @@ public interface DiningMapper {
 	RtRev getRtRevByRevNo(String no);
 	void updateRtRev(RtRev rtRev);
 	void deleteRtRevCount(@Param("mealTime") String mealTime,@Param("seatType") String seatType, @Param("revCount") int revCount);
+	List<RtRev> getRtRevsByUserId(String userId);
 }

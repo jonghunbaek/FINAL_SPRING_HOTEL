@@ -12,6 +12,8 @@ import lombok.ToString;
 public class RtRev {
 	
 	private String reservationNo;
+	private String userId;
+	private String userNo;
 	private int no;
 	private int adult;
 	private int child;
