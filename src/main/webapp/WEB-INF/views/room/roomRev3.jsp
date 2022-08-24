@@ -760,15 +760,6 @@
 			
 			$("#form-rev").submit(function() {
 				
-				if($('#check-d1').prop('checked') || ($('#check-d2').prop('checked'))) {
-		            alert("동의해주세요");
-		            return false;
-		  		  }
-				if((!$('#agree-checked').prop('checked'))) {
-		            alert("동의해주세요");
-		            return false;
-		  		  }
-				
 				if($("select[name=title]").val() === '선택') {
 					alert("칭호는 필수 선택항목입니다.");
 					return false;
@@ -822,6 +813,15 @@
 					alert("카드 유효기간은 필수 선택항목입니다.");
 					return false;
 				}
+				
+				if($('#check-d1').prop('checked') || ($('#check-d2').prop('checked'))) {
+		            alert("동의해주세요");
+		            return false;
+		  		  }
+				if((!$('#agree-checked').prop('checked'))) {
+		            alert("동의해주세요");
+		            return false;
+		  		  }
 				
 			
 			})

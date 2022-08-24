@@ -17,6 +17,7 @@ public class RoomCriteria {
 	private String sort; // 정렬기준
 	private int lowPrice;
 	private int highPrice;
-	private List<String> tags; //ㄱ키워드
-	private String roomCategoryNo;
+	private List<String> tags;
+	private Integer roomCategoryNo;
+	private int roomGroupNo;
 }

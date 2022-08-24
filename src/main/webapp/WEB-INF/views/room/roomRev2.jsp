@@ -66,7 +66,7 @@
 															d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
 												</svg>
 												</a>
-												<input type="text" id="adultMeal" name="optionAdultBf" value="0"/>
+												<input type="hidden" id="adultMeal" name="optionAdultBf" value="0"/>
 										</div>
 									</div>
 									<!-- 엑스트라 베드 -->
@@ -90,7 +90,7 @@
 														d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
 											</svg>
 											</a>
-											<input type="text" id="extraBed" name="extraBed" value="0"/>
+											<input type="hidden" id="extraBed" name="extraBed" value="0"/>
 										</div>
 									</div>
 									<!-- 어린이 조식 -->
@@ -111,7 +111,7 @@
 	  											<path fill-rule="evenodd"
 															d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
 												</svg>
-												</a><input type="text" id="childMeal" name="optionChildBf"  value="0"/>
+												</a><input type="hidden" id="childMeal" name="optionChildBf"  value="0"/>
 										</div>
 									</div>
 								</div>
@@ -272,8 +272,12 @@
 			<div class="gray-info"
 				style="color: gray; font-size: 14px; margin-block: 10px; margin-bottom: 90px;">
 				※ 상기 포인트는 적립 예상 포인트이며 체크아웃 이후 [마이페이지]에서 확인 가능합니다.<br> ※ 일부 프로모션
-				예약은 스프링리워즈 포인트 적립 대상에서 제외될 수 있습니다.
+
+				예약은 신라리워즈 포인트 적립 대상에서 제외될 수 있습니다.
+				<input type="hidden" id="isM" name="isM">		
+
 			</div>
+			
 			<!-- rev2 total accordion -->
 			<div id="Accordion_wrap3" style="border-top:0.01em solid #8080809e;">
 				<div class="anw3">
@@ -338,14 +342,11 @@
 						</div>
 						<div class="total-price"
 							style="margin-right: 20px; margin-top: 10px;"><span id="last-total-price">0</span>원</div>
-						<a href="#" id="btn-rev-1" class="nm-btn"><img alt="비회원예약"
+						<a href="#" id="btn-rev-nm" class="nm-btn"><img alt="비회원예약"
 							src="../resources/images/room/rev/nonmember.gif"></a>
-						<a href="#" class="m-btn"><img alt="회원예약"
+						<a href="#" id="btn-rev-m" class="m-btn"><img alt="회원예약"
 							src="../resources/images/room/rev/member_rev.gif"></a>
-							<!-- <button type="submit" id="submit"
-							style="background-color: #a9937d; border: none; width: 140px; color: white; font-size: 14px; height: 50px;">비회원예약</button>
-						<button type="submit" id="submit"
-							style="background-color: #3e2b2c; border: none; width: 140px; color: white; font-size: 14px; height: 50px;">회원예약</button> -->
+						
 					</div>
 				</div>
 			</div>
@@ -380,9 +381,13 @@ $(function(){
 		let vat = parseInt(roomPrice)*0.1;
 		let c = vat.toLocaleString();
 		$('#optionTotalP').text(totalOptionPrice);
-		let totalPrice = parseInt(roomPrice)+parseInt(totalOptionPrice)+parseInt(vat);
+		let checkinDate = $('#checkinDate').text();
+		let checkoutDate = $('#checkoutDate').text();
+		let days = moment(checkoutDate).diff(moment(checkinDate), 'days');
+		let totalPrice = (parseInt(days)*(parseInt(roomPrice)+parseInt(totalOptionPrice)+parseInt(vat)));
 		let b = totalPrice.toLocaleString();
 		
+		$('#night').text(days);
 		$('#val').text(c);
 		$('#all-total-price').text(totalPrice);
 		$('#last-total-price').text(b);
@@ -394,7 +399,14 @@ $(function(){
 		return false;
 	})
 	/* 비회원 버튼을 누르면 */
-	$("#btn-rev-1").click(function(){
+	$("#btn-rev-nm").click(function(){
+		$("#form-rev").trigger("submit");
+		return false;
+	});
+	
+	/*회원 버튼을 누르면*/
+	$("#btn-rev-m").click(function(){
+		$('input[name=isM]').val("Y");
 		$("#form-rev").trigger("submit");
 		return false;
 	});

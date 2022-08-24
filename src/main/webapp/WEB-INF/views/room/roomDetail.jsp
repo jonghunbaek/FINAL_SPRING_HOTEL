@@ -30,7 +30,7 @@
 								<span>스탠다드</span>
 							</a>
 							<ul class="st-menu">
-								<li class="roomt"><a href="../room/roomDetail"><span>디럭스</span></a></li>
+								<li class="roomt"><a href="/room/roomDetail"><span>디럭스</span></a></li>
 								<li class="room"><a href=""><span>비즈니스 디럭스</span></a></li>
 								<li class="room"><a href=""><span>그랜드 코너 디럭스</span></a></li>
 							</ul>
@@ -40,7 +40,7 @@
 								<span>이그제큐티브</span>
 							</a>
 							<ul class="st-menu">
-								<li class="roomt"><a href=""><span>이그제큐티브 비즈니스 디럭스</span></a></li>
+								<li class="roomt"><a href="/room/roomDetail?groupNo=200&${roomCategory.no }"><span>이그제큐티브 비즈니스 디럭스</span></a></li>
 								<li class="room"><a href=""><span>이그제큐티브 그랜드 디럭스</span></a></li>
 							</ul>
 						</li>
@@ -49,7 +49,7 @@
 								<span>스위트</span>
 							</a>
 							<ul class="st-menu">
-								<li class="roomt"><a href=""><span>수페리어 스위트</span></a></li>
+								<li class="roomt"><a href="/room/roomDetail?groupNo=300&${roomCategory.no }"><span>수페리어 스위트</span></a></li>
 								<li class="room"><a href=""><span>코리안 스위트</span></a></li>
 								<li class="room"><a href=""><span>코너 스위트</span></a></li>
 								<li class="room"><a href=""><span>프리미어 스위트</span></a></li>
@@ -143,7 +143,7 @@
 						<div class="room-info-set">
 							<div class="room-info-room">
 								<div class="info-title">객실 이용</div>
-								<div class="info-content">내용</div>
+								<div class="info-content">${roomInfo }</div>
 							</div>
 							<div class="room-info-etc">
 								<div class="info-title1">부대 시설</div>
@@ -168,7 +168,7 @@
 									<a href="">도면보기</a>
 								</div>
 								<div class="btn-q">
-									<a href="">문의하기</a>
+									<a href="/contact">문의하기</a>
 								</div>
 								<div class="btn-r">
 									<a href="../room/roomRev1">예약하기</a>
