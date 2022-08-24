@@ -257,17 +257,17 @@ select[name=cardSort] {width:365px; height:70%;}
 						</select>
 						<select name="cardExpiryYear">
 							<option selected>년</option>
-							<option value="32">32</option>
-							<option value="31">31</option>
-							<option value="30">30</option>
-							<option value="29">29</option>
-							<option value="28">28</option>
-							<option value="27">27</option>
-							<option value="26">26</option>
-							<option value="25">25</option>
-							<option value="24">24</option>
-							<option value="23">23</option>
-							<option value="22">22</option>
+							<option value="2032">2032</option>
+							<option value="2031">2031</option>
+							<option value="2030">2030</option>
+							<option value="2029">2029</option>
+							<option value="2028">2028</option>
+							<option value="2027">2027</option>
+							<option value="2026">2026</option>
+							<option value="2025">2025</option>
+							<option value="2024">2024</option>
+							<option value="2023">2023</option>
+							<option value="2022">2022</option>
 						</select>
 					</div>
 				</div>

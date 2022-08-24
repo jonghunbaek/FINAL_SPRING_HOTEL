@@ -82,7 +82,8 @@
 	                       <a class="nav-link dropdown-toggle" href="" id="navbar-dropdown-menu" role="button" data-bs-toggle="dropdown" aria-expanded="false">예약확인</a>
 	                       <ul class="dropdown-menu" aria-labelledby="navbar-dropdown-menu">
 	                           <li style="border-bottom: 2px solid rgb(129, 114, 95);"><a class="dropdown-item" href="">객실</a></li>
-	                           <li><a class="dropdown-item" href="../dining/confirmRev">다이닝</a></li>
+
+	                           <li><a class="dropdown-item" href="../dining/loginForm">다이닝</a></li>
 
 	                       </ul>
 	                   </li>

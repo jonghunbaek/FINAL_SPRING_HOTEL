@@ -33,6 +33,7 @@ public class RtRev {
 	private String email;
 	private String tel;
 	private String cardSort;
+	private String status;
 	private int cardNum1;
 	private int cardNum2;
 	private int cardNum3;
