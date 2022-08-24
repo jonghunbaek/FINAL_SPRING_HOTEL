@@ -21,50 +21,51 @@
 
 #div-notice {padding-top: 20px;}
 
-#div-rev-info{padding: 20px; border:solid #f1e3c4 1px;}
+#div-rev-info{padding: 20px; border:solid #856f56 3px;}
 
 #info-title{border-bottom:solid #4a433b 3px; color:#81725f}
 
-#div-cancel-notice{margin-top:20px; background:#faf9f7; font-size:80%; padding-top:5px; border:solid #f1e3c4 1px;}
+#div-cancel-notice{margin-top:20px; background:#f1e3c4; font-size:80%; padding-top:5px; border:solid #f1e3c4 1px;}
 
 #div-text-info {margin-top :20px; font-size:80%;}
 
 #div-text-info img {width: 60px; height: 20px;}
 
-#div-rev-number{height: 50px; padding:10px; background:#faf9f7; padding-bottom: 20px;}
+#div-rev-number{height: 50px; padding:10px; background:#f1e3c4; padding-bottom: 20px;}
 
-#div-box-info{border: solid #f1e3c4 1px};
+#div-box-info{border: solid #856f56 2px};
 
 #rev-no{color: grey;}
 
-#div-hotel-info .left {border-right: dotted #f1e3c4 1px;}
+#div-hotel-info .left {padding-lef:20px; border-right: dotted #856f56 3px;}
 
-#div-hotel-info .left {padding-left: 20px;}
+#div-hotel-info .right {padding-left: 30px;}
 
 #div-hotel-info span{font-size: 100%; }
 
 #div-hotel-info p{font-size: 90%;}
 
-#div-hotel-info {padding: 30px;}
+#div-hotel-info {padding: 30px; background:#f7f7f7}
 
 #div-customer-info-title{margin-left: 10px; margin-top :20px; font-size:80%;}
 
-#div-customer-info{padding: 30px;border: solid #f1e3c4 1px}
+#div-customer-info{padding: 30px;border: solid #856f56 2px}
 
 #div-customer-info p{font-size: 90%; }
 
-#div-customer-info{border-right: dotted #f1e3c4 1px;}
+#div-customer-info{ background:#f7f7f7}
 
-#div-customer-info .left {border-right: dotted #f1e3c4 1px;}
+#div-customer-info .left {border-right: dotted #856f56 3px;}
 
-#div-customer-info .right {padding-left:20px;}
+#div-customer-info .right {padding-left:30px;}
 
 #div-card-info-title{margin-left: 10px; margin-top :20px; font-size:80%;}
 
-#div-card-info{border-top: solid #f1e3c4 1px; border-bottom: solid #f1e3c4 1px; padding:10px; margin-left:10px; margin-bottom:20px;}
+#div-card-info{background:#f7f7f7; border-top: solid #f1e3c4 1px; border-bottom: solid #f1e3c4 1px; padding:10px; margin-left:10px; margin-bottom:20px;}
 
 #btn-div-reservation img{width: 100xp ; height: 30px;}
 
+.text1{font-weight: 500;}
 </style>
 </head>
 <body>
@@ -112,15 +113,15 @@
 				<div class="row">
 					<div class="col-6 left">
 						<p><strong>예약자명</strong></p>
-						<p>${rtRev.name }</p>
+						<p class="text1">${rtRev.name }</p>
 						</br>
 						<p><strong>호텔</strong><p>
-						<p>${rtRev.dn.location.name }신라호텔</p>
+						<p class="text1">${rtRev.dn.location.name }신라호텔</p>
 						</br>
 						<p><strong>레스토랑</strong></p>
-						<p>${rtRev.dn.name }(${rtRev.dn.dnInfo.tel })</p>
+						<p class="text1">${rtRev.dn.name }(${rtRev.dn.dnInfo.tel })</p>
 					</div>
-					<div class="col-6">
+					<div class="col-6 right">
 						<p><strong>예약상태</strong></p>
 						<c:choose>
 						<c:when test="${rtRev.status eq 'R' }">
@@ -138,10 +139,10 @@
 						</c:choose>						
 						</br>
 						<p><strong>예약일</strong><p>
-						<span id="rev-date"><fmt:formatDate pattern="yyyy-MM-dd" value="${rtRev.visitDate }"/></span> <span id="week-day"></span><span> &nbsp;${rtRev.visitTime }</span>
+						<span id="rev-date" ><fmt:formatDate pattern="yyyy-MM-dd" value="${rtRev.visitDate }"/></span> <span id="week-day"></span><span> &nbsp;${rtRev.visitTime }</span>
 						</br></br>
 						<p><strong>예약인원</strong></p>
-						<p>성인&nbsp;${rtRev.adult },&nbsp;어린이&nbsp;${rtRev.child },&nbsp;유아&nbsp;${rtRev.baby }</p>
+						<p class="text1">성인&nbsp;${rtRev.adult },&nbsp;어린이&nbsp;${rtRev.child },&nbsp;유아&nbsp;${rtRev.baby }</p>
 					</div>
 				</div>
 			</div>
@@ -153,15 +154,15 @@
 			<div class="row">
 				<div class="col-6 left">
 					<p><strong>고객명</strong></p>
-					<p>${rtRev.name }</p>
+					<p class="text1">${rtRev.name }</p>
 					</br>
 					<p><strong>연락처</strong><p>
-					<p>${rtRev.tel }</p>
+					<p class="text1">${rtRev.tel }</p>
 					</br>
 				</div>
 				<div class="col-6 right">
 					<p><strong>이메일</strong></p>
-					<p>${rtRev.email }</p>
+					<p class="text1">${rtRev.email }</p>
 					</br>
 				</div>
 			</div>

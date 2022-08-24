@@ -61,7 +61,7 @@
 	
 	#div-hotel-info p{font-size: 90%;}
 	
-	#div-hotel-info {padding: 15px; background:#f6f6f6}
+	#div-hotel-info {padding: 15px; background:#fbfbfb;}
 	
 	#div-customer-info-title{margin-left: 10px; margin-top :20px; font-size:80%;}
 	
@@ -174,7 +174,7 @@
 								<p class="text-status" style="color:#3a3125;"><strong>예약완료</strong></p>
 							</c:when>
 							<c:when test="${rtRev.status eq 'D' }">
-								<p class="text-status" style="color:#3a3125;"><strong>예약취소</strong></p>
+								<p class="text-status" style="color:red;"><strong>예약취소</strong></p>
 							</c:when>
 							<c:when test="${rtRev.status eq 'O' }">
 								<p class="text-status" style="color:#3a3125;"><strong>예약임박</strong></p>
@@ -250,10 +250,52 @@
 			</div>
 		</div>
 </div>
+
+<div class="modal" tabindex="-1" id="modal-rev-cancel" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">예약취소 안내</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+     	<h5>예약을 정말 취소하시겠습니까?</h5>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" id="btn-cancel-rev">확인</button>
+        <form id="form-delete-Rev" method="post" action="/dining/deleteRevMember">
+        	<input type="hidden" name="rtRevNo">
+        	<input type="hidden" name="name">
+        	<input type="hidden" name="seatType">
+        	<input type="hidden" name="mealTime">
+        	<input type="hidden" name="revCount">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
 $(function(){
+	let cancelModal = new bootstrap.Modal(document.getElementById("modal-rev-cancel"));
+	
+	//예약취소 모달창 오픈
+	$("#btn-open-cancel-rev").click(function(){
+		cancelModal.show();
+	})
+	$("#btn-cancel-rev").click(function(){
+		$(":input[name=rtRevNo]").val("${rtRev.reservationNo}");
+		$(":input[name=name]").val("${rtRev.name}");
+		$(":input[name=seatType]").val("${rtRev.seatType}");
+		$(":input[name=mealTime]").val("${rtRev.mealTime}");
+		let revCount = ${rtRev.adult}+${rtRev.child}+${rtRev.baby};
+		$(":input[name=revCount]").val(revCount);
+		$("#form-delete-Rev").submit();
+	})
+	
 	// 요일 표시
 	let date = $("#rev-date").text();
 	let week = new Array('(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)');
