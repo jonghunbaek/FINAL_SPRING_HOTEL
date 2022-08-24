@@ -109,7 +109,10 @@
 					</div>
 				</div>
 				<div id="div-tableBox">
-					<div class="mt-2"><span id="span-num">Total : 0</span></div>
+					<div class="mt-2">
+						<span>Total : ${itemSize }</span>
+						<span style="float:right;">※ 문의내역을 클릭하면 상세정보로 이동할 수 있습니다.</span>
+					</div>
 					<div class="mt-3" id="div-table">
 						<table class="table background-color">
 							<colgroup>
@@ -130,7 +133,7 @@
 									<th>답변여부</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="table-tbody">
 							<c:choose>
 								<c:when test="${empty inquery }">
 									<tr class="first last">
@@ -139,13 +142,20 @@
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="qna" items="${inquery }">
-										<tr id="tr-data">
+										<tr id="table-tr-${qna.no }" data-no="${qna.no }" onclick="moveQnaDetail(this);" onmouseover="mouseOver(this);" onmouseout="mouseOut(this);">
 											<td>${qna.no }</td>
-											<td>${qna.location.name }</td>
+											<td>${qna.location.name } 스프링</td>
 											<td>${qna.qnaCategory.name }</td>
 											<td>${qna.title }</td>
 											<td><fmt:formatDate value="${qna.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
-											<td>${qna.answerState }</td>
+											<td>
+												<c:if test="${qna.answerState eq 'N' }">
+												 	답변대기
+												</c:if>
+												<c:if test="${qna.answerState eq 'Y' }">
+												 	답변완료
+												</c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -163,10 +173,25 @@
 </body>
 <script type="text/javascript">
 
-$(function () {
-	let tr = $('#tr-data').length;
-	$('#span-num').html("Total : " + tr);
-})
+	// 문의 상세로 이동
+	function moveQnaDetail(data) {
+		let no = data.getAttribute('data-no');
+		location.href = "/inquiry/detail?no=" + no;
+	}
+	
+	// 마우스 이벤트
+	function mouseOver(data) {
+		let no = data.getAttribute('data-no');
+	 	let select = document.querySelector('#table-tr-' + no);
+	 	select.style.backgroundColor = 'rgb(240,240,240)';
+	}
+	
+	// 마우스 이벤트
+	function mouseOut(data) {
+		let no = data.getAttribute('data-no');
+	 	let select = document.querySelector('#table-tr-' + no);
+	 	select.style.backgroundColor = '';
+	}
 	
 </script>
 </html>

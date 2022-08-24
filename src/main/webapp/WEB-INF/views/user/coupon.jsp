@@ -88,7 +88,7 @@
 				<img src="/resources/images/mypage/couponTopMsg.gif">
 			</div>
 			<div class="fs-7">
-				<p>※ 총 <span id="span-num"> 0 </span> 건의 사용가능한 쿠폰이 있습니다.</p>
+				<p>※ 총 <span> ${itemSize } </span> 건의 사용가능한 쿠폰이 있습니다.</p>
 			</div>
 			<div id="div-tableBox">
 				<div class="mt-3" id="div-table">
@@ -134,9 +134,7 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-$(function () {
-	let tr = $('#tr-data').length;
-	$('#span-num').html(tr);
-})
+
+
 </script>
 </html>
