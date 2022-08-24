@@ -16,7 +16,8 @@
 				B.SHOP_BUSINESS_NAME as "business.name", 
 				L.LOCATION_NAME as "location.name", 
 				P.PRODUCT_PRICE as price, 
-				P.PRODUCT_DISCOUNT_RATE as discountRate
+				P.PRODUCT_DISCOUNT_RATE as discountRate,
+				P.PRODUCT_IMAGE_URL_FOR_SHARING as imgUrl
 		FROM SH_SHOP_PRODUCT P, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L
 		WHERE P.PRODUCT_NO = #{value}
 		AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
@@ -38,9 +39,9 @@
 		AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
 		AND P.LOCATION_NO = L.LOCATION_NO
         AND P.SHOP_MAINCATEGORY_NO = M.SHOP_MAINCATEGORY_NO
-		AND PRODUCT_ISONSALE = 'Y'
-		AND PRODUCT_ISDELETED = 'N'
-		ORDER BY PRODUCT_UPDATED_DATE DESC
+		AND P.PRODUCT_ISONSALE = 'Y'
+		AND P.PRODUCT_ISDELETED = 'N'
+		ORDER BY P.PRODUCT_UPDATED_DATE DESC
 	</select>
 
 	<!-- List<ShopProduct> getProductsByParameters(ShopProductListCriteria shoplistCriteria); -->
@@ -69,8 +70,84 @@
 		<if test="mainCategoryNo > 0">
 			AND P.SHOP_MAINCATEGORY_NO = #{mainCategoryNo}
 		</if>
-		ORDER BY PRODUCT_UPDATED_DATE DESC
+		ORDER BY P.PRODUCT_UPDATED_DATE DESC
 	</select>
+
+	<!-- List<ShopProduct> getPopularProductsbySoldNo(); -->
+	<select id="getPopularProductsbySoldNo" resultType="com.sh.vo.ShopProduct">
+		<![CDATA[
+			SELECT PRODUCT_NO as no,
+					PRODUCT_NAME as name,
+					PRODUCT_IMAGE_NAME as imageName,
+					SHOP_BUSINESS_NAME as "business.name",
+					LOCATION_NAME as "location.name"
+			FROM
+				(SELECT O.SHOP_OPTION_NUM_SOLD, P.PRODUCT_NO, P.PRODUCT_NAME, P.PRODUCT_IMAGE_NAME, B.SHOP_BUSINESS_NAME, L.LOCATION_NAME
+				FROM SH_SHOP_OPTIONS O, SH_SHOP_PRODUCT P, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L
+				WHERE P.PRODUCT_NO = O.PRODUCT_NO
+				AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
+				AND P.LOCATION_NO = L.LOCATION_NO
+				ORDER BY SHOP_OPTION_NUM_SOLD DESC)
+			WHERE ROWNUM <=6
+		]]>
+	</select>
+	
+	<!-- List<ShopProduct> getRecommendedProductsByDiscountRate(); -->
+	<select id="getProductsByDiscountRate" resultType="com.sh.vo.ShopProduct">
+		<![CDATA[
+		SELECT 	P.PRODUCT_NO as no,
+		        P.PRODUCT_NAME as name,
+		        P.PRODUCT_IMAGE_NAME as imageName,
+		        B.SHOP_BUSINESS_NAME as "business.name",
+		        L.LOCATION_NAME as "location.name",
+		        P.PRODUCT_PRICE as price,
+				P.PRODUCT_DISCOUNT_RATE as discountRate
+		FROM SH_SHOP_PRODUCT P, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L,
+		    (SELECT PRODUCT_NO
+		    FROM SH_SHOP_PRODUCT
+		    ORDER BY PRODUCT_DISCOUNT_RATE DESC) R
+		WHERE P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
+		AND P.LOCATION_NO = L.LOCATION_NO
+		AND P.PRODUCT_NO = R.PRODUCT_NO
+		AND ROWNUM <= 9
+		]]>
+	</select>
+	
+	<!-- List<ShopProduct> getProductOptionsByNo(int no); -->
+	<select id="getProductOptionsByNo" parameterType="int" resultType="com.sh.vo.ShopProductOption">
+		SELECT
+				SHOP_OPTION_NO as no,
+				SHOP_OPTION_NAME as name,
+				SHOP_OPTION_PRICE as price,
+				PRODUCT_NO as "product.no",
+				SHOP_OPTION_STOCK as stock,
+				SHOP_OPTION_NUM_SOLD as soldNo
+		FROM SH_SHOP_OPTIONS
+		WHERE PRODUCT_NO = ${value }
+	
+	</select>
+	
+	<!-- List<ShopAdditionalImages> getAdditionalImagesByNo(int no); -->
+	<select id="getAdditionalImagesByNo" parameterType="int" resultType="com.sh.vo.ShopAdditionalImages">
+		SELECT
+				SHOP_IMAGE_NO as no,
+				SHOP_IMAGE_NAME as name,
+				PRODUCT_NO as "shopProduct.no"
+		FROM SH_SHOP_ADDITIONAL_IMAGES
+		WHERE PRODUCT_NO = ${value }
+	</select>
+	
+	<!-- List<ShopPickOrShip> getGettingMethodsByNo(int no); -->
+	<select id="getGettingMethodsByNo" parameterType="int" resultType="com.sh.vo.ShopPickOrShip">
+	SELECT
+			M.SHOP_PICK_OR_SHIP_NO as no,
+			M.SHOP_PICK_OR_SHIP_NAME as name
+	FROM SH_SHOP_PICK_OR_SHIP M, SH_SHOP_SELECTED_PICK_OR_SHIP S
+	WHERE M.SHOP_PICK_OR_SHIP_NO = S.SHOP_PICK_OR_SHIP_NO
+	AND PRODUCT_NO =  ${value }
+	
+	</select>
+
 
 
 

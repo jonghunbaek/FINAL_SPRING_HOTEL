@@ -12,4 +12,8 @@ public class ShopAdditionalImages {
 	private int no;
 	private String name;
 	private ShopProduct shopProduct;
+
+	public ShopAdditionalImages(int productNo) {
+		this.shopProduct = new ShopProduct(productNo);
+	}
 }

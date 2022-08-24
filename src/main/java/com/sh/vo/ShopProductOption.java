@@ -16,4 +16,7 @@ public class ShopProductOption {
 	private int stock;
 	private int soldNo;
 
+	public ShopProductOption(int productNo) {
+		this.product = new ShopProduct(productNo);
+	}
 }
