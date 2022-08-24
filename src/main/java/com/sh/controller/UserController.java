@@ -39,7 +39,7 @@ public class UserController {
 		model.addAttribute("userGrade", grade);
 		PointGrade pointGrade = userService.getUserPointAndGrade(loginUser.getNo());
 		model.addAttribute("pg", pointGrade);
-		List<PointHistory> pointHis = userService.getPointHistory(loginUser.getNo());
+		List<PointHistory> pointHis = userService.getPointHistorySixMonth(loginUser.getNo());
 		model.addAttribute("pointHis", pointHis);
 		
 		// 포인트 합산
@@ -62,8 +62,28 @@ public class UserController {
 		
 		List<RoomRev> roomRevs = userService.getRoomRevInfo(loginUser.getNo());
 		model.addAttribute("roomRevs",roomRevs);
+		int itemSize = roomRevs.size();
+		model.addAttribute("itemSize",itemSize);
 		
 		return "user/roomReservation";
+	}
+	// 예약확인/취소 -> 객실/패키지 -> 객실 예약 취소
+	@GetMapping("/cancleRoomRev")
+	public String cancleRoomRev(@RequestParam("revNo") int revNo) {
+		userService.cancleRoomRev(revNo);
+		return "redirect:/user/room";
+	}
+	// 예약확인/취소 -> 객실/패키지 -> 객실 재예약
+	@GetMapping("/reRoomRev")
+	public String reRoomRev(@RequestParam("revNo") int revNo) {
+		userService.reRoomRev(revNo);
+		return "redirect:/user/room";
+	}
+	// 예약확인/취소 -> 객실/패키지 -> 객실 예약내역 삭제
+	@GetMapping("/deleteRoomRev")
+	public String deleteRoomRev(@RequestParam("revNo") int revNo) {
+		userService.deleteRoomRev(revNo);
+		return "redirect:/user/room";
 	}
 	
 	// 예약확인/취소 -> 다이닝
@@ -85,8 +105,28 @@ public class UserController {
 		
 		List<ShopOrderItem> orderItems = userService.getOrderItemsInfo(loginUser.getNo());
 		model.addAttribute("orderItems",orderItems);
+		int itemSize = orderItems.size();
+		model.addAttribute("itemSize",itemSize);
 		
 		return "user/shop";
+	}
+	// 스프링 샵 -> 상품 구매내역 -> 상품 주문 취소
+	@GetMapping("/cancleOrder")
+	public String cancleOrder(@RequestParam("orderNo") int orderNo) {
+		userService.cancleOrder(orderNo);
+		return "redirect:/user/shop";
+	}
+	// 스프링 샵 -> 상품 구매내역 -> 재주문
+	@GetMapping("/reorder")
+	public String reorder(@RequestParam("orderNo") int orderNo) {
+		userService.reorder(orderNo);
+		return "redirect:/user/shop";
+	}
+	// 스프링 샵 -> 상품 구매내역 -> 주문내역 삭제
+	@GetMapping("/deleteOrder")
+	public String deleteOrder(@RequestParam("orderNo") int orderNo) {
+		userService.deleteOrder(orderNo);
+		return "redirect:/user/shop";
 	}
 	
 	// 포인트	조회
@@ -110,6 +150,9 @@ public class UserController {
 		model.addAttribute("user", user);
 		List<Coupon> coupons = userService.getCouponInfo(loginUser.getNo());
 		model.addAttribute("coupons",coupons);
+		int itemSize = coupons.size();
+		model.addAttribute("itemSize",itemSize);
+		
 		return "user/coupon";
 	}
 	
@@ -196,6 +239,8 @@ public class UserController {
 		
 		List<Qna> inquery = userService.getQnaInfo(loginUser.getNo()); 
 		model.addAttribute("inquery",inquery);
+		int itemSize = inquery.size();
+		model.addAttribute("itemSize",itemSize);
 		
 		return "user/inquery";
 	}

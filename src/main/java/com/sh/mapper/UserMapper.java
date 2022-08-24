@@ -30,7 +30,14 @@ public interface UserMapper {
 	void updateUser(User user);
 	void updateUserPoint(int userNo, int point);
 	void deleteUser(int userNo);
-  
+	
+	void cancleRoomRev(int revNo);
+	void reRoomRev(int revNo);
+	void deleteRoomRev(int revNo);
+	void cancleOrder(int orderNo);
+	void reorder(int orderNo);
+	void deleteOrder(int orderNo);
+	
 	String fineId(@Param("name") String name, @Param("email")String email);
 	String finePw(@Param("id") String id, @Param("email")String email);
 	void updatePw(User user);
@@ -39,6 +46,7 @@ public interface UserMapper {
 	Grade getUserGradeByUserId(String id);
 	UserPoint getUserPointByUserNo(int userNo);
 	List<PointHistory> getUserPointHistoryByUserNo(int userNo);
+	List<PointHistory> getUserPointHistorySixMonthByUserNo(int userNo);
 	PointGrade getPointAndGradeByUserNo(int userNo);
 	List<Coupon> getCouponInfoByUserNo(int userNo);
 	List<RoomRev> getRoomRevByUserNo(int userNo);
@@ -51,4 +59,6 @@ public interface UserMapper {
 	// 관리자페이지 예약등록 고객검색
 	List<User> getUserByName(String keyword);
 	Grade getGrade(String keyword);
+	
+	
 }

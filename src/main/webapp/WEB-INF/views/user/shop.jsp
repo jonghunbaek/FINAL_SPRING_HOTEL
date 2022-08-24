@@ -38,8 +38,11 @@
 	#div-tableBox {margin: 20px 0 26px;}
 	#div-hTitle {height: 40px; border-bottom: 3px solid #a1886f; margin-bottom: 20px 0px;}
 	#div-table {border: none; border-top: 1px solid #cdcbbe; width: 100%; border-collapse: collapse;}
-	.table {text-align: center; font-size: 13px;}
+	.table {text-align: center; font-size: 13px; vertical-align: middle;}
 	.table th {border-bottom: 1px solid #cdcbbe; color: #666666; line-height: 25px;}
+	#btn {text-decoration: none; background-color: rgb(62,43,44); width:55px; height:23px; 
+		  text-align: center; font-size: 11px; display: block; margin-left: 10px;}
+    #btn span {color: rgb(250,241,208);}
 	
 </style>
 <title>Spring Hotel</title>
@@ -88,7 +91,7 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
-			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">스프링 샵 - 구매내역 조회</h3>
+			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">스프링 샵 - 주문내역 조회</h3>
 			<div id="div-topmsg">
 				<img src="/resources/images/mypage/myRsvTopMsg.gif">
 			</div>
@@ -110,18 +113,19 @@
 				</div>
 				<div id="div-tableBox">
 					<div id="div-hTitle">
-						<h6>스프링 샵 - 구매내역</h6>
+						<h6>스프링 샵 - 주문내역</h6>
 					</div>
-					<div class="mt-2"><span id="span-num">Total : 0</span></div>
+					<div class="mt-2"><span>Total : ${itemSize}</span></div>
 					<div class="mt-3" id="div-table">
 						<table class="table background-color">
 							<colgroup>
-								<col width="11%" class="col1">
+								<col width="8%" class="col1">
 								<col width="*%" class="col2">
 								<col width="11%" class="col3">
 								<col width="11%" class="col4">
 								<col width="11%" class="col5">
 								<col width="15%" class="col6">
+								<col width="11%" class="col7">
 							</colgroup>
 							<thead>
 								<tr style="background-color: #faf9f4;">
@@ -131,24 +135,41 @@
 									<th>상품금액</th>
 									<th>주문상태</th>
 									<th>주문날짜</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 							<c:choose>
 								<c:when test="${empty orderItems }">
 									<tr class="first last">
-										<td colspan="6">주문내역이 없습니다.</td>
+										<td colspan="7">주문내역이 없습니다.</td>
 									</tr>
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="orderItem" items="${orderItems }">
-										<tr id="tr-data">
+										<tr>
 											<td>${orderItem.shopOrder.no }</td>
 											<td>${orderItem.product.name }</td>
 											<td>${orderItem.quantity }</td>
 											<td>${orderItem.product.price } 원</td>
-											<td>${orderItem.shopOrder.status }</td>
+											<td>
+												<c:if test="${orderItem.shopOrder.deleted eq 'N' }">
+													주문완료
+												</c:if>
+												<c:if test="${orderItem.shopOrder.deleted eq 'Y' }">
+													주문취소
+												</c:if>
+											</td>
 											<td><fmt:formatDate value="${orderItem.shopOrder.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
+											<td>
+												<c:if test="${orderItem.shopOrder.deleted eq 'N' }">
+												 	<button id="btn" value="${orderItem.shopOrder.no }" onclick="cancleOrder(this);"><span>주문취소</span></button>
+												</c:if>
+												<c:if test="${orderItem.shopOrder.deleted eq 'Y' }">
+												 	<button id="btn" value="${orderItem.shopOrder.no }" onclick="reorder(this);"><span>재주문</span></button>
+												</c:if>
+												<p style="margin:5px 0 0;"><button id="btn" value="${orderItem.shopOrder.no }" onclick="deleteOrder(this);"><span>삭제</span></button></p>
+											</td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -166,10 +187,38 @@
 </body>
 <script type="text/javascript">
 
-$(function () {
-	let tr = $('#tr-data').length;
-	$('#span-num').html("Total : " + tr);
-})
+	// 주문 취소
+	function cancleOrder(item) {
+		let orderNo = item.value;
+		if (confirm("함께 주문한 다른 상품들도 같이 취소됩니다. \n 주문을 취소하시겠습니까?") == true) {
+			alert("주문을 취소합니다.");
+			location.href = "/user/cancleOrder?orderNo="+orderNo;
+		} else {
+			return false;
+		}
+	}
+	
+	// 재주문 
+	function reorder(item) {
+		let orderNo = item.value;
+		if (confirm("함께 주문한 다른 상품들도 같이 주문됩니다. \n 주문 하시겠습니까?") == true) {
+			alert("상품을 주문합니다.");
+			location.href = "/user/reorder?orderNo="+orderNo;
+		} else {
+			return false;
+		}
+	}
+	
+	// 주문내역 삭제 
+	function deleteOrder(item) {
+		let orderNo = item.value;
+		if (confirm("함께 주문한 다른 상품들도 같이 삭제됩니다. \n 삭제 하시겠습니까?") == true) {
+			alert("주문내역을 삭제합니다.");
+			location.href = "/user/deleteOrder?orderNo="+orderNo;
+		} else {
+			return false;
+		}
+	}
 	
 </script>
 </html>
