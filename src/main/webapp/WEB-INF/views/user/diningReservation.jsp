@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../common/tags.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,7 +95,7 @@
 				<img src="/resources/images/mypage/myRsvDinTopMsg.jpeg">
 			</div>
 			<div id="div-box">
-				<div class="mb-3 pb-3" id="div-date">
+				<!-- <div class="mb-3 pb-3" id="div-date">
 					<span class="me-3" id="span-color">기간 조회</span>
 					<label class="dateStart" for="searchStrtDt"></label>
 					<input type="text" class="dateStart uiform text" id="searchStrtDt" name="searchStrtDt" value="" onclick="popCalendarLayer2('searchStrtDt','2022-08-02');" autocomplete="off">
@@ -108,21 +109,21 @@
 					<div class="mt-1" id="div-inquery">
 						<a href="javascript:void(0);"><span>조회</span></a>
 					</div>
-				</div>
+				</div> -->
 				<div id="div-tableBox">
 					<div id="div-hTitle">
 						<h5><img src="/resources/images/mypage/myRsvDinTit.jpeg"></h5>
 					</div>
-					<div class="mt-2">Total : 0</div>
+					<div class="mt-2">Total : ${fn:length(rtRevs)}</div>
 					<div class="mt-3" id="div-table">
 						<table class="table background-color" summary="호텔,구분,이용금액(원),적립포인트,사용포인트,이용날짜로 구성된 게시물 리스트 표">
 							<colgroup>
 								<col width="16%" class="col1">
-								<col width="22%" class="col2">
-								<col width="*%" class="col3">
-								<col width="13%" class="col4">
+								<col width="20%" class="col2">
+								<col width="20%" class="col3">
+								<col width="*%" class="col4">
 								<col width="15%" class="col5">
-								<col width="16%" class="col6">
+								<col width="10%" class="col6">
 							</colgroup>
 							<thead>
 								<tr style="background-color: #faf9f4;">
@@ -135,9 +136,36 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="first last">
-									<td colspan="6">예약내역이 없습니다.</td>
-								</tr>
+								<c:choose>
+									<c:when test="${empty rtRevs }">
+									<tr class="first last">
+										<td colspan="6">예약내역이 없습니다</td>
+									</tr>
+									</c:when>
+									<c:when test="${not empty rtRevs }">
+										<c:forEach var="rtRev" items="${rtRevs }">
+										<tr class="first last">
+											<td><a style="color:blue;" href="diningInfo?rtRevNo=${rtRev.reservationNo }">${rtRev.reservationNo }</a></td>
+											<td>${rtRev.dn.location.name }신라호텔</td>
+											<td>${rtRev.dn.name }</td>
+											<td>성인 ${rtRev.adult },어린이 ${rtRev.child },유아 ${rtRev.baby }</td>
+											<td><fmt:formatDate pattern="yyyy-MM-dd" value="${rtRev.visitDate }"/></td>
+											<c:if test="${rtRev.status eq 'R'}">
+												<td>예약중</td>
+											</c:if>
+											<c:if test="${rtRev.status eq 'I'}">
+												<td>방문완료</td>
+											</c:if>
+											<c:if test="${rtRev.status eq 'D'}">
+												<td>예약취소</td>
+											</c:if>
+											<c:if test="${rtRev.status eq 'O'}">
+												<td>예약임박</td>
+											</c:if>
+										</tr>
+										</c:forEach>
+									</c:when>
+								</c:choose>
 							</tbody>
 						</table>
 					</div>
@@ -150,7 +178,9 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-
+$(function(){
+	
+})
 	
 </script>
 </html>

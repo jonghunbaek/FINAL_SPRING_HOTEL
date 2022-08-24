@@ -101,9 +101,7 @@
 		
 	
 	<!-- List<ShopProduct> getProductsByKeywords(String[] keywords); -->
-
-<!--  	<select id="getProductsByKeywords" parameterType="java.util.ArrayList" resultType="com.sh.vo.ShopProduct">
-
+	<select id="getProductsByKeywords" parameterType="java.util.ArrayList" resultType="com.sh.vo.ShopProduct">
 		SELECT P.PRODUCT_NO as no,
 	        P.PRODUCT_NAME as name,
 	        P.PRODUCT_IMAGE_NAME as imageName,

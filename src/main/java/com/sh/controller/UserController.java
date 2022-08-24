@@ -2,6 +2,8 @@ package com.sh.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sh.service.DiningService;
 import com.sh.service.UserService;
 import com.sh.utils.SessionUtils;
 import com.sh.vo.Coupon;
 import com.sh.vo.Grade;
 import com.sh.vo.PointGrade;
 import com.sh.vo.PointHistory;
+import com.sh.vo.RtRev;
 import com.sh.vo.Qna;
 import com.sh.vo.RoomRev;
 import com.sh.vo.ShopOrderItem;
@@ -28,6 +32,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private DiningService diningService;
 	
 	// 마이페이지 메인
 	@GetMapping("/mypage")
@@ -71,11 +78,46 @@ public class UserController {
 	public String cancledining(Model model) {
 		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
 		User user = userService.getUserDetail(loginUser.getId());
+		List<RtRev> rtRevs = diningService.getRtRevsByUserId(loginUser.getId());
 		model.addAttribute("user", user);
+		model.addAttribute("rtRevs", rtRevs);
 		
+		for (int i = 0; i < rtRevs.size(); i++) {
+			 System.out.println(i);
+	         System.out.println(rtRevs.get(i));
+	    }
 		return "user/diningReservation";
 	}
 	
+
+	// 비로그인상태 -> 예약확인 -> 로그인 -> 다이닝
+	@PostMapping("/dining")
+	public String loginDining(Model model, @RequestParam("id") String id, @RequestParam("password") String password, HttpSession httpSession) {
+		User user = userService.login(id, password);
+		httpSession.setAttribute("LOGIN_USER", user);
+		List<RtRev> rtRevs = diningService.getRtRevsByUserId(id);
+		model.addAttribute("user", user);
+		model.addAttribute("rtRevs", rtRevs);
+		for (int i = 0; i < rtRevs.size(); i++) {
+			 System.out.println(i);
+	         System.out.println(rtRevs.get(i));
+	    }
+		
+		return "/user/diningReservation";
+	}
+	
+	// 예약확인/취소 -> 다이닝 -> 다이닝 상세페이지
+	@GetMapping("/diningInfo")
+	public String diningInfo(Model model, @RequestParam("rtRevNo") String revNo) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.getUserDetail(loginUser.getId());
+		RtRev rtRev =  diningService.getReservationByNo(revNo);
+		
+		model.addAttribute("rtRev", rtRev);
+		model.addAttribute("user", user);
+		
+		return "user/diningReservationInfo";
+
 	// 스프링 샵 -> 상품 구매내역
 	@GetMapping("/shop")
 	public String shop(Model model) {
@@ -87,6 +129,7 @@ public class UserController {
 		model.addAttribute("orderItems",orderItems);
 		
 		return "user/shop";
+
 	}
 	
 	// 포인트	조회

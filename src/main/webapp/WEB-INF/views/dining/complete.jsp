@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-*{font-family: 돋움, sans-serif, Arial}
 
 #container {width: 1200px; margin: 0 auto;}
 
@@ -36,7 +35,7 @@
 
 .st-text2 {font-size: 100%; font-weight:800;}
 
-.nor-text {font-size: 85%; font-weight:200; }
+.nor-text {font-size: 85%; font-weight:600; }
 
 #text-rev-info {padding: 10px; border-bottom:solid #9f876b 1px;}
 
@@ -46,7 +45,8 @@
 
 #rev-guest-info{padding: 20px;}
 
-#rev-notice{margin-top: 50px;}
+#rev-notice{margin-top: 50px; margin-left:30px;}
+
 </style>
 <title>Spring Hotel</title>
 </head>

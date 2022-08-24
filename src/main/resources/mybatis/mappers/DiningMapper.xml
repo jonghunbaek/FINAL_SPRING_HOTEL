@@ -187,6 +187,7 @@
 	
 	<resultMap type="RtRev" id="RtRevResultMap">
 		<id column="rt_rev_no" property="no"/>
+		<result column="user_id" property="userId"/>
 		<result column="rt_rev_adult" property="adult"/>
 		<result column="rt_rev_child" property="child"/>
 		<result column="rt_rev_baby" property="baby"/>
@@ -214,6 +215,7 @@
 		<result column="rt_rev_reservation_no" property="reservationNo"/>
 		<result column="rt_rev_status" property="status"/>
 		<association property="dn" column="dn_no" select="getDiningByNo"/>
+		<!-- <association property="user" column="user_id" select="com.sh.mapper.UserMapper.getUserById"/> -->
 	</resultMap>
 	
 	<!-- void deleteRtRevCount(@Param("mealTime") String mealTime,@Param("seatType") String seatType, @Param("revCount") int revCount); -->
@@ -255,4 +257,12 @@
 			rt_rev_reservation_no = #{reservationNo}
 		where rt_rev_no = #{no}
 	</update>
+	
+	<!-- List<RtRev> getRtRevsByUser(User user); -->
+	<select id="getRtRevsByUserId" parameterType="String" resultMap="RtRevResultMap">
+		select *
+		from sh_rt_rev
+		where user_id = #{value}
+	</select>
+	
 </mapper>

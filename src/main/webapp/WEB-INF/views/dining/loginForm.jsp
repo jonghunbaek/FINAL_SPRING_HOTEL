@@ -89,14 +89,14 @@ input[name=select] {margin-left: 20px;}
 			</div>
 		</div>
 		<div id="div-form-member" class="d-none">
-			<form id="form-member" method="post" action="/confirmRev">
+			<form id="form-member" method="post" action="/user/dining">
 			<div id="field-input" class="row">
 				<div class="col-8">
-					<input class="input-field" type="text" name="email" placeholder="스프링리워즈 아이디입력">
+					<input class="input-field" type="text" name="id" placeholder="스프링리워즈 아이디입력">
 					<input class="input-field" type="password" name="password" placeholder="비밀번호 입력">
 				</div>
 				<div class="col-4 text-start">
-					<a href="#"><img id="img-login-member" src="../resources/images/dining/btn-login.png"></a>
+					<a id="btn-member-login" href="#"><img id="img-login-member" src="../resources/images/dining/btn-login.png"></a>
 				</div>
 			</div>
 			<input type="checkbox"><label>스프링리워즈번호 또는 아이디 저장</label>
@@ -170,6 +170,20 @@ $(function(){
 		}
 	})
 	
+	//회원 로그인버튼 클릭
+	$("#btn-member-login").click(function(){
+		$("#form-member").submit();
+	})
+	
+	//회원 로그인 제출 유효성 체크
+	$("#form-member").submit(function(){
+		if(!$(":input[name=id]").val()){
+			alert("아이디는 필수입력값입니다.");
+		}
+		if(!$(":input[name=password]").val()){
+			alert("비밀번호는 필수입력값입니다.");
+		}
+	})
 	
 })
 </script>

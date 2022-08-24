@@ -28,6 +28,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.sh.exception.ApplicationException;
 import com.sh.service.DiningService;
 import com.sh.service.UserService;
+import com.sh.utils.DateUtils;
 import com.sh.utils.SessionUtils;
 import com.sh.vo.Dn;
 import com.sh.vo.RtRev;
@@ -103,7 +104,6 @@ public class DiningController {
 		}
 	}
 	
-	// 잔여좌석조회
 	@GetMapping("/lookUpSeat")
 	@ResponseBody
 	public Map<String, String> lookUpSeat(@DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @RequestParam("diningNo") int diningNo, @RequestParam("seat") String seatType, @RequestParam("adult") int adult, @RequestParam("child") int child, @RequestParam("baby") int baby) {
@@ -116,10 +116,9 @@ public class DiningController {
 	
 	// 예약페이지2_로그인
 	@PostMapping("/logIn")
-	public String logIn(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, @RequestParam("id") String id, @RequestParam("password") String password, @RequestParam("diningNo") int diningNo, Model model, HttpSession httpSession) throws ParseException{
-		User user = userService.login(id, password);
+	public String logIn(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, @RequestParam("userId") String userId, @RequestParam("password") String password, @RequestParam("diningNo") int diningNo, Model model, HttpSession httpSession) throws ParseException{
+		User user = userService.login(userId, password);
 		httpSession.setAttribute("LOGIN_USER", user);
-		model.addAttribute("diningReservationForm", diningReservationForm);
 		
 		String dnMealTime = "";
 		if(diningReservationForm.getMealTime().equals("lunch")) {
@@ -129,38 +128,7 @@ public class DiningController {
 		} else {
 			dnMealTime = "브런치";
 		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
-		String day = "";
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(nDate);         
-		int dayNum = cal.get(Calendar.DAY_OF_WEEK);         
-		
-		switch(dayNum){
-	      case 1:
-	          day = "일";  
-	          break ;
-	      case 2:
-	          day = "월";
-	          break ;
-	      case 3:
-	          day = "화";
-	          break ;
-	      case 4:
-	          day = "수";
-	          break ;
-	      case 5:
-	          day = "목";
-	          break ;
-	      case 6:
-	          day = "금";
-	          break ;
-	      case 7:
-	          day = "토";
-	          break ;
-		}
+		String day = DateUtils.getDayByDate(diningReservationForm.getDate());
 		
 		model.addAttribute("dining", diningService.getDiningByNo(diningReservationForm.getDiningNo()));
 		model.addAttribute("diningReservationForm", diningReservationForm);
@@ -203,39 +171,8 @@ public class DiningController {
 		} else {
 			dnMealTime = "브런치";
 		}
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
-		String day = "";
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(nDate);         
-		int dayNum = cal.get(Calendar.DAY_OF_WEEK);         
-		
-		switch(dayNum){
-	      case 1:
-	          day = "일";  
-	          break ;
-	      case 2:
-	          day = "월";
-	          break ;
-	      case 3:
-	          day = "화";
-	          break ;
-	      case 4:
-	          day = "수";
-	          break ;
-	      case 5:
-	          day = "목";
-	          break ;
-	      case 6:
-	          day = "금";
-	          break ;
-	      case 7:
-	          day = "토";
-	          break ;
-		}
-		
+	
+		String day = DateUtils.getDayByDate(diningReservationForm.getDate());
 		
 		model.addAttribute("dining", diningService.getDiningByNo(diningReservationForm.getDiningNo()));
 		model.addAttribute("diningReservationForm", diningReservationForm);
@@ -264,38 +201,7 @@ public class DiningController {
 			dnMealTime = "브런치";
 		}
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
-		String day = "";
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(nDate);         
-		int dayNum = cal.get(Calendar.DAY_OF_WEEK);         
-		
-		switch(dayNum){
-	      case 1:
-	          day = "일";  
-	          break ;
-	      case 2:
-	          day = "월";
-	          break ;
-	      case 3:
-	          day = "화";
-	          break ;
-	      case 4:
-	          day = "수";
-	          break ;
-	      case 5:
-	          day = "목";
-	          break ;
-	      case 6:
-	          day = "금";
-	          break ;
-	      case 7:
-	          day = "토";
-	          break ;
-		}
-		
+		String day = DateUtils.getDayByDate(diningReservationForm.getDate());
 		
 		model.addAttribute("dining", diningService.getDiningByNo(diningReservationForm.getDiningNo()));
 		model.addAttribute("diningReservationForm", diningReservationForm);
@@ -338,40 +244,12 @@ public class DiningController {
 	@GetMapping("/complete")
 	public String complete(@ModelAttribute("diningReservationForm") DiningReservationForm diningReservationForm, Model model, SessionStatus sessionStatus) throws ParseException {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
-		String day = "";
-		
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(nDate);         
-		int dayNum = cal.get(Calendar.DAY_OF_WEEK);         
-		
-		switch(dayNum){
-	      case 1:
-	          day = "일";  
-	          break ;
-	      case 2:
-	          day = "월";
-	          break ;
-	      case 3:
-	          day = "화";
-	          break ;
-	      case 4:
-	          day = "수";
-	          break ;
-	      case 5:
-	          day = "목";
-	          break ;
-	      case 6:
-	          day = "금";
-	          break ;
-	      case 7:
-	          day = "토";
-	          break ;
-		}
+		String day = DateUtils.getDayByDate(diningReservationForm.getDate());
 		
 		RtRevCount rtRevCount = new RtRevCount();
 		rtRevCount.setCount(diningReservationForm.getAdult() + diningReservationForm.getChild() + diningReservationForm.getBaby());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date nDate = new Date(sdf.parse(diningReservationForm.getDate()).getTime());
 		rtRevCount.setDate(nDate);
 		rtRevCount.setDn(diningService.getDiningByNo(diningReservationForm.getDiningNo()));
 		rtRevCount.setMealTime(diningReservationForm.getMealTime());
@@ -389,7 +267,7 @@ public class DiningController {
 		return "dining/complete";
 	}
 	
-	// 주문확인
+	// 비회원주문확인
 	@PostMapping("/loginNonMember")
 	public String loginNonMember(@RequestParam("reservationNo") String reservationNo, @RequestParam("name") String name, Model model) {
 		
@@ -425,7 +303,5 @@ public class DiningController {
 		
 		return "dining/confirmRev";
 	}
-	
-	
 	
 }
