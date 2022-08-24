@@ -41,13 +41,60 @@
 	<!-- ======================객실,다이닝 예약추가========================= -->
 	<!-- void insertNewRoomRev(AdminAddRevForm adminAddRevForm); -->
 	<insert id="insertNewRoomRev" parameterType="com.sh.web.form.AdminAddRevForm">
-			insert into sh_room_rev
-			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time, room_rev_checkout_time, room_rev_request,
-			 room_rev_option_checkin_time, room_bedtype, user_no, room_id, room_rev_option_adult_bf, room_rev_option_child_bf, room_rev_option_extra_bed) 
-			values 
-			(room_rev_seq.nextval, #{adult}, #{child}, #{totalPrice}, #{startDate}, #{endDate}, #{request},
-			 #{timeOption}, #{bedType}, #{no}, #{id}, #{adultBf}, #{childBf}, #{extraBed})
+		insert into sh_room_rev
+		(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time, room_rev_checkout_time, room_rev_request,
+		 room_rev_option_checkin_time, room_bedtype, user_no, room_id, room_rev_option_adult_bf, room_rev_option_child_bf, room_rev_option_extra_bed) 
+		values 
+		(room_rev_seq.nextval, #{adult}, #{child}, #{totalPrice}, #{startDate}, #{endDate}, #{request},
+		 #{timeOption}, #{bedType}, #{no}, #{id}, #{adultBf}, #{childBf}, #{extraBed})
 	</insert>
+
+	<!-- void insertNewDiningRev(DiningReservationForm diningReservationForm) -->
+	<insert id="insertNewDiningRev" parameterType="com.sh.web.form.DiningReservationForm">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select rt_rev_seq.nextval 
+			from dual
+		</selectKey>
+		begin
+			insert into sh_rt_rev
+			(rt_rev_no, rt_rev_adult, rt_rev_child, rt_rev_baby, rt_rev_visit_time, rt_seat_type, rt_rev_request, 
+			 dn_no, rt_rev_visit_date, rt_rev_meal_time, rt_rev_is_allergy, user_no, rt_rev_etc_allergy)
+			values
+			(#{no}, #{adult}, #{child}, #{baby}, #{visitTime}, #{seat}, #{request}, 
+			 #{diningNo}, #{date}, #{mealTime}, #{isAllergy}, #{userNo}, #{etcAllergy});
+			
+			<choose>
+				<when test="revDate == null">
+					insert into sh_rt_rev_count
+					values
+					(#{adult} + #{child}, #{date}, #{diningNo}, #{mealTime}, #{seat});
+				</when>
+				<when test="revDate != null">
+					<if test="checkMeal == null">
+						insert into sh_rt_rev_count
+						values
+						(#{adult} + #{child}, #{date}, #{diningNo}, #{mealTime}, #{seat});
+					</if>
+					<if test="checkMeal != null">
+						update sh_rt_rev_count
+						set
+							rt_rev_count = rt_rev_count + #{adult} + #{child}
+						where rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1
+						and rt_rev_count_meal_time = #{mealTime}
+						and dn_no = #{diningNo};
+					</if>
+				</when>
+			</choose>
+			<if test='isAllergy == "Y"'>
+				<foreach collection="allergyNos" item="allergyNo">
+					insert into sh_rt_allergy_selected
+					values
+					(#{no}, #{allergyNo});
+				</foreach>
+			</if>
+		end;	
+	</insert>
+
 
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>
@@ -90,8 +137,8 @@
 	</resultMap>
 	
 	<resultMap type="RtRevCount" id="RtRevCountResultMap">
-		<result column="rt_rev_count" property="revCount"/>
-		<result column="rt_rev_count_date" property="countDate"/>
+		<result column="rt_rev_count" property="count"/>
+		<result column="rt_rev_count_date" property="date"/>
 		<result column="rt_rev_count_meal_time" property="mealTime"/>
 		<result column="rt_rev_count_seat_type" property="seatType"/>
 		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"></association>
@@ -103,6 +150,22 @@
 		<result column="dn_rev_time" property="time"/>
 		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"/>
 	</resultMap>
+	
+	<resultMap type="Dn" id="DiningResultMap">
+		<id column="dn_no" property="no"/>
+		<result column="dn_name" property="name"/>
+		<result column="dn_image" property="imagename"/>
+		<result column="dn_max_count" property="maxCount"/>
+		<association property="location" column="location_no" select="com.sh.mapper.DiningMapper.getLocationByDnNo"/>
+		<association property="dnCategory" column="dn_category_no" select="getDnCategoryByNo"/>
+	</resultMap>
+	
+	<resultMap type="DnCategory" id="DnCategoryResultMap">
+		<id column="dn_category_no" property="no"/>
+		<result column="dn_category_name" property="name"/>
+		<result column="dn_group_no" property="groupNo"/>
+	</resultMap>
+	
 	<!-- ======================객실,다이닝 예약추가========================= -->
 	<!-- List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria); -->
 	<select id="getRtSelectableDate" parameterType="AdminDnRevCriteria" resultMap="RtRevCountResultMap">
@@ -122,14 +185,44 @@
 							                         where location_no = #{location}
 							                         and dn_category_no = #{dnCategory})
 	</select>
+	<!-- int getDnByNo(AdminDnRevCriteria adminDnRevCriteria); -->
+	<select id="getDnByNo" parameterType="AdminDnRevCriteria" resultMap="DiningResultMap">
+		select *
+		from sh_dn
+		where location_no = #{location}
+		and dn_category_no = #{dnCategory}
+	</select>
+	<!-- DnCategory getDnCategoryByNo(int no); -->
+	<select id="getDnCategoryByNo" parameterType="int" resultMap="DnCategoryResultMap">
+		select *
+		from sh_dn_category
+		where dn_category_no = #{no}
+	</select>
 	
 	<!-- List<String> getRevDateBySelectedDate(AdminDnRevCriteria adminDnRevCriteria); -->
 	<select id="getRevDateBySelectedDate" parameterType="adminDnRevCriteria" resultType="string">
 		select distinct rt_rev_count_date
 		from sh_rt_rev_count
-		where rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1
+		where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
 	</select>
-	
+	<!-- 다이닝 신규예약시 선택날짜 존재하는지 확인 -->
+	<!-- String getRevDateBySelectedDateInAddRev(DiningReservationForm diningReservationForm); -->
+	<select id="getRevDateBySelectedDateInAddRev" parameterType="com.sh.web.form.DiningReservationForm" resultType="string">
+		select distinct rt_rev_count_date
+		from sh_rt_rev_count
+		where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
+		and dn_no = #{diningNo}
+	</select>
+	<!-- 다이닝 신규예약시 선택날짜 존재 할때 해당 밀타임 존재하는지 확인 -->
+	<!-- String checkSelectedMeal(DiningReservationForm diningReservationForm); -->
+	<select id="checkSelectedMeal" parameterType="com.sh.web.form.DiningReservationForm" resultType="string">
+		select distinct rt_rev_count_date
+		from sh_rt_rev_count
+		where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
+		and rt_rev_count_meal_time = #{mealTime}
+		and dn_no = #{diningNo}
+	</select>
+	<!-- where rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1 임시용-->
 	<!-- // 선택될 날짜가 없을때 mealtime을 가져온다.
 	List<String> getMealTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria); -->
 	<select id="getMealTimeByRevIsNot" parameterType="AdminDnRevCriteria" resultType="string">
@@ -154,7 +247,7 @@
 						                                                            from sh_dn
 						                                                            where location_no = #{location}
 						                                                            and dn_category_no = #{dnCategory})
-		                             and rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1)		
+		                             and to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date})		
 	</select>
 	<!-- // 선택될 날짜가 없을때 visittime을 가져온다.  ==============일단 보류================
 	List<String> getVisitTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria); -->
