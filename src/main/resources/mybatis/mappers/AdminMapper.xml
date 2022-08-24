@@ -41,4 +41,116 @@
 		#{hireDate}, #{location.no}, #{gender}, #{profileImage})
 	</insert>
 	
+	<!-- int getSaleSeoul(); -->
+	<select id="getSaleSeoul" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 1) 
+	</select>
+	<!-- int getSaleBusan(); -->
+	<select id="getSaleBusan" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 2) 
+	</select>
+	<!-- int getSaleJeju(); -->
+	<select id="getSaleJeju" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 3) 
+	</select>
+	<!-- int getSaleGangreung(); -->
+	<select id="getSaleGangreung" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 4)
+	</select>
+	<!-- int getSaleGwangju(); -->
+	<select id="getSaleGwangju" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 5) 
+	</select>
+	
+	<!-- int getSaleJan(); -->
+	<select id="getSaleJan" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-01-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-01-01')) + 1
+	</select>
+	<!-- int getSaleFeb(); -->
+	<select id="getSaleFeb" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-02-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-02-01')) + 1
+	</select>
+	<!-- int getSaleMar(); -->
+	<select id="getSaleMar" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-03-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-03-01')) + 1
+	</select>
+	<!-- int getSaleApr(); -->
+	<select id="getSaleApr" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-04-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-04-01')) + 1
+	</select>
+	<!-- int getSaleMay(); -->
+	<select id="getSaleMay" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-05-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-05-01')) + 1
+	</select>
+	<!-- int getSaleJun(); -->
+	<select id="getSaleJun" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-06-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-06-01')) + 1
+	</select>
+	
+	<!-- int getSaleStandard(); -->
+	<select id="getSaleStandard" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where room_category_no in (select g.room_category_no
+		                                             from sh_room_category g, sh_room_category c
+		                                             where g.room_group_no = c.room_category_no
+		                                             and g.room_group_no = 100))
+	</select>
+	<!-- int getSaleExecutive(); -->
+	<select id="getSaleExecutive" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where room_category_no in (select g.room_category_no
+		                                             from sh_room_category g, sh_room_category c
+		                                             where g.room_group_no = c.room_category_no
+		                                             and g.room_group_no = 200))
+	</select>
+	<!-- int getSaleSuite(); -->
+	<select id="getSaleSuite" resultType="int">
+		select sum(ROOM_REV_TOTAL_PRICE)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where room_category_no in (select g.room_category_no
+		                                             from sh_room_category g, sh_room_category c
+		                                             where g.room_group_no = c.room_category_no
+		                                             and g.room_group_no = 200))
+	</select>
+	
 </mapper>

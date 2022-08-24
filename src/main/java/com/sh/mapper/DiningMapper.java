@@ -27,6 +27,8 @@ public interface DiningMapper {
 	
 	Dn getDiningByNo(int no);
 	DnInfo getDiningInfoByNo(int no);
+	DnCategory getDnCategoryByNo(int no);
+	
 	List<DnRev> getDiningRevByNo(int no);
 	List<DnMealTime> getMealTimeByNo(int no);
 	List<String> getTimeByParaMeters(@Param("week") String week, @Param("no") int no, @Param("mealTime") String mealTime);
@@ -41,9 +43,6 @@ public interface DiningMapper {
 	List<DnSeatCountOfDate> getDnSeatCountOfDate(@Param("no") int no, @Param("date") Date date, @Param("seatType") String seatType);
 	int getTotalSeatByNo(int no);
 	int getTotalRoomByNo(int no);
-	
-
-	DnCategory getDnCategoryByNo(int no);
 
 	RtRev getRtRevByRevNo(String no);
 	void updateRtRev(RtRev rtRev);
