@@ -80,11 +80,17 @@ public class ShopController {
 	//검색결과
 	@GetMapping(path="/search/list")
 	public String search(String keyword, Model model) {
-//		String chagedKeyword = keyword.replace("\\s", "|");
-//		System.out.println(chagedKeyword);
-		String[] keywords = keyword.split("\\s");
-		System.out.println(Arrays.toString(keywords));
-		List<ShopProduct> searchResults = shopService.getSearchResults(keywords);
+		
+		// 검색방법1 (29개 검색됨)
+		String modifiedKeyword = keyword.replaceAll("\\s", "|");
+		System.out.println(modifiedKeyword);
+		List<ShopProduct> searchResults = shopService.getSearchResultsByModifiedKeywords(modifiedKeyword);
+		
+		// 검색방법2 (이상함..)
+//		String[] keywords = keyword.split("\\s");
+//		System.out.println(Arrays.toString(keywords));
+//		List<ShopProduct> searchResults = shopService.getSearchResults(keywords);
+		
 		model.addAttribute("productList", searchResults);
 		return "shop/search/list";
 	}

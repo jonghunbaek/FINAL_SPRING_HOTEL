@@ -72,10 +72,10 @@
 		</if>
 		ORDER BY P.PRODUCT_UPDATED_DATE DESC
 	</select>
-	
-	
-	<!-- List<ShopProduct> getProductsByKeywords(String[] keywords); -->
-	<select id="getProductsByKeywords" parameterType="java.util.arraylist" resultType="com.sh.vo.ShopProduct">
+
+
+	<!-- List<ShopProduct> getProductsByModifiedKeywords(String modifiedKeyword); -->
+	<select id="getProductsByModifiedKeywords" parameterType="String" resultType="com.sh.vo.ShopProduct">
 		SELECT P.PRODUCT_NO as no,
 	        P.PRODUCT_NAME as name,
 	        P.PRODUCT_IMAGE_NAME as imageName,
@@ -86,28 +86,53 @@
 			P.SHOP_MAINCATEGORY_NO as "mainCategory.mainCategoryNo",
 			M.SHOP_MAINCATEGORY_NAME as "mainCategory.name",
 	        S.SHOP_SUBCATEGORY_NAME as "subCategory.subCategoryName"
-		FROM SH_SHOP_PRODUCT P , SH_SHOP_MAINCATEGORY M, SH_SHOP_SUBCATEGORY S, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L
+	        
+		FROM SH_SHOP_PRODUCT P , SH_SHOP_SUBCATEGORY S, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L, SH_SHOP_MAINCATEGORY M
 		WHERE P.SHOP_SUBCATEGORY_NO = S.SHOP_SUBCATEGORY_NO
-			AND P.SHOP_MAINCATEGORY_NO = M.SHOP_MAINCATEGORY_NO
 			AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
 			AND P.LOCATION_NO = L.LOCATION_NO
+			AND P.SHOP_MAINCATEGORY_NO = M.SHOP_MAINCATEGORY_NO
 			AND
-				<foreach collection="array" item="arr" index="index" separator="OR">
-				(P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME) LIKE '%' + #{arr} + '%'			
-				</foreach>
-			
-<!-- 			AND REGEXP_LIKE ( (P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME),
-				' #{value} ') -->
-<!-- 				'<foreach collection="array" item="arr" index="index" separator="||">
-						#{arr} </foreach> ') -->
-			
-<!-- 			AND (P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME)
-				LIKE '%' || 
-						<foreach collection="array" item="arr" index="index" separator="||">
-							#{arr } </foreach>  || '%' -->
-		ORDER BY P.PRODUCT_UPDATED_DATE DESC
-
+			<!-- 메소드1 검색결과 29-->
+			REGEXP_LIKE ( (P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME),
+				'${value}')
+			ORDER BY P.PRODUCT_UPDATED_DATE DESC
 	</select>
+		
+	
+	<!-- List<ShopProduct> getProductsByKeywords(String[] keywords); -->
+<!--  	<select id="getProductsByKeywords" parameterType="java.util.ArrayList" resultType="com.sh.vo.ShopProduct">
+		SELECT P.PRODUCT_NO as no,
+	        P.PRODUCT_NAME as name,
+	        P.PRODUCT_IMAGE_NAME as imageName,
+	        B.SHOP_BUSINESS_NAME as "business.name", 
+	        L.LOCATION_NAME as "location.name", 
+	        P.PRODUCT_PRICE as price, 
+			P.PRODUCT_DISCOUNT_RATE as discountRate,
+			P.SHOP_MAINCATEGORY_NO as "mainCategory.mainCategoryNo",
+			M.SHOP_MAINCATEGORY_NAME as "mainCategory.name",
+	        S.SHOP_SUBCATEGORY_NAME as "subCategory.subCategoryName"
+	        
+		FROM SH_SHOP_PRODUCT P , SH_SHOP_SUBCATEGORY S, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L, SH_SHOP_MAINCATEGORY M
+		WHERE P.SHOP_SUBCATEGORY_NO = S.SHOP_SUBCATEGORY_NO
+			AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
+			AND P.LOCATION_NO = L.LOCATION_NO
+			AND P.SHOP_MAINCATEGORY_NO = M.SHOP_MAINCATEGORY_NO
+			AND -->
+			
+			<!-- 메소드 2 검색결과 10 why? 글자 앞뒤에 공백이 들어가네? => 이렇게 하면 앞뒤&가 없는것같이 결과가 나온다,..-->
+<!--    			REGEXP_LIKE ( (P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME),
+			'<foreach collection="array" item="arr" separator="|">${arr}</foreach>')
+			ORDER BY P.PRODUCT_UPDATED_DATE DESC -->
+		
+			<!-- 메소드 3 검색결과 중복데이터로 캐시넘어감.. distinct가 마이바티스에서는 일단 안먹힘?-->
+<!--   			<foreach collection="array" item="arr" separator="OR" >
+			(P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME) LIKE '%${arr}%'			
+			</foreach> -->
+			
+<!--  	</select> -->
+	
+
 	
 
 	<!-- List<ShopProduct> getPopularProductsbySoldNo(); -->

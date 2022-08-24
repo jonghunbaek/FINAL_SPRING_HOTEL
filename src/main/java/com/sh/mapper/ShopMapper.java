@@ -18,6 +18,7 @@ public interface ShopMapper {
 	
 	//search
 	List<ShopProduct> getProductsByKeywords(String[] keywords);
+	List<ShopProduct> getProductsByModifiedKeywords(String modifiedKeywords);
 	
 	//home
 	List<ShopProduct> getPopularProductsbySoldNo();
