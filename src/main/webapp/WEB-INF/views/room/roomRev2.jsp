@@ -19,7 +19,8 @@
 <!-- total zone -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<!-- moment -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <title>Spring Hotel</title>
 </head>
 <body>
@@ -255,23 +256,23 @@
 						</div>
 					</div>
 				</div>
-			</form>
+			
 			<div class="rewards-box" style="margin-top: 30px;
     text-align: center;
     padding: 30px;
     border: 5px solid #f1e3c4;">
 				<div style="font-size: 17px; margin-bottom: 13px;">
-					지금 바로, 신라리워즈 가입 후 포인트 적립과 할인 혜택을 받으세요.<br> 본 상품을 회원 가입 후 이용하시면
+					지금 바로, 스프링리워즈 가입 후 포인트 적립과 할인 혜택을 받으세요.<br> 본 상품을 회원 가입 후 이용하시면
 					<span style="font-size: 22px;
     font-weight: 600;
     color: #9a877a;">22,800P</span>가 적립됩니다.
 				</div>
-				<a href="/register"><img alt="신라리워즈가입버튼" src="../resources/images/room/rev/rewards.gif"></a>
+				<a href="/register"><img alt="스프링리워즈가입버튼" src="../resources/images/room/rev/rewards.gif"></a>
 			</div>
 			<div class="gray-info"
 				style="color: gray; font-size: 14px; margin-block: 10px; margin-bottom: 90px;">
 				※ 상기 포인트는 적립 예상 포인트이며 체크아웃 이후 [마이페이지]에서 확인 가능합니다.<br> ※ 일부 프로모션
-				예약은 신라리워즈 포인트 적립 대상에서 제외될 수 있습니다.
+				예약은 스프링리워즈 포인트 적립 대상에서 제외될 수 있습니다.
 			</div>
 			<!-- rev2 total accordion -->
 			<div id="Accordion_wrap3" style="border-top:0.01em solid #8080809e;">
@@ -285,39 +286,39 @@
 							</div>
 							<div class="total-sub">
 								<div class="sub-title">체크인-체크아웃</div>
-								<span>2022.09.13~2022.09.16(3박)</span>
+								<span id="checkinDate"><fmt:formatDate value="${roomReservationForm.checkinTime }" pattern="yyyy-MM-dd"/></span><span>~</span><span id="checkoutDate"><fmt:formatDate value="${roomReservationForm.checkoutTime }" pattern="yyyy-MM-dd"/></span>
 							</div>
 							<div class="total-sub-a">
 								<div class="sub-title">객실</div>
-								<span>Deluxe,Double</span>
+								<span>${roomReservationForm.roomName },${roomReservationForm.bedType }</span>
 							</div>
 							<div class="total-sub">
 								<div class="sub-title">투숙인원</div>
-								<span>성인 2, 어린이 2</span>
+								<span>성인 <span><fmt:formatNumber value="${roomReservationForm.adult }"/></span>, 어린이 <span><fmt:formatNumber value="${roomReservationForm.child }"/></span></span>
 							</div>
 						</div>
 						<div class="total-detail col-9">
 							<div class="total-title-box">
-								<div class="total-title">요금상세 (n박)</div>
+								<div class="total-title">요금상세(<span id="night">0</span>박)</div>
 								<span><img alt="예약초기화"
 									src="../resources/images/room/rev/rev_clear.png"></span>
 							</div>
 							<div class="total-sub-box">
-								<div class="total-sub">객실1(성인 n / 어린이 n)</div>
-								<span>1,188,000원</span>
+								<div class="total-sub">객실1(성인 <span><fmt:formatNumber value="${roomReservationForm.adult }"/></span> / 어린이 <span><fmt:formatNumber value="${roomReservationForm.child }"/></span>)</div>
+								<span><span id="all-total-price">0</span>원</span><input name="totalPrice" type="hidden">
 							</div>
 							<div class="total-sub2-box row">
 								<div class="객실요금 col-4">
 									<div>객실요금</div>
-									<div class="sub2-price">560,000 원</div>
+									<div class="sub2-price"><span id="room-price"><fmt:formatNumber value="${roomReservationForm.roomPrice }"/></span> 원</div>
 								</div>
 								<div class="옵션사항 col-4"><!-- 성인조식/엑스트라베드/어린이조식 -->
-									<div>옵션사항</div>
-									<div class="sub2-price">330,000 원</div>
+									<div>옵션사항</div><input name="optionTotalPrice" type="hidden">
+									<div class="sub2-price"><span id="optionTotalP">0</span> 원</div>
 								</div>
 								<div class="부가가치세 col-4">
 									<div>부가가치세</div>
-									<div class="sub2-price">56,000 원</div>
+									<div class="sub2-price"><span id="val">0</span> 원</div>
 								</div>
 							</div>
 							<div class="">부가가치세 10%가 포함된 금액입니다.</div>
@@ -336,7 +337,7 @@
 								포함</span>
 						</div>
 						<div class="total-price"
-							style="margin-right: 20px; margin-top: 10px;">616,000원</div>
+							style="margin-right: 20px; margin-top: 10px;"><span id="last-total-price">0</span>원</div>
 						<a href="#" id="btn-rev-1" class="nm-btn"><img alt="비회원예약"
 							src="../resources/images/room/rev/nonmember.gif"></a>
 						<a href="#" class="m-btn"><img alt="회원예약"
@@ -349,12 +350,45 @@
 				</div>
 			</div>
 			<!-- rev2 total accordion -->
+			</form>
 		</div>
 	</div>
 <%@ include file="../common/footer.jsp"%>
 <script>
 
 $(function(){
+	
+	/* 옵션 카운트 */
+	$(".anw1").mouseout(function(){
+		
+		/* let checkinDate = dateF($('#checkinDate')).val();
+		let checkoutDate = dateF($('#checkoutDate')).val();
+		let dfi = moment(checkinDate).format('yyyy-MM-dd');
+		let dfo = moment(checkoutDate).format('yyyy-MM-dd');
+		
+		let days = moment(dfo).diff(moment(dfi), 'days');
+		$('#night').text(days); */
+		
+		let adultBfCount = $("input[name=optionAdultBf]").val();
+		let childBfCount = $("input[name=optionChildBf]").val();
+		let extraBedCount = $('input[name=extraBed]').val();
+		let roomPrice = $('#room-price').text().replace(/,/g,'');
+		let adultBfPrice = parseInt(adultBfCount*50000);
+		let childBfPrice = parseInt(childBfCount*30000);
+		let extraBedPrice = parseInt(extraBedCount*33000);
+		let totalOptionPrice = parseInt(adultBfPrice)+parseInt(childBfPrice)+parseInt(extraBedPrice);
+		let vat = parseInt(roomPrice)*0.1;
+		let c = vat.toLocaleString();
+		$('#optionTotalP').text(totalOptionPrice);
+		let totalPrice = parseInt(roomPrice)+parseInt(totalOptionPrice)+parseInt(vat);
+		let b = totalPrice.toLocaleString();
+		
+		$('#val').text(c);
+		$('#all-total-price').text(totalPrice);
+		$('#last-total-price').text(b);
+		$('input[name=totalPrice]').val(totalPrice);
+		$('input[name=optionTotalPrice]').val(totalOptionPrice);
+	});
 	
 	$(".total-price a").click(function(){
 		return false;

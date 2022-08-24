@@ -147,9 +147,21 @@ readonly {
 	margin-top: 50px;
 }
 
+#inquiry .searchBtn {
+	display:inline-block;
+	width:100px;
+	height:50px;
+	background-color:#3a3125;
+	color:#f6edcd;
+	margin: auto;
+	boradr:none;
+	float:right;
+}
+
 .pagination {
    justify-content: center;
 }
+
 
 .page-item.active .page-link {
  z-index: 1;
@@ -191,6 +203,36 @@ a:focus {outline:0;}
     font-weight: bold;
 }
 
+/* 모달 */
 
+.modal-content {
+	width:300px;
+}
+.modal-header {
+	background-color: #F1EBD6;
+	border:none;
+	text-align:center;
+}
 
+.modal table th,td{
+	vertical-align:middle;
+}
+.modal label{
+    font-weight: bolder;
+}
 
+.modal-footer {
+	border-top: none;
+	padding-top: 0;
+	background-color: #F1EBD6;
+	border:none;
+
+}
+.modal button {
+	float:left;
+	width:100px;
+	height:50px;
+	background-color:#3a3125;
+	color:#f6edcd;
+	margin:auto;
+}

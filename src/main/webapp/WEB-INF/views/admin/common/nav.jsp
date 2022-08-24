@@ -90,7 +90,7 @@
           <li class="nav-item" id="inquiry">
             <a class="nav-link" href="inquiry" role="button" id="rev" style="font-weight:bold; font-size:16px; color:black; text-decoration: none;">
               <span data-feather="clipboard"></span>
-              고객문의 관리
+              Q&A
             </a>
           </li>
           <li class="nav-item">

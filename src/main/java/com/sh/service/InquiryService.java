@@ -3,16 +3,16 @@ package com.sh.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sh.criteria.QnaCriteria;
 import com.sh.mapper.InquiryMapper;
 import com.sh.vo.Location;
 import com.sh.vo.Pagination;
 import com.sh.vo.Qna;
 import com.sh.vo.QnaCategory;
-import com.sh.web.form.InquiryForm;
 
 @Service
 public class InquiryService {
@@ -26,16 +26,34 @@ public class InquiryService {
 	public List<Qna> getAllQna(Pagination pagination) {
 		return inquiryMapper.getAllInquiry(pagination);
 	}
+	/** 고객별 문의사항 조회
+	 * @return
+	 */
+	public List<Qna> getAllQnaByUserNo(Pagination pagination,int userNo) {
+		return inquiryMapper.getAllInquiryByUserNo(pagination, userNo);
+	}
 	
-	/** 페이징처리에 필요한 전체 개수 
+	/** 페이징처리 관련
 	 * @return
 	 */
 	public int getTotalRows() {
 		int totalRows = inquiryMapper.getQnaTotalRows();
 		return totalRows;
 	}
+	
+	public int getTotalRowsByUserNo(Integer no) {
+		int totalRows = inquiryMapper.getQnaTotalRowsByUserNo(no);
+		return totalRows;
+	}
 		
-		
+	/** 
+	 * @param qnaCriteria
+	 * @return
+	 */
+	public List<Qna> searchQna(QnaCriteria qnaCriteria) {
+		return inquiryMapper.getInquiryByCriteria(qnaCriteria);
+	}
+	
 	/** 모든 문의사항 카테고리 조회
 	 * @return
 	 */
@@ -71,7 +89,6 @@ public class InquiryService {
 	 * @param no 문의사항 번호
 	 */
 	public void deleteInquiry(Qna qna) {
-		qna.setDeleted("Y");
 		inquiryMapper.deleteInquiry(qna);
 	}
 	
@@ -80,7 +97,9 @@ public class InquiryService {
 	 * @param qna 
 	 */
 	public void updateInquiry(Qna qna) {
-		qna.setUpdatedDate(new Date());
 		inquiryMapper.updateInquiry(qna);
 	}
+	
+
+	
 }

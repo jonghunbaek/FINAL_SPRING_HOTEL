@@ -86,5 +86,8 @@ public interface RoomMapper {
 	// 객실 종류 반환 
 	List<String> getRoomCategories();
 	
+	//객실 그룹번호로 객실유형 받기 
+	List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo);
+	
 
 }

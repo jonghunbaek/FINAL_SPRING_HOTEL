@@ -48,7 +48,7 @@
 						<div class="col" style="margin-top: 10px;">
 							<img class="row-6" alt="호텔사진" src="../resources/images/room/location/${roomReservationForm.locationName }.jpg" style="width: 150px;">
 							<div class="row-6" style="margin-top: 10px;">
-								<div class="title-bold" style="font-weight: 700;">${roomReservationForm.locationName} 신라호텔</div>
+								<div class="title-bold" style="font-weight: 700;">${roomReservationForm.locationName} 스프링호텔</div>
 								<!-- <div style="color: gray; font-size:13px; margin-top: 5px; ">서울특별시 중구 장충동 동호로 249</div> -->
 							</div>
 						</div>
@@ -63,7 +63,7 @@
 								<li>투숙인원</li>
 							</ul>
 							<ul class="col-8" style="list-style: none; margin-top: 10px;">
-								<li>${roomReservationForm.checkinTime }-${roomReservationForm.checkoutTime }</li>
+								<li><fmt:formatDate value="${roomReservationForm.checkinTime }" pattern="yyyy-MM-dd"/>-<fmt:formatDate value="${roomReservationForm.checkoutTime }" pattern="yyyy-MM-dd"/></li>
 								<li style="margin-block: 10px;">${roomReservationForm.roomName } / ${roomReservationForm.bedType }</li>
 								<li>성인 <fmt:formatNumber value="${roomReservationForm.adult }"/>, 어린이 <fmt:formatNumber value="${roomReservationForm.child }"/></li>
 							</ul>
@@ -78,7 +78,7 @@
 								<li>이메일</li>
 							</ul>
 								<ul class="col-6" style="list-style: none; margin-top: 10px;">
-								<li>${roomReservationForm.lastName }&nbsp;${roomReservationForm.firstName }</li>
+								<li>${roomReservationForm.userName}&nbsp;/&nbsp;${roomReservationForm.lastName }&nbsp;${roomReservationForm.firstName }</li>
 								<li style="margin-block:10px; ">${roomReservationForm.tel }</li>
 								<li>${roomReservationForm.email }</li>
 							</ul>
@@ -99,7 +99,7 @@
 					</div>
 				</div>
 				<div class="anw2 p-3" style="display: flex; border-bottom: 1px solid #dddddd; display: none; overflow: hidden; font-size: 16px; padding: 27px 0;">
-					<strong class="title-bord">객실1(성인 2 / 어린이 0)</strong>
+					<strong class="title-bord">객실1(성인 <span><fmt:formatNumber value="${roomReservationForm.adult }"/></span> / 어린이 <span><fmt:formatNumber value="${roomReservationForm.child }"/></span>)</strong>
 					<div class="box-2" style="margin: 30px;">
 						<div class="box-2-1 row"
 							style="text-align: center; padding-block: 10px; border-top: 1px solid #7b6f4bf2;">
@@ -111,7 +111,7 @@
 							<div class="col-2">합계</div>
 						</div>
 						<div class="box-2-2 row" style="text-align: center; padding-block: 10px; border-block: 1px dashed #8080805c;">
-							<div class="col-2">${roomReservationForm.checkinTime }</div>
+							<div class="col-2"><fmt:formatDate value="${roomReservationForm.checkinTime }" pattern="yyyy-MM-dd"/></div>
 							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.roomPrice }"/>원</div>
 							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.optionAdultBf }"/>명</div>
 							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.optionChildBf}"/>명</div>

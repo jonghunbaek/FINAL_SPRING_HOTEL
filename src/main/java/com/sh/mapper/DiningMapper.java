@@ -42,5 +42,11 @@ public interface DiningMapper {
 	int getTotalSeatByNo(int no);
 	int getTotalRoomByNo(int no);
 	
+
 	DnCategory getDnCategoryByNo(int no);
+
+	RtRev getRtRevByRevNo(String no);
+	void updateRtRev(RtRev rtRev);
+	void deleteRtRevCount(@Param("mealTime") String mealTime,@Param("seatType") String seatType, @Param("revCount") int revCount);
+
 }

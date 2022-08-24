@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../common/tags.jsp" %>
+<script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -19,6 +19,7 @@
 	input[type='text'], input[type='password'], input[type='tel'], input[type='email'] {display: inline-block;width: 100%;height: 50px;padding: 0 14px;border: 1px solid #999;background-color: #fff;font-size: 13px;color: #333;line-height: 50px;border-radius: 0;vertical-align: top;}
 	button {border: 0;background: none;cursor: pointer;outline: none;}
 
+	.product-details{ white-space: pre-line; line-height:2; margin:-30px 0 0;}
 
 </style>
 
@@ -30,16 +31,16 @@
 <!-- PRODUCT SUMMARY -->
 <div class="container" style="">
 	<div class="row" style=" padding-top:60px; ">
-	
 <!-- PRODUCT IMAGE THUMBNAIL -->
 		<div class="col" style="float:left; width:560px; height:680px; ">
 			<div class="image-input" style="margin: 0 0 34px; height:75%;">
 				<img id="thumb-img" src="../resources/images/shop/product/${product.imageName }.jpg" style="width:100%; height:100%; object-fit: cover;">
 			</div>
 			<div class="thumb-list" style=" height:15%; text-align: center;">
-				<span style="display: inline-block; overflow: hidden;opacity: 1;border:1px solid transparent; width: 80px;height: 80px;"><img src="../resources/images/shop/product/lh_product_021.jpg" onmouseenter="changeImage(this);" style="width:100%; height:100%;"></span>
-				<span style="display: inline-block; overflow: hidden;opacity: 0.5; border:1px solid #333; width: 80px;height: 80px;"><img src="../resources/images/shop/product/lh_product_022.jpg" onmouseenter="changeImage(this);" style="width:100%; height:100%;"></span>
-				<span style="display: inline-block; overflow: hidden;opacity: 0.5;border:1px solid transparent; width: 80px;height: 80px;"><img src="../resources/images/shop/product/lh_product_021.jpg" onmouseenter="changeImage(this);" style="width:100%; height:100%;"></span>
+				<span style="display: inline-block; overflow: hidden;opacity: 1;border:1px solid transparent; width: 80px;height: 80px;"><img src="../resources/images/shop/product/${product.imageName }.jpg" onmouseenter="changeImage(this);" style="width:100%; height:100%;"></span>
+				<c:forEach var="smallImage" items="${imageList }"> 
+					<span name="smallImagesSpan" style="display: inline-block; overflow: hidden;opacity: 0.5; border:1px solid #333; width: 80px;height: 80px;"><img src="../resources/images/shop/product/${smallImage.name }.jpg" onmouseenter="changeImage(this);" style="width:100%; height:100%;"></span>
+				</c:forEach>
 			</div>
 		</div>
 		
@@ -49,15 +50,16 @@
 	<!-- WISH AND SHARE -->
 			<div style="position:relative;">
 			<div class="btn-box" style=" position:absolute; top:0; right:0; display:block;">
-				<button type="button" class="btn-wish" onclick="" style="text-indent: -9999px;overflow: hidden;width:23px; height:20px;background:url(/resources/images/shop/common/icon-wish.png) 50% 50% no-repeat; background-size:100%;">위시리스트에 담기</button>
-				<button type="button" class="btn-share" onclick="" style="text-indent: -9999px;overflow: hidden;width:21px; height:23px;margin-left: 15px;background:url(/resources/images/shop/common/icon-share.png) 50% 50% no-repeat; background-size:100%;">공유하기</button>
+				<a href="/login" target="_blink"><button type="button" class="btn-wish" onclick="" style="text-indent: -9999px;overflow: hidden;width:23px; height:20px;background:url(/resources/images/shop/common/icon-wish.png) 50% 50% no-repeat; background-size:100%;">위시리스트에 담기</button></a>
+					<button type="button" id="sharingbykakao" class="btn-share" onclick="shareMessage();" style="text-indent: -9999px;overflow: hidden;width:21px; height:23px;margin-left: 15px;background:url(/resources/images/shop/common/icon-share.png) 50% 50% no-repeat; background-size:100%;">공유하기</button>
 			</div>
 			</div>
 
 	<!-- PRODUCT TITLE AND PRICE -->
 			<div class="row" style="">
 				<h1 class="title" style="margin-top:25px;font-size: 40px;font-weight: 400;">
-					<span style="margin-bottom: 10px;font-size: 16px;display: block;color: #666;word-spacing: 2px;">[스프링호텔 ${product.location.name } ${product.business.name }]</span>
+					<span style="margin-bottom: 10px;font-size: 16px;display: block;color: #666;word-spacing: 2px;">
+					[스프링호텔 ${product.location.name } ${product.business.name }]</span>
 					${product.name }
 				</h1>
 				<p class="txt-blank" style="margin: 10px 0 40px;"></p>
@@ -66,11 +68,12 @@
 				<div class="col-3">
 					<p><span style="color: #666; padding-top:10px; display:inline-block;">판매가</span></p>
 				</div>
-				<div class="col-5">
+				<div class="col-8">
 					<p style="font-weight:500;vertical-align:middle;font-size: 28px;display:inline-block;">
-						<span style="margin-right:10px;width:35px;font-size: 16px;display:inline-block; font-weight:400;vertical-align:middle;">
-						KRW</span>
-						<span id="productPrice"><fmt:formatNumber value="${product.price }"/></span>
+						<span style="margin-right:10px;width:35px;font-size: 16px;display:inline-block; font-weight:400;vertical-align:middle;">KRW</span>
+						<span id="discountprice-box" id="productDiscountPrice"><fmt:formatNumber value="${product.price*(1 - product.discountRate/100) }"/></span>
+						<span class="price-box" id="productPrice" style="margin-right: 10px;font-size: 16px;line-height: 24px;color: #999;font-weight: 500;text-decoration: line-through;letter-spacing: -0.05em;vertical-align: middle;letter-spacing: -0.05em;vertical-align: middle;"><fmt:formatNumber value="${product.price }"/></span>
+						<span class="discountRate-box" id="productDiscountRate" style="font-size: 22px;line-height: 33px;color: #ff7a00;font-weight: 500;letter-spacing: -0.05em;vertical-align: middle;">${product.discountRate }%</span>
 					</p>
 				</div> 
 			</div>
@@ -78,19 +81,36 @@
 
 	<!-- PRODUCT OPTION CHOICE -->
 
+			<!-- PRODUCT OPTIONS -->
+			<div class="row" id="opt0ProductOptions" style="padding-top: 27px; display: ${optionsList.size() eq 1 ? 'none' : 'display'} ;">
+				<div class="col-3" style="display: table;">
+					<p style=" display: table-cell; vertical-align: middle; color: #666;">상품선택</p>
+				</div>
+				<div class="col-8">
+						<div class="row" style="margin: 10px 18px 0 0; height:50px;">
+							<lable for="select" class="hide"></lable>
+							<select id="opt0SelectProduct" type="button" style="height:100%;">
+								<option value="" selected disabled><span>원하시는 상품을 선택하세요</span></option>
+								<c:forEach var="productOption" items="${optionsList }">
+								<option value="${productOption.price }" name="opt0Selecteds"><span>${productOption.name } (<fmt:formatNumber value="${productOption.price }"/>)</span></option>
+								</c:forEach>
+							</select>
+						</div>
+				</div>
+			</div>
+			
 			<!-- PICKUP OR GIFT -->
-			<div class="row" style=" padding-top: 27px;">
+			<div class="row" id="opt1PickupOptions" style=" padding-top: 27px; display: ${optionsList.size() eq 1 ? 'display':'none'} ;">
 				<div class="col-3">
 					<p style="vertical-align: middle; color: #666;">수령방법</p>
 				</div>
-				<div class="col-5">
-					<div class="row">
-						<div class="col" style="height: 18px;margin: 0 18px 0 0;">
-							<input type="radio" name="opt1Radio" id="opt1RadioPickUp" value="직접픽업"><lable for="radio-pickup">직접픽업</lable>
+				<div class="col-7">
+					<div class="row" style="justify-content: space-evenly;">
+						<c:forEach var="method" items="${methodList }">
+						<div class="col" style="height: 18px; margin: 0 18px 0 0;">
+							<input type="radio" name="opt1Radio" id="opt1Radio${method.no }" value="${method.name }"><lable for="radio-${method.no }">${method.name }</lable>
 						</div>
-						<div class="col" style="height: 18px;margin: 0 18px 0 0;">
-							<input type="radio" name="opt1Radio" id="opt1RadioSendGift" value="선물하기"><lable for="radio-gift">선물하기</lable>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
@@ -130,13 +150,8 @@
 				<div class="col-8">
 					<div class="row" style="margin: 10px 18px 0 0; height:50px;">
 						<lable for="select" class="hide"></lable>
-						<select id="opt2SelectLocation" type="button" style="height:100%;" >
-							<option value="" selected disabled><span>원하시는 픽업장소를 선택하세요</span></option>
-							<option name="" value="스프링 서울"><span>스프링 서울</span></option>
-							<option name="" value="스프링 제주"><span>스프링 제주</span></option>
-							<option name="" value="스프링 부산"><span>스프링 부산</span></option>
-							<option name="" value="스프링 광주"><span>스프링 광주</span></option>
-							<option name="" value="스프링 강릉"><span>스프링 강릉</span></option>
+						<select id="opt2SelectLocation" type="button" disabled="disabled" style="height:100%;" >
+							<option value="" selected="selected"><span>스프링호텔 ${product.location.name }</span></option>
 						</select>
 					</div>
 				</div>
@@ -151,7 +166,7 @@
 								<th></th>
 							</tr>
 							<tr style=" margin-top:8px; height:30px;">
-								<td style="padding-right: 8px; font-weight: 500;">사용일시</td>
+								<td id="selectiontimeTitle" style="padding-right: 8px; font-weight: 500;">사용일시</td>
 								<td id="selectionday"></td>
 								<td>&nbsp;</td>
 								<td id="selectiontime"></td>
@@ -211,10 +226,8 @@
 			<h5>상품소개</h5>
 		</div>
 		<div class="col-8" style="padding-left:6px; vertical-align:top;color: #666;margin-inline-start: 20px;">
-			<div class="product-detail">
-				<ul>
-					<li style="line-height:2;">${product.detail }</li>
-				</ul>
+			<div class="product-details" style="line-height:2;">
+				${product.detail }
 			</div>
 		</div>
 	</div>
@@ -223,10 +236,8 @@
 			<h5>상품구성</h5>
 		</div>
 		<div class="col-8" style="padding-left:6px; vertical-align:top;color: #666;margin-inline-start: 20px;">
-			<div class="product-composition">
-				<ul>
-					<li style="line-height:2;">${product.composition }</li>
-				</ul>
+			<div class="product-details" style="line-height:2;">
+				${product.composition }
 			</div>
 		</div>
 	</div>
@@ -235,10 +246,8 @@
 			<h5>상품안내</h5>
 		</div>
 		<div class="col-8" style="padding-left:25px; vertical-align:top;color: #666;">
-			<div class="product-caution">
-				<ul>
-					<li style="line-height:2;">${product.caution}</li>
-				</ul>
+			<div class="product-details" style="line-height:2;">
+				${product.caution}
 			</div>
 		</div>
 	</div>
@@ -247,10 +256,8 @@
 			<h5>기타정보</h5>
 		</div>
 		<div class="col-8" style="padding-left:25px; vertical-align:top;color: #666;">
-			<div class="productcategory-caution">
-				<ul>
-					<li style="line-height:2;">${product.additionalInfo } </li>
-				</ul>
+			<div class="product-details" style="">
+				${product.additionalInfo }
 			</div>
 		</div>
 	</div>
@@ -267,12 +274,13 @@
 		thumbImgEl.setAttribute("src", imgSource);
 	}
 
-	// 달력에 넣을 오늘날짜와 90일 뒤의 날짜를 구한다.
+	// 달력에 넣을 오늘날짜와 93일 뒤의 날짜를 구한다.
 	const TODAY = new Date();
-	const dayAfter90 = new Date(TODAY.getTime() + 7776000000);
+	const dayAfter2 = new Date(TODAY.getTime() + 172800000);
+	const dayAfter90 = new Date(TODAY.getTime() + 8035200000);
 	const FORMATTER_YYYYMMDD = new Intl.DateTimeFormat('ko-KR', {year:"numeric", month:"2-digit", day:"2-digit"});
 	
-	var minDay = FORMATTER_YYYYMMDD.formatToParts(TODAY).map(({type, value}) => {
+	var minDay = FORMATTER_YYYYMMDD.formatToParts(dayAfter2).map(({type, value}) => {
 						switch (type) {
 							case 'literal': return '-';
 							default: return value;
@@ -295,10 +303,42 @@
 		calEl.setAttribute("max", maxDay);
 	}) ();
 
-	opt1RadioPickUp.addEventListener('change', refreshOpts);
-	opt1RadioPickUp.addEventListener('change', hideSummary);
-	opt1RadioPickUp.addEventListener('click', showDayLocOpt);
+	// 즉시실행함수 for 가격
+	(function() {
+		var discountRateEls = document.querySelectorAll("#productDiscountRate");
+		var productPriceEls = document.querySelectorAll("#productPrice");
+		 
+		for (let index = 0 ; index < discountRateEls.length ; index++) {
+			let discountRate = discountRateEls[index];
+			if (discountRate.textContent == '0%') {
+				discountRate.setAttribute("hidden", true);
+				productPriceEls[index].setAttribute("hidden", true);
+			
+			} else {
+				discountRate.removeAttribute("hidden");
+				productPriceEls[index].removeAttribute("hidden");
+			};
+		};
+		
+	}) ();
 	
+	var optionRadio1 = null;
+	optionRadio1 = document.getElementById("opt1Radio1");
+	if(optionRadio1) {
+		optionRadio1.addEventListener('change', refreshOpts);
+		optionRadio1.addEventListener('change', hideSummary);
+		optionRadio1.addEventListener('click', showDayLocOpt);
+	}
+	
+	var optionRadio2  = null;
+	optionRadio2 = document.getElementById("opt1Radio2");
+	if(optionRadio2) {
+		optionRadio2.addEventListener('change', refreshOpts);
+		optionRadio2.addEventListener('change', hideSummary);
+		optionRadio2.addEventListener('click', showDayLocOpt);
+	}
+	
+
 	function refreshOpts() {
 		opt2InputDate.value = minDay;
 		opt2SelectTime.value = "";
@@ -306,6 +346,7 @@
 		quantityInput.value = 1;
 		
 		selectionday.textContent = "";
+		selectiontimeTitle.style.display="inline-block";
 		selectiontime.textContent = "";
 		selectionlocation.textContent = "";
 		
@@ -315,30 +356,47 @@
 		optSummary.style.display = "none";
 
 	}
+	
+
 	function showDayLocOpt() {
 		opt2DayNTimeDiv.style.display = "flex";
 		opt2locationDiv.style.display = "flex";
 	}
 
-	opt1RadioSendGift.addEventListener('click', hideDayLocOpt);
-	opt1RadioSendGift.addEventListener('click', showSummary);
+	var optionRadio3  = null;
+	optionRadio3 = document.getElementById("opt1Radio3");
+	if(optionRadio3) {
+		optionRadio3.addEventListener('change', refreshOpts);
+		optionRadio3.addEventListener('click', hideDayLocOpt);
+		optionRadio3.addEventListener('click', showSummary);
+	}
 
+	var optionRadio4 = null;
+	optionRadio4 = document.getElementById("opt1Radio4");
+	if(optionRadio4) {
+		optionRadio4.addEventListener('change', refreshOpts);
+		optionRadio4.addEventListener('click', hideDayLocOpt);
+		optionRadio4.addEventListener('click', hideSummary);
+	}
+	
 	function hideDayLocOpt() {
 		opt2DayNTimeDiv.style.display = "none";
 		opt2locationDiv.style.display = "none";
 		
 	}
+	
 	function showSummary() {
 		selectedOpt1.textContent = document.querySelector('input[name="opt1Radio"]:checked').value;
 		optSummary.style.display = "flex";
 		
-		if (opt1RadioPickUp.checked) {
+		if (optionRadio1.checked || optionRadio2.checked) {
 			selectionday.textContent = opt2InputDate.value;
 			selectiontime.textContent = opt2SelectTime.value;
-			selectionlocation.textContent = opt2SelectLocation.value;
+			selectionlocation.textContent = opt2SelectLocation.options[0].text;
 		} else {
 			refreshOpts();
-			
+			selectiontimeTitle.style.display="none";
+			selectionlocation.textContent = opt2SelectLocation.options[0].text;
 		}
 		
 	}
@@ -346,13 +404,9 @@
 	// 선택한 옵션정보가 Summary에 표시된다.
 	// 모두 선택되면 Summary를 화면에 나타나게 한다.
 	opt2SelectTime.addEventListener('change', isAllChecked);
-	opt2SelectLocation.addEventListener('change', isAllChecked);
 
 	function isAllChecked(){
 		if (!opt2SelectTime.value) {
-			return;
-		};
-		if (!opt2SelectLocation.value) {
 			return;
 		};
 		hideDayLocOpt();
@@ -392,17 +446,73 @@
 		quantityInput.value = quantity - 1;
 		calculateTot;
 	} */
+
+	// 즉시실행함수 for 계산
+	calculateTot();
 	
-	quantityInput.onchange = calculateTot;
+	quantityInput.addEventListener('change', calculateTot);
+	opt0SelectProduct.addEventListener('change', calculateTot);
+	opt0SelectProduct.addEventListener('change', showPickupOpt);
+	opt0SelectProduct.addEventListener('change', hideDayLocOpt);
 	
-	function calculateTot() {
-		let quantity = parseInt(quantityInput.value);
-		let price = parseInt(document.getElementById("productPrice").textContent);
-		let totalPrice = price*quantity;
-		calculatedPriceinOptBox.textContent = totalPrice;
-		calculatedPrice.textContent = totalPrice;
+	function showPickupOpt() {
+		opt1PickupOptions.style.display = "flex";
 	}
 	
+	
+	
+	
+	function calculateTot() {
+		var quantity = parseInt(quantityInput.value);
+		//옵션이 선택되어 있지 않다면 상품대표가격으로 계산한다.
+		if(!document.getElementById("opt0SelectProduct").value) {
+			var priceBeforeDiscount = stringNumberToInt(document.getElementById("productPrice").textContent);
+		} else {
+			priceBeforeDiscount = parseInt(document.getElementById("opt0SelectProduct").value);
+		}
+		
+		var price = priceBeforeDiscount*(100-${product.discountRate })/100;
+		var totalPrice = price*quantity;
+		calculatedPriceinOptBox.textContent = totalPrice.toLocaleString();
+		calculatedPrice.textContent = totalPrice.toLocaleString();
+	}
+	
+	function stringNumberToInt(stringNumber){
+	    return parseInt(stringNumber.replace(/,/g , ''));
+	}
+	
+
+	 try {
+		  function shareMessage() {
+		    Kakao.init('cd06812ecefd9b9d880815e7367e1e06')
+		    Kakao.Link.sendDefault({
+		    objectType: 'commerce',
+		      content: {
+		        title: '스프링호텔 제품을 만나보세요.',
+		        imageUrl: '${product.imgUrl }',
+		        link: {
+		          webUrl: 'http://localhost/shop/detail?no=${product.no }',
+		        },
+		        
+		      },
+		      commerce: {
+		          productName: '${product.name }',
+		          regularPrice: ${product.price },
+		          discountRate: ${product.discountRate },
+		          discountPrice: ${(product.price)*(100-product.discountRate)/100 },
+		        },
+		      buttons: [
+		    	  {
+	    	        title: '구경가기',
+	    	        link: {
+	    	          webUrl: 'http://localhost/shop/detail?no=${product.no }',
+	    	        },
+	    	      },
+		      ],
+		    })
+		  }
+		; window.kakaoDemoCallback && window.kakaoDemoCallback() }
+		catch(e) { window.kakaoDemoException && window.kakaoDemoException(e) }
 	
 </script>
 </html>

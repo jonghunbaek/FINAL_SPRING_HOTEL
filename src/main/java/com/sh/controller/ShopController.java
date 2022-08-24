@@ -1,5 +1,7 @@
 package com.sh.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sh.criteria.ShopProductListCriteria;
 import com.sh.service.ShopService;
+import com.sh.vo.ShopAdditionalImages;
+import com.sh.vo.ShopPickOrShip;
 import com.sh.vo.ShopProduct;
 
 @Controller
@@ -21,7 +25,12 @@ public class ShopController {
 
 	//쇼핑몰 홈
 	@GetMapping(path="")
-	public String shop() {
+	public String shop(Model model) {
+		List<ShopProduct> populars = shopService.getSixPopulars();
+		List<ShopProduct> discounts = shopService.getProductsWithDiscount();
+		model.addAttribute("popularlist", populars);
+		model.addAttribute("discountedlist", discounts);
+//		System.out.println(populars);
 		return "shop/home";
 	}
 
@@ -37,7 +46,7 @@ public class ShopController {
 	//상품리스트
 	@GetMapping(path="/list")
 	public String mainSubList(Model model, ShopProductListCriteria shoplistCriteria) {
-		System.out.println(shoplistCriteria);
+//		System.out.println(shoplistCriteria);
 		List<ShopProduct> products = shopService.getAllProductsByParameters(shoplistCriteria);
 		model.addAttribute("shopList", products);
 		return "shop/list";
@@ -49,6 +58,16 @@ public class ShopController {
 	public String productDetail(int no, Model model) {
 		ShopProduct product = shopService.getProductDetail(no);
 		model.addAttribute("product", product);
+		
+		List<ShopProduct> options = shopService.getProductOptions(no);
+		model.addAttribute("optionsList", options);
+		
+		List<ShopAdditionalImages> images = shopService.getAdditionalImages(no);
+		model.addAttribute("imageList", images);
+		
+		List<ShopPickOrShip> methods = shopService.getGettingMethods(no);
+		model.addAttribute("methodList", methods);
+		
 		return "shop/detail";
 	}
 	
@@ -56,6 +75,24 @@ public class ShopController {
 	@GetMapping(path="/nomem/orderist")
 	public String nomemOrderList() {
 		return "shop/nomem/nomemOrderList";
+	}
+	
+	//검색결과
+	@GetMapping(path="/search/list")
+	public String search(String keyword, Model model) {
+		
+		// 검색방법1 (29개 검색됨)
+		String modifiedKeyword = keyword.replaceAll("\\s", "|");
+		System.out.println(modifiedKeyword);
+		List<ShopProduct> searchResults = shopService.getSearchResultsByModifiedKeywords(modifiedKeyword);
+		
+		// 검색방법2 (이상함..)
+//		String[] keywords = keyword.split("\\s");
+//		System.out.println(Arrays.toString(keywords));
+//		List<ShopProduct> searchResults = shopService.getSearchResults(keywords);
+		
+		model.addAttribute("productList", searchResults);
+		return "shop/search/list";
 	}
 	
 }
