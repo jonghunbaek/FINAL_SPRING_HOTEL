@@ -82,6 +82,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		
 		<!-- 메일 api -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
