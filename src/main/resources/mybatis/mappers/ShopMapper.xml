@@ -72,6 +72,43 @@
 		</if>
 		ORDER BY P.PRODUCT_UPDATED_DATE DESC
 	</select>
+	
+	
+	<!-- List<ShopProduct> getProductsByKeywords(String[] keywords); -->
+	<select id="getProductsByKeywords" parameterType="java.util.arraylist" resultType="com.sh.vo.ShopProduct">
+		SELECT P.PRODUCT_NO as no,
+	        P.PRODUCT_NAME as name,
+	        P.PRODUCT_IMAGE_NAME as imageName,
+	        B.SHOP_BUSINESS_NAME as "business.name", 
+	        L.LOCATION_NAME as "location.name", 
+	        P.PRODUCT_PRICE as price, 
+			P.PRODUCT_DISCOUNT_RATE as discountRate,
+			P.SHOP_MAINCATEGORY_NO as "mainCategory.mainCategoryNo",
+			M.SHOP_MAINCATEGORY_NAME as "mainCategory.name",
+	        S.SHOP_SUBCATEGORY_NAME as "subCategory.subCategoryName"
+		FROM SH_SHOP_PRODUCT P , SH_SHOP_MAINCATEGORY M, SH_SHOP_SUBCATEGORY S, SH_SHOP_BUSINESS_NAME B, SH_LOCATION L
+		WHERE P.SHOP_SUBCATEGORY_NO = S.SHOP_SUBCATEGORY_NO
+			AND P.SHOP_MAINCATEGORY_NO = M.SHOP_MAINCATEGORY_NO
+			AND P.SHOP_BUSINESS_NO = B.SHOP_BUSINESS_NO
+			AND P.LOCATION_NO = L.LOCATION_NO
+			AND
+				<foreach collection="array" item="arr" index="index" separator="OR">
+				(P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME) LIKE '%' + #{arr} + '%'			
+				</foreach>
+			
+<!-- 			AND REGEXP_LIKE ( (P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME),
+				' #{value} ') -->
+<!-- 				'<foreach collection="array" item="arr" index="index" separator="||">
+						#{arr} </foreach> ') -->
+			
+<!-- 			AND (P.PRODUCT_NAME || P.PRODUCT_DETAIL || P.PRODUCT_COMPOSITION || S.SHOP_SUBCATEGORY_NAME || M.SHOP_MAINCATEGORY_NAME || B.SHOP_BUSINESS_NAME || L.LOCATION_NAME)
+				LIKE '%' || 
+						<foreach collection="array" item="arr" index="index" separator="||">
+							#{arr } </foreach>  || '%' -->
+		ORDER BY P.PRODUCT_UPDATED_DATE DESC
+
+	</select>
+	
 
 	<!-- List<ShopProduct> getPopularProductsbySoldNo(); -->
 	<select id="getPopularProductsbySoldNo" resultType="com.sh.vo.ShopProduct">

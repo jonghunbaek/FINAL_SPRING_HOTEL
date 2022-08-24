@@ -125,7 +125,7 @@
 			</div>
 			
 			<div class="col-3" >		
-				<form action="/shop/search_product/product_lists" id="searchForm" method="get">
+				<form action="/shop/search/list" id="searchForm" method="get">
 			        <div class="searchbox" >
 			            <input type="text" name="keyword" id="keyword" placeholder="검색어를 입력해주세요" >
 			            <button type="submit" >Search</button>

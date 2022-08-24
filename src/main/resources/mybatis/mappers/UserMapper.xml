@@ -165,7 +165,7 @@
 		set 
 			user_password = #{password}
 		where user_email = #{email}
-    </update>
+	</update>
     
 	<!-- void deleteUser(int userNo); -->
 	<delete id="deleteUser" parameterType="int">
