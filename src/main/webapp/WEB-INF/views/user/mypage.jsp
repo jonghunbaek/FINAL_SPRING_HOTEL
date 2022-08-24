@@ -197,8 +197,8 @@
 								<c:forEach var="his" items="${pointHis }">
 									<tr class="first last">
 										<td>${his.title }</td>
-										<td>${his.earned }</td>
-										<td>${his.used }</td>
+										<td>${his.earned }P</td>
+										<td>${his.used }P</td>
 										<td><fmt:formatDate value="${his.createdDate}" pattern="yyyy년 MM월 dd일"/></td>
 									</tr>
 								</c:forEach>
