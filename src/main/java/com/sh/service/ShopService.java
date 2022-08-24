@@ -38,11 +38,19 @@ public class ShopService {
 		return products;
 	}
 	
-	//search.jsp에 들어갈 메소드
+	//search.jsp에 들어갈 메소드1
 	public List<ShopProduct> getSearchResults(String[] keywords) {
 		List<ShopProduct> results = shopMapper.getProductsByKeywords(keywords);
 		return results;
 	}
+	
+	//search.jsp에 들어갈 메소드2
+	public List<ShopProduct> getSearchResultsByModifiedKeywords(String modifiedKeyword) {
+		List<ShopProduct> results = shopMapper.getProductsByModifiedKeywords(modifiedKeyword);
+		return results;
+	}
+	
+	
 
 	// detail.jsp에 들어갈 메소드
 	public ShopProduct getProductDetail(int no) {
