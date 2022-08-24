@@ -117,7 +117,8 @@ public class UserController {
 		model.addAttribute("user", user);
 		
 		return "user/diningReservationInfo";
-
+	}
+	
 	// 스프링 샵 -> 상품 구매내역
 	@GetMapping("/shop")
 	public String shop(Model model) {
