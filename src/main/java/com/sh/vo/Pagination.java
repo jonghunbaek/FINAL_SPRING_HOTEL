@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
+@ToString
 @Alias("Pagination")
 public class Pagination {
 

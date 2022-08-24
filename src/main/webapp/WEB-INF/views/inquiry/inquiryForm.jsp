@@ -71,7 +71,7 @@
 							<select name="locationNo" disabled>
 								<option label="호텔 선택">
 								<c:forEach var="location" items="${location}">
-								<option value="${location.no }" label="${location.name}스프링호텔">
+								<option value="${location.no}" label="${location.name}스프링호텔">
 								</c:forEach>
 							</select>
 							</td>
@@ -83,7 +83,7 @@
 								<option label="선택">
 								<c:forEach var="category" items="${category}">
 									<c:if test="${category.groupNo eq 200 }">
-										<option value="${category.no}" label="${category.name }">	
+										<option value="${category.no}" label="${category.name}">	
 									</c:if>
 								</c:forEach>
 								<option value="500" label="기타">

@@ -36,7 +36,7 @@ public class AdminQnaController {
 	 * @return
 	 */
 	@GetMapping(path = "/inquiry")
-	public String inquiryList(@LoginUser User loginUser, @RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
+	public String inquiryList(@RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
 		
 		int totalRows = inquiryService.getTotalRows();
 		Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
@@ -83,13 +83,35 @@ public class AdminQnaController {
 		return "redirect:/admin/detail?no="+qna.getNo();
 	}
 	
+	/** 답변내역 수정
+	 * @param no
+	 * @param model
+	 * @return
+	 */
+	@GetMapping(path="/modify")
+	public String modifyform(@RequestParam(value="no", required=false) int no, Model model) {
+		Qna inquiry = inquiryService.getInquiryDetail(no); 
+		model.addAttribute("inquiry", inquiry);
+		return "admin/inquiry/modify";
+	}
+	
+	/** 답변내역 수정
+	 * @param qna
+	 * @return
+	 */
+	@PostMapping(path="/modify")
+	public String modify(Qna qna) {
+		adminQnaService.updateAnswer(qna);
+		return "redirect:/admin/detail?no="+qna.getNo();
+	}
+	
 	/** 답변삭제
 	 * @param no
 	 * @return
 	 */
-	@PostMapping(path="/deleteAnswer")
+	@GetMapping(path="/delete")
 	public String deleteAnswer(Qna qna) {
 		adminQnaService.deleteAnswer(qna);
-		return "redirect:/admin/inquiry";
+		return "redirect:/admin/detail?no="+qna.getNo();
 	}
 }

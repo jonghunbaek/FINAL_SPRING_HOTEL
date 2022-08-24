@@ -65,7 +65,7 @@
 	</div>
 	<div class="row revInfo">
 		<div class="col-11">
-			<h6><strong>${dining.name }</strong>&nbsp;&nbsp;&nbsp;${dining.location.name }신라호텔<strong>&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.date }(${day})&nbsp;&nbsp;&nbsp;|
+			<h6><strong>${dining.name }</strong>&nbsp;&nbsp;&nbsp;${dining.location.name }스프링호텔<strong>&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.date }(${day})&nbsp;&nbsp;&nbsp;|
 			&nbsp;&nbsp;&nbsp;${mealTime }&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.visitTime }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;성인&nbsp;${diningReservationForm.adult }&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
 			어린이 ${diningReservationForm.child }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;유아 ${diningReservationForm.baby }&nbsp;&nbsp;&nbsp;&nbsp;</strong></h6>
 		</div>

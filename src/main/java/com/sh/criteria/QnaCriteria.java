@@ -14,7 +14,6 @@ public class QnaCriteria {
 	private Integer userNo;
 	private String answerState;
 	private String keyword;
-	private String author;
 	private String sort;
 	private String rows;
 	
