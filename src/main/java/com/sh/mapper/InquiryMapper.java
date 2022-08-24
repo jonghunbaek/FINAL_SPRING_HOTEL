@@ -28,6 +28,9 @@ public interface InquiryMapper {
 	// 모든 문의내역 조회
 	List<Qna> getAllInquiry(Pagination pagination);
 	
+	// 고객별 문의내역 조회
+	List<Qna> getAllInquiryByUserNo(@Param("pagination") Pagination pagination, @Param("userNo")int userNo);
+	
 	// 옵션별 문의내역 조회
 	List<Qna> getInquiryByCriteria(QnaCriteria qnaCriteria);
 	
@@ -47,6 +50,7 @@ public interface InquiryMapper {
 	
 	// 페이징처리 관련 
 	int getQnaTotalRows();
+	int getQnaTotalRowsByUserNo(int no);
 	int getQnaTotalRowsByFilter(QnaCriteria qnaCriteria);
 
 	

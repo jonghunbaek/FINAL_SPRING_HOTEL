@@ -73,7 +73,7 @@
 					</div>
 					<div class="col-6">
 						<p><strong>${dining.name}</strong></p>
-						<p class="nor-text">${dining.location.name }신라호텔</p>
+						<p class="nor-text">${dining.location.name }스프링호텔</p>
 						<p class="nor-text">${dining.dnInfo.location }</p>
 						<p class="nor-text">${dining.dnInfo.tel }</p>
 					</div>

@@ -48,7 +48,7 @@
 						<div class="col" style="margin-top: 10px;">
 							<img class="row-6" alt="호텔사진" src="../resources/images/room/location/${roomReservationForm.locationName }.jpg" style="width: 150px;">
 							<div class="row-6" style="margin-top: 10px;">
-								<div class="title-bold" style="font-weight: 700;">${roomReservationForm.locationName} 신라호텔</div>
+								<div class="title-bold" style="font-weight: 700;">${roomReservationForm.locationName} 스프링호텔</div>
 								<!-- <div style="color: gray; font-size:13px; margin-top: 5px; ">서울특별시 중구 장충동 동호로 249</div> -->
 							</div>
 						</div>

@@ -279,7 +279,7 @@
 <title>객실 관리</title>
 </head>
 <body>
-<c:set var="menu" value="roomrev"/>
+<c:set var="menu" value="inquiry"/>
 <%@ include file="../common/nav.jsp" %>
 <div class="container-fluid">
 	<div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 pb-3">
@@ -341,10 +341,6 @@
 							</tr>
 							<c:if test="${inquiry.answerState eq 'Y' }">
 							<tr>
-								<td>답변작성자</td>
-								<td>${LOGIN_ADMIN.name}</td>
-							</tr>
-							<tr>
 								<td>답변날짜</td>
 								<td><fmt:formatDate value="${inquiry.answerCreatedDate}" pattern="yyyy-M-d"/></td>
 							</tr>
@@ -358,8 +354,10 @@
 					<c:if test="${inquiry.answerState eq 'N'}">
 						<button type="button" class="btn btn-inquiry" onclick="location.href='/admin/answerForm?no=${inquiry.no}'">답변작성</button>
 					</c:if>
+					<c:if test="${inquiry.answerState eq 'Y'}">
 					<button type="button" class="btn btn-inquiry" onclick="location.href='/admin/modify?no=${inquiry.no}'">답변수정</button>
 					<button type="button" class="btn btn-inquiry" onclick="location.href='/admin/delete?no=${inquiry.no}'">답변내역 삭제</button>
+					</c:if>
 					<button style="float:right" type="button" class="btn btn-inquiry" onclick="location.href='/admin/inquiry'">목록</button>
 				</div>
 			</div>

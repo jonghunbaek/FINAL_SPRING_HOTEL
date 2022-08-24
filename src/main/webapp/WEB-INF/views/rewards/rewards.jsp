@@ -151,7 +151,7 @@
 								<span class="price">261,000&nbsp;원 ~</span>
 							</dd>
 						</dl>
-						<a href="#" onclick="checkR('17705', '서울신라호텔'); return false;" id="btn-reservation">
+						<a href="#" onclick="checkR('17705', '서울스프링호텔'); return false;" id="btn-reservation">
 							<img src="resources/images/rewards/btnReservation.gif" alt="예약하기">
 						</a>
 					</div>
@@ -183,7 +183,7 @@
 								<span class="price">261,000&nbsp;원 ~</span>
 							</dd>
 						</dl>
-						<a href="#" onclick="checkR('17705', '서울신라호텔'); return false;" id="btn-reservation">
+						<a href="#" onclick="checkR('17705', '서울스프링호텔'); return false;" id="btn-reservation">
 							<img src="resources/images/rewards/btnReservation.gif" alt="예약하기">
 						</a>
 					</div>
@@ -215,7 +215,7 @@
 								<span class="price">261,000&nbsp;원 ~</span>
 							</dd>
 						</dl>
-						<a href="#" onclick="checkR('17705', '서울신라호텔'); return false;" id="btn-reservation">
+						<a href="#" onclick="checkR('17705', '서울스프링호텔'); return false;" id="btn-reservation">
 							<img src="resources/images/rewards/btnReservation.gif" alt="예약하기">
 						</a>
 					</div>
@@ -247,7 +247,7 @@
 								<span class="price">261,000&nbsp;원 ~</span>
 							</dd>
 						</dl>
-						<a href="#" onclick="checkR('17705', '서울신라호텔'); return false;" id="btn-reservation">
+						<a href="#" onclick="checkR('17705', '서울스프링호텔'); return false;" id="btn-reservation">
 							<img src="resources/images/rewards/btnReservation.gif" alt="예약하기">
 						</a>
 					</div>
