@@ -124,8 +124,7 @@
 					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div>
 					      <div class="modal-body">
-				        	<table class="table find
-				        	Id">
+				        	<table class="table findId">
 						      	<tr>
 							    	<td><label>성명</label></td>
 							    	<td><input type="text" class="form-control" id="name" name="name" placeholder="스프링리워즈 이름 입력"
@@ -141,8 +140,8 @@
 					      	</div>
 					      </div>
 					      <div class="modal-footer">
-					      	<button type="button" class="btn text-white" style="background-color:#856F5D;" onclick="findId()">확인</button>
-					        <button type="button" class="btn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
+					      	<button type="button" class="btn findIdBtn text-white" style="background-color:#856F5D;" onclick="findId()">확인</button>
+					        <button type="button" class="btn findIdCloseBtn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
 					      </div>
 					    </div>
 					  </div>
@@ -173,8 +172,8 @@
 					      	</div>
 					      </div>
 					      <div class="modal-footer">
-					        <button type="button" class="btn text-white" style="background-color:#856F5D;" onclick="findPw()">확인</button>
-					        <button type="button" class="btn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
+					        <button type="button" class="btn findPwBtn text-white" style="background-color:#856F5D;" onclick="findPw()">확인</button>
+					        <button type="button" class="btn findPwCloseBtn text-white" style="background-color:#856F5D;" data-bs-dismiss="modal">취소</button>
 					      </div>
 					    </div>
 					  </div>
@@ -182,112 +181,6 @@
 			</div>
 		</div>
 	</div>
-               <!-- 
-					<div class="beLogin">
-						<p class="tpBox">※ 현장가입 및 기존 멤버십에서 전환하신 회원님께는 온라인 계정을 활성화 하시면
-							로그인 하실 수 있습니다.</p>
-						<p class="btnBox">
-							<a href="javascript:fnCmdActi();" class="btnOnline"><span>온라인
-									계정 등록하기</span></a>
-						</p>
-					</div>
-				</div>
-			</div>
-             
-				<div class="allBox">
-					<div class="box">
-						<div class="loginTabl rBtn">
-							<div class="radio" id="uniform-rMember">
-								<span class="checked"><input type="radio"
-									class="rMember uiform radio" id="rMember" name="rMember"
-									checked="" value="Y" autocomplete="off"></span>
-							</div>
-							<label class="rMember mgr22" for="rMember">객실</label>
-							<div class="radio" id="uniform-rMemberNone">
-								<span><input type="radio"
-									class="rMemberNone uiform radio" id="rMemberNone"
-									name="rMember" value="N" autocomplete="off"></span>
-							</div>
-							<label class="rMemberNone" for="rMemberNone">다이닝</label>
-						</div>
-						<div class="formBox">
-							<div class="cBox">
-								<fieldset class="loginSet">
-									<form id="loginResvForm" action="/membership/resv/rpm/memListNonMbrResv.do" method="POST">
-										<div class="inputFormNo formOn" id="roomR">
-											<div class="inputId">
-												<label for="rNum">예약번호</label><input type="text"
-													onkeyup="return removeChar(event)"
-													onkeydown="return onlyNumber(event)"
-													class="id rNum input uiform text" id="resvId" name="resvId"
-													value="" autocomplete="off">
-											</div>
-											<div class="inputPw">
-												<label for="rName1">first name </label><input type="text"
-													value="First name(이름)" id="guestEnFnm" name="guestEnFnm"
-													style="text-transform: uppercase;"
-													onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');"
-													class="rName1 input uiform text" autocomplete="off"
-													title="성을 제외한 이름 입력"> <label for="rName2">Last
-													name </label><input type="text" value="Last name(성)"
-													id="guestEnLnm" name="guestEnLnm"
-													class="rName2 input uiform text"
-													style="text-transform: uppercase;"
-													onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');"
-													autocomplete="off"
-													onkeydown="javascript: if(event.keyCode == 13) loginSubmit();"
-													title="이름을 제외한 성 입력">
-											</div>
-										</div>
-										<div class="loginBtn">
-											<a href="javascript:loginSubmit();" title="Login"><img
-												src="resources/images/loginBtnLogin.gif" alt="로그인"
-												class="btnLogin"></a>
-										</div>
-									</form>
-									객실 예약
-
-									 비회원 기능 
-									 다이닝 예약 
-									
-									<form id="loginDiningForm"
-										action="/membership/resv/rpm/memListNonMbrResv.do"
-										method="POST">
-										<input type="hidden" id="visitName" name="visitName"
-											autocomplete="off"> <input type="hidden" id="resvId"
-											name="resvId" autocomplete="off"> <input
-											type="hidden" id="resvTypeCd" name="resvTypeCd" value="N"
-											autocomplete="off">
-										<div id="diningR" class="inputFormNo ">
-											<div class="inputId">
-												<input type="text" onkeydown="javascript: if(event.keyCode == 13) loginSubmit()" class="id rNum input uiform text" id="resvCode" name="resvCode"
-													onkeyup="this.value=this.value.replace(/[^A-Z0-9]/gi,'');"
-													placeholder="예약번호"">
-											</div>
-											<div class="inputPw">
-												<input type="text" onkeydown="javascript: if(event.keyCode == 13) loginSubmit()" style="ime-mode: active" id="guestNm" 
-													onkeyup="this.value=this.value.replace(/[^가-힣ㄱ-ㅎㅏ-ㅣ]/gi,'');"
-													class="rName3 input uiform text" placeholder="이름">
-											</div>
-										</div>
-									 	<p class="msg" id="pwNot" style="display: none">
-										아이디와 비밀번호가 일치하지 않습니다.<br>연속 5회 오류시(로그인 날짜가 달라도 해당됨) 로그인이 제한됩니다.<br>
-										제한해제를 위해서는 임시 비밀번호를 발급받으시거나 비밀번호를 재설정해주시기 바랍니다.</p><br>
-										<p class="msg" id="pwError" style="display: none">
-										비밀번호를 연속 5회 잘못 입력하셨습니다. 임시 비밀번호를 발급받아 이용해주시기 바랍니다.</p>
-									<input type="hidden" name="nextURL" id="nextURL" value="">
-										
-									</form>
-									<div class="loginBtn">
-										<a href="javascript:loginSubmit();" title="Login"> <img
-											src="resources/images/loginBtnLogin.gif"
-											alt="로그인" class="btnLogin">
-										</a>
-									</div>
-							</div>
-						</div>
-					</div>
-					   -->
 <%@ include file="common/footer.jsp"%>
 <script>
 //아이디 찾기
@@ -304,7 +197,8 @@ function findId() {
 				alert("아이디가 존재하지 않습니다.");
 			} else {
 				$(".findId").css('display','none');
-				$(".findbtn").css('display','none');
+				$(".findIdBtn").css('display','none');
+				$(".findIdCloseBtn").html("확인");
 				let content = '<p class="text-center">아이디는 <strong>'+data+'</strong> 입니다.</p>';
 				$(".showId").append(content);
 			}
@@ -315,7 +209,7 @@ function findId() {
 	})
 };
 
-//비밀번호 찾기
+//비밀번호 찾기 임시비밀번호 이메일로 발송
 function findPw() {
 	let id = document.getElementById('id').value;
 	let email = document.getElementById('email2').value;
@@ -325,12 +219,14 @@ function findPw() {
 		type: 'post',
 		data: {"id":id, "email":email},
 		success:function(data){
-			if(data == 0) {
-				alert("아이디 혹은 이메일이 잘못되었습니다.");
-			} else {
+			if(data == "success") {
 				$(".findPw").css('display','none');
-				let content = '<p class="text-center">비밀번호는 <strong>'+data+'</strong> 입니다.</p>';
+				$(".findPwBtn").css('display','none');
+				$(".findPwCloseBtn").html("확인");
+				let content = '<p class="text-center">임시 비밀번호를 '+email+'로 보냈습니다.</p>';
 				$(".showPw").append(content);
+			} else if (data =="fail"){
+				alert("아이디 혹은 이메일이 잘못되었습니다.");
 			}
 		}, 
 		error:function(){
@@ -393,7 +289,6 @@ $(function() {
 		});		
 	})
 });	
-
 	var naver_id_login = new naver_id_login("ULeHM_EeBcaEqPfusaeF", "http://localhost/");
  	var state = naver_id_login.getUniqState();
  	naver_id_login.setButton("green",2,60);

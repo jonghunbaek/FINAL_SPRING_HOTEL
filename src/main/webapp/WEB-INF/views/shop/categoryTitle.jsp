@@ -30,12 +30,13 @@
 		<div class="col">
 			<div>
 				<h1><strong>
-				<c:if test="${empty shopList[0].subCategory }">
+				<c:if test="${empty param.subCategoryNo }">
 					<c:out value="${shopList[0].mainCategory.name }"/>
 				</c:if>
-				<c:if test="${not empty shopList[0].subCategory }">
+				<c:if test="${not empty param.subCategoryNo }">
 					<c:out value="${shopList[0].subCategory.subCategoryName }"/>
 				</c:if>
+
 			</div>
 		</div>
 	</div>

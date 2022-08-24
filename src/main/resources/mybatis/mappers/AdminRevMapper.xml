@@ -43,10 +43,10 @@
 	<insert id="insertNewRoomRev" parameterType="com.sh.web.form.AdminAddRevForm">
 			insert into sh_room_rev
 			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time, room_rev_checkout_time, room_rev_request,
-			 room_rev_option_checkin_time, room_bedtype, user_no, room_id) 
+			 room_rev_option_checkin_time, room_bedtype, user_no, room_id, room_rev_option_adult_bf, room_rev_option_child_bf, room_rev_option_extra_bed) 
 			values 
 			(room_rev_seq.nextval, #{adult}, #{child}, #{totalPrice}, #{startDate}, #{endDate}, #{request},
-			 #{timeOption}, #{bedType}, #{no}, #{id});
+			 #{timeOption}, #{bedType}, #{no}, #{id}, #{adultBf}, #{childBf}, #{extraBed})
 	</insert>
 
 	<resultMap type="RoomRev" id="RoomRevResultMap">
@@ -64,9 +64,108 @@
 		<result column="room_bedtype" property="bedType"/>
 		<result column="room_rev_created_date" property="createdDate"/>
 		<result column="room_rev_updated_date" property="updatedDate"/>
+		<result column="room_rev_room_name" property="roomName"/>
+		<result column="room_rev_location_name" property="locationName"/>
+		<result column="room_rev_user_title" property="userTitle"/>
+		<result column="room_rev_first_name" property="firstName"/>
+		<result column="room_rev_last_name" property="lastName"/>
+		<result column="room_rev_email" property="email"/>
+		<result column="room_rev_tel" property="tel"/>
+		<result column="room_rev_country" property="country"/>
+		<result column="room_rev_option_adult_bf" property="optionAdultBf"/>
+		<result column="room_rev_option_child_bf" property="optionChildBf"/>
+		<result column="room_rev_option_extra_bed" property="extraBed"/>
+		<result column="room_rev_option_total_price" property="optionTotalPrice"/>
+		<result column="room_rev_card_type" property="cardType"/>
+		<result column="room_rev_card_number1" property="cardNumber1"/>
+		<result column="room_rev_card_number2" property="cardNumber2"/>
+		<result column="room_rev_card_number3" property="cardNumber3"/>
+		<result column="room_rev_card_number4" property="cardNumber4"/>
+		<result column="room_rev_card_type" property="cardType"/>
+		<result column="room_rev_card_valid_month" property="validMonth"/>
+		<result column="room_rev_card_valid_year" property="validYear"/>
+		<result column="is_m" property="isMem"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
 	</resultMap>
+	
+	<resultMap type="RtRevCount" id="RtRevCountResultMap">
+		<result column="rt_rev_count" property="revCount"/>
+		<result column="rt_rev_count_date" property="countDate"/>
+		<result column="rt_rev_count_meal_time" property="mealTime"/>
+		<result column="rt_rev_count_seat_type" property="seatType"/>
+		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"></association>
+	</resultMap>
+	
+	<resultMap type="DnRev" id="DiningRevResultMap">
+		<result column="dn_rev_meal_time" property="mealTime"/>
+		<result column="dn_rev_week" property="week"/>
+		<result column="dn_rev_time" property="time"/>
+		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"/>
+	</resultMap>
+	<!-- ======================객실,다이닝 예약추가========================= -->
+	<!-- List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria); -->
+	<select id="getRtSelectableDate" parameterType="AdminDnRevCriteria" resultMap="RtRevCountResultMap">
+		select rt_rev_count_date
+		from sh_rt_rev_count
+		where rt_rev_count_meal_time = 'dinner'
+		and rt_rev_count + #{adult} + #{child} &gt; (select dn_max_count
+						                         	 from sh_dn
+						                          	 where location_no = #{location}
+						                          	 and dn_category_no = #{dnCategory})
+		intersect
+		select rt_rev_count_date
+		from sh_rt_rev_count
+		where rt_rev_count_meal_time = 'lunch'
+		and rt_rev_count + #{adult} + #{child} &gt; (select dn_max_count
+							                         from sh_dn
+							                         where location_no = #{location}
+							                         and dn_category_no = #{dnCategory})
+	</select>
+	
+	<!-- List<String> getRevDateBySelectedDate(AdminDnRevCriteria adminDnRevCriteria); -->
+	<select id="getRevDateBySelectedDate" parameterType="adminDnRevCriteria" resultType="string">
+		select distinct rt_rev_count_date
+		from sh_rt_rev_count
+		where rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1
+	</select>
+	
+	<!-- // 선택될 날짜가 없을때 mealtime을 가져온다.
+	List<String> getMealTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria); -->
+	<select id="getMealTimeByRevIsNot" parameterType="AdminDnRevCriteria" resultType="string">
+		select distinct DN_REV_MEAL_TIME as mealTime
+		from sh_dn_rev
+		where dn_no = (select dn_no
+		               from sh_dn
+		               where location_no = #{location}
+		               and dn_category_no = #{dnCategory})
+	</select>
+	<!-- List<String> getMealTimeByRevIs(AdminDnRevCriteria adminDnRevCriteria); -->
+	<select id="getMealTimeByRevIs" parameterType="AdminDnRevCriteria" resultType="string">
+		select distinct DN_REV_MEAL_TIME
+		from sh_dn_rev
+		where dn_no = (select dn_no
+		               from sh_dn
+		               where location_no = #{location}
+		               and dn_category_no = #{dnCategory})
+		and dn_rev_meal_time not in (select RT_REV_COUNT_MEAL_TIME
+		                             from sh_rt_rev_count
+		                             where rt_rev_count + #{adult} + #{child} &gt; (select dn_max_count
+						                                                            from sh_dn
+						                                                            where location_no = #{location}
+						                                                            and dn_category_no = #{dnCategory})
+		                             and rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1)		
+	</select>
+	<!-- // 선택될 날짜가 없을때 visittime을 가져온다.  ==============일단 보류================
+	List<String> getVisitTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria); -->
+	<select id="getVisitTimeByRevIsNot" parameterType="AdminDnRevCriteria" resultType="string">
+		select distinct DN_REV_TIME as time
+		from sh_dn_rev
+		where dn_no = (select dn_no
+		               from sh_dn
+		               where location_no = #{location}
+		               and dn_category_no = #{dnCategory})
+	</select>
 	
 	<!-- ======================객실,다이닝 예약현황========================= -->
 	<!-- List<RoomRev> getPeriodByNo(int revNo); -->

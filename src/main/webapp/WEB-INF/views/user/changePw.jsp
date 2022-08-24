@@ -172,6 +172,7 @@
 	}
 	
 	function submitPasswordCheck() {
+		let password = $('#input-password').val();
 		let password1 = $('#input-newPassword1').val();
 		let password2 = $('#input-newPassword2').val();
 		let passwordCheck = $('#passwordCheckMessage').html();
@@ -203,6 +204,10 @@
 		}
 		if (password1 !== password2) {
 			alert("새 비밀번호를 확인해주세요");
+			return false;
+		}
+		if (password == password1 || password == password2) {
+			alert("기존 비밀번호와 다른 비밀번호를 설정해주세요");
 			return false;
 		}
 		alert("비밀번호가 변경되었습니다.");

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -102,51 +103,22 @@
 			<h3 style="">인기상품</h3>
 		</div>
 		<div class="row row-cols-3" style="">
+				<c:forEach var="popular" items="${popularlist }">
 				<div class="col position-relative" style=" ">
-					<div class="imgRow">
-						<img src="../resources/images/shop/product/lh_product_020.jpg" style="width:100%;">
+					<div class="imgRow" style="height:70%;position:relative; padding:0px 5px;">
+						<img src="../resources/images/shop/product/${popular.imageName }.jpg" style="width:100%; height:100%;">
 					</div>
 					<div class="titleRow" style="">
-							<span class="sub-title" style="">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#1" class="stretched-link" style="">애플망고 빙수</a></h2>
+							<span class="sub-title" style="">[스프링호텔 ${popular.location.name } ${popular.business.name }]</span>
+							<h2><a href="/shop/detail?no=${popular.no }" class="stretched-link" style="">${popular.name }</a></h2>
 					</div>
 					<div class="detailRow" style="">
 						<p style="">자세히보기 &gt;</p>
 					</div>
 				</div>
-				<div class="col position-relative" style=" ">
-					<div class="imgRow">
-						<img src="../resources/images/shop/product/lh_product_021.jpg" style="width:100%;">
-					</div>
-					<div class="titleRow" style="">
-							<span class="sub-title" style="">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#1" class="stretched-link" style="">애플망고 빙수</a></h2>
-					</div>
-					<div class="detailRow" style="">
-						<p style="">자세히보기 &gt;</p>
-					</div>
-				</div>
-				<div class="col position-relative" style=" ">
-					<div class="imgRow">
-						<img src="../resources/images/shop/product/lh_product_022.jpg" style="width:100%;">
-					</div>
-					<div class="titleRow" style="">
-							<span class="sub-title" style="">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#1" class="stretched-link" style="">애플망고 빙수</a></h2>
-					</div>
-					<div class="detailRow" style="">
-						<p style="">자세히보기 &gt;</p>
-					</div>
-				</div>
-
-
+				</c:forEach>
 		</div>
 	</section>
-	
-<style>
-
-
-</style>
 
 <!-- HOME BANNER -->
 	<section class="home-banner" style="margin-top: 150px; width: 100%; position: relative;">
@@ -166,51 +138,25 @@
 <!-- RECOMMENDS -->
 	<section class="recommends" style="width: 1400px; margin: 0 auto;">
 		<div class="row" style="margin: 150px 0 50px;">
-			<h3 style="font-size: 40px;color: #998465; ">e-SHOP 추천상품</h3>
+			<h3 style="font-size: 40px;color: #998465; ">e-SHOP 추천 할인 상품</h3>
 		</div>
 		<div class="row row-cols-3" style="margin: 0 auto; justify-content: space-between;">
+				<c:forEach var="discounted" items="${discountedlist }">
 				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
 					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/lh_product_024.jpg" style="width:100%;">
+						<img src="../resources/images/shop/product/${discounted.imageName }.jpg" style="width:100%;">
 					</div>
 					<div class="" style="margin-top:24px; padding:0px;">
-							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#1" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">애플망고 빙수</a></h2>
+							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 ${discounted.location.name } ${discounted.business.name }]</span>
+							<h2><a href="/shop/detail?no=${discounted.no }" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">${discounted.name }</a></h2>
 					</div>
 					<div class="" style="margin: 20px 0 0;">
 						<p style="font-size:16px; color: #998465;">자세히보기 &gt;</p>
 					</div>
 				</div>
-				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
-					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/lh_product_025.jpg" style="width:100%;">
-					</div>
-					<div class="" style="margin-top:24px; padding:0px;">
-							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#2" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">애플망고 빙수</a></h2>
-					</div>
-					<div class="" style="margin: 20px 0 0;">
-						<p style="font-size:16px; color: #998465;">자세히보기 &gt;</p>
-					</div>
-				</div>
-				<div class="col position-relative" style="margin:0px 15px 25px 0px; float: left; width: 442px; ">
-					<div class="" style="position:relative; padding:0;">
-						<img src="../resources/images/shop/product/lh_product_026.jpg" style="width:100%;">
-					</div>
-					<div class="" style="margin-top:24px; padding:0px;">
-							<span class="sub-title" style="border:1px dotted dark-gray; color: #666; font-size: 16px;margin-bottom: 10px;">[스프링호텔 서울]</span>
-							<h2><a href="/shop/productdetail#3" class="stretched-link" style="font-size: 22px; color: #333; font-weight:500;">애플망고 빙수</a></h2>
-					</div>
-					<div class="" style="margin: 20px 0 0;">
-						<p style="font-size:16px; color: #998465;">자세히보기 &gt;</p>
-					</div>
-				</div>
-
+				</c:forEach>
 		</div>
 	</section>
-
-
-
 
 </div>
 <%@ include file="footer.jsp" %>

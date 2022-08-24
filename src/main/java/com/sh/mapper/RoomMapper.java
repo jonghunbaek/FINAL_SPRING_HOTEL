@@ -24,6 +24,9 @@ public interface RoomMapper {
 	Room getRoomById(int id);
 	RoomCategory getRoomCategoryByNo(int no);
 	
+	// 관리자 페이지 객실 신규예약 객실 검색
+	List<Room> getAllRoomByFilter(AdminRoomRevCriteria adminRoomRevCriteria);
+	
 	//모든 객실 유형 
 	List<RoomCategory> getAllRoomCategories();
 	
@@ -74,21 +77,17 @@ public interface RoomMapper {
 	// 객실 예약 
 	void insertRoomRev(RoomReservationForm revForm);
 
-	void insertRoomRev(RoomReservationForm roomReservationForm);
-
-
 	// 예약번호로 예약정보 가져오기
 	RoomRev getRoomRevByRoomRevNo(int no);
-	
-
-	// 관리자 페이지 객실 신규예약 객실 검색
-	List<Room> getAllRoomByFilter(AdminRoomRevCriteria adminRoomRevCriteria);
 
 	// 로케 번호로 모든 객실 반환 
 	List<Room> getAllRoomByLocationNo(int no);
 	
 	// 객실 종류 반환 
 	List<String> getRoomCategories();
+	
+	//객실 그룹번호로 객실유형 받기 
+	List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo);
 	
 
 }

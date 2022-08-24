@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,6 +26,8 @@ import com.sh.exception.ApplicationException;
 import com.sh.service.InquiryService;
 import com.sh.service.UserService;
 import com.sh.utils.SessionUtils;
+import com.sh.vo.Coupon;
+import com.sh.vo.PointHistory;
 import com.sh.utils.VerifyRecaptcha;
 import com.sh.vo.Location;
 import com.sh.vo.QnaCategory;
@@ -177,6 +180,21 @@ public class HomeController {
 			System.out.println("error:" + e);
 			return "registerform";
 		}
+		
+		// 회원가입시 쿠폰, 포인트 지급
+		Coupon coupon = new Coupon();
+		PointHistory pointHistory = new PointHistory();
+		User user = userService.getUserInfoByRownum(1);
+		coupon.setTitle("회원가입 축하 쿠폰 (숙박 예약시 30% 할인");
+		coupon.setUserNo(user.getNo());
+		pointHistory.setTitle("회원가입 축하");
+		pointHistory.setEarned(50);
+		pointHistory.setUsed(0);
+		pointHistory.setUserNo(user.getNo());
+		userService.insertCouponInfo(coupon);
+		userService.insertPointInfo(pointHistory);
+		userService.updateUserPointInfo(user.getNo(), 50);
+		
 		return "redirect:/completed";
 	}
 
@@ -205,11 +223,35 @@ public class HomeController {
 	}
 	
 	// 비밀번호 찾기
+	/* 
 	@PostMapping(path ="/findPw")
 	@ResponseBody
 	public String findPw(@RequestParam("id") String id, @RequestParam("email") String email) {
 		String findPw = userService.findPw(id, email);
 		return findPw;
+	} 
+	*/
+	/*
+	@GetMapping(path="/findPw")
+	public String find() {
+		return "findPw";
+	}
+	*/
+	
+	@PostMapping(path="/findPw")
+	@ResponseBody
+	public String findPw(@RequestParam("id") String id, @RequestParam("email") String email) throws Exception{
+		String result = userService.findPw(id,email);
+		try {
+			if ("success".equals(result)) {
+				return result; // 성공
+			} else {
+				return "fail"; // 실패
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "error"; //에러
+		}
 	}
 	
 	// 구글 reCapptcha

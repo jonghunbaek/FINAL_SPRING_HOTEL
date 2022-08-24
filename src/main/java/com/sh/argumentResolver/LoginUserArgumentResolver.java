@@ -8,6 +8,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.sh.annotation.LoginUser;
+import com.sh.vo.User;
 
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -19,7 +20,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 	@Override
 	public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-		return webRequest.getAttribute("LOGIN_USER", WebRequest.SCOPE_SESSION);
+		User user = (User)webRequest.getAttribute("LOGIN_USER", WebRequest.SCOPE_SESSION);
+		return user;
 	}
 }
 

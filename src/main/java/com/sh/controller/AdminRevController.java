@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.sh.criteria.AdminDnRevCriteria;
 import com.sh.criteria.AdminRoomRevCriteria;
 import com.sh.service.AdminRevService;
 import com.sh.vo.Pagination;
 import com.sh.vo.Room;
 import com.sh.vo.RoomRev;
+import com.sh.vo.RtRevCount;
 import com.sh.vo.User;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
@@ -43,7 +45,8 @@ public class AdminRevController {
 	public List<User> searchUser(String keyword) {
 		return adminRevService.getUserByName(keyword);
 	}
-		
+	
+	// ------------------------------------------객실 신규예약 등록---------------------------------------------------
 	// 객실 예약등록 페이지
 	@GetMapping(path = "/addrevroom")
 	public String addRevRoom() {
@@ -58,17 +61,31 @@ public class AdminRevController {
 	}
 	
 	// 객실 예약등록 페이지 신규 객실 예약등록
-	@PostMapping(path = "/addrevroom/addrevroomform")
+	@PostMapping(path = "/addrevroomform")
 	public String addRevRoom(AdminAddRevForm adminAddRevForm) {
 		adminRevService.insertNewRoomRev(adminAddRevForm);
 		return "admin/reservation/complete";
 	}
 	
+	// ------------------------------------------다이닝 신규예약 등록---------------------------------------------------
 	// 다이닝 예약등록 페이지
 	@GetMapping(path = "/addrevdining")
 	public String addRevDining() {
-		
 		return "admin/reservation/addrevdining";
+	}
+	
+	// 다이닝 필터조회 후 불가날짜 리턴 
+	@GetMapping(path = "/addrevdining/dn")
+	@ResponseBody
+	public List<RtRevCount> searchDining(AdminDnRevCriteria adminDnRevCriteria) {
+		return adminRevService.getRtSelectableDate(adminDnRevCriteria);
+	}
+	
+
+	@GetMapping(path = "/addrevdining/checkDnDate")
+	@ResponseBody
+	public List<String> checkDnDate(AdminDnRevCriteria adminDnRevCriteria) {
+		return adminRevService.getMealTime(adminDnRevCriteria);
 	}
 	
 	// ------------------------------------------객실예약조회관련---------------------------------------------------

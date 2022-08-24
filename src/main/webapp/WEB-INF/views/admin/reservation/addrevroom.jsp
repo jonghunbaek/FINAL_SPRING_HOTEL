@@ -172,10 +172,6 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-4 mb-3">
-								<label for="recipient-name" class="col-form-label">국적</label> 
-								<input type="text" class="form-control" name="adult" id="user-country">
-							</div>
 							<div class="col-8 mb-3">
 								<label for="recipient-name" class="col-form-label">주소</label> 
 								<input type="text" class="form-control" name="adult" id="user-address">
@@ -185,7 +181,7 @@
 				</div>
 				<!-- --------------------------------------예약정보 form--------------------------------------------- -->
 				<div class="col-6">
-					<form id="revForm" method="post" action="addrevroom/addrevroomform">
+					<form id="revForm" method="post" action="addrevroomform">
 						<input type="hidden" id="userNo" name="no">
 						<input type="hidden" id="roomId" name="id">
 						<p>예약정보</p>		
@@ -210,17 +206,17 @@
 							</div>
 							<div class="col-3 mb-3">
 								<label for="recipient-name" class="col-form-label">지점</label> 
-								<input type="text" class="form-control" name="location" id="location">
+								<input type="text" class="form-control" name="location" id="location" readonly>
 							</div>
 							<div class="col-3 mb-3">
 								<label for="recipient-name" class="col-form-label">객실타입</label> 
-								<input type="text" class="form-control" name="roomCategory" id="roomCategory">
+								<input type="text" class="form-control" name="roomCategory" id="roomCategory" readonly>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-6 mb-3">
 								<label for="recipient-name" class="col-form-label">숙박기간</label> 
-								<input type="text" class="form-control" name="checkinPeriod" id="checkinPeriod">
+								<input type="text" class="form-control" name="checkinPeriod" id="checkinPeriod" readonly>
 							</div>
 							<div class="col-3 mb-3">
 								<label for="recipient-name" class="col-form-label">체크인 예정시간</label> 
@@ -259,7 +255,7 @@
 							</div>
 							<div class="col-3 mb-3">
 								<label for="recipient-name" class="col-form-label">금액</label> 
-								<input type="text" class="form-control" name="price" id="totalPrice"><span style="position: relative; bottom: 26px; left: 140px;">원</span>
+								<input type="text" class="form-control" name="totalPrice" id="totalPrice" readonly><span style="position: relative; bottom: 26px; left: 140px;">원</span>
 							</div>
 						</div>
 						<div class="row">
@@ -369,6 +365,10 @@ $(function() {
 	// 고객명 검색
 	$("#search-keyword").on("click", function() {
 		let keyword = $("#keyword").val();
+		if (keyword == null || keyword == '') {
+			alert("고객명을 입력해주세요");
+			return false;
+		}
 		userCheck(keyword);
 	})
 	
@@ -387,7 +387,6 @@ $(function() {
 		$("#user-stay").attr('value', userDetail.stay);
 		$("#user-point").attr('value', userDetail.point);
 		$("#user-grade").attr('value', userDetail.grade.grade);
-		$("#user-country").attr('value', userDetail.country);
 		$("#user-address").attr('value', userDetail.totalAddress);
 		$("#userNo").attr('value', userDetail.no);
 		
@@ -420,6 +419,7 @@ $(function() {
 	})
 	
 	// 객실선택
+	let originalTotalPrice = 0;
 	let rooms = [];
 	$("#room-list").on("click",".btn-table", function() {
 		let i = $(this).attr("data-tag");
@@ -444,6 +444,8 @@ $(function() {
 		
 		let periodPrice = roomDetail.discountPrice*dateDiff;
 		
+		
+		originalTotalPrice = periodPrice;
 		$("#totalPrice").attr('value', periodPrice.toLocaleString());
 		$("#roomId").attr('value', roomDetail.id);
 		
@@ -452,70 +454,107 @@ $(function() {
 		rooms = [];
 	})
 	
-	// 조식,엑스트라베드 옵션에 따른 총 금액 변경------------------------------------------------------------------강사님께 질문
-	$("#options div").not(":last-child").on('propertychange change keyup paste input', function () {
+	// 조식,엑스트라베드 옵션에 따른 총 금액 변경----------------------propertychange change keyup paste input
+    $("#options div").not(":last-child").on('change', function () {
 		let $adultBf = $("#adultBf").val();
 		let $childBf = $("#childBf").val();
 		let $extraBed = $("#extraBed").val();
-		let $totalPrice = $("#totalPrice").val().replace(',','');
 		
-		let totalPrice = parseInt($totalPrice) + ($adultBf*50000) + ($childBf*40000) + ($extraBed*50000);
+		let totalPrice = originalTotalPrice + ($adultBf*50000) + ($childBf*40000) + ($extraBed*50000);
 		
 		$("#totalPrice").attr('value', totalPrice.toLocaleString());
 	})
 	
 	// 인원 수 유효성체크
-	$("#adult").on('keyup mouseup', function () {
+	let $preValAdult = '';
+	$("#adult").on('change', function () {
 		
-		let $value = $("#adult").val();
+		let $adultBf = $("#adultBf").val();
+		let $adult = $("#adult").val();
+		let type = $("#roomCategory").val();
+		
 		var pattern = /[0-9]/;	// 숫자 
-		var testAdult = pattern.test($value);
+		var testAdult = pattern.test($adult);
 		
 		if (!testAdult) {
 			alert("숫자만 입력가능 합니다.")
 			$("#adult").val(1);
 		}
-
-		let type = $("#roomCategory").val();
-		if (type == '디럭스' || type == '비즈니스 디럭스' || type == '그랜드 코너 디럭스') {
-			if($value <= 0 || $value > 4) {
-				alert("해당타입은 성인 1~4명까지 선택가능합니다.");
-				$(this).val(1);
-			}
-		}
 		
-		if (type == '이그제큐티브 비즈니스 디럭스' || type == '이그제큐티브 그랜드 디럭스') {
-			if($value <= 0 || $value > 6) {
-				alert("해당타입은 성인 1~6명까지 선택가능합니다.");
-				$("#adult").val(1);
+		if ($adultBf > $adult || $adultBf < 0) {
+			alert("조식은 투숙인원보다 적거나 같아야합니다.");
+			$("#adultBf").val(0);
+		}
+
+		if (type == '디럭스' || type == '비즈니스 디럭스' || type == '그랜드 코너 디럭스') {
+			
+			if ($adult == 4) {
+				$(this).data('val', $(this).val());	
+				$preValAdult = $(this).data('val');
 			}
+			
+			if($adult <= 0 || $adult > 4) {
+				alert("해당타입은 성인 1~4명까지 선택가능합니다.");
+				$(this).val($preValAdult);
+			}
+			
+		} else if (type == '이그제큐티브 비즈니스 디럭스' || type == '이그제큐티브 그랜드 디럭스') {
+			
+			if ($adult == 6) {
+				$(this).data('val', $(this).val());	
+				$preValAdult = $(this).data('val');
+			}
+			
+			if($adult <= 0 || $adult > 6) {
+				alert("해당타입은 성인 1~6명까지 선택가능합니다.");
+				$(this).val($preValAdult);
+			}
+			
 		} else {
-			if($value <= 0 || $value > 10) {
+			
+			if ($adult == 10) {
+				$(this).data('val', $(this).val());	
+				$preValAdult = $(this).data('val');
+			}
+			
+			if($adult <= 0 || $adult > 10) {
 				alert("해당타입은 성인 1~10명까지 선택가능합니다.");
-				$("#adult").val(1);
+				$(this).val($preValAdult);	
 			}
 		}
 	})
 	
-	$("#child").on('keyup mouseup', function () {
+	let $preValChild = '';
+	$("#child").on('change', function () {
 		
-		let $value = $("#child").val();
+		let $childBf = $("#childBf").val();
+		let $child = $("#child").val();
 		var pattern = /[0-9]/;	// 숫자 
-		var testChild = pattern.test($value);
+		var testChild = pattern.test($child);
 		
 		if (!testChild) {
 			alert("숫자만 입력가능 합니다.")
 			$("#child").val(0);
 		}
+		
+		if($childBf > $child || $childBf < 0) {
+			alert("조식은 투숙인원보다 적거나 같아야합니다.");
+			$("#childBf").val(0);
+		}
+		
+		if ($child == 4) {
+			$(this).data('val', $(this).val());	
+			$preValChild = $(this).data('val');
+		}
 
-		if($value < 0 || $value > 4) {
+		if($child < 0 || $child > 4) {
 			alert("어린이는 0~4명까지 선택가능합니다.");
-			$("#child").val(0);
+			$(this).val($preValChild);
 		}
 	});
 	
 	// 조식 인원 유효성 체크
-	$("#adultBf").on('keyup mouseup', function () {
+	$("#adultBf").on('change', function () {
 		
 		let $adult = $("#adult").val();
 		let $adultBf = $("#adultBf").val();
@@ -527,13 +566,13 @@ $(function() {
 			$("#adultBf").val(0);
 		}
 
-		if($adultBf > $adult || $adultBf < 0) {
+		if ($adultBf > $adult || $adultBf < 0) {
 			alert("조식은 투숙인원보다 적거나 같아야합니다.");
 			$("#adultBf").val(0);
 		}
 	});
 	
-	$("#childBf").on('keyup mouseup', function () {
+	$("#childBf").on('change', function () {
 		
 		let $child = $("#child").val();
 		let $childBf = $("#childBf").val();
@@ -552,7 +591,7 @@ $(function() {
 	});
 	
 	// extrabed 유효성체크
-	$("#extraBed").on('keyup mouseup', function () {
+	$("#extraBed").on('change', function () {
 		
 		let $adult = $("#adult").val();
 		let $extraBed = $("#extraBed").val();
@@ -570,7 +609,24 @@ $(function() {
 		}
 	});
 	
-	// 객실 요금 변경
+	// 예약정보 form제출시 유효성체크
+	$("#btn-setting").on('click', function () {
+		let $location = $("#location").val();
+		let $roomCategory = $("#roomCategory").val();
+		let $checkinPeriod = $("#checkinPeriod").val();
+		let $roomId = $("#roomId").val();
+		let $userNo = $("#userNo").val();
+		
+		if ($userNo == null || $userNo == '') {
+			alert("고객정보 입력은 필수 입니다.");
+			return false;
+		}
+		
+		if ($location == '' || $roomCategory == '' || $checkinPeriod == '' || $roomId =='') {
+			alert("객실선택은 필수 입니다.");
+			return false;
+		}
+	})
 	
 	// 고객 검색 모달창 열기 
 	let userModal= new bootstrap.Modal($("#user-rev"), {keyboard: false})
