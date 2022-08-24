@@ -11,7 +11,7 @@ public void sendMail(User user) throws Exception{
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";		//SMTP 서버명
 		String hostSMTPid = "sw7321"; 		//네이버 아이디
-		String hostSMTPpw = "sw5321@@"; 	//네이버 비밀번호
+		String hostSMTPpw = "springhotel"; 	//네이버 비밀번호
 		
 		//보내는 사람
 		String fromEmail = "sw7321@naver.com";	//보내는 사람 메일
