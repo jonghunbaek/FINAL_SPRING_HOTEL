@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <style type="text/css">
 	
-	#container {padding-top: 65px; width: 1200px; height:1500px; margin: auto; padding-left: 0px; padding-right: 0px;}
+	#container {padding-top: 65px; width: 1200px; height:2000px; margin: auto; padding-left: 0px; padding-right: 0px;}
 	#container a {text-decoration: none; color: rgb(99, 62, 16);}
 	#container h3 {font-family: 'Nanum Myeongjo', serif; color: rgb(133, 111, 86);}
 	#container input {border: 1px solid rgb(204,204,204);}

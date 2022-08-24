@@ -19,7 +19,7 @@
 	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
 	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px; margin-bottom: 30px;}
-	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
+	#div-sidebar {float: left; width: 264px; height: 700px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
 	#list {margin-top: 25px; text-align: left;}
@@ -49,6 +49,7 @@
 	.formBox {border:solid 1px #e9e9e9; background-color: #fbfbfb; padding: 19px; margin: 0 0 10px 0;}
 	.formBox table {border-collapse: separate; border-spacing: 10px;}
 	#div-modal-btn {text-align: center; padding-top:30px; margin-bottom:30px;}
+	#div-modal-btn button {border: 0; padding: 0;}
 	.modal-footer {border-top: solid 1px #a1886f;  padding: 10px; margin: 0;}
 	#div-modal-box1 {float: left; text-align: center; width: 197px;}
 	#div-modal-box2 {float: right; text-align: center; width: 200px;}
@@ -69,17 +70,22 @@
 					<li><a href="dining">다이닝</a></li>
 				</ul>
 			</li>
+			<li id="list"><span>스프링 샵</span>
+				<ul id="list-border">
+					<li><a href="shop">주문내역 조회</a></li>
+				</ul>
+			</li>
 			<li id="list"><span>포인트</span>
 				<ul id="list-border">
 					<li><a href="point">포인트 조회</a></li>
-					<li><a href="#">포인트 조정신청</a></li>
-					<li><a href="#">상품권 교환 신청</a></li>
+					<!-- <li><a href="#">포인트 조정신청</a></li>
+					<li><a href="#">상품권 교환 신청</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>쿠폰</span>
 				<ul id="list-border">
 					<li><a href="coupon">쿠폰함</a></li>
-					<li><a href="#">프로모션 숙박권</a></li>
+					<!-- <li><a href="#">프로모션 숙박권</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>내 정보</span>
@@ -130,67 +136,52 @@
 </div>
 
 <!-- 비밀번호 찾기 Modal -->
-<form action="POST">
 <div class="modal fade" id="modal-password" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+    <form action="findPassword" method="post">
     	<div class="modal-header">
        		<h5 class="modal-title" id="modalLabel">비밀번호 찾기</h5>
         	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       	</div>
   		<div class="modal-body">
-			<h5>임시 비밀번호 발급</h5>
+			<h5>비밀번호 찾기</h5>
   			<div id="div-modal-body">
-  				<p>회원가입 시 등록하신 이메일 및 휴대폰으로 임시비밀번호를 발급해드립니다.</p>
+  				<p>회원가입 시 등록하신 아이디와 이메일로 비밀번호를 찾아드립니다.</p>
   				<div class="formBox">
-					<table class="tableFormBox" summary="성명,이메일,휴대폰으로 구성된테이블입니다">
+					<table class="tableFormBox">
 						<colgroup>
 							<col width="25%">
 							<col>
 						</colgroup>
 						<tbody>
+							
 							<tr>
-								<th scope="row"><label for="idInput" class="idInput">리워즈 번호</label></th>
-								<td><input type="text" class="uiform idInput" id="rewardNum" name="rewardNum" value="" size="15"></td>
-							</tr>
-							<tr>
-								<th scope="row"><label for="idInput" class="idInput2">성명</label></th>
+								<th scope="row"><label for="idInput" class="idInput2">아이디</label></th>
 								<td>
 									<div class="inputForm2">
 										<div class="Fname" style="float: left;">
 											<label for="firstName"></label>
-											<input type="text" class="firstName input uiform" id="mbrEnFnm" name="mbrEnFnm" placeholder="First name(이름)" style=" width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
-										</div>
-										<div class="Lname" style="float: right;">
-											<label for="lastName"></label>
-											<input type="text" class="lastName input uiform" id="mbrEnLnm" name="mbrEnLnm" placeholder="Last name(성)" style="width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
+											<input type="text" class="firstName input uiform" id="input-id" name="id" placeholder="아이디" style=" width:260px;">
 										</div>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row" style="text-align:left;">
-									<input type="radio" name="findPwOpt" class="findIdOpt1 uiform" id="findIdOpt1" checked="" value="email">
 									<label for="findIdOpt1" class="findIdOpt1">이메일</label>
 								</th>
 								<td>
 									<label class="emailId" for="emailId"></label>
-									<input id="email" name="email" class="emailId uiform text" type="text" style="width: 260px;" size="15">
+									<input id="input-email1" name="email" class="emailId uiform text" type="text" placeholder="이메일" style="width: 260px;" size="15">
 								</td>
-							</tr>
-							<tr>
-								<th scope="row" style="text-align:left;">
-									<input type="radio" name="findPwOpt" class="findIdOpt1 uiform" id="findIdOpt1" checked="" value="email">
-									<label for="findIdOpt1" class="findIdOpt1">휴대전화</label>
-								</th>
-								<td><input type="text" value=""></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="mb-5" id="div-modal-btn">
-					<a class="me-2" href="#modal-password-result" data-bs-toggle="modal"><img alt="확인" src="/resources/images/mypage/popFindIdBtnSubmit.gif"></a>
-					<a class="ms-2" href=""><img alt="취소" src="/resources/images/mypage/popFindIdBtnCancel.gif" data-bs-dismiss="modal"></a>
+					<button class="me-2" data-bs-toggle="modal" onclick="findPassword();"><img alt="확인" src="/resources/images/mypage/popFindIdBtnSubmit.gif"></button>
+					<button class="ms-2" ><img alt="취소" src="/resources/images/mypage/popFindIdBtnCancel.gif" data-bs-dismiss="modal"></button>
 				</div>
 				<div class="modal-footer justify-content-center">
 					<div id="div-modal-box1">
@@ -207,6 +198,7 @@
 		    	</div>
   			</div>
     	</div>
+    </form>
     </div>
   </div>
 </div>
@@ -220,9 +212,8 @@
 			</div>
       		<div class="modal-body">
       			<div class="formBox" style="text-align: center;">
-					<p class="pt-3">회원님의 이메일 <strong>asdf@naver.com</strong> 로</p>
-					<p>임시 비밀번호를 발송해드렸습니다.</p>
-					<p>발급받은 임시 비밀번호로 로그인 해주시기 바랍니다.</p>
+					<p class="pt-3">회원님의 비밀번호는</p>
+					<p id="password-result"></p>
 				</div>
 		      	<div class="modal-footer justify-content-center border-0">
 		        	<div id="div-modal-btn">
@@ -237,13 +228,14 @@
 <div class="modal fade" id="modal-id" aria-hidden="true" aria-labelledby="modalToggleLabel2" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered">
 		<div class="modal-content">
+		<form action="findId" method="post">
 			<div class="modal-header">
 				<h5 class="modal-title" id="modalToggleLabel2">아이디 찾기</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
       		<div class="modal-body">
       			<div class="formBox">
-					<table class="tableFormBox" summary="성명,이메일,휴대폰으로 구성된테이블입니다">
+					<table class="tableFormBox">
 						<colgroup>
 							<col width="25%">
 							<col>
@@ -253,13 +245,9 @@
 								<th scope="row"><label for="idInput" class="idInput2">성명</label></th>
 								<td>
 									<div class="inputForm2">
-										<div class="Fname" style="float: left;">
+										<div class="Fname">
 											<label for="firstName"></label>
-											<input type="text" class="firstName input uiform" id="mbrEnFnm" name="mbrEnFnm" placeholder="First name(이름)" style=" width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
-										</div>
-										<div class="Lname" style="float: right;">
-											<label for="lastName"></label>
-											<input type="text" class="lastName input uiform" id="mbrEnLnm" name="mbrEnLnm" placeholder="Last name(성)" style="width:130px; text-transform: uppercase;" onkeyup="this.value=this.value.replace(/[^a-z]/gi,'');">
+											<input type="text" class="firstName input uiform" id="input-name" name="name" placeholder="이름" style=" width:260px;">
 										</div>
 									</div>
 								</td>
@@ -270,22 +258,22 @@
 								</th>
 								<td>
 									<label class="emailId" for="emailId"></label>
-									<input id="email" name="email" class="emailId uiform text" type="text" style="width: 260px;" size="15">
+									<input id="input-email2" name="email" class="emailId uiform text" type="text" placeholder="이메일" style="width: 260px;" size="15">
 								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 		      	<div class="modal-footer justify-content-center border-0">
-		        	<div class="pt-3">
-						<a href="#modal-id-result" data-bs-toggle="modal"><img src="/resources/images/mypage/popFindIdBtnSubmit.gif"></a>
+		        	<div id="div-modal-btn" class="pt-3">
+						<button class="me-2" data-bs-toggle="modal" onclick="findId();"><img alt="확인" src="/resources/images/mypage/popFindIdBtnSubmit.gif"></button>
 					</div>
 		      	</div>
 			</div>
+		</form>
 		</div>
 	</div>
 </div>
-</form>
 <!-- 아이디 찾기 결과 Modal -->
 <div class="modal fade" id="modal-id-result" aria-hidden="true" aria-labelledby="modalToggleLabel2" tabindex="-1">
 	<div class="modal-dialog modal-dialog-centered">
@@ -297,8 +285,8 @@
       		<div class="modal-body">
       			<p>스프링 리워즈 번호 찾기 결과는 아래와 같습니다.</p>
       			<div class="formBox" style="text-align: center;">
-					<p class="pt-3"><strong>DDD</strong> 스프링리워즈 번호 - <strong>[${user.no }]</strong></p>
-					<p>ID - <strong>[${user.id }]</strong></p>
+					<p class="pt-3"><strong>${user.firstName }&nbsp;${user.lastName }</strong> 스프링리워즈 번호 - <strong>[${user.no }]</strong></p>
+					<p id="id-result"></p>
 				</div>
 		      	<div class="modal-footer justify-content-center border-0">
 		        	<div id="div-modal-btn">
@@ -314,5 +302,72 @@
 </body>
 <script type="text/javascript">
 
+	//비밀번호 찾기
+	function findPassword() {
+		let id = document.getElementById('id').value;
+		let email = document.getElementById('email1').value;
+		
+		$.ajax({
+			url: '/findPassword',
+			type: 'post',
+			data: {"id":id, "email":email},
+			success:function(data){
+				if(data == 0) {
+					alert("아이디 혹은 이메일이 잘못되었습니다.");
+				} else {
+					$('#modal-password').modal('hide');
+					$('#modal-password-result').modal('show');
+					$('#password-result').html("<strong>[" + data + "]</strong>입니다.");
+				}
+			}, 
+			error:function(){
+				alert("에러입니다.");
+			}
+		})
+	};
+	
+	//아이디 찾기
+	function findId() {
+		let name = document.getElementById('name').value;
+		let email = document.getElementById('email2').value;
+		
+		$.ajax({
+			url: '/findId',
+			type: 'post',
+			data: {"name":name, "email":email},
+			success:function(data){
+				if(data == 0) {
+					alert("아이디가 존재하지 않습니다.");
+				} else {
+					$('#modal-id').modal('hide');
+					$('#modal-id-result').modal('show');
+					$('#id-result').html("<strong>[" + data + "]</strong>입니다.");
+				}
+			}, 
+			error:function(){
+				alert("에러입니다.");
+			}
+		})
+	};
+
+	/* function passwordCheck() {
+		let inputId = $('#input-id').val();
+		let inputEmail1 = $('#input-email1').val();
+		let inputName = $('#input-name').val();
+		let inputEmail2 = $('#input-email2').val();
+		let userId = "${user.id}";
+		let userEmail = "${user.email}";
+		let userName = "${user.name}";
+		
+		if (inputId !== userId || inputEmail1 !== userEmail) {
+			alert("아이디 혹은 이메일이 일치하지 않습니다.");
+			return false;
+		} else {
+			$('#modal-password').modal('hide');
+			$('#modal-password-result').modal('show');
+			$('#password-result').html("<strong>[${user.password }]</strong>입니다.");
+		}
+	} */
+	
 </script>
 </html>

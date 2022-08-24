@@ -34,6 +34,9 @@ public interface InquiryMapper {
 	// 옵션별 문의내역 조회
 	List<Qna> getInquiryByCriteria(QnaCriteria qnaCriteria);
 	
+	// 회원번호로 문의내역 조회
+	List<Qna> getQnaByUserNo(int userNo);
+	
 	// 문의내역 상세사항
 	Qna getInquiryByNo(int no);
 	

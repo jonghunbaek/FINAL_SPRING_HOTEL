@@ -76,6 +76,7 @@
 	               <c:if test="${not empty LOGIN_USER }">
 	               	   <li class="list-inline-item"><strong>${LOGIN_USER.name }</strong>님 환영합니다.</li>
 	              	   <li class="list-inline-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+	              	   <li class="list-inline-item"><a class="nav-link" href="/user/mypage">마이페이지</a></li>
 	               </c:if>
 
 	                   <li class="list-inline-item dropdown">
@@ -96,8 +97,8 @@
 	               <div class="gnb" id="rev"><a href="">예약</a><div class="snb" id="rev-div"></div></div><div class="vr" id="vr-1"></div>
 	               <div class="gnb" id="room"><a href="/room/roomHome">객실</a><div class="snb" id="room-div"></div></div><div class="vr" id="vr-2"></div>
 	               <div class="gnb" id="dining"><a href="">다이닝</a><div class="snb" id="dining-div"></div></div><div class="vr" id="vr-3"></div>
-		           <div class="gnb" id="info"><a href="">호텔소개</a><div class="snb" id="info-div"></div></div><div class="vr" id="vr-4"></div>
-	               <div class="gnb" id="rewards"><a href="/rewards">스프링리워즈</a><div class="snb" id="rewards-div"></div></div><div class="vr" id="vr-5"></div>
+		           <div class="gnb" id="info"><a href="/about">호텔소개</a><div class="snb" id="info-div"></div></div><div class="vr" id="vr-4"></div>
+	               <div class="gnb" id="rewards"><a href="">스프링리워즈</a><div class="snb" id="rewards-div"></div></div><div class="vr" id="vr-5"></div>
 	               <div class="gnb" id="store"><a href="../shop" target="_blink">스프링스토어</a><div class="snb" id="store-div"></div></div>
         		</div>
     		</div> 
@@ -210,7 +211,7 @@ $(function() {
 			let content = '';
 
 			content += '<ul class="list-inline">'
-			content += '	<li class="list-inline-item"><a href="">스프링 리워즈</a></li><div class="vr" style="position:relative; top:3px;"></div>';
+			content += '	<li class="list-inline-item"><a href="/rewards">스프링 리워즈</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">스프링 호텔</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">다이닝</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">기타</a></li>';

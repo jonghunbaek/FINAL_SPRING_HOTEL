@@ -102,6 +102,13 @@
 		where qna_no = #{value}
 	</select>
 	
+	<!-- List<Qna> getQnaByUserNo(int userNo); -->
+	<select id="getQnaByUserNo" parameterType="int" resultMap="inquiryResultMap">
+		select *
+		from sh_qna
+		where user_no = #{value}
+	</select>
+	
 	<!-- QnaCategory getQnaCategoryByNo(int no); -->
 	<select id="getQnaCategoryByNo" parameterType="int" resultType="QnaCategory">
 		select 
