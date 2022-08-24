@@ -23,6 +23,7 @@ import com.sh.vo.RtRevCount;
 import com.sh.vo.User;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
+import com.sh.web.form.DiningReservationForm;
 
 @Controller
 @RequestMapping("/admin")
@@ -74,10 +75,10 @@ public class AdminRevController {
 		return "admin/reservation/addrevdining";
 	}
 	
-	// 다이닝 필터조회 후 불가날짜 리턴 
+	// 다이닝 필터조회 후 불가날짜 리턴, 추가 -------- dn_no도 같이 보냄
 	@GetMapping(path = "/addrevdining/dn")
 	@ResponseBody
-	public List<RtRevCount> searchDining(AdminDnRevCriteria adminDnRevCriteria) {
+	public Map<String, Object> searchDining(AdminDnRevCriteria adminDnRevCriteria) {
 		return adminRevService.getRtSelectableDate(adminDnRevCriteria);
 	}
 	
@@ -86,6 +87,13 @@ public class AdminRevController {
 	@ResponseBody
 	public List<String> checkDnDate(AdminDnRevCriteria adminDnRevCriteria) {
 		return adminRevService.getMealTime(adminDnRevCriteria);
+	}
+	
+	// 객실 예약등록 페이지 신규 객실 예약등록
+	@PostMapping(path = "/addrevdiningform")
+	public String addRevRoom(DiningReservationForm diningReservationForm) {
+		adminRevService.insertNewDiningRev(diningReservationForm);
+		return "admin/reservation/complete";
 	}
 	
 	// ------------------------------------------객실예약조회관련---------------------------------------------------
@@ -147,14 +155,13 @@ public class AdminRevController {
 	@GetMapping(path = "/diningrev")
 	public String diningRev(@RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
 
-		/*
-		 * int totalRows = adminRevService.getTotalRows(); Pagination pagination = new
-		 * Pagination(totalRows, Integer.parseInt(pageNo));
-		 * 
-		 * List<RoomRev> roomRevs = adminRevService.getAllRoomRevList(pagination);
-		 * model.addAttribute("roomRevs", roomRevs); model.addAttribute("pagination",
-		 * pagination);
-		 */
+		
+		 int totalRows = adminRevService.getTotalRows(); 
+		 Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
+		 
+		 List<RoomRev> roomRevs = adminRevService.getAllRoomRevList(pagination);
+		 model.addAttribute("roomRevs", roomRevs); model.addAttribute("pagination", pagination);
+
 		
 		return "admin/reservation/diningrev";
 	}

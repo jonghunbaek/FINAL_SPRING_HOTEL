@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.sh.vo.Allergy;
 import com.sh.vo.Dn;
+import com.sh.vo.DnCategory;
 import com.sh.vo.DnInfo;
 import com.sh.vo.DnMealTime;
 import com.sh.vo.DnRev;
@@ -41,7 +42,11 @@ public interface DiningMapper {
 	int getTotalSeatByNo(int no);
 	int getTotalRoomByNo(int no);
 	
+
+	DnCategory getDnCategoryByNo(int no);
+
 	RtRev getRtRevByRevNo(String no);
 	void updateRtRev(RtRev rtRev);
 	void deleteRtRevCount(@Param("mealTime") String mealTime,@Param("seatType") String seatType, @Param("revCount") int revCount);
+
 }
