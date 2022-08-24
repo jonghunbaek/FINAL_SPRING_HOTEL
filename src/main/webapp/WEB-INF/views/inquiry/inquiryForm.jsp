@@ -190,12 +190,12 @@
 								<input type="text" style="width:180px;">
 							</td>
 						</tr>
-						<!-- <tr>
+						<tr>
 							<th class="required">자동입력방지</td>
 							<td>
 							  <div class="g-recaptcha" data-sitekey="6LfBUF0hAAAAABOljXJ3rEhAs_oytiR5EqtTgaLS"></div>
 							</td>
-						</tr> -->
+						</tr>
 					</table>
 					
 					<div class="privacyBox">
@@ -235,7 +235,7 @@
 <%@ include file="../common/footer.jsp" %>
 <script>
 $(function() {
-	document.querySelector('#container').style.height = "900px";
+	document.querySelector('#container').style.height = "1000px";
 	document.querySelector("#content2").style.display = "block"
 	document.querySelector('#localhotel').style.display ="none";
 	document.querySelector('#hotelinquiry').style.display="none";
@@ -323,11 +323,11 @@ $("#inquiryform").submit(function() {
 	}
 	
 	// 이메일필드에 값이 있는지 체크하기
-	if ($(":input[name=email1]").val() == "") {
+	if ($(":input[name=email1]").val() === "") {
 		alert("이메일은 필수 입력값입니다.");
 		return false;
 	}
-	if ($(":input[name=email2]").val() == "") {
+	if ($(":input[name=email2]").val() === "") {
 		alert("이메일은 필수 입력값입니다.");
 		return false;
 	}
@@ -339,7 +339,7 @@ $("#inquiryform").submit(function() {
 	}
 	
 	//구글 reCAPTCHA 
-	/* let captcha = 1;
+	let captcha = 1;
 	$.ajax({
 	   url: '/VerifyRecaptcha',
 	   type: 'post',
@@ -352,6 +352,7 @@ $("#inquiryform").submit(function() {
 	           case 0:
 	               captcha = 0;
 	               console.log("자동 가입 방지 봇 통과");
+	               document.getElementById("inquiryform").submit();
 	       		   break;
 	           case 1:
 	               alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
@@ -365,7 +366,7 @@ $("#inquiryform").submit(function() {
 	
 	if(captcha != 0) {
 		return false;
-	} */
+	} 
 	
 	return true;
 }); 

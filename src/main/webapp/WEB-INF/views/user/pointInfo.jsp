@@ -91,8 +91,8 @@
 			</div>
 			<div id="div-box">
 				<div class="mb-3" id="div-info">
-					<strong>ㅇㅇㅇ </strong><span id="span-color">님의 스프링리워즈 포인트는</span>
-					<strong class="colorRed"> 0 </strong><span id="span-color">입니다.</span>
+					<strong>${user.firstName}&nbsp;${user.lastName} </strong><span id="span-color">님의 스프링리워즈 포인트는</span>
+					<strong class="colorRed"><fmt:parseNumber var="userPoint" value="${user.point }" integerOnly="true"/>${userPoint } </strong><span>입니다.</span>
 				</div>
 				<div class="mb-3 pb-3" id="div-date">
 					<span class="me-3" id="span-color">기간 조회</span>
@@ -111,7 +111,7 @@
 				</div>
 				<div id="div-tableBox">
 					<div class="mt-3" id="div-table">
-						<table class="table background-color" summary="호텔,구분,이용금액(원),적립포인트,사용포인트,이용날짜로 구성된 게시물 리스트 표">
+						<table class="table background-color">
 							<colgroup>
 								<col width="25%" class="col1">
 								<col width="25%" class="col2">
@@ -127,10 +127,24 @@
 								</tr>
 							</thead>
 							<tbody>
+						<c:choose>
+							<c:when test="${empty pointHis }">
 								<tr class="first last">
-									<td colspan="4">자료가 없습니다.</td>
+									<td colspan="6">자료가 없습니다.</td>
 								</tr>
-							</tbody>
+							</c:when>					
+							<c:otherwise>
+								<c:forEach var="his" items="${pointHis }">
+									<tr class="first last">
+										<td>${his.title }</td>
+										<td>${his.earned }</td>
+										<td>${his.used }</td>
+										<td><fmt:formatDate value="${his.createdDate}" pattern="yyyy년 MM월 dd일"/></td>
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
+						</tbody>
 						</table>
 					</div>
 				</div>

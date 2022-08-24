@@ -3,16 +3,15 @@ package com.sh.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sh.criteria.QnaCriteria;
 import com.sh.mapper.InquiryMapper;
 import com.sh.vo.Location;
 import com.sh.vo.Pagination;
 import com.sh.vo.Qna;
 import com.sh.vo.QnaCategory;
-import com.sh.web.form.InquiryForm;
 
 @Service
 public class InquiryService {
@@ -35,7 +34,14 @@ public class InquiryService {
 		return totalRows;
 	}
 		
-		
+	/** 
+	 * @param qnaCriteria
+	 * @return
+	 */
+	public List<Qna> searchQna(QnaCriteria qnaCriteria) {
+		return inquiryMapper.getInquiryByCriteria(qnaCriteria);
+	}
+	
 	/** 모든 문의사항 카테고리 조회
 	 * @return
 	 */
@@ -83,4 +89,6 @@ public class InquiryService {
 		qna.setUpdatedDate(new Date());
 		inquiryMapper.updateInquiry(qna);
 	}
+
+	
 }

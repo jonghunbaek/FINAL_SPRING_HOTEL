@@ -33,6 +33,28 @@
 		<!-- and user_no = #{value} -->
 	</select>
 	
+	<!-- int getQnaTotalRowsByFilter(QnaCriteria qnaCriteria); -->
+	<select id="getQnaTotalRowsByFilter" parameterType="QnaCriteria" resultType="int">
+		select count(*)
+		from sh_qna
+		<where>
+			<if test='search == "name"'>
+				user_no in (select user_no
+		                    from sh_users
+		                    where user_name like '%'||#{keyword}||'%')
+			</if>
+			<if test='search == "title"'>
+				and qna_title like '%'||#{keyword}||'%' 
+			</if>
+			<if test="search != content">
+				or qna_content like '%'||#{keyword}||'%'
+			</if>
+			<if test="answerState != null">
+				and qna_answer_state = #{answerState} 
+			</if>
+		</where>
+	</select>
+	
 	<!-- List<Qna> getAllInquiry(); -->
 	 <select id="getAllInquiry"  parameterType="Pagination" resultMap="inquiryResultMap">
 		select *
@@ -43,8 +65,8 @@
 		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
 	</select>
 	
-	<!-- List<Qna> getInquiryByUserNo(Pagination pagination, int userNo) -->
-	<select id="getInquiryByUserNo" parameterType="Pagination" resultMap="inquiryResultMap">
+	<!-- List<Qna> getInquiryByCriteria(QnaCriteria qnaCriteria); -->
+	<select id="getInquiryByCriteria" parameterType="QnaCriteria" resultMap="inquiryResultMap">
 		select *
 		from (SELECT Q.*,
       		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER

@@ -30,16 +30,20 @@ public class ShopProduct {
 	private int price;
 	private int discountRate;
 	private String deleted;
+	private String imgUrl;
 	
 	private ShopMainCategory mainCategory;
 	private ShopSubCategory subCategory;
 	private ShopBusiness business;
 	private Location location;
 	
-	public ShopProduct(int no, String businessName) {
-		this.mainCategory = new ShopMainCategory(no);
+	public ShopProduct(int mainNo, String businessName) {
+		this.mainCategory = new ShopMainCategory(mainNo);
 		this.business = new ShopBusiness(businessName);
 	};
-
+	
+	public ShopProduct(int productNo) {
+		this.no = productNo;
+	}
 
 }

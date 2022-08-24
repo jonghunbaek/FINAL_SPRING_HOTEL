@@ -83,27 +83,40 @@
 				<img src="/resources/images/mypage/couponTopMsg.gif">
 			</div>
 			<div class="fs-7">
-				<p>※ 추가 다운로드 가능한 쿠폰은 총 0 건 있습니다. (쿠폰함의 ＇쿠폰 받기＇에서 다운로드하실 수 있습니다.)</p>
+				<p>※ 총 사용 가능한 쿠폰은 총 <span id="span-num"> 0 </span> 건 있습니다.</p>
 			</div>
 			<div id="div-tableBox">
 				<div class="mt-3" id="div-table">
-					<table class="table background-color" summary="호텔,구분,이용금액(원),적립포인트,사용포인트,이용날짜로 구성된 게시물 리스트 표">
+					<table class="table background-color">
 						<colgroup>
-							<col width="33%" class="col1">
-							<col width="34%" class="col2">
-							<col width="33%" class="col3">
+							<col width="50%" class="col1">
+							<col width="25%" class="col2">
+							<col width="25%" class="col3">
 						</colgroup>
 						<thead>
 							<tr style="background-color: #faf9f4;">
-								<th>등급</th>
 								<th>쿠폰명</th>
+								<th>발급날짜</th>
 								<th>사용기간</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="first last">
-								<td colspan="3">사용 가능한 쿠폰이 없습니다.</td>
-							</tr>
+							<c:choose>
+								<c:when test="${empty coupons }">
+									<tr class="first last">
+										<td colspan="3">사용 가능한 쿠폰이 없습니다.</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="coupon" items="${coupons }">
+										<tr id="tr-data">
+											<td>${coupon.title }</td>
+											<td><fmt:formatDate value="${coupon.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
+											<td><fmt:formatDate value="${coupon.useableDate }" pattern="~ yyyy년 MM월 dd일"/></td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>
@@ -116,7 +129,9 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
-
-	
+$(function () {
+	let tr = $('#tr-data').length;
+	$('#span-num').html(tr);
+})
 </script>
 </html>

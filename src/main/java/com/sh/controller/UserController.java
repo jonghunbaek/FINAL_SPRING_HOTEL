@@ -1,5 +1,7 @@
 package com.sh.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sh.service.UserService;
 import com.sh.utils.SessionUtils;
+import com.sh.vo.Coupon;
 import com.sh.vo.Grade;
+import com.sh.vo.PointGrade;
+import com.sh.vo.PointHistory;
 import com.sh.vo.User;
 
 @Controller
@@ -25,41 +30,67 @@ public class UserController {
 	@GetMapping("/mypage")
 	public String mypage(Model model) {
 		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
-		
 		User user = userService.getUserDetail(loginUser.getId());
 		model.addAttribute("user", user);
 		Grade grade = userService.getUserGrade(loginUser.getId());
-		model.addAttribute("grade", grade);
+		model.addAttribute("userGrade", grade);
+		PointGrade pointGrade = userService.getUserPointAndGrade(loginUser.getNo());
+		model.addAttribute("pg", pointGrade);
+		List<PointHistory> pointHis = userService.getPointHistory(loginUser.getNo());
+		model.addAttribute("pointHis", pointHis);
 		
+		// 포인트 합산
+		int totPoint = 0;
+		for (int i = 0; i<pointHis.size(); i++) {
+			PointHistory points = pointHis.get(i);
+			totPoint = totPoint + points.getEarned() - points.getUsed();
+		}
+		userService.updateUserPointInfo(loginUser.getNo(), totPoint);
 		
 		return "user/mypage";
 	}
 	
 	// 예약확인/취소 -> 객실/패키지
 	@GetMapping("/room")
-	public String cancleroom() {
+	public String cancleroom(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.getUserDetail(loginUser.getId());
+		model.addAttribute("user", user);
 		
 		return "user/roomReservation";
 	}
 	
 	// 예약확인/취소 -> 다이닝
 	@GetMapping("/dining")
-	public String cancledining() {
+	public String cancledining(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.getUserDetail(loginUser.getId());
+		model.addAttribute("user", user);
 		
 		return "user/diningReservation";
 	}
 	
 	// 포인트	조회
 	@GetMapping("/point")
-	public String points() {
+	public String points(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		
+		User user = userService.getUserDetail(loginUser.getId());
+		model.addAttribute("user", user);
+		List<PointHistory> pointHis = userService.getPointHistory(loginUser.getNo());
+		model.addAttribute("pointHis", pointHis);
 		
 		return "user/pointInfo";
 	}
 	
 	// 쿠폰함
 	@GetMapping("/coupon")
-	public String coupon() {
-		
+	public String coupon(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.getUserDetail(loginUser.getId());
+		model.addAttribute("user", user);
+		List<Coupon> coupons = userService.getCouponInfo(loginUser.getNo());
+		model.addAttribute("coupons",coupons);
 		return "user/coupon";
 	}
 	
@@ -132,9 +163,29 @@ public class UserController {
 	
 	// 내 정보 -> 탈퇴 요청
 	@GetMapping("/withdrawal")
-	public String withdrawal() {
+	public String withdrawal(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.getUserDetail(loginUser.getId());
+		model.addAttribute("user", user);
 		
 		return "user/withdrawal";
+	}
+	// 탈퇴요청 -> (비밀번호 확인) -> 탈퇴요청 폼
+	@PostMapping("/withdrawalform")
+	public String passwordCheck2(@RequestParam("password") String password, Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		User user = userService.checkPassword(loginUser.getNo(), password);
+		model.addAttribute("user",user);
+		
+		return "user/withdrawalform";
+	}
+	// 탈퇴신청
+	@PostMapping("/confirmWithdrawal")
+	public String confirmWithdrawal(Model model) {
+		User loginUser = (User) SessionUtils.getAttribute("LOGIN_USER");
+		userService.deleteUser(loginUser.getNo());
+		
+		return "redirect:/";
 	}
 	
 	

@@ -54,10 +54,10 @@
 	.header .dropmenu .col-3{border-right: 1px solid #DCDCDC;; float:left; width:25%; margin:0 2% 0 0;}
 	.header .dropmenu .col-3 .category-name{text-align:center;}
 	.header .dropmenu .col-3 .category-name a{font-size: 22px;}
-	.header .dropmenu .col-7{float:left; width:60%; font-size: 18px; font-weight: 500;}
+	.header .dropmenu .col-7{float:left; width:60%; font-size: 18px; font-weight: 500;line-height:37px;}
 	.header .dropmenu .col-7 .row .col{height:40px;}
 	.header .dropmenu .col-7 .row .col a{}
-	.header .dropmenu .col-7 .row .col ul li a{color: #666;}
+	.header .dropmenu .col-7 .row .col ul li a{color: #666; font-size:17px; font-weight:400; line-height:35px;}
 	
 </style>
 </head>
@@ -69,7 +69,7 @@
 	
 		<div class="row">
 			<div class="col-3">
-				<a href="/" target="_blink">
+				<a href="/" target="_blank">
 					<img src="/resources/images/shop/common/hotel-logo-brown.png" height="40px;">
 				</a>	
 			</div>
@@ -77,15 +77,15 @@
 				<ul class="nav-txt-align">
 					<c:if test="${empty LOGIN_USER }">
 					    <li><a href="/login">로그인</a></li>
-					    <li><a href="/shop/nomem/orderist">비회원 주문조회</a></li>
+					    <li><a href="#">비회원 주문조회</a></li>
 					    <li><a href="/register">회원가입</a></li>
 					</c:if>
 					<c:if test="${not empty LOGIN_USER }">
 					    <li><a href="/logout">로그아웃</a></li>
-					    <li><a href="/shop/orderlist">주문조회</a></li>
+					    <li><a href="#">주문조회</a></li>
 					</c:if>
-						<li><a href="/shop/faq/faq_list">FAQ</a></li>
-						<li class="cart"><a href="/shop/cart/cart_list">장바구니</a></li>
+						<li><a href="#">FAQ</a></li>
+						<li class="cart"><a href="#">장바구니</a></li>
 				</ul>
 			</div>
 		</div>
@@ -125,7 +125,7 @@
 			</div>
 			
 			<div class="col-3" >		
-				<form action="/shop/search_product/product_lists" id="searchForm" method="get">
+				<form action="/shop/search/list" id="searchForm" method="get">
 			        <div class="searchbox" >
 			            <input type="text" name="keyword" id="keyword" placeholder="검색어를 입력해주세요" >
 			            <button type="submit" >Search</button>
@@ -145,8 +145,6 @@
 			</div>
 			<div class="col-7" >
 				<div class="row row-cols-3">
-				
-				
 							<div class="col">
 								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=1"><span>시즌 상품</span></a>
 							</div>
@@ -162,6 +160,13 @@
 							</div>
 							<div class="col">
 								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=3"><span>미드나잇 플렉스</span></a>
+								<ul>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=3&locationNo=1"><span>스프링 서울</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=3&locationNo=3"><span>스프링 제주</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=3&locationNo=2"><span>스프링 부산</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=3&locationNo=5"><span>스프링 광주</span></a></li>
+									<li><a href="/shop/list?mainCategoryNo=1&subCategoryNo=3&locationNo=4"><span>스프링 강릉</span></a></li>
+								</ul>
 							</div>
 <!-- 							<div class="col">
 								<a href="/shop/list?mainCategoryNo=1&subCategoryNo=1&locationNo=3"><span>스프링 서울 TO-GO</span></a>

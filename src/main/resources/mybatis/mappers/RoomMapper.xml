@@ -184,8 +184,8 @@
 	</select>
 	
 	<!-- 객실 검색  -->
-	<!-- List<Room> getAllRoomsByCriteria(RoomCriteria roomCriteria);  -->
-	<select id="getAllRoomsByCriteria" parameterType="RoomCriteria" resultMap="RoomResultMap">
+	<!-- List<Room> getRoomsByCriteria(RoomCriteria roomCriteria);  -->
+	<select id="getRoomsByCriteria" parameterType="RoomCriteria" resultMap="RoomResultMap">
 		select *
 		from sh_room
 		where location_no = #{value}
@@ -210,6 +210,13 @@
 		where sh_room_name = #{value}
 	</select>
 	
+	
+	<!-- List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo); -->
+	<select id="getRoomCategoryByGroupNo" parameterType="int">
+		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		from sh_room_category
+		where room_group_no = #{value}
+	</select>
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>
 		<result column="room_rev_adult" property="adult"/>
@@ -245,6 +252,7 @@
 		<result column="room_rev_card_type" property="cardType"/>
 		<result column="room_rev_card_valid_month" property="validMonth"/>
 		<result column="room_rev_card_valid_year" property="validYear"/>
+		<result column="room_price" property="roomPrice"/>
 		<result column="is_m" property="isMem"/>
 		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
@@ -255,25 +263,41 @@
 	
 	<!-- void insertRoomRev(RoomReservationForm roomReservationForm) -->
 	<insert id="insertRoomRev" parameterType="com.sh.web.form.RoomReservationForm">
-		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		<selectKey keyProperty="revNo" resultType="int" order="BEFORE">
 			select room_rev_seq.nextval 
 			from dual
 		</selectKey>
 		insert into sh_room_rev
-			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time,
-			room_rev_checkout_time, room_rev_room_name, room_rev_request, room_rev_bedType, 
+			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_price, room_rev_checkin_time,
+			room_rev_checkout_time, room_rev_room_name, room_rev_request, room_bedtype, 
 			room_rev_location_name, room_rev_user_title, room_rev_first_name, room_rev_option_checkin_time, 
 			room_rev_last_name, room_rev_email,	room_rev_tel, room_rev_country, room_rev_option_extra_bed,
 			room_rev_option_adult_bf, room_rev_option_child_bf, 
 			room_rev_option_total_price, room_rev_card_type, room_rev_card_n1, room_rev_card_n2, room_rev_card_n3, room_rev_card_n4,
 			 room_rev_card_valid_month, 
-			room_rev_valid_year, room_rev_user_name, is_m, room_rev_created_date, room_rev_updated_date, user_no)
+			room_rev_card_valid_year, room_rev_user_name, is_m, room_rev_created_date, room_rev_updated_date
+			<choose>
+				<when test="userNo == 0">
+					)
+				</when>
+				<otherwise>
+					,user_no)				
+				</otherwise>
+			</choose>
 		values
-			(#{revNo}, #{adult}, #{child}, #{totalPrice}, #{checkinTime}, #{checkoutTime},
-			 #{roomName}, #{request}, #{bedType}, #{location.name}, #{title}, #{firstName}, 
+			(#{revNo}, #{adult}, #{child}, #{totalPrice}, #{roomPrice}, #{checkinTime}, #{checkoutTime},
+			 #{roomName}, #{request}, #{bedType}, #{locationName}, #{title}, #{firstName}, 
 			 #{optionCheckinTime}, #{lastName}, #{email}, #{tel}, #{country}, #{extraBed}, 
 			 #{optionAdultBf}, #{optionChildBf}, #{optionTotalPrice}, #{cardType}, #{cardNumber1}, #{cardNumber2}, #{cardNumber3}, #{cardNumber4}, #{cardValidMonth}, 
-			  #{cardValidYear}, #{userName}, #{isM}, sysdate, sysdate, #{user.no});
+			  #{cardValidYear}, #{userName}, #{isM}, sysdate, sysdate
+			 <choose>
+				<when test="userNo == 0">
+					)
+				</when>
+				<otherwise>
+			  ,#{userNo})
+				</otherwise>
+			</choose>
 	</insert>
 	
 	

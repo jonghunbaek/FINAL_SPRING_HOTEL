@@ -7,7 +7,7 @@ html a {
 
 .contain .container {
 	margin-top: 60px;
-	border: 1px solid orange;
+	/* border: 1px solid orange; */
 	min-width: 1150px;
 	max-width: 1150px;
 }
@@ -200,6 +200,17 @@ html a {
 	font-size: 17px;
     border: 1px solid #dddddd;
     border-top: none;
+	display: flex;
+	justify-content: center;
+	column-gap: 50px;
+}
+
+.que4 {
+	position: relative;
+	padding: 17px 0;
+	cursor: pointer;
+	font-size: 17px;
+	border-bottom: 1px solid #dddddd;
 	display: flex;
 	justify-content: center;
 	column-gap: 50px;
