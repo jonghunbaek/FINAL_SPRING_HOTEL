@@ -26,9 +26,12 @@
 	href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+
+
 <!-- total zone -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
 <title>Spring Hotel</title>
 </head>
@@ -442,26 +445,26 @@
 										</div>
 										<div class="total-detail col-9">
 											<div class="total-title-box">
-												<div class="total-title">요금상세 (n박)</div>
+												<div class="total-title">요금상세 (<span id="box-night">n</span>박)</div>
 												<span><img alt="예약초기화"
 													src="../resources/images/room/rev/rev_clear.png"></span>
 											</div>
 											<div class="total-sub-box">
-												<div class="total-sub">객실1(성인 <span id="a-count">n</span> / 어린이 <span id="c-count">n</span>)</div>
-												<span>1,188,000원</span>
+												<div class="total-sub">객실1&nbsp;(성인 <span id="a-count">n</span> / 어린이 <span id="c-count">n</span>)</div>
+												<span><span id="box-total-price">0</span>원</span>
 											</div>
 											<div class="total-sub2-box row">
 												<div class="객실요금 col-4">
 													<div>객실요금</div>
-													<div class="sub2-price"><span id="box-room-price">560,000</span> 원</div>
+													<div class="sub2-price"><span id="box-room-price">${room.price }</span> 원<input type="hidden" name="roomPrice" id="roomPrice-input"> </div>
 												</div>
 												<div class="옵션사항 col-4">
 													<div>옵션사항</div>
-													<div class="sub2-price">330,000 원</div>
+													<div class="sub2-price">-</div>
 												</div>
 												<div class="부가가치세 col-4">
 													<div>부가가치세</div>
-													<div class="sub2-price">56,000 원</div>
+													<div class="sub2-price"><span id="box-vat">-</span> 원</div>
 												</div>
 											</div>
 											<div class="">부가가치세 10%가 포함된 금액입니다.</div>
@@ -477,7 +480,7 @@
 										<span class="text1">요금합계</span> <span class="text2">부가가치세
 											포함</span>
 									</div>
-									<div class="total-price" style="margin-top: 10px;">616,000원</div>
+									<div class="total-price" style="margin-top: 10px;"><span id="totalPrice">0</span>원</div>
 									<button type="submit" id="submit"
 										style="background-color: #3e2b2c; border: none; width: 140px; color: white; font-size: 14px; height: 50px;">선택</button>
 								</div>
@@ -601,16 +604,12 @@ $('.btn-rev').click(function(){
 	} );
 		
 	/* 숙박일 계산 */
-	$('#s-btn a').click(function() {
+	$('.s-btn a').click(function() {
 		let checkinDate = $('input[name=checkinTime]').val();
 		let checkoutDate = $('input[name=checkoutTime]').val();
-		let startArray = checkinDate.split('-');
-		let endArray = checkoutDate.split('-');
 		
-		let startDate = new Date(startArray[0], startArray[1], startArray[2]);
-		let endDate = new Date(endArray[0], endArray[1], endArray[2]);
-		let sum = math.abs(endDate-stardDate);
-		$('#night').val(sum);
+		let days = moment(checkoutDate).diff(moment(checkinDate), 'days');
+		$('#night').text(days);
 	})
 	
 	
@@ -718,7 +717,12 @@ $('.btn-rev').click(function(){
 		let checkout = $('input[name=checkoutTime]').val();
 		let adultC = $('input[name=adult]').val();
 		let childC = $('input[name=child]').val();
-//		let roomPrice = #('#room-price-${room.id}').val(); ////////// 
+		let roomPrice = $('#room-price-'+roomId).text();
+		let night = $('#night').text();
+		let vat = (parseInt(roomPrice)*0.1);
+		let a = vat.toLocaleString();
+		let totalPrice = (parseInt(night)*(parseInt(roomPrice)+parseInt(vat))).toLocaleString();
+
 
 		$(":input[name=roomName]").val(roomName);
 		$("#accordion-roomName").text(roomName);
@@ -729,12 +733,20 @@ $('.btn-rev').click(function(){
 		$('#add-child-number').text(childC);
 		$('#a-count').text(adultC);
 		$('#c-count').text(childC);
-//		$('#box-room-price').text(roomPrice);
+		$('#box-room-price').text(roomPrice);
+		
+		$('#box-night').text(night);
+		$('#box-vat').text(a);
+		$('#box-total-price').text(totalPrice);
+		$('#totalPrice').text(totalPrice);
+		
+		let roomPriceInput = $('#box-room-price').text();
+		$('#roomPrice-input').val(roomPriceInput);
+		
 		
 		
 		return false;
 	})
-	
 	
 	/* let bedType = $(":input[name=bedType]").attr();
 	$() */

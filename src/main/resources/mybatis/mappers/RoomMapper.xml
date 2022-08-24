@@ -210,6 +210,13 @@
 		where sh_room_name = #{value}
 	</select>
 	
+	
+	<!-- List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo); -->
+	<select id="getRoomCategoryByGroupNo" parameterType="int">
+		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		from sh_room_category
+		where room_group_no = #{value}
+	</select>
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>
 		<result column="room_rev_adult" property="adult"/>

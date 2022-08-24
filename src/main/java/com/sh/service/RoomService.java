@@ -150,4 +150,8 @@ public class RoomService {
 		return roomMapper.getAllRoomByLocationNo(no);
 	}
 
+	public List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo) {
+		return roomMapper.getRoomCategoryByGroupNo(roomGroupNo);
+	}
+
 }
