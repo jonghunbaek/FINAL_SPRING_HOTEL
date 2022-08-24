@@ -22,7 +22,6 @@ public class ShopService {
 		List<ShopProduct> populars = shopMapper.getPopularProductsbySoldNo();
 		return populars;
 	}
-	
 	public List<ShopProduct> getProductsWithDiscount() {
 		List<ShopProduct> discounts = shopMapper.getProductsByDiscountRate();
 		return discounts;
@@ -38,23 +37,26 @@ public class ShopService {
 		List<ShopProduct> products = shopMapper.getProductsByParameters(shoplistCriteria);
 		return products;
 	}
+	
+	//search.jsp에 들어갈 메소드
+	public List<ShopProduct> getSearchResults(String[] keywords) {
+		List<ShopProduct> results = shopMapper.getProductsByKeywords(keywords);
+		return results;
+	}
 
 	// detail.jsp에 들어갈 메소드
 	public ShopProduct getProductDetail(int no) {
 		ShopProduct product = shopMapper.getProductByNo(no);
 		return product;
 	}
-	
 	public List<ShopProduct> getProductOptions(int no) {
 		List<ShopProduct> options = shopMapper.getProductOptionsByNo(no);
 		return options;
 	}
-	
 	public List<ShopAdditionalImages> getAdditionalImages(int no) {
 		List<ShopAdditionalImages> images = shopMapper.getAdditionalImagesByNo(no);
 		return images;
 	}
-	
 	public List<ShopPickOrShip> getGettingMethods(int no) {
 		List<ShopPickOrShip> methods = shopMapper.getGettingMethodsByNo(no);
 		return methods;

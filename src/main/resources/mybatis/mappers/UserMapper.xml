@@ -19,8 +19,8 @@
 		<result column="user_annual_stay" property="stay"/>
 		<result column="first_name" property="firstName"/>
 		<result column="last_name" property="lastName"/>
-		<association column="grade" property="grade" select="com.sh.mapper.UserMapper.getUserGradeByUserId"></association>
 		<result column="user_country" property="country"/>
+		<association column="grade" property="grade" select="com.sh.mapper.UserMapper.getUserGradeByUserId"></association>
 	</resultMap>
 	<resultMap type="Grade" id="GradeResultMap">
 		<id column="grade" property="grade"/>
@@ -165,6 +165,7 @@
 		set 
 			user_password = #{password}
 		where user_email = #{email}
+	</update>
     
 	<!-- void deleteUser(int userNo); -->
 	<delete id="deleteUser" parameterType="int">
