@@ -99,7 +99,7 @@ select[name=cardSort] {width:365px; height:70%;}
 	</div>
 	<div class="row revInfo">
 		<div class="col-11">
-			<h6><strong>${dining.name }</strong>&nbsp;&nbsp;&nbsp;${dining.location.name }신라호텔<strong>&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.date }(${day})&nbsp;&nbsp;&nbsp;|
+			<h6><strong>${dining.name }</strong>&nbsp;&nbsp;&nbsp;${dining.location.name }스프링호텔<strong>&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.date }(${day})&nbsp;&nbsp;&nbsp;|
 			&nbsp;&nbsp;&nbsp;${mealTime }&nbsp;&nbsp;&nbsp;&nbsp;${diningReservationForm.visitTime }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;성인&nbsp;${diningReservationForm.adult }&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;
 			어린이 ${diningReservationForm.child }&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;유아 ${diningReservationForm.baby }&nbsp;&nbsp;&nbsp;&nbsp;</strong></h6>
 		</div>
@@ -257,17 +257,17 @@ select[name=cardSort] {width:365px; height:70%;}
 						</select>
 						<select name="cardExpiryYear">
 							<option selected>년</option>
-							<option value="32">32</option>
-							<option value="31">31</option>
-							<option value="30">30</option>
-							<option value="29">29</option>
-							<option value="28">28</option>
-							<option value="27">27</option>
-							<option value="26">26</option>
-							<option value="25">25</option>
-							<option value="24">24</option>
-							<option value="23">23</option>
-							<option value="22">22</option>
+							<option value="2032">2032</option>
+							<option value="2031">2031</option>
+							<option value="2030">2030</option>
+							<option value="2029">2029</option>
+							<option value="2028">2028</option>
+							<option value="2027">2027</option>
+							<option value="2026">2026</option>
+							<option value="2025">2025</option>
+							<option value="2024">2024</option>
+							<option value="2023">2023</option>
+							<option value="2022">2022</option>
 						</select>
 					</div>
 				</div>
@@ -303,7 +303,7 @@ select[name=cardSort] {width:365px; height:70%;}
 			<p><strong>유의사항</strong><p>
 		</div>
 		<div id="privacy-text" >
-			<p> <span style="font-size:70%">신라호텔 다이닝 예약과 관련하여 귀사가 아래와 같이 본인의 개인정보를 수집 및 이용하는데 동의합니다.</span><br/><br/>
+			<p> <span style="font-size:70%">스프링호텔 다이닝 예약과 관련하여 귀사가 아래와 같이 본인의 개인정보를 수집 및 이용하는데 동의합니다.</span><br/><br/>
 
 				<strong>① 수집·이용 항목 | 성명, 이메일, 연락처(휴대전화), 예약정보, 결제정보(카드종류, 카드번호, 유효기간)<br/>
 				② 수집·이용 목적 | 레스토랑 예약 및 고객 응대<br/>

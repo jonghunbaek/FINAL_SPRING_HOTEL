@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sh.exception.ApplicationException;
 import com.sh.mapper.DiningMapper;
 import com.sh.mapper.UserMapper;
 import com.sh.vo.Allergy;
@@ -151,11 +152,46 @@ public class DiningService {
 				}
 			}
 		}
-		
-		
-		
 		return result;
+	} 
+	/**
+	 * 비회원 예약조회
+	 * @param reservationNo
+	 * @param name
+	 * @return 예약정보
+	 */
+	public RtRev getReservationNonMember(String reservationNo, String name) {
+		RtRev rtRev = diningMapper.getRtRevByRevNo(reservationNo);
+		if(rtRev == null) {
+			throw new ApplicationException("예약번호 혹은 이름이 맞지않습니다.");
+		}
+		if(!rtRev.getName().equals(name)) {
+			throw new ApplicationException("예약번호 혹은 이름이 맞지않습니다.");
+		}
+		
+		return rtRev;
 	}
 	
+	/**
+	 * 주문상태 취소상태로 변경
+	 * @param reservationNo
+	 */
+	public void deleteRtRev(String reservationNo) {
+		RtRev rtRev = diningMapper.getRtRevByRevNo(reservationNo);
+		if(rtRev.getStatus().equals("O")) {
+			throw new ApplicationException("방문이 임박한 예약은 취소불가능합니다.");
+		} else if(rtRev.getStatus().equals("D")) {
+			throw new ApplicationException("이미 취소된 예약입니다.");
+		} else if(rtRev.getStatus().equals("I")) {
+			throw new ApplicationException("방문이 완료된 예약입니다.");
+		} else {
+			rtRev.setStatus("D");
+			diningMapper.updateRtRev(rtRev);
+		}
+	}
+	
+	public void deleteRtRevCount(String mealTime, String seatType, int revCount) {
+		diningMapper.deleteRtRevCount(mealTime, seatType, revCount);
+	}
 
 }

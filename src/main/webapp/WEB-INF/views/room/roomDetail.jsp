@@ -54,7 +54,7 @@
 								<li class="room"><a href=""><span>코너 스위트</span></a></li>
 								<li class="room"><a href=""><span>프리미어 스위트</span></a></li>
 								<li class="room"><a href=""><span>로열 스위트</span></a></li>
-								<li class="room"><a href=""><span>신라 스위트</span></a></li>
+								<li class="room"><a href=""><span>스프링 스위트</span></a></li>
 								<li class="room"><a href=""><span>프레지덴셜 스위트</span></a></li>
 							</ul>
 						</li>

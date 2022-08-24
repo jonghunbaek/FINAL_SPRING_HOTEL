@@ -19,7 +19,7 @@
 	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
 	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px; margin-bottom: 30px;}
-	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
+	#div-sidebar {float: left; width: 264px; height: 700px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
 	#list {margin-top: 25px; text-align: left;}
@@ -54,17 +54,22 @@
 					<li><a href="dining">다이닝</a></li>
 				</ul>
 			</li>
+			<li id="list"><span>스프링 샵</span>
+				<ul id="list-border">
+					<li><a href="shop">주문내역 조회</a></li>
+				</ul>
+			</li>
 			<li id="list"><span>포인트</span>
 				<ul id="list-border">
 					<li><a href="point">포인트 조회</a></li>
-					<li><a href="#">포인트 조정신청</a></li>
-					<li><a href="#">상품권 교환 신청</a></li>
+					<!-- <li><a href="#">포인트 조정신청</a></li>
+					<li><a href="#">상품권 교환 신청</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>쿠폰</span>
 				<ul id="list-border">
 					<li><a href="coupon">쿠폰함</a></li>
-					<li><a href="#">프로모션 숙박권</a></li>
+					<!-- <li><a href="#">프로모션 숙박권</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>내 정보</span>
@@ -80,13 +85,13 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
-		<form action="withdrawalform" method="POST">
+		<form action="withdrawalform" method="POST" onsubmit="return passwordCheck();">
 			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">탈퇴 요청</h3>
 			<div id="div-msg">
 				${user.name } 님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번 확인합니다.
 			</div>
 			<div id="div-table">
-				<table class="table" summary="아이디,비밀번호로 구성된 테이블">
+				<table class="table">
 					<colgroup>
 						<col width="17%" class="col1">
 						<col class="col2">
@@ -99,7 +104,7 @@
 						<tr class="last">
 							<th scope="row" class="last"><label for="mbrPw" class="pw">비밀번호</label></th>
 							<td class="last">
-							<input type="password" class="pw uiform password" id="mbrPw" name="password" maxlength="20" autocomplete="off">
+							<input type="password" class="pw uiform password" id="input-password" name="password" maxlength="20" autocomplete="off">
 							</td>
 						</tr>
 					</tbody>
@@ -116,6 +121,30 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
+
+	function passwordCheck() {
+		let password = document.getElementById('input-password').value;
+		if (password == '') {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		$.ajax({
+			url: 'passwordCheck',
+			type: 'post',
+			data: {password},
+			success:function(check){
+				if(check == 0) {
+					alert("비밀번호가 일치하지 않습니다");
+					return false;
+				} else {
+					return true;
+				}
+			}, 
+			error:function(){
+				alert("에러입니다.");
+			}
+		})
+	};
 
 </script>
 </html>

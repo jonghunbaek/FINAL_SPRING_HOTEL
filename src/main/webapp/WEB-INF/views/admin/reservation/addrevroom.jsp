@@ -329,7 +329,7 @@
 							<option value="303">코너 스위트</option>
 							<option value="304">프리미어 스위트</option>
 							<option value="305">로열 스위트</option>
-							<option value="306">신라 스위트</option>
+							<option value="306">스프링 스위트</option>
 							<option value="307">프레지덴셜 스위트</option>
 						</select>
 			  		</div>

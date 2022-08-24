@@ -20,7 +20,7 @@
 	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
 	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px;}
-	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
+	#div-sidebar {float: left; width: 264px; height: 700px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
 	#list {margin-top: 25px; text-align: left;}
@@ -57,17 +57,22 @@
 					<li><a href="dining">다이닝</a></li>
 				</ul>
 			</li>
+			<li id="list"><span>스프링 샵</span>
+				<ul id="list-border">
+					<li><a href="shop">주문내역 조회</a></li>
+				</ul>
+			</li>
 			<li id="list"><span>포인트</span>
 				<ul id="list-border">
 					<li><a href="point">포인트 조회</a></li>
-					<li><a href="#">포인트 조정신청</a></li>
-					<li><a href="#">상품권 교환 신청</a></li>
+					<!-- <li><a href="#">포인트 조정신청</a></li>
+					<li><a href="#">상품권 교환 신청</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>쿠폰</span>
 				<ul id="list-border">
 					<li><a href="coupon">쿠폰함</a></li>
-					<li><a href="#">프로모션 숙박권</a></li>
+					<!-- <li><a href="#">프로모션 숙박권</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>내 정보</span>
@@ -107,33 +112,46 @@
 					<div id="div-hTitle">
 						<h5><img src="/resources/images/mypage/myRsvTit1_ko.gif"></h5>
 					</div>
-					<div class="mt-2">Total : 0</div>
+					<div class="mt-2"><span id="span-num">Total : 0</span></div>
 					<div class="mt-3" id="div-table">
 						<table class="table background-color" summary="호텔,구분,이용금액(원),적립포인트,사용포인트,이용날짜로 구성된 게시물 리스트 표">
 							<colgroup>
 								<col width="11%" class="col1">
 								<col width="17%" class="col2">
 								<col width="*%" class="col3">
-								<col width="8%" class="col4">
+								<col width="30%" class="col4">
 								<col width="13%" class="col5">
-								<col width="14%" class="col6">
-								<col width="12%" class="col7">
 							</colgroup>
 							<thead>
 								<tr style="background-color: #faf9f4;">
 									<th>예약번호</th>
 									<th>호텔</th>
 									<th>객실/패키지</th>
-									<th>객실 수</th>
 									<th>체크인/체크아웃</th>
-									<th>홈페이지 예약여부</th>
 									<th>예약상태</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="first last">
-									<td colspan="7">예약내역이 없습니다.</td>
-								</tr>
+							<c:choose>
+								<c:when test="${empty roomRevs }">
+									<tr class="first last">
+										<td colspan="6">예약내역이 없습니다.</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="room" items="${roomRevs }">
+										<tr id="tr-data">
+											<td>${room.no }</td>
+											<td>${room.locationName } 스프링</td>
+											<td>${room.room.name }</td>
+											<td><fmt:formatDate value="${room.checkinTime }" pattern="yyyy년 MM월 dd일"/> ~ 
+												<fmt:formatDate value="${room.checkoutTime }" pattern="yyyy년 MM월 dd일"/>
+											</td>
+											<td>${room.status }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 							</tbody>
 						</table>
 					</div>
@@ -147,6 +165,10 @@
 </body>
 <script type="text/javascript">
 
+$(function () {
+	let tr = $('#tr-data').length;
+	$('#span-num').html("Total : " + tr);
+})
 	
 </script>
 </html>

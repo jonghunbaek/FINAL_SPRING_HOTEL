@@ -262,18 +262,20 @@
     padding: 30px;
     border: 5px solid #f1e3c4;">
 				<div style="font-size: 17px; margin-bottom: 13px;">
-					지금 바로, 신라리워즈 가입 후 포인트 적립과 할인 혜택을 받으세요.<br> 본 상품을 회원 가입 후 이용하시면
+					지금 바로, 스프링리워즈 가입 후 포인트 적립과 할인 혜택을 받으세요.<br> 본 상품을 회원 가입 후 이용하시면
 					<span style="font-size: 22px;
     font-weight: 600;
     color: #9a877a;">22,800P</span>가 적립됩니다.
 				</div>
-				<a href="/register"><img alt="신라리워즈가입버튼" src="../resources/images/room/rev/rewards.gif"></a>
+				<a href="/register"><img alt="스프링리워즈가입버튼" src="../resources/images/room/rev/rewards.gif"></a>
 			</div>
 			<div class="gray-info"
 				style="color: gray; font-size: 14px; margin-block: 10px; margin-bottom: 90px;">
 				※ 상기 포인트는 적립 예상 포인트이며 체크아웃 이후 [마이페이지]에서 확인 가능합니다.<br> ※ 일부 프로모션
+
 				예약은 신라리워즈 포인트 적립 대상에서 제외될 수 있습니다.
 				<input type="hidden" id="isM" name="isM">		
+
 			</div>
 			
 			<!-- rev2 total accordion -->

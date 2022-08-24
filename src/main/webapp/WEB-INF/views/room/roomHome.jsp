@@ -38,13 +38,15 @@
 					<li class="m3"><a> <span>스위트</span>
 					</a>
 						<ul class="st-menu">
-							<li class="roomt"><a href="../room/roomDetail?roomGroupNo=300&categoryNo=301"><span>수페리어 스위트</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=300&categoryNo=302"><span>코리안 스위트</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=300&categoryNo=303"><span>코너 스위트</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=300&categoryNo=304"><span>프리미어 스위트</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=300&categoryNo=305"><span>로열 스위트</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=300&categoryNo=306"><span>신라 스위트</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=300&categoryNo=307"><span>프레지덴셜 스위트</span></a></li>
+
+							<li class="roomt"><a href=""><span>수페리어 스위트</span></a></li>
+							<li class="room"><a href=""><span>코리안 스위트</span></a></li>
+							<li class="room"><a href=""><span>코너 스위트</span></a></li>
+							<li class="room"><a href=""><span>프리미어 스위트</span></a></li>
+							<li class="room"><a href=""><span>로열 스위트</span></a></li>
+							<li class="room"><a href=""><span>스프링 스위트</span></a></li>
+							<li class="room"><a href=""><span>프레지덴셜 스위트</span></a></li>
+
 						</ul></li>
 					<li class="m4-last" id="lounge"><a> <span>더 이그제큐티브
 								라운지</span>

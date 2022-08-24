@@ -71,7 +71,7 @@
 				<div>
 					<c:forEach var="location" items="${locations }">
 					<input type="radio" class="btn-check" name="hotel" id="hotel-${location.no }" value="${location.no }" autocomplete="off"   >
-					<label class="btn btn-outline-secondary" for="hotel-${location.no }">${location.name }신라호텔</label>
+					<label class="btn btn-outline-secondary" for="hotel-${location.no }">${location.name }스프링호텔</label>
 					</c:forEach>
 				</div>
 			</form>

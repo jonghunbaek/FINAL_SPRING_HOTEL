@@ -130,7 +130,7 @@
 						</span>
 						<div class="city-box">
 							<div class="btn-title">
-								신라호텔
+								스프링호텔
 								<div class="city-btn">
 									<a class="btn" id="bt-s">서울</a> <a class="btn" id="bt-j">제주</a>
 									<a class="btn" id="bt-b">부산</a> <a class="btn" id="bt-ga">강릉</a>

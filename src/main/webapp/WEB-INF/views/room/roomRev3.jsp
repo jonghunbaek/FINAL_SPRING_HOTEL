@@ -574,7 +574,7 @@
 							<div style="margin-top: 20px; font-weight: bold; font-size: 15px; ">필수적인 개인정보의 수집ㆍ이용에 관한 사항</div>
 							<div class="op-text-box" style="border: 1px solid #41464b99; margin-top: 15px; padding: 15px; height: 100px; overflow-y: auto; " >
 								<p>
-									<b style="font-weight: 500;">신라호텔 객실예약과 관련하여 귀사가 아래와 같이 본인의 개인정보를 수집 및 이용하는데 동의합니다.</b><br>
+									<b style="font-weight: 500;">스프링호텔 객실예약과 관련하여 귀사가 아래와 같이 본인의 개인정보를 수집 및 이용하는데 동의합니다.</b><br>
 									<br> <b style="font-size: 14px;">① 수집 이용 항목 |
 										성명(국문·영문), 지역(여권기준), 이메일, 연락처(휴대전화·자택전화), 예약정보, 결제정보(카드종류,
 										카드번호, 유효기간)</b><br> <b style="font-size: 14px;">② 수집 이용
@@ -606,12 +606,12 @@
 								<div style="margin-top: 20px; font-weight: bold; font-size: 15px;">개인정보 제3자 제공에 대한 동의</div>
 								<div class="op-text-box" style="border: 1px solid #41464b99; margin-top: 15px; padding: 15px; height: 100px; overflow-y: auto; " >
 									<p>
-										<b style="font-size: 14px;">① 제공받는 자 | (주)신라스테이</b><br> <b
+										<b style="font-size: 14px;">① 제공받는 자 | (주)스프링스테이</b><br> <b
 											style="font-size: 14px;">② 제공 목적 | 호텔 예약 및 고객 응대</b><br>
 										<b style="font-size: 14px;">③ 제공하는 항목 | 성명(국문·영문),
 											지역(여권기준), 이메일, 연락처(휴대전화·자택전화), 예약정보, 결제정보(카드종류, 카드번호, 유효기간)</b><br>
 										<b style="font-size: 14px;">④ 제공 기간 | 예약일 후 1년간</b><br> <br>
-										※위 사항에 대한 동의를 거부할 수 있으나, 이에 대한 동의가 없을 경우 신라 리워즈 회원가입 및 서비스 제공이
+										※위 사항에 대한 동의를 거부할 수 있으나, 이에 대한 동의가 없을 경우 스프링 리워즈 회원가입 및 서비스 제공이
 										불가능함을 알려드립니다.
 									</p>
 								</div>

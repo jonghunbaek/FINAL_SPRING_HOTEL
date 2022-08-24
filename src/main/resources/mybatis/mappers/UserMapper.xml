@@ -165,7 +165,7 @@
 		set 
 			user_password = #{password}
 		where user_email = #{email}
-    </update>
+	</update>
     
 	<!-- void deleteUser(int userNo); -->
 	<delete id="deleteUser" parameterType="int">
@@ -271,5 +271,46 @@
 		from sh_coupon
 		where user_no = #{value}
 	</select>
+	
+	<resultMap type="RoomRev" id="RoomRevResultMap">
+		<id column="room_rev_no" property="no"/>
+		<result column="room_rev_checkin_time" property="checkinTime"/>
+		<result column="room_rev_checkout_time" property="checkoutTime"/>
+		<result column="room_rev_status" property="status"/>
+		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
+		<result column="room_rev_created_date" property="createdDate"/>
+		<result column="room_rev_updated_date" property="updatedDate"/>
+		<result column="room_rev_room_name" property="roomName"/>
+		<result column="location_name" property="locationName"/>
+		<result column="room_price" property="roomPrice"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
+		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
+	</resultMap>
+	<!-- 해당회원의 Room 예약내역 -->
+	<select id="getRoomRevByUserNo" parameterType="int" resultMap="RoomRevResultMap">
+		select *
+		from sh_room_rev
+		where user_no = #{value}
+	</select>
+	
+	<resultMap type="ShopOrderItem" id="ShopOrderItemResultMap">
+		<result column="order_no" property="shopOrder.no"/>
+		<result column="order_no" property="shopOrder.status"/>
+		<result column="order_created_date" property="shopOrder.createdDate"/>
+		<result column="product_no" property="product.no"/>
+		<result column="product_name" property="product.name"/>
+		<result column="product_price" property="product.price"/>
+		<result column="order_item_price" property="price"/>
+		<result column="order_item_quantity" property="quantity"/>
+	</resultMap>
+	<!-- 해당회원의 스프링 샵 구매내역 -->
+	<select id="getOrderItemsByUserNo" parameterType="int" resultMap="ShopOrderItemResultMap">
+		select o.order_no, p.product_name, i.order_item_quantity, p.product_price, o.order_status, o.order_created_date
+		from sh_shop_order o, sh_shop_order_items i, sh_shop_product p
+		where o.order_no = i.order_no
+		and i.product_no = p.product_no
+		and o.user_no = #{value}
+	</select>
+	
 	
 </mapper>
