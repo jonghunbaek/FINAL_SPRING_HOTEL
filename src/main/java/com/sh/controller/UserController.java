@@ -46,10 +46,11 @@ public class UserController {
 		model.addAttribute("userGrade", grade);
 		PointGrade pointGrade = userService.getUserPointAndGrade(loginUser.getNo());
 		model.addAttribute("pg", pointGrade);
-		List<PointHistory> pointHis = userService.getPointHistorySixMonth(loginUser.getNo());
-		model.addAttribute("pointHis", pointHis);
+		List<PointHistory> pointHisSixMonth = userService.getPointHistorySixMonth(loginUser.getNo());
+		model.addAttribute("pointHis", pointHisSixMonth);
 		
 		// 포인트 합산
+		List<PointHistory> pointHis = userService.getPointHistory(loginUser.getNo());
 		int totPoint = 0;
 		for (int i = 0; i<pointHis.size(); i++) {
 			PointHistory points = pointHis.get(i);
@@ -182,6 +183,14 @@ public class UserController {
 		model.addAttribute("user", user);
 		List<PointHistory> pointHis = userService.getPointHistory(loginUser.getNo());
 		model.addAttribute("pointHis", pointHis);
+		
+		// 포인트 합산
+		int totPoint = 0;
+		for (int i = 0; i<pointHis.size(); i++) {
+			PointHistory points = pointHis.get(i);
+			totPoint = totPoint + points.getEarned() - points.getUsed();
+		}
+		userService.updateUserPointInfo(loginUser.getNo(), totPoint);
 		
 		return "user/pointInfo";
 	}
