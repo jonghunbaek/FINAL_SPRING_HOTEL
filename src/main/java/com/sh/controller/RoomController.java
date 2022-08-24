@@ -20,6 +20,10 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.sh.service.RoomService;
 import com.sh.vo.Room;
+import com.sh.vo.RoomAmenity;
+import com.sh.vo.RoomCategory;
+import com.sh.vo.RoomInfo;
+import com.sh.vo.RoomOptions;
 import com.sh.web.form.RoomReservationForm;
 
 @Controller
@@ -31,14 +35,14 @@ public class RoomController {
 	private RoomService roomService;
 	
 //객실 메인페이지 
-	@GetMapping
+	@GetMapping(path="/roomHome")
 	public String home() {
 		
 		return "room/roomHome";
 	}
 
 //객실 상세페이지
-	@GetMapping(path="/detail")
+	@GetMapping(path="/roomDetail")
 	public String detail() {
 		
 		return "room/roomDetail";
@@ -81,8 +85,9 @@ public class RoomController {
 	}
 	
 	@PostMapping(path="/insert")
-	public String insert( @ModelAttribute("roomReservationForm") RoomReservationForm roomReservationForm, Model model) throws IOException { // + 로그인 
+	public String insert( @ModelAttribute("roomReservationForm") RoomReservationForm roomReservationForm, Model model) throws IOException{ // + 로그인 
 		roomService.addNewReservation(roomReservationForm);
+		model.addAttribute("roomReservationForm", roomReservationForm);
 		
 		return "redirect:/room/complete";
 	}
