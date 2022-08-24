@@ -287,7 +287,7 @@ public class DiningController {
 		return "dining/loginForm";
 	}
 	
-	// 예약취소
+	// 비회원예약취소
 	@PostMapping("/deleteRev")
 	public String deleteRev(Model model, @RequestParam("rtRevNo") String rtRevNo, @RequestParam("name") String name, @RequestParam("mealTime") String mealTime, @RequestParam("seatType") String seatType, @RequestParam("revCount") int revCount ) {
 		
@@ -302,6 +302,23 @@ public class DiningController {
 		}
 		
 		return "dining/confirmRev";
+	}
+	
+	// 회원예약취소
+	@PostMapping("/deleteRevMember")
+	public String deleteRevMember(Model model, @RequestParam("rtRevNo") String rtRevNo, @RequestParam("name") String name, @RequestParam("mealTime") String mealTime, @RequestParam("seatType") String seatType, @RequestParam("revCount") int revCount ) {
+		
+		diningService.deleteRtRev(rtRevNo);
+		diningService.deleteRtRevCount(mealTime, seatType, revCount);
+		
+		try {
+			RtRev rtRev =  diningService.getReservationNonMember(rtRevNo, name);
+			model.addAttribute("rtRev", rtRev);
+		} catch(ApplicationException e) {
+			return "redirect:/dining/loginForm?fail=nonMemberInvalid";
+		}
+		
+		return "redirect:/user/diningInfo?rtRevNo="+rtRevNo;
 	}
 	
 }

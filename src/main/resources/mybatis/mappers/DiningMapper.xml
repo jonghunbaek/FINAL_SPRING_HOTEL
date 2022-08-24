@@ -263,6 +263,7 @@
 		select *
 		from sh_rt_rev
 		where user_id = #{value}
+		order by rt_rev_visit_date desc
 	</select>
 	
 </mapper>
