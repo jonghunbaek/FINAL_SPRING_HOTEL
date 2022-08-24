@@ -147,7 +147,7 @@ $(function() {
 			let content = '';
 
 			content += '<ul class="list-inline">'
-			content += '	<li class="list-inline-item"><a href="../room/roomDetail?roomCategoryNo=100">스탠다드</a></li><div class="vr" style="position:relative; top:3px;"></div>';
+			content += '	<li class="list-inline-item"><a href="">스탠다드</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">이그제큐티브</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">스위트</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">더 이그제큐티브 라운지</a></li><div class="vr" style="position:relative; top:3px;"></div>';

@@ -36,15 +36,20 @@ public class RoomController {
 	
 //객실 메인페이지 
 	@GetMapping(path="/roomHome")
-	public String home() {
-		
+	public String home(Model model) {
+		List<Room> rooms = roomService.getAllRooms();
+		model.addAttribute("room", rooms);
 		return "room/roomHome";
 	}
 
 //객실 상세페이지
 	@GetMapping(path="/roomDetail")
+//	public String detail(Model model, int no, int roomGroupNo) {
 	public String detail() {
-		
+//		Room room = roomService.getRoomByRoomCategoryNo(no);
+//		RoomCategory roomCat = roomService.getRoomCategoryByGroupNo(roomGroupNo);
+//		model.addAttribute("room", room);
+//		model.addAttribute("roomCategory", roomCat);
 		return "room/roomDetail";
 	}
 	

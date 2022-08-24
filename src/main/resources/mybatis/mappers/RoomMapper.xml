@@ -211,7 +211,7 @@
 	</select>
 	
 	
-	<!-- List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo); -->
+	<!-- RoomCategory getRoomCategoryByGroupNo(int roomGroupNo); -->
 	<select id="getRoomCategoryByGroupNo" parameterType="int">
 		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
 		from sh_room_category
