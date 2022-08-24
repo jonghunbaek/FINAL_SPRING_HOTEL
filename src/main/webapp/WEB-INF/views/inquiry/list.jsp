@@ -46,15 +46,6 @@
 			<div class="headTit">
 				<h3><strong>문의내역</strong></h3>
 			</div>
-			
-			<form id="filter-inquiry" >
-			<input type="hidden" name="page" value="${page}" />
-			<select name="state" class="m-2 float-end">
-				<option value="" ${''.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">모두보기</option>
-				<option value="N" ${'N'.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">답변대기</option>
-				<option value="Y" ${'Y'.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">답변완료</option>
-			</select>
-			<div class="inquiryList">
 				<c:choose>
 					<c:when test="${empty inquiries}">
 						<div class="col-12">
@@ -62,6 +53,14 @@
 						</div>
 					</c:when>
 					<c:otherwise>
+					<form id="filter-inquiry" method="get" action="inquiry/list">
+					<input type="hidden" name="page" value="${page}" />
+					<select name="state" class="m-2 float-end" onchange="changeStatus()">
+						<option value="" ${''.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">모두보기</option>
+						<option value="N" ${'N'.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">답변대기</option>
+						<option value="Y" ${'Y'.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">답변완료</option>
+					</select>
+					<div class="inquiryList">
 							<table class="table">
 								<thead>
 									<tr>
@@ -96,8 +95,6 @@
 								</tbody>
 								</c:forEach>
 							</table>	
-					</c:otherwise>
-				</c:choose>
 				<div class="nav-footer" id="pagination">
 				<nav aria-label="Page navigation">
 				  <ul class="pagination pagination-sm" >
@@ -122,6 +119,8 @@
 				</nav>
 				</div>
 				</form>
+				</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 	</div>
@@ -130,11 +129,8 @@
 </body>
 <script>
 $(function() {
-	// 답변옵션 체크할 때
-	$("select[name=state]").change(function() {
-		changeStatus()
-	}
-	
+		document.querySelector('#container').style.height = "600px";
+		
 	function changeStatus() {
 		document.querySelector("input[name=page]").value =1;
 		document.querySelector("input[name=state]").value = document.querySelector("select[name=state]").value;

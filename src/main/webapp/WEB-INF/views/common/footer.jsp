@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <style>
 
-    #footer {background-color: rgb(241, 227, 196); margin-top: 150px; height: 170px;}
+    #footer {background-color: rgb(241, 227, 196); margin-top: 100px; height: 170px; float:left;}
     #footer-logo img {width: 120px; height: 120px;}
     #footer-content {margin-left: 50px;}
     hr {border: solid 1px black; margin-top: 60px;}
@@ -45,7 +45,7 @@
         </div>
         <div class="row justify-content-center" style="position:relative; top:50px; left:320px; font-size:11px; color:darkgray; font-weight:bold; height:13px; width:1200px;">
         	<div class="col text-center" style="border-right:1px solid darkgray; color:black;">
-        		신라리워즈 약관
+        		스프링리워즈 약관
         	</div>
         	<div class="col text-center" style="border-right:1px solid darkgray; color:RGB(178, 147, 123);">
         		개인정보처리방침
