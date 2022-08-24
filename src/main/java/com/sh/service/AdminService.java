@@ -59,7 +59,7 @@ public class AdminService {
 		admin = new Admin();
 		BeanUtils.copyProperties(adminRegisterForm, admin);
 		
-		admin.setLocation(new Location(adminRegisterForm.getLocationNo())); 
+		//admin.setLocation(new Location(adminRegisterForm.getLocationNo())); 
 		MultipartFile upfile = adminRegisterForm.getProfileFile();
 		
 		if (!upfile.isEmpty()) {

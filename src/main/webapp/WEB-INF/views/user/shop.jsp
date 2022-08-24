@@ -30,11 +30,16 @@
 	#list-border {border-top: 1px dotted rgb(206,194,168); padding-top: 5px; margin-top: 5px;}
 	#div-contents {float: right; margin: auto; width: 866px; height: 100%;}
 	#span-color {color:rgb(118,118,118)}
-	#div-topmsg {margin: 20px 0px;}
+	#div-box {width: 866px; height: 100%; border: solid 1px; border-color: rgb(227, 214, 198); 
+			  padding: 24px; font-size: 14px;}
+    #div-inquery {display:block; margin:auto; float:right; width:62px; height:27px; position: relative; right:250px;
+    			  background-color: rgb(62,43,44); text-align: center;}
+    #div-inquery a {display: block; color: rgb(250,241,208); padding-top: 2px;}
 	#div-tableBox {margin: 20px 0 26px;}
+	#div-hTitle {height: 40px; border-bottom: 3px solid #a1886f; margin-bottom: 20px 0px;}
 	#div-table {border: none; border-top: 1px solid #cdcbbe; width: 100%; border-collapse: collapse;}
 	.table {text-align: center; font-size: 13px;}
-	.table th {border-bottom: 1px solid #cdcbbe; color: #666666; line-height: 20px;}
+	.table th {border-bottom: 1px solid #cdcbbe; color: #666666; line-height: 25px;}
 	
 </style>
 <title>Spring Hotel</title>
@@ -83,50 +88,76 @@
 	
 	<div id="div-contents">
 		<div id="div-content1">
-			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">쿠폰함</h3>
+			<h3 class="fs-7 border-dark border-bottom border-5 pb-3">스프링 샵 - 구매내역 조회</h3>
 			<div id="div-topmsg">
-				<img src="/resources/images/mypage/couponTopMsg.gif">
+				<img src="/resources/images/mypage/myRsvTopMsg.gif">
 			</div>
-			<div class="fs-7">
-				<p>※ 총 <span id="span-num"> 0 </span> 건의 사용가능한 쿠폰이 있습니다.</p>
-			</div>
-			<div id="div-tableBox">
-				<div class="mt-3" id="div-table">
-					<table class="table background-color">
-						<colgroup>
-							<col width="50%" class="col1">
-							<col width="25%" class="col2">
-							<col width="25%" class="col3">
-						</colgroup>
-						<thead>
-							<tr style="background-color: #faf9f4;">
-								<th>쿠폰명</th>
-								<th>발급날짜</th>
-								<th>사용기간</th>
-							</tr>
-						</thead>
-						<tbody>
+			<div id="div-box">
+				<div class="mb-3 pb-3" id="div-date">
+					<span class="me-3" id="span-color">기간 조회</span>
+					<label class="dateStart" for="searchStrtDt"></label>
+					<input type="text" class="dateStart uiform text" id="searchStrtDt" name="searchStrtDt" value="" onclick="popCalendarLayer2('searchStrtDt','2022-08-02');" autocomplete="off">
+					<a href="#none" onclick="" >
+					<span class="material-symbols-outlined" style="position: relative; top: 5px;">calendar_month</span></a>
+					~
+					<label class="dateEnd" for="searchEndDt"></label>
+					<input type="text" class="dateEnd uiform text" id="searchEndDt" name="searchEndDt" value="" onclick="popCalendarLayer2('searchEndDt','2022-08-02');" autocomplete="off">
+					<a href="#none" onclick="" >
+					<span class="material-symbols-outlined" style="position: relative; top: 5px;">calendar_month</span></a>
+					<div class="mt-1" id="div-inquery">
+						<a href="javascript:void(0);"><span>조회</span></a>
+					</div>
+				</div>
+				<div id="div-tableBox">
+					<div id="div-hTitle">
+						<h6>스프링 샵 - 구매내역</h6>
+					</div>
+					<div class="mt-2"><span id="span-num">Total : 0</span></div>
+					<div class="mt-3" id="div-table">
+						<table class="table background-color">
+							<colgroup>
+								<col width="11%" class="col1">
+								<col width="*%" class="col2">
+								<col width="11%" class="col3">
+								<col width="11%" class="col4">
+								<col width="11%" class="col5">
+								<col width="15%" class="col6">
+							</colgroup>
+							<thead>
+								<tr style="background-color: #faf9f4;">
+									<th>주문번호</th>
+									<th>상품정보</th>
+									<th>상품수량</th>
+									<th>상품금액</th>
+									<th>주문상태</th>
+									<th>주문날짜</th>
+								</tr>
+							</thead>
+							<tbody>
 							<c:choose>
-								<c:when test="${empty coupons }">
+								<c:when test="${empty orderItems }">
 									<tr class="first last">
-										<td colspan="3">사용 가능한 쿠폰이 없습니다.</td>
+										<td colspan="6">주문내역이 없습니다.</td>
 									</tr>
 								</c:when>
 								<c:otherwise>
-									<c:forEach var="coupon" items="${coupons }">
+									<c:forEach var="orderItem" items="${orderItems }">
 										<tr id="tr-data">
-											<td>${coupon.title }</td>
-											<td><fmt:formatDate value="${coupon.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
-											<td><fmt:formatDate value="${coupon.useableDate }" pattern="~ yyyy년 MM월 dd일"/></td>
+											<td>${orderItem.shopOrder.no }</td>
+											<td>${orderItem.product.name }</td>
+											<td>${orderItem.quantity }</td>
+											<td>${orderItem.product.price } 원</td>
+											<td>${orderItem.shopOrder.status }</td>
+											<td><fmt:formatDate value="${orderItem.shopOrder.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
-						</tbody>
-					</table>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
-	
+			 </div>
 		</div>
 	</div>
 	
@@ -134,9 +165,11 @@
 <%@ include file="../common/footer.jsp" %>
 </body>
 <script type="text/javascript">
+
 $(function () {
 	let tr = $('#tr-data').length;
-	$('#span-num').html(tr);
+	$('#span-num').html("Total : " + tr);
 })
+	
 </script>
 </html>

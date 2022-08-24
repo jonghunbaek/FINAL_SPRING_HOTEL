@@ -31,6 +31,9 @@ public interface InquiryMapper {
 	// 회원별 문의내역 조회
 	List<Qna> getInquiryByUserNo(Pagination pagination, int userNo);
 	
+	// 회원번호로 문의내역 조회
+	List<Qna> getQnaByUserNo(int userNo);
+	
 	// 문의내역 상세사항
 	Qna getInquiryByNo(int no);
 	

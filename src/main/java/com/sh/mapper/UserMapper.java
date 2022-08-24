@@ -9,6 +9,9 @@ import com.sh.vo.Coupon;
 import com.sh.vo.Grade;
 import com.sh.vo.PointGrade;
 import com.sh.vo.PointHistory;
+import com.sh.vo.Qna;
+import com.sh.vo.RoomRev;
+import com.sh.vo.ShopOrderItem;
 import com.sh.vo.User;
 import com.sh.vo.UserPoint;
 
@@ -36,6 +39,9 @@ public interface UserMapper {
 	List<PointHistory> getUserPointHistoryByUserNo(int userNo);
 	PointGrade getPointAndGradeByUserNo(int userNo);
 	List<Coupon> getCouponInfoByUserNo(int userNo);
+	List<RoomRev> getRoomRevByUserNo(int userNo);
+	List<ShopOrderItem> getOrderItemsByUserNo(int userNo);
+	List<Qna> getQnaByUserNo(int userNo);
 	
 	// 관리자페이지 예약현황에서 고객상세정보 확인용도
 	User getUserByNo(int no);
