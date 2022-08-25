@@ -117,7 +117,8 @@
 				</div>
 				<div id="div-tableBox">
 					<div id="div-hTitle">
-						<h5><img src="/resources/images/mypage/myRsvTit1_ko.gif"></h5>
+						<h5  style="float:left;"><img src="/resources/images/mypage/myRsvTit1_ko.gif"></h5>
+						<span style="float:right;">※ 객실/패키지명을 클릭하면 상세정보로 이동할 수 있습니다.</span>
 					</div>
 					<div class="mt-2"><span>Total : ${itemSize }</span></div>
 					<div class="mt-3" id="div-table">
@@ -151,10 +152,10 @@
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="room" items="${roomRevs }">
-										<tr>
+										<tr id="table-tr-${room.room.no }" data-no="${room.room.no }" onclick="moveQnaDetail(this);" onmouseover="mouseOver(this);" onmouseout="mouseOut(this);">
 											<td>${room.no }</td>
 											<td>${room.locationName } 스프링</td>
-											<td>${room.room.name }</td>
+											<td><a href="/room/roomDetail??groupNo=${room.room.no }">${room.room.name }</a></td>
 											<td>
 												<fmt:formatDate value="${room.checkinTime }" pattern="yyyy년 MM월 dd일"/> ~ 
 												<fmt:formatDate value="${room.checkoutTime }" pattern="yyyy년 MM월 dd일"/>
@@ -208,7 +209,7 @@
 	// 재예약
 	function reRev(item) {
 		let revNo = item.value;
-		if (confirm("함께 예약한 다른 객실도 같이 예약됩니다. \n 예약 하시겠습니까?") == true) {
+		if (confirm("함께 예약한 다른 객실도 같이 예약됩니다. \n\n예약 하시겠습니까?") == true) {
 			alert("객실을 예약합니다.");
 			location.href = "/user/reRoomRev?revNo="+revNo;
 		} else {
@@ -219,12 +220,26 @@
 	// 예약내역 삭제
 	function deleteRev(item) {
 		let revNo = item.value;
-		if (confirm("함께 예약한 다른 예약내역도 같이 삭제됩니다. \n 삭제 하시겠습니까?") == true) {
+		if (confirm("함께 예약한 다른 예약내역도 같이 삭제됩니다. \n\n삭제 하시겠습니까?") == true) {
 			alert("예약내역을 삭제합니다.");
 			location.href = "/user/deleteRoomRev?revNo="+revNo;
 		} else {
 			return false;
 		}
+	}
+	
+	// 마우스 이벤트
+	function mouseOver(data) {
+		let no = data.getAttribute('data-no');
+	 	let select = document.querySelector('#table-tr-' + no);
+	 	select.style.backgroundColor = 'rgb(240,240,240)';
+	}
+	
+	// 마우스 이벤트
+	function mouseOut(data) {
+		let no = data.getAttribute('data-no');
+	 	let select = document.querySelector('#table-tr-' + no);
+	 	select.style.backgroundColor = '';
 	}
 	
 </script>

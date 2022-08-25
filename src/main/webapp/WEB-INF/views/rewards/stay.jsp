@@ -112,10 +112,10 @@
 			</div>
 			<div class="justify-content-center" id="div-tab">
 			 	<ul> 
-                   	<li id="tabSeoul" style="border-bottom: 0; border-right: 0;"><a href="#" >서울스프링호텔</a></li>
-                   	<li id="tabJeju" style="border-right: 0;"><a href="/rewards/jeju" >제주스프링호텔</a></li>
-                   	<li id="tabMg" style="border-right: 0;"><a href="/rewards/monogram" >스프링모노그램</a></li>
-                   	<li id="tabStay"><a href="/rewards/stay" >스프링스테이</a></li>
+                   	<li id="tabSeoul"><a href="/rewards/seoul" >서울스프링호텔</a></li>
+                   	<li id="tabJeju" style="border-left: 0;"><a href="/rewards/jeju" >제주스프링호텔</a></li>
+                   	<li id="tabMg" style="border-left: 0;"><a href="/rewards/monogram" >스프링모노그램</a></li>
+                   	<li id="tabStay" style="border-bottom: 0; border-left: 0;"><a href="#" >스프링스테이</a></li>
               	</ul>
 			</div>
 			<div id="div-selector">

@@ -111,7 +111,7 @@
 				<div id="div-tableBox">
 					<div class="mt-2">
 						<span>Total : ${itemSize }</span>
-						<span style="float:right;">※ 문의내역을 클릭하면 상세정보로 이동할 수 있습니다.</span>
+						<span style="float:right;">※ 제목을 클릭하면 상세정보로 이동할 수 있습니다.</span>
 					</div>
 					<div class="mt-3" id="div-table">
 						<table class="table background-color">
@@ -146,7 +146,7 @@
 											<td>${qna.no }</td>
 											<td>${qna.location.name } 스프링</td>
 											<td>${qna.qnaCategory.name }</td>
-											<td>${qna.title }</td>
+											<td><a href="/inquiry/detail?no=${qna.no }">${qna.title }</a></td>
 											<td><fmt:formatDate value="${qna.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
 											<td>
 												<c:if test="${qna.answerState eq 'N' }">
@@ -173,11 +173,11 @@
 </body>
 <script type="text/javascript">
 
-	// 문의 상세로 이동
+	/* // 문의 상세로 이동
 	function moveQnaDetail(data) {
 		let no = data.getAttribute('data-no');
 		location.href = "/inquiry/detail?no=" + no;
-	}
+	} */
 	
 	// 마우스 이벤트
 	function mouseOver(data) {

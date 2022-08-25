@@ -75,11 +75,27 @@ public class HomeController {
 		return "contactus";
 	}
 	
-	// 스프링리워즈 메인
-	@GetMapping(path="/rewards")
+	// 스프링리워즈 메인 (서울스프링)
+	@GetMapping(path="/rewards/seoul")
 	public String rewards() {
 		return "rewards/rewards";
 	}
+	// 스프링리워즈 (제주스프링)
+	@GetMapping(path="/rewards/jeju")
+	public String tabJeju() {
+		return "rewards/jeju";
+	}
+	// 스프링리워즈 메인 (스프링모노그램)
+	@GetMapping(path="/rewards/monogram")
+	public String tabMonogram() {
+		return "rewards/monogram";
+	}
+	// 스프링리워즈 메인 (스프링스테이)
+	@GetMapping(path="/rewards/stay")
+	public String tabStay() {
+		return "rewards/stay";
+	}
+	
 	// 스프링리워즈 회원특전
 	@GetMapping(path="/benefits")
 	public String benefits() {

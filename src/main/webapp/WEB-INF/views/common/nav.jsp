@@ -215,7 +215,7 @@ $(function() {
 			let content = '';
 
 			content += '<ul class="list-inline">'
-			content += '	<li class="list-inline-item"><a href="/rewards">스프링 리워즈</a></li><div class="vr" style="position:relative; top:3px;"></div>';
+			content += '	<li class="list-inline-item"><a href="/rewards/seoul">스프링 리워즈</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">스프링 호텔</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">다이닝</a></li><div class="vr" style="position:relative; top:3px;"></div>';
 			content += '	<li class="list-inline-item"><a href="">기타</a></li>';
