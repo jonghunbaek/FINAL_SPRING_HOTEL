@@ -21,59 +21,51 @@
 <div class="contain">
 <!-- 전체 객실 사이드메뉴 시작 -->
 	<div class="container" id="container"> 
-		<div class="side-nav">
+	<div class="side-nav">
 			<div class="r-title">
 				<h5>객실</h5>
-					<ul class="menu">
-						<li class="m1-first">
-							<a>
-								<span>스탠다드</span>
-							</a>
-							<ul class="st-menu">
-								<li class="roomt"><a href="/room/roomDetail"><span>디럭스</span></a></li>
-								<li class="room"><a href=""><span>비즈니스 디럭스</span></a></li>
-								<li class="room"><a href=""><span>그랜드 코너 디럭스</span></a></li>
-							</ul>
-						</li>
-						<li class="m2">
-							<a>
-								<span>이그제큐티브</span>
-							</a>
-							<ul class="st-menu">
-								<li class="roomt"><a href="/room/roomDetail?groupNo=200&${roomCategory.no }"><span>이그제큐티브 비즈니스 디럭스</span></a></li>
-								<li class="room"><a href=""><span>이그제큐티브 그랜드 디럭스</span></a></li>
-							</ul>
-						</li>
-						<li class="m3">
-							<a>
-								<span>스위트</span>
-							</a>
-							<ul class="st-menu">
-								<li class="roomt"><a href="/room/roomDetail?groupNo=300&${roomCategory.no }"><span>수페리어 스위트</span></a></li>
-								<li class="room"><a href=""><span>코리안 스위트</span></a></li>
-								<li class="room"><a href=""><span>코너 스위트</span></a></li>
-								<li class="room"><a href=""><span>프리미어 스위트</span></a></li>
-								<li class="room"><a href=""><span>로열 스위트</span></a></li>
-								<li class="room"><a href=""><span>스프링 스위트</span></a></li>
-								<li class="room"><a href=""><span>프레지덴셜 스위트</span></a></li>
-							</ul>
-						</li>
-						<li class="m4-last" id="lounge">
-							<a>
-								<span>더 이그제큐티브 라운지</span>
-							</a>
-						</li>
-					</ul>
-					<div class="all-view">
-						<a href="#">	
-							<span id="all-view">전체 객실 보기</span>
-						</a>
-					</div>
+				<ul class="menu">
+					<li class="m1-first"><a> <span>스탠다드</span>
+					</a>
+						<ul class="st-menu">
+							<li class="roomt"><a href="../room/roomDetail?categoryNo=101"><span>디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=102"><span>비즈니스 디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=103"><span>그랜드 코너 디럭스</span></a></li>
+						</ul></li>
+					<li class="m2"><a> <span>이그제큐티브</span>
+					</a>
+						<ul class="st-menu">
+							<li class="roomt"><a href="../room/roomDetail?categoryNo=201"><span>이그제큐티브 비즈니스
+										디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=202"><span>이그제큐티브 그랜드 디럭스</span></a></li>
+						</ul></li>
+					<li class="m3"><a> <span>스위트</span>
+					</a>
+						<ul class="st-menu">
+
+							<li class="roomt"><a href="../room/roomDetail?categoryNo=301"><span>수페리어 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=302"><span>코리안 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=303"><span>코너 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=304"><span>프리미어 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=305"><span>로열 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=306"><span>신라 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=307"><span>프레지덴셜 스위트</span></a></li>
+
+						</ul></li>
+					<li class="m4-last" id="lounge"><a> <span>더 이그제큐티브
+								라운지</span>
+					</a></li>
+				</ul>
+				<div class="all-view">
+					<a href="#"> <span id="all-view">전체 객실 보기</span>
+					</a>
+				</div>
 			</div>
 		</div>
 		<!-- 메인 컨텐츠 박스 -->
 		<div class="main" id="main">
 		<!-- 객실 detail 시작 -->
+			
 			<div class="main-contents">
 				<!-- 페이지 위치 -->
 					<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -81,48 +73,35 @@
 					    <li class="breadcrumb-item"><img alt="" src="../resources/images/room/detail/location.gif"></li>
 					    <li class="breadcrumb-item">객실</li>
 					    <li class="breadcrumb-item">스탠다드</li>
-					    <li class="breadcrumb-item active" aria-current="page"><a href="#">디럭스</a></li>
+					    <li class="breadcrumb-item active" aria-current="page"><a href="#">${room.roomCategory.name }</a></li>
 					  </ol>
 					</nav>
 				<!-- 객실 이름 -->
 					<div class="main-title">
-						디럭스
+						${room.roomCategory.name }
 					</div>
 			<!-- 슬라이드 -->
 			<div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d1.jpg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d2.jpg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d3.jpg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d4.jpg" />
-        </div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    </div>
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d1.jpg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d2.jpg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d3.jpg" />
-        </div>
-        <div class="swiper-slide">
-          <img src="../resources/images/room/detail/d4.jpg" />
-        </div>
-      </div>
-    </div>
+			      <div class="swiper-wrapper">
+			      <c:forEach var="name" items="${room.roomInfo[0].roomImages }">
+			        <div class="swiper-slide">
+			          <img src="../resources/images/room/detail/${name }" />
+			        </div>
+			      </c:forEach>
+			      </div>
+			      <div class="swiper-button-next"></div>
+			      <div class="swiper-button-prev"></div>
+			    </div>
+			    <div class="swiper mySwiper">
+			      <div class="swiper-wrapper">
+			      <c:forEach var="name" items="${room.roomInfo[0].roomImages }">
+			        <div class="swiper-slide">
+			          <img src="../resources/images/room/detail/${name }" />
+			        </div>
+			      </c:forEach>
+			  
+			      </div>
+			    </div>
 				
 				<!-- 이메일 / 인쇄하기 <<< 나중에 -->
 				<div class="email-print"><img alt="" src="#">이메일 인쇄하기 </div>
@@ -143,16 +122,16 @@
 						<div class="room-info-set">
 							<div class="room-info-room">
 								<div class="info-title">객실 이용</div>
-								<div class="info-content">${roomInfo }</div>
+								<div class="info-content">${room.roomInfo[0].room }</div>
 							</div>
 							<div class="room-info-etc">
 								<div class="info-title1">부대 시설</div>
-								<div class="info-content">내용</div>
+								<div class="info-content">${room.roomInfo[0].etc }</div>
 							</div>
 							
 							<div class="room-info-service">
 								<div class="info-title">룸서비스</div>
-								<div class="info-content">내용</div>
+								<div class="info-content">${room.roomInfo[0].service }</div>
 							</div>
 						</div>
 						<!-- SNS -->
@@ -182,9 +161,7 @@
 							<div class="side-title">
 							Hotel Info.
 							</div>
-							<div class="info-menu">breakfast</div>
-							<div class="info-menu">check-in/out</div>
-							<div class="info-menu">cancel</div>
+							<div class="info-menu">${room.roomInfo[0].side }</div>
 						</div>
 					</div>
 				</div>
