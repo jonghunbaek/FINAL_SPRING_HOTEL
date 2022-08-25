@@ -77,15 +77,15 @@
 				</div>
 				<div class="col" style="border-left: 1px solid #333; border-right: 1px solid #333; padding:0 27px;">
 						<ul style="list-style:none;margin: 0px; line-height:1.7;">
-		                    <li><a href="/shop/help/help_write">1:1문의</a></li>
-		                    <li><a href="/shop/sitemap">사이트맵</a></li>
+		                    <li><a href="#">1:1문의</a></li>
+		                    <li><a href="#">사이트맵</a></li>
 		                </ul>
 				</div>
 				<div class="col" style="padding:0 27px;">
 						<ul style="list-style:none;margin: 0px; line-height:1.7;">
 			                <c:if test="${empty LOGIN_USER }">
 			                    <li><a href="/login" style="color: #fff;"><strong>로그인</strong></a></li>
-			                    <li><a href="/shop/nomem/nomem_order_lists">비회원 주문조회</a></li>
+			                    <li><a href="#">비회원 주문조회</a></li>
 			                    <li><a href="/register">회원가입</a></li>
 			                </c:if>
 			                <c:if test="${not empty LOGIN_USER }">
@@ -98,10 +98,10 @@
 			<div class="row" style="border-top: 1px solid #333; padding: 10px 0 30px;">
 					<div class="col" style="float:left;" id="f-bottom-txt">
 				            <ul style="margin: 30px 0 0; ">
-				                <li><a href="/shop/login/privacy_policy">개인정보처리방침</a></li>
-				                <li><a href="/shop/login/terms_service">이용약관</a></li>
-				                <li><a href="/shop/login/rewards_policy">리워즈 회원약관</a></li>
-				                <li><a href="/shop/login/exchange_return">이용안내</a></li>
+				                <li><a href="#">개인정보처리방침</a></li>
+				                <li><a href="#">이용약관</a></li>
+				                <li><a href="/benefits">리워즈 회원약관</a></li>
+				                <li><a href="/rewards">이용안내</a></li>
 				            </ul>
 					</div>
 		            <div class="col-2" style="float:right; width:20%;">
