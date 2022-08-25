@@ -85,6 +85,8 @@
 		<id column="dn_no" property="no"/>
 		<result column="dn_name" property="name"/>
 		<result column="dn_image" property="imagename"/>
+		<result column="dn_sub_img1" property="subImg1"/>
+		<result column="dn_sub_img2" property="subImg2"/>
 		<result column="dn_max_count" property="maxCount"/>
 		<association property="location" column="dn_no" select="getLocationByDnNo"/>
 		<association property="dnInfo" column="dn_no" select="getDiningInfoByNo"/>

@@ -64,6 +64,8 @@
 
 #hotel-info {padding-top: 50px;}
 
+
+
 </style>
 <title>Spring Hotel</title>
 </head>
@@ -154,6 +156,40 @@ $(function() {
 	
 	// json이후 추가된 버튼에서 상세정보 모달창 띄우기
 	$("#container").on('click', "#btn-open-modal-detail", function() {
+		
+		let queryString = $("#form-dining-select").serialize();
+		let $hotelInfo = $("#modal-detail").empty();
+			
+		$.getJSON("/dining/info", queryString, function(dining){
+			
+			let content = '';
+			content +=	'<div class="modal-dialog modal-dialog-scrollable modal-lg">'
+			content +=		'<div class="modal-content">'
+			content +=			'<div class="modal-header">'
+			content +=				'<h5 class="modal-title">레스토랑 상세보기</h4>'
+			content +=				'<button type="button" class="btn-close" data-bs-dismiss="modal"></button>'
+			content +=			'</div>'
+			content +=			'<div class="modal-body">'
+			content +=				'<div class="row modal-main-img-div">'
+			content +=					'<div class="col" id="modal-main-img">'
+			content +=						'<img src="../resources/images/dining/'+dining.imagename+'"/>'
+			content +=					'</div>'
+			content +=				'</div>'
+			content +=				'<div class="row">'
+			content +=					'<div class="col-7" id="modal-sub-img1">'
+			content +=						'<img src="../resources/images/dining/'+dining.subImg1+'"/>'
+			content +=					'</div>'
+			content +=					'<div class="col-5" id="modal-sub-img2">'
+			content +=						'<img src="../resources/images/dining/'+dining.subImg2+'"/>'
+			content +=					'</div>'
+			content +=				'</div>'
+			content +=			'</div>'
+			content +=		'</div>'
+			content +=	'</div>'
+			
+			$hotelInfo.append(content);
+			
+		})
 		detailModal.show();
 	});
 	
@@ -199,7 +235,7 @@ $(function() {
 		
 		//console.log(queryString);
 		
-		$.getJSON("/dining/info", queryString, function(dining) {
+		$.getJSON("/dining/info", queryString, function(dining){
 			if(dining == null) {
 				let content = `
 					<div class="col-12">

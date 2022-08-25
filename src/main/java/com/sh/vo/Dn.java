@@ -15,9 +15,12 @@ public class Dn {
 	private int no;
 	private String name;
 	private String imagename;
+	private String subImg1;
+	private String subImg2;
 	private int maxCount;
 	private DnCategory dnCategory;
 	private Location location;
 	private DnInfo dnInfo;
+	
 	
 }
