@@ -19,7 +19,8 @@
 <!-- total zone -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<!-- moment -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <title>Spring Hotel</title>
 </head>
 <body>
@@ -93,7 +94,7 @@
 			<div id="Accordion_wrap2"
 				style="margin-top: 30px; border: 0.01em solid #80808063;">
 				<div class="que2" style="background-color: #9fa0a11c;">
-					<span style="margin-left: 20px;">요금상세(1박)</span>
+					<span style="margin-left: 20px;">요금상세</span>
 					<div class="arrow-wrap2">
 						<span class="arrow-top2">↑</span> <span class="arrow-bottom2">↓</span>
 					</div>
@@ -104,14 +105,14 @@
 						<div class="box-2-1 row"
 							style="text-align: center; padding-block: 10px; border-top: 1px solid #7b6f4bf2;">
 							<div class="col-2">투숙 일자</div>
-							<div class="col-2">객실 요금</div>
+							<div class="col-2">객실 요금 (1박)</div>
 							<div class="col-2">성인 조식</div>
 							<div class="col-2">어린이 조식</div>
 							<div class="col-2">엑스트라 베드</div>
-							<div class="col-2">합계</div>
+							<div class="col-2">옵션 합계</div>
 						</div>
 						<div class="box-2-2 row" style="text-align: center; padding-block: 10px; border-block: 1px dashed #8080805c;">
-							<div class="col-2"><fmt:formatDate value="${roomReservationForm.checkinTime }" pattern="yyyy-MM-dd"/></div>
+							<div class="col-2"><fmt:formatDate value="${roomReservationForm.checkinTime }" pattern="yyyy-MM-dd"/><br>-<fmt:formatDate value="${roomReservationForm.checkoutTime }" pattern="yyyy-MM-dd"/></div>
 							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.roomPrice }"/>원</div>
 							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.optionAdultBf }"/>명</div>
 							<div class="col-2"><fmt:formatNumber value="${roomReservationForm.optionChildBf}"/>명</div>

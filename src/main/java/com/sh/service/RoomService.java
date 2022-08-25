@@ -134,7 +134,9 @@ public class RoomService {
 		roomrev.setCardNumber4(roomReservationForm.getCardNumber4());
 		roomrev.setValidMonth(roomReservationForm.getCardValidMonth());
 		roomrev.setValidYear(roomReservationForm.getCardValidYear());
-		
+//		if(roomReservationForm.getIsM().equals("Y")) {
+//			roomrev.setUser(userMapper.getUserByEmail(roomReservationForm.getUserName()));
+//		}
 		
 		roomMapper.insertRoomRev(roomReservationForm);
 		
@@ -150,7 +152,7 @@ public class RoomService {
 		return roomMapper.getAllRoomByLocationNo(no);
 	}
 
-	public List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo) {
+	public RoomCategory getRoomCategoryByGroupNo(int roomGroupNo) {
 		return roomMapper.getRoomCategoryByGroupNo(roomGroupNo);
 	}
 

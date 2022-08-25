@@ -10,25 +10,35 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
-*{font-family: 돋움, sans-serif, Arial}
-.col-6 img {
-    width: 500px;
-    height: 300px;
-}
+#container {width: 1300px; margin: 0 auto;}
+
+#div-main-titUp{border-bottom:#94816b solid 2px;}
+
+#div-main-tit h2{color:#a59582;}
+
+#div-hotel-select{border-bottom:#f7f7f7 solid 5px;}
+
 .tit {
 	margin-bottom: 20px;
+	font-size: 140%;
+	font-weight: 800;
+	color:#81725f;
 }
 .subTit {
+	font-size: 100%;
 	margin-bottom: 20px;
+	font-weight: 500;
 }
 .bnt-rest-info {
-	font-size: 80%;
+	font-size: 100%;
 	color: red;
 	margin-bottom: 50px;
+	font-weight:600;
 }
 .info{
 	margin-top:30px;
-	font-size: 50%;
+	font-size: 80%;
+	font-weight:600;
 }
 #modal-main-img img{
     width: 750px;
@@ -46,11 +56,13 @@
 
 #form-select .btn-outline-secondary{ margin-right: 10px; margin-bottom: 10px;}
 
-#dining-main-image {width: 600px; height:400px;}
+#dining-main-image {width: 550px; height:350px;}
 
 .modal-main-img-div{width:600px; heigth:250px;}
 
 #modal-main-img{width:600px; heigth:100px;}
+
+#hotel-info {padding-top: 50px;}
 
 </style>
 <title>Spring Hotel</title>
@@ -59,12 +71,12 @@
 <c:set var="menu" value="home"/>
 <%@ include file="../common/nav.jsp" %>
 <div class="container-fluid" id="container">
-	<div class="row border-bottom p-5" >
-		<div class="col text-center">
-			<h4>다이닝 예약</h4>
+	<div id="div-main-titUp" class="row p-5" >
+		<div id="div-main-tit" class="col text-center">
+			<h2><strong>다이닝 예약</strong></h2>
 		</div>
 	</div>
-		<div class="row p-4 border-bottom">
+		<div id="div-hotel-select" class="row p-4 ">
 			<div class="col-6">
 			<form id="form-select" method="get">
 				<label class="form-label">호텔 선택</label>

@@ -6,11 +6,17 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.sh.criteria.AdminDnRevCriteria;
 import com.sh.criteria.AdminRoomRevCriteria;
+import com.sh.criteria.AdminRtRevCriteria;
+import com.sh.vo.AllergySelected;
+import com.sh.vo.Dn;
+import com.sh.vo.DnCategory;
 import com.sh.vo.Pagination;
 import com.sh.vo.RoomRev;
+import com.sh.vo.RtRev;
 import com.sh.vo.RtRevCount;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
+import com.sh.web.form.DiningReservationForm;
 
 @Mapper
 public interface AdminRevMapper {
@@ -18,6 +24,37 @@ public interface AdminRevMapper {
 	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
 	void changeRevStatus();
 
+	/*----------------------------- 객실신규 예약관련---------------------------- */
+	// 신규 객실예약 등록
+	void insertNewRoomRev(AdminAddRevForm adminAddRevForm);
+	
+	/*----------------------------- 다이닝 신규 예약관련---------------------------- */
+	// 다이닝예약가능 날짜 조회
+	List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria);
+
+	// 선택된 날짜가 sh_rt_rev_count에 존재하는지 확인 --> 처음 날짜 선택시
+	String getRevDateBySelectedDate(AdminDnRevCriteria adminDnRevCriteria);
+	// 선택된 날짜가 sh_rt_rev_count에 존재하는지 확인 --> 신규 다이닝 예약등록시
+	String getRevDateBySelectedDateInAddRev(DiningReservationForm diningReservationForm);
+	// 선택된 날짜가 존재할 때 해당 날짜의 mealTime이 존재하는 지 확인
+	String checkSelectedMeal(DiningReservationForm diningReservationForm);
+	
+	// 다이닝 넘버 가져오기
+	Dn getDnByNo(AdminDnRevCriteria adminDnRevCriteria);
+	DnCategory getDnCategoryByNo(int no);
+
+	// 선택된 날짜가 없을때 mealtime을 가져온다.
+	List<String> getMealTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria);
+	// 선택된 날짜가 있을때 mealtime을 가져온다.
+	List<String> getMealTimeByRevIs(AdminDnRevCriteria adminDnRevCriteria);
+
+	// 선택될 날짜가 없을때 visittime을 가져온다. ---------> 일단 보류
+	List<String> getVisitTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria);
+
+	// 신규 다이닝예약 등록
+	void insertNewDiningRev(DiningReservationForm diningReservationForm);
+	
+	/*----------------------------- 객실예약 조회 관련---------------------------- */
 	List<RoomRev> getAllRoomRevList(Pagination pagination);
 	
 	// 페이징처리 전체 개수 
@@ -38,23 +75,24 @@ public interface AdminRevMapper {
 
 	// 선택된 예약정보 삭제
 	void deleteCheckedByNo(String revNo);
+
+	/*----------------------------- 다이닝 예약조회관련---------------------------- */
+	// 다이닝예약 조회 총 행수
+	int getTotalRowsDn();
+	int getTotalRowsByFilterRt(AdminRtRevCriteria adminRtRevCriteria);
 	
-	// 신규 객실예약 등록
-	void insertNewRoomRev(AdminAddRevForm adminAddRevForm);
+	// 다이닝예약 전체 목록가져오기
+	List<RtRev> getAllRtRevList(Pagination pagination);
+	List<RtRev> filterRevRt(AdminRtRevCriteria adminRtRevCriteria);
+
+	// 다이닝예약 상세정보 가져오기
+	RtRev getRtRevDetailByNo(int revNo);
+	// 예약번호로 저장된 알레르기번호를 가져온다.
+	List<AllergySelected> getAllergySelectedByNo(int revNo);
+
+
 	
-	// 다이닝예약가능 날짜 조회
-	List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria);
 
-	// 선택된 날짜가 sh_rt_rev_count에 존재하는지 확인
-	String getRevDateBySelectedDate(AdminDnRevCriteria adminDnRevCriteria);
-
-	// 선택된 날짜가 없을때 mealtime을 가져온다.
-	List<String> getMealTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria);
-	// 선택된 날짜가 있을때 mealtime을 가져온다.
-	List<String> getMealTimeByRevIs(AdminDnRevCriteria adminDnRevCriteria);
-
-	// 선택될 날짜가 없을때 visittime을 가져온다. ---------> 일단 보류
-	List<String> getVisitTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria);
 	
 
 	

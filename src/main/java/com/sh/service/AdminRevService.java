@@ -12,16 +12,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sh.criteria.AdminDnRevCriteria;
 import com.sh.criteria.AdminRoomRevCriteria;
+import com.sh.criteria.AdminRtRevCriteria;
 import com.sh.mapper.AdminRevMapper;
 import com.sh.mapper.RoomMapper;
 import com.sh.mapper.UserMapper;
+import com.sh.vo.AllergySelected;
+import com.sh.vo.Dn;
 import com.sh.vo.Pagination;
 import com.sh.vo.Room;
 import com.sh.vo.RoomRev;
+import com.sh.vo.RtRev;
 import com.sh.vo.RtRevCount;
 import com.sh.vo.User;
 import com.sh.web.form.AdminAddRevForm;
 import com.sh.web.form.AdminRoomRevUpdateForm;
+import com.sh.web.form.DiningReservationForm;
 
 @Service
 @Transactional
@@ -81,8 +86,17 @@ public class AdminRevService {
 	}
 	
 	// ------------------------------------------다이닝 신규예약추가 ----------------------------------------------
-	public List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria) {
-		return adminRevMapper.getRtSelectableDate(adminDnRevCriteria);
+	public Map<String, Object> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria) {
+		
+		Dn dn = adminRevMapper.getDnByNo(adminDnRevCriteria);
+		List<RtRevCount> selectableDate = adminRevMapper.getRtSelectableDate(adminDnRevCriteria);
+		
+		Map<String, Object> dnDate = new HashMap<String, Object>();
+		
+		dnDate.put("dn", dn);
+		dnDate.put("selectableDate", selectableDate);
+		
+		return dnDate;
 	}
 	
 	public List<String> getMealTime(AdminDnRevCriteria adminDnRevCriteria) {
@@ -100,8 +114,17 @@ public class AdminRevService {
 		}
 		
 	}
+	public void insertNewDiningRev(DiningReservationForm diningReservationForm) {
 	
-	// ------------------------------------------객실, 다이닝 예약현황 ----------------------------------------------
+		// 선택된 날짜가 sh_rt_rev_count에 존재하는지 체크하여 form에 담는다
+		diningReservationForm.setRevDate(adminRevMapper.getRevDateBySelectedDateInAddRev(diningReservationForm));
+		// 선택된 날짜가 존재 할때 해당 mealtime이 존재하는지 체크한다.
+		diningReservationForm.setCheckMeal(adminRevMapper.checkSelectedMeal(diningReservationForm));
+		
+		adminRevMapper.insertNewDiningRev(diningReservationForm);
+	}
+	
+	// ------------------------------------------객실 예약현황 ----------------------------------------------
 	// 페이징처리에 필요한 전체 개수 
 	public int getTotalRows() {
 		int totalRows = adminRevMapper.getTotalRows();
@@ -195,7 +218,70 @@ public class AdminRevService {
 		for (String revNo : revNos) {
 			adminRevMapper.deleteCheckedByNo(revNo);			
 		}
-
+	}
+	
+	// ------------------------------------------다이닝 예약현황 ----------------------------------------------
+	public int getTotalRowsDn() {
+		int totalRows = adminRevMapper.getTotalRowsDn();
+		return totalRows;
 	}
 
+	public List<RtRev> getAllRtRevList(Pagination pagination) {
+		List<RtRev> rtmRev = adminRevMapper.getAllRtRevList(pagination);
+		return rtmRev;
+	}
+
+	public Map<String, Object> filterRevRt(AdminRtRevCriteria adminRtRevCriteria) {
+		String visitDate = adminRtRevCriteria.getVisitDate();
+		
+		if (visitDate == null || visitDate == "") {
+			 System.out.println("checkinPeriod:-------" + visitDate);
+		} else {
+			
+			String[] dates = visitDate.split("~");
+			
+			List<String> dateTrim = new ArrayList<String>();
+			
+			for (int i=0; i<dates.length; i++) {
+				dateTrim.add(dates[i].trim());
+			}
+			
+			adminRtRevCriteria.setInStartDate(dateTrim.get(0));
+			adminRtRevCriteria.setInEndDate(dateTrim.get(1));
+		}
+	  
+		// Pagination 객체 생성 후 페이지에 표시될 개수를 매개변수로 전해주고 그 값을 adminRoomRevCriteria에 담는다.
+		int totalRows = adminRevMapper.getTotalRowsByFilterRt(adminRtRevCriteria);
+		
+		if (adminRtRevCriteria.getPage() == null || adminRtRevCriteria.getPage() == "") {
+			adminRtRevCriteria.setPage("1");
+		}
+		
+		int currentPage = Integer.parseInt(adminRtRevCriteria.getPage());
+			
+		Pagination pagination = new Pagination(Integer.parseInt(adminRtRevCriteria.getRows()) , totalRows, currentPage);
+
+		adminRtRevCriteria.setBeginIndex(pagination.getBeginIndex());
+		adminRtRevCriteria.setEndIndex(pagination.getEndIndex());
+		
+		List<RtRev> rtRev = adminRevMapper.filterRevRt(adminRtRevCriteria);
+		
+		Map<String, Object> filter = new HashMap<String, Object>();
+		filter.put("pagination", pagination);
+		filter.put("rtRev", rtRev);
+
+		return filter;
+	}
+
+	public Map<String, Object> getRtRevDetailByNo(int revNo) {
+		
+		List<AllergySelected> allergySelected = adminRevMapper.getAllergySelectedByNo(revNo);  
+		RtRev rtRev =  adminRevMapper.getRtRevDetailByNo(revNo);
+		
+		Map<String, Object> results = new HashMap<String, Object>();
+		results.put("allergySelected", allergySelected);
+		results.put("rtRev", rtRev);
+		
+		return results;
+	}
 }

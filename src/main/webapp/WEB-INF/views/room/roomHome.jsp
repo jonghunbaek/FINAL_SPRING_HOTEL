@@ -25,19 +25,20 @@
 					</a>
 						<ul class="st-menu">
 							<li class="roomt"><a href="../room/roomDetail"><span>디럭스</span></a></li>
-							<li class="room"><a href=""><span>비즈니스 디럭스</span></a></li>
-							<li class="room"><a href=""><span>그랜드 코너 디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?roomGroupNo=100&categoryNo=102"><span>비즈니스 디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?roomGroupNo=100&categoryNo=103"><span>그랜드 코너 디럭스</span></a></li>
 						</ul></li>
 					<li class="m2"><a> <span>이그제큐티브</span>
 					</a>
 						<ul class="st-menu">
-							<li class="roomt"><a href=""><span>이그제큐티브 비즈니스
+							<li class="roomt"><a href="../room/roomDetail?roomGroupNo=200&categoryNo=201"><span>이그제큐티브 비즈니스
 										디럭스</span></a></li>
-							<li class="room"><a href=""><span>이그제큐티브 그랜드 디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?roomGroupNo=200&categoryNo=202"><span>이그제큐티브 그랜드 디럭스</span></a></li>
 						</ul></li>
 					<li class="m3"><a> <span>스위트</span>
 					</a>
 						<ul class="st-menu">
+
 							<li class="roomt"><a href=""><span>수페리어 스위트</span></a></li>
 							<li class="room"><a href=""><span>코리안 스위트</span></a></li>
 							<li class="room"><a href=""><span>코너 스위트</span></a></li>
@@ -45,6 +46,7 @@
 							<li class="room"><a href=""><span>로열 스위트</span></a></li>
 							<li class="room"><a href=""><span>스프링 스위트</span></a></li>
 							<li class="room"><a href=""><span>프레지덴셜 스위트</span></a></li>
+
 						</ul></li>
 					<li class="m4-last" id="lounge"><a> <span>더 이그제큐티브
 								라운지</span>
@@ -80,7 +82,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -105,7 +107,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -132,7 +134,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -162,7 +164,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -186,7 +188,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -216,7 +218,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -240,7 +242,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -267,7 +269,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -291,7 +293,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -319,7 +321,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -343,7 +345,7 @@
 								</span>
 							</div>
 							<div class="st-info-btn">
-								<a href="#"> <img alt="예약"
+								<a href="/room/roomRev1"> <img alt="예약"
 									src="../resources/images/room/mainInfo/bookingBtn.gif">
 								</a> <a href="#"> <img alt="이미지보기"
 									src="../resources/images/room/mainInfo/imgViewbtn.gif">
@@ -369,7 +371,7 @@
 							</span>
 						</div>
 						<div class="st-info-btn">
-							<a href="#"> <img alt="예약"
+							<a href="/room/roomRev1"> <img alt="예약"
 								src="../resources/images/room/mainInfo/bookingBtn.gif">
 							</a> <a href="#"> <img alt="이미지보기"
 								src="../resources/images/room/mainInfo/imgViewbtn.gif">

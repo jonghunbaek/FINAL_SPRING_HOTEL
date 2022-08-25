@@ -38,16 +38,63 @@
 			where room_rev_checkin_time &lt;= sysdate+1 and room_rev_checkin_time &gt;=(sysdate-10/(24*60*60))	
 	</update>
 	
-	<!-- ======================객실,다이닝 예약추가========================= -->
+	<!-- =============================================객실,다이닝 예약추가=================================================== -->
 	<!-- void insertNewRoomRev(AdminAddRevForm adminAddRevForm); -->
 	<insert id="insertNewRoomRev" parameterType="com.sh.web.form.AdminAddRevForm">
-			insert into sh_room_rev
-			(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time, room_rev_checkout_time, room_rev_request,
-			 room_rev_option_checkin_time, room_bedtype, user_no, room_id, room_rev_option_adult_bf, room_rev_option_child_bf, room_rev_option_extra_bed) 
-			values 
-			(room_rev_seq.nextval, #{adult}, #{child}, #{totalPrice}, #{startDate}, #{endDate}, #{request},
-			 #{timeOption}, #{bedType}, #{no}, #{id}, #{adultBf}, #{childBf}, #{extraBed})
+		insert into sh_room_rev
+		(room_rev_no, room_rev_adult, room_rev_child, room_rev_total_price, room_rev_checkin_time, room_rev_checkout_time, room_rev_request,
+		 room_rev_option_checkin_time, room_bedtype, user_no, room_id, room_rev_option_adult_bf, room_rev_option_child_bf, room_rev_option_extra_bed) 
+		values 
+		(room_rev_seq.nextval, #{adult}, #{child}, #{totalPrice}, #{startDate}, #{endDate}, #{request},
+		 #{timeOption}, #{bedType}, #{no}, #{id}, #{adultBf}, #{childBf}, #{extraBed})
 	</insert>
+
+	<!-- void insertNewDiningRev(DiningReservationForm diningReservationForm) -->
+	<insert id="insertNewDiningRev" parameterType="com.sh.web.form.DiningReservationForm">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select rt_rev_seq.nextval 
+			from dual
+		</selectKey>
+		begin
+			insert into sh_rt_rev
+			(rt_rev_no, rt_rev_adult, rt_rev_child, rt_rev_baby, rt_rev_visit_time, rt_seat_type, rt_rev_request, 
+			 dn_no, rt_rev_visit_date, rt_rev_meal_time, rt_rev_is_allergy, user_no, rt_rev_etc_allergy)
+			values
+			(#{no}, #{adult}, #{child}, #{baby}, #{visitTime}, #{seat}, #{request}, 
+			 #{diningNo}, #{date}, #{mealTime}, #{isAllergy}, #{userNo}, #{etcAllergy});
+			
+			<choose>
+				<when test="revDate == null">
+					insert into sh_rt_rev_count
+					values
+					(#{adult} + #{child}, #{date}, #{diningNo}, #{mealTime}, #{seat});
+				</when>
+				<when test="revDate != null">
+					<if test="checkMeal == null">
+						insert into sh_rt_rev_count
+						values
+						(#{adult} + #{child}, #{date}, #{diningNo}, #{mealTime}, #{seat});
+					</if>
+					<if test="checkMeal != null">
+						update sh_rt_rev_count
+						set
+							rt_rev_count = rt_rev_count + #{adult} + #{child}
+						where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
+						and rt_rev_count_meal_time = #{mealTime}
+						and dn_no = #{diningNo};
+					</if>
+				</when>
+			</choose>
+			<if test='isAllergy == "Y"'>
+				<foreach collection="allergyNos" item="allergyNo">
+					insert into sh_rt_allergy_selected
+					values
+					(#{no}, #{allergyNo});
+				</foreach>
+			</if>
+		end;	
+	</insert>
+
 
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>
@@ -89,9 +136,41 @@
 		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
 	</resultMap>
 	
+	<resultMap type="RtRev" id="RtRevResultMap">
+		<id column="rt_rev_no" property="no"/>
+		<result column="rt_rev_adult" property="adult"/>
+		<result column="rt_rev_child" property="child"/>
+		<result column="rt_rev_baby" property="baby"/>
+		<result column="rt_rev_visit" property="isVisit"/>
+		<result column="rt_rev_visit_time" property="visitTime"/>
+		<result column="rt_rev_visit_date" property="visitDate"/>
+		<result column="rt_seat_type" property="seatType"/>
+		<result column="rt_rev_request" property="request"/>
+		<result column="rt_rev_created_date" property="createdDate"/>
+		<result column="rt_rev_updated_date" property="updatedDate"/>
+		<result column="rt_rev_meal_time" property="mealTime"/>
+		<result column="rt_rev_is_member" property="isMember"/>
+		<result column="rt_rev_is_allergy" property="isAllergy"/>
+		<result column="rt_rev_etc_allergy" property="etcAllergy"/>
+		<result column="rt_rev_name" property="name"/>
+		<result column="rt_rev_email" property="email"/>
+		<result column="rt_rev_tel" property="tel"/>
+		<result column="rt_rev_card_sort" property="cardSort"/>
+		<result column="rt_rev_card_num1" property="cardNum1"/>
+		<result column="rt_rev_card_num2" property="cardNum2"/>
+		<result column="rt_rev_card_num3" property="cardNum3"/>
+		<result column="rt_rev_card_num4" property="cardNum4"/>
+		<result column="rt_rev_card_expiry_month" property="cardExpiryMonth"/>
+		<result column="rt_rev_card_expiry_year" property="cardExpiryYear"/>
+		<result column="rt_rev_reservation_no" property="reservationNo"/>
+		<result column="rt_rev_status" property="status"/>
+		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"/>
+	</resultMap>
+	
 	<resultMap type="RtRevCount" id="RtRevCountResultMap">
-		<result column="rt_rev_count" property="revCount"/>
-		<result column="rt_rev_count_date" property="countDate"/>
+		<result column="rt_rev_count" property="count"/>
+		<result column="rt_rev_count_date" property="date"/>
 		<result column="rt_rev_count_meal_time" property="mealTime"/>
 		<result column="rt_rev_count_seat_type" property="seatType"/>
 		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"></association>
@@ -103,7 +182,23 @@
 		<result column="dn_rev_time" property="time"/>
 		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"/>
 	</resultMap>
-	<!-- ======================객실,다이닝 예약추가========================= -->
+	
+	<resultMap type="Dn" id="DiningResultMap">
+		<id column="dn_no" property="no"/>
+		<result column="dn_name" property="name"/>
+		<result column="dn_image" property="imagename"/>
+		<result column="dn_max_count" property="maxCount"/>
+		<association property="location" column="location_no" select="com.sh.mapper.DiningMapper.getLocationByDnNo"/>
+		<association property="dnCategory" column="dn_category_no" select="getDnCategoryByNo"/>
+	</resultMap>
+	
+	<resultMap type="DnCategory" id="DnCategoryResultMap">
+		<id column="dn_category_no" property="no"/>
+		<result column="dn_category_name" property="name"/>
+		<result column="dn_group_no" property="groupNo"/>
+	</resultMap>
+	
+	<!-- =======================================객실,다이닝 예약추가========================================================== -->
 	<!-- List<RtRevCount> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria); -->
 	<select id="getRtSelectableDate" parameterType="AdminDnRevCriteria" resultMap="RtRevCountResultMap">
 		select rt_rev_count_date
@@ -122,14 +217,44 @@
 							                         where location_no = #{location}
 							                         and dn_category_no = #{dnCategory})
 	</select>
+	<!-- int getDnByNo(AdminDnRevCriteria adminDnRevCriteria); -->
+	<select id="getDnByNo" parameterType="AdminDnRevCriteria" resultMap="DiningResultMap">
+		select *
+		from sh_dn
+		where location_no = #{location}
+		and dn_category_no = #{dnCategory}
+	</select>
+	<!-- DnCategory getDnCategoryByNo(int no); -->
+	<select id="getDnCategoryByNo" parameterType="int" resultMap="DnCategoryResultMap">
+		select *
+		from sh_dn_category
+		where dn_category_no = #{no}
+	</select>
 	
 	<!-- List<String> getRevDateBySelectedDate(AdminDnRevCriteria adminDnRevCriteria); -->
 	<select id="getRevDateBySelectedDate" parameterType="adminDnRevCriteria" resultType="string">
 		select distinct rt_rev_count_date
 		from sh_rt_rev_count
-		where rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1
+		where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
 	</select>
-	
+	<!-- 다이닝 신규예약시 선택날짜 존재하는지 확인 -->
+	<!-- String getRevDateBySelectedDateInAddRev(DiningReservationForm diningReservationForm); -->
+	<select id="getRevDateBySelectedDateInAddRev" parameterType="com.sh.web.form.DiningReservationForm" resultType="string">
+		select distinct rt_rev_count_date
+		from sh_rt_rev_count
+		where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
+		and dn_no = #{diningNo}
+	</select>
+	<!-- 다이닝 신규예약시 선택날짜 존재 할때 해당 밀타임 존재하는지 확인 -->
+	<!-- String checkSelectedMeal(DiningReservationForm diningReservationForm); -->
+	<select id="checkSelectedMeal" parameterType="com.sh.web.form.DiningReservationForm" resultType="string">
+		select distinct rt_rev_count_date
+		from sh_rt_rev_count
+		where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
+		and rt_rev_count_meal_time = #{mealTime}
+		and dn_no = #{diningNo}
+	</select>
+	<!-- where rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1 임시용-->
 	<!-- // 선택될 날짜가 없을때 mealtime을 가져온다.
 	List<String> getMealTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria); -->
 	<select id="getMealTimeByRevIsNot" parameterType="AdminDnRevCriteria" resultType="string">
@@ -154,7 +279,7 @@
 						                                                            from sh_dn
 						                                                            where location_no = #{location}
 						                                                            and dn_category_no = #{dnCategory})
-		                             and rt_rev_count_date between to_date(#{date}, 'yyyy-mm-dd') and to_date(#{date}, 'yyyy-mm-dd')+1)		
+		                             and to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date})		
 	</select>
 	<!-- // 선택될 날짜가 없을때 visittime을 가져온다.  ==============일단 보류================
 	List<String> getVisitTimeByRevIsNot(AdminDnRevCriteria adminDnRevCriteria); -->
@@ -167,7 +292,7 @@
 		               and dn_category_no = #{dnCategory})
 	</select>
 	
-	<!-- ======================객실,다이닝 예약현황========================= -->
+	<!-- =================================================객실,다이닝 예약현황======================================================= -->
 	<!-- List<RoomRev> getPeriodByNo(int revNo); -->
 	<select id="getPeriodByNo" parameterType="int" resultMap="RoomRevResultMap">
 		select *
@@ -184,6 +309,19 @@
 		where room_rev_no = #{revNo}
 	</select>
 	
+	<!-- RtRev getRtRevDetailByNo(int revNo); -->
+	<select id="getRtRevDetailByNo" parameterType="int" resultMap="RtRevResultMap">
+		select *
+		from sh_rt_rev
+		where rt_rev_no = #{revNo}
+	</select>
+	<!-- List<AllergySelected> getAllergySelectedByNo(int revNo); -->
+	<select id="getAllergySelectedByNo" parameterType="int" resultType="AllergySelected">
+		select allergy_no as allergyNo
+		from sh_rt_allergy_selected
+		where rt_rev_no = #{revNo}
+	</select>
+	
 	<!-- RoomRev getAllRoomRevList(); 예약현황 페이지 첫 진입시 전체 리스트 뿌리기 -->
 	<select id="getAllRoomRevList" parameterType="Pagination" resultMap="RoomRevResultMap">
 		select *
@@ -192,10 +330,23 @@
 	    where row_number &gt;= #{beginIndex} and row_number &lt;= #{endIndex}
 	</select>
 	
+	<!-- List<RtRev> getAllRtRevList(Pagination pagination); -->
+	<select id="getAllRtRevList" parameterType="pagination" resultMap="RtRevResultMap">
+		select *
+		from (select row_number() over (order by rt_rev_no desc) row_number, V.*
+			  from sh_rt_rev V)
+	    where row_number &gt;= #{beginIndex} and row_number &lt;= #{endIndex}
+	</select>
 	<!-- int getTotalRows(); 페이징처리 총 개수 반환-->
 	<select id="getTotalRows" resultType="int">
 	 	select count(*)
 	 	from sh_room_rev
+	</select>
+	
+	<!-- int getTotalRowsDn(); -->
+	<select id="getTotalRowsDn" resultType="int">
+		select count(*)
+	 	from sh_rt_rev
 	</select>
 	
 	<!-- int getTotalRowsByFilter(AdminRoomRevCriteria adminRoomRevCriteria); -->	
@@ -229,6 +380,44 @@
 			</if>
 			<if test='checkinPeriod != null and checkinPeriod != ""'>
 				and room_rev_checkin_time between to_date(#{inStartDate}) and to_date(#{inEndDate})
+			</if>
+		</where>	  
+	</select>
+	
+	<!-- int getTotalRowsByFilterRt(AdminRtRevCriteria adminRtRevCriteria); -->
+	<select id="getTotalRowsByFilterRt" parameterType="AdminRtRevCriteria" resultType="int">
+		select count(*)
+		from sh_rt_rev
+		<where>
+			<if test='search == "name"'>
+			    user_no in (select user_no
+		                    from sh_users
+		                    where user_name like '%'||#{keyword}||'%')
+			</if>
+			<if test='search == "revNo"'>
+				and rt_rev_no like '%'||#{keyword}||'%'
+			</if>
+			<if test="location != 0">
+		 		and dn_no in (select dn_no
+		                      from sh_dn
+		                      where location_no = #{location})
+			</if>
+			<if test="restaurant != 0">
+			    and dn_no in (select dn_no 
+		                 	  from sh_dn
+		                      where dn_category_no = #{restaurant})
+			</if>
+			<if test="revStatus != null">
+				and rt_rev_status = #{revStatus}
+			</if>
+			<if test='visitDate != null and visitDate != ""'>
+				and rt_rev_visit_date between to_date(#{inStartDate}) and to_date(#{inEndDate})
+			</if>
+			<if test="isAllergy != null">
+				and rt_rev_is_allergy = #{isAllergy}
+			</if>
+			<if test="mealTime != null">
+				and rt_rev_meal_time = #{mealTime}
 			</if>
 		</where>	  
 	</select>
@@ -303,5 +492,77 @@
 		</where>
 	</select>
 	
+	<!-- List<RtRev> filterRevRt(AdminRtRevCriteria adminRtRevCriteria); -->
+	<select id="filterRevRt" parameterType="AdminRtRevCriteria" resultMap="RtRevResultMap">
+		select *
+		from (select row_number() over
+		<choose>	
+			<when test='sortRev == null and sortVisit == null'>
+				(order by rt_rev_no desc)
+			</when>
+			<when test='sortRev == "desc" and sortVisit == "desc"'>
+				(order by rt_rev_no desc, rt_rev_visit_date desc)
+			</when>
+			<when test='sortRev == "desc" and sortVisit == "asc"'>
+				(order by rt_rev_no desc, rt_rev_visit_date asc)
+			</when>
+			<when test='sortRev == "asc" and sortVisit == "desc"'>
+				(order by rt_rev_no asc, rt_rev_visit_date desc)
+			</when>
+			<when test='sortRev == "asc" and sortVisit == "asc"'>
+				(order by rt_rev_no asc, rt_rev_visit_date asc)
+			</when>
+			<when test='sortRev == null and sortVisit == "asc"'>
+				(order by rt_rev_visit_date asc)
+			</when>
+			<when test='sortRev == null and sortVisit == "desc"'>
+				(order by rt_rev_visit_date desc)
+			</when>
+			<when test='sortRev == "asc" and sortVisit == null'>
+				(order by rt_rev_no asc)
+			</when>
+			<when test='sortRev == "desc" and sortVisit == null'>
+				(order by rt_rev_no desc)
+			</when>	
+		</choose>
+			row_number, V.*
+			from sh_rt_rev V
+		<where>
+			<if test='search == "name"'>
+			    user_no in (select user_no
+		                    from sh_users
+		                    where user_name like '%'||#{keyword}||'%')
+			</if>
+			<if test='search == "revNo"'>
+				and rt_rev_no like '%'||#{keyword}||'%'
+			</if>
+			<if test="location != 0">
+		 		and dn_no in (select dn_no
+		                      from sh_dn
+		                      where location_no = #{location})
+			</if>
+			<if test="restaurant != 0">
+			    and dn_no in (select dn_no 
+		                 	  from sh_dn
+		                      where dn_category_no = #{restaurant})
+			</if>
+			<if test="revStatus != null">
+				and rt_rev_status = #{revStatus}
+			</if>
+			<if test='visitDate != null and visitDate != ""'>
+				and rt_rev_visit_date between to_date(#{inStartDate}) and to_date(#{inEndDate})
+			</if>
+			<if test="isAllergy != null">
+				and rt_rev_is_allergy = #{isAllergy}
+			</if>
+			<if test="mealTime != null">
+				and rt_rev_meal_time = #{mealTime}
+			</if>
+		</where>	  
+			  )
+		<where>
+				row_number &gt;= #{beginIndex} and row_number &lt;= #{endIndex}
+		</where>
+	</select>
 	
 </mapper>

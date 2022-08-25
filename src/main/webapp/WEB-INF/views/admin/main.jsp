@@ -144,9 +144,9 @@
 	  			</div>
 	  			<div class="col-3">
 	  				<ul>
-	  					<li style="margin-bottom:32px; font-size:0.9rem; font-weight:bold; position:relative; top:3px; right:40px;">3500만원</li>
-	  					<li style="margin-bottom:28px; font-size:0.9rem; font-weight:bold; position:relative; right:40px;">6522만원</li>
-	  					<li style="font-size:0.9rem; font-weight:bold; position:relative; right:40px;">2900만원</li>
+	  					<li style="margin-bottom:32px; font-size:0.9rem; font-weight:bold; position:relative; top:3px; right:40px;">${sale.saleStandard }만원</li>
+	  					<li style="margin-bottom:28px; font-size:0.9rem; font-weight:bold; position:relative; right:40px;">${sale.saleExecutive }만원</li>
+	  					<li style="font-size:0.9rem; font-weight:bold; position:relative; right:40px;">${sale.saleSuite }만원</li>
 	  				</ul>
 	  			</div>
 	  			<div class="col-2">
@@ -338,12 +338,12 @@ $(function () {
 	var barChart = new Chart(ctx, {
 				    type: 'bar',
 				    data: {
-				      labels: ["서울", "제주", "부산","강릉","광주"],
+				      labels: ["서울", "부산", "제주","강릉","광주"],
 				      datasets: [
 				        { 
 				          label: "2022 상반기 지역별 매출",
 				          backgroundColor: ["rgba(103, 36, 54, 1)", "rgba(132, 50, 61, 1)", "rgba(179, 76, 73, 1)", "rgba(243, 115, 88, 1)", "rgba(255, 173, 104, 1)"],
-				          data: [5202,4352,7341,2305,2056]
+				          data: [${sale.saleSeoul}, ${sale.saleBusan}, ${sale.saleJeju},${sale.saleGangreung},${sale.saleGwangju}]
 				        }
 				      ]
 				    },

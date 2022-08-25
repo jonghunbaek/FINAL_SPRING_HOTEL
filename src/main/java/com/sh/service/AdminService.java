@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.sh.dto.AdminSaleChartDto;
 import com.sh.exception.ApplicationException;
 import com.sh.mapper.AdminMapper;
 import com.sh.vo.Admin;
@@ -59,7 +60,7 @@ public class AdminService {
 		admin = new Admin();
 		BeanUtils.copyProperties(adminRegisterForm, admin);
 		
-		admin.setLocation(new Location(adminRegisterForm.getLocationNo())); 
+		//admin.setLocation(new Location(adminRegisterForm.getLocationNo())); 
 		MultipartFile upfile = adminRegisterForm.getProfileFile();
 		
 		if (!upfile.isEmpty()) {
@@ -75,6 +76,33 @@ public class AdminService {
 		}
 		
 		adminMapper.insertAdmin(admin);
+	}
+
+	// 지역별 매출합계 가져오기
+	public AdminSaleChartDto getAllSale() {
+		
+		AdminSaleChartDto saleChart = new AdminSaleChartDto();
+		
+		saleChart.setSaleSeoul(adminMapper.getSaleSeoul()); 
+		saleChart.setSaleBusan(adminMapper.getSaleBusan());
+		saleChart.setSaleJeju(adminMapper.getSaleJeju());
+		saleChart.setSaleGangreung(adminMapper.getSaleGangreung());
+		saleChart.setSaleGwangju(adminMapper.getSaleGwangju());
+		
+		/*
+		 * saleChart.setSaleJan(adminMapper.getSaleJan());
+		 * saleChart.setSaleFeb(adminMapper.getSaleFeb());
+		 * saleChart.setSaleMar(adminMapper.getSaleMar());
+		 * saleChart.setSaleApr(adminMapper.getSaleApr());
+		 * saleChart.setSaleMay(adminMapper.getSaleMay());
+		 * saleChart.setSaleJun(adminMapper.getSaleJun());
+		 */
+		
+		saleChart.setSaleStandard(adminMapper.getSaleStandard());
+		saleChart.setSaleExecutive(adminMapper.getSaleExecutive());
+		saleChart.setSaleSuite(adminMapper.getSaleSuite());
+		
+		return saleChart;	
 	}
 	
 }

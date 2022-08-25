@@ -11,12 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sh.exception.ApplicationException;
+import com.sh.mapper.InquiryMapper;
+import com.sh.mapper.RoomMapper;
+import com.sh.mapper.ShopMapper;
 import com.sh.mapper.UserMapper;
 import com.sh.utils.MailUtil;
 import com.sh.vo.Coupon;
 import com.sh.vo.Grade;
 import com.sh.vo.PointGrade;
 import com.sh.vo.PointHistory;
+import com.sh.vo.Qna;
+import com.sh.vo.RoomRev;
+import com.sh.vo.ShopOrderItem;
 import com.sh.vo.User;
 import com.sh.vo.UserPoint;
 import com.sh.web.form.UserRegisterForm;
@@ -29,6 +35,12 @@ public class UserService {
 
 	@Autowired
 	private UserMapper userMapper;
+	
+	@Autowired
+	private InquiryMapper inquiryMapper;
+	
+	@Autowired
+	private RoomMapper roomMapper;
 	
 	/** 유저정보 가져오기
 	 * @param userid
@@ -231,6 +243,81 @@ public class UserService {
 	}
 	
 	/**
+	 * 최근 6개월내 포인트 이력 조회
+	 * @param userNo
+	 * @return 최근 6개월내 포인트 이력
+	 */
+	public List<PointHistory> getPointHistorySixMonth(int userNo) {
+		return userMapper.getUserPointHistorySixMonthByUserNo(userNo);
+	}
+	
+	/**
+	 * room 예약내역 조회
+	 * @param userNo
+	 * @return room 예약내역
+	 */
+	public List<RoomRev> getRoomRevInfo(int userNo) {
+		return userMapper.getRoomRevByUserNo(userNo);
+	}
+	
+	/**
+	 * room 예약 취소
+	 * @param revNo
+	 */
+	public void cancleRoomRev(int revNo) {
+		userMapper.cancleRoomRev(revNo);
+	}
+	
+	/**
+	 * room 재예약
+	 * @param revNo
+	 */
+	public void reRoomRev(int revNo) {
+		userMapper.reRoomRev(revNo);
+	}
+	
+	/**
+	 * room 예약내역 삭제
+	 * @param revNo
+	 */
+	public void deleteRoomRev(int revNo) {
+		userMapper.deleteRoomRev(revNo);
+	}
+	
+	/**
+	 * 스프링 샵 주문내역 조회
+	 * @param userNo
+	 * @return 주문 상품 정보
+	 */
+	public List<ShopOrderItem> getOrderItemsInfo(int userNo) {
+		return userMapper.getOrderItemsByUserNo(userNo);
+	}
+	
+	/**
+	 * 스프링 샵 주문취소
+	 * @param orderNo
+	 */
+	public void cancleOrder(int orderNo) {
+		userMapper.cancleOrder(orderNo);
+	}
+	
+	/**
+	 * 스프링 샵 재주문
+	 * @param orderNo
+	 */
+	public void reorder(int orderNo) {
+		userMapper.reorder(orderNo);
+	}
+	
+	/**
+	 * 스프링 샵 주문내역 삭제
+	 * @param orderNo
+	 */
+	public void deleteOrder(int orderNo) {
+		userMapper.deleteOrder(orderNo);
+	}
+	
+	/**
 	 * 쿠폰 지급 내역 조회
 	 * @param userNo
 	 * @return 쿠폰 정보
@@ -282,11 +369,21 @@ public class UserService {
 	}
 	
 	/**
+	 * 문의내역 조회
+	 * @param userNo
+	 * @return 문의내역
+	 */
+	public List<Qna> getQnaInfo(int userNo) {
+		return inquiryMapper.getQnaByUserNo(userNo);
+	}
+	
+	/**
 	 * 회원탈퇴
 	 * @param userNo
 	 */
 	public void deleteUser(int userNo) {
 		userMapper.deleteUser(userNo);
 	}
+
 
 }

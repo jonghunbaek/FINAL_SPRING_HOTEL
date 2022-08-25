@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 <title>스프링 온라인</title>
 <style>
-*{font-family: 돋움, sans-serif, Arial}
 #container {width: 1200px; margin: 0 auto;}
 .logo-outer { 
 	margin-top: 100px; border-bottom: solid 2px brown; 
@@ -25,7 +24,7 @@
 }
 .inner-div img { width: 160px; height: 80px;}
 
-#div-hotel-name{margin-top: 20px; border-bottom: solid 5px #D5D5D5;}
+#div-hotel-name{margin-top: 20px; border-bottom: solid 5px #f1e3c4;}
 
 #must-require {text-align: right; color: red; margin-top: 10px; font-size: 5px; margin-bottom:0px;}
 
@@ -33,17 +32,21 @@
 
 #seat-notice {font-size: 60%; margin-top: 20px;}
 
+#select-people{padding-right:10px;}
+
 #select-people a,span{margin-right:15px;}
 
 #select-people .bi{border: 1px solid brown; color:brown;}
 
+#date-choice {padding-right:30px;}
+
 #date-choice img{width: 100px; height: 30px;}
 
-#visit-div{border: 1px solid grey;}
+#visit-div{border: 5px solid #f1e3c4; padding:10px; margin-top: 50px; margin-left:10px; background:#FCFCFC;}
 
-#datepicker{margin-left: 50px; margin-bottom: 50px;}
+#datepicker{margin-left: 130px;margin-bottom: 50px;}
 
-#visit-div-left{border-right: 1px solid grey;}
+#visit-div-left{border-right: 3px dotted #f1e3c4;}
 
 #date-choice-text, #time-choice-text{margin: 10px; margin-bottom: 30px;}
 
@@ -54,6 +57,7 @@
 #submit-button {margin-top: 50px;}
 
 #submit-button img {width: 150px; height: 50px;}
+
 </style>
 </head>
 <body>
@@ -117,6 +121,7 @@
 					<a href="#" id="increaseChild"><i class="bi bi-plus-lg"></i></a>
 					<input id="input-child" type="hidden" name="child"/>
 					<input type="hidden" name="isMember"/>
+					<input type="hidden" name="userId" value="${LOGIN_USER.id }"/>
 				</div>
 					<div class="col-1">
 					<p>유아</p>
@@ -136,18 +141,18 @@
 			<div class="row" id="visit-div">
 				<div class="col-6" id="visit-div-left">
 					<div id="date-choice-text">
-						<p><strong>날짜선택</strong></p>
+						<p style="color:#3e2c2c; font-size:100%;"><strong>날짜선택</strong></p>
 					</div>
 					<div id="datepicker"></div>
 					<input type="hidden" id="input-date" name="date"/>
 				</div>
 				<div class="col-6">
 					<div id="time-choice-text">
-						<p><strong>시간선택</strong></p>
+						<p style="color:#3e2c2c; font-size:100%;"><strong>시간선택</strong></p>
 					</div>
 					<div id="meal-type-select">
 						<c:forEach var="meal" items="${mealTimes }">
-							<input type="radio" class="btn-check" name="mealTime" id="${meal.mealTime }-select" value="${meal.mealTime }" autocomplete="off">
+							<input type="radio" class="btn-check meal" name="mealTime" id="${meal.mealTime }-select" value="${meal.mealTime }" autocomplete="off">
 							<label class="btn btn-outline-secondary" for="${meal.mealTime }-select">${meal.name }</label>
 						</c:forEach>
 					</div>
@@ -184,7 +189,7 @@
 	        <div class="row">
 	        	<div class="col-8">
 			        <div class="inputId">
-		        		<input type="text" class="id" name="id" id="id-field" placeholder="스프링리워즈 번호 또는 아이디를 입력해주세요">
+		        		<input type="text" class="id" name="userId" id="id-field" placeholder="스프링리워즈 번호 또는 아이디를 입력해주세요">
 			        </div>
 			        <div class="inputPw">
 			        	<input type="password" class="password" name="password" id="pw-field">
@@ -363,13 +368,30 @@ $(function() {
 	// 테이블 , 룸 변경시
 	$(":radio[name=seat]").change(function(e) {
 		if((!$("#date-time-select-form").hasClass('d-none'))){
-			e.preventDefault();
+			$checkedSeat = $(":radio[name=seat]:checked")
+			if($checkedSeat == 'table'){
+				$(":radio#room-select").prop("checked", true);
+				$(":radio#table-select").prop("checked", false);
+			} else {
+				$(":radio#room-select").prop("checked", false);
+				$(":radio#table-select").prop("checked", true);
+			}
+			
 			seatModal.show();
 		}
 	});
 	
 	// 테이블, 룸 리셋 버튼
 	$("#btn-reset-seat").click(function() {
+		$checkedSeat = $(":radio[name=seat]:checked")
+		if($checkedSeat == 'table'){
+			$(":radio#room-select").prop("checked", false);
+			$(":radio#table-select").prop("checked", true);
+		} else {
+			$(":radio#room-select").prop("checked", true);
+			$(":radio#table-select").prop("checked", false);
+		}
+		
 		$("#date-time-select-form").addClass('d-none');
 		seatModal.hide();
 		$("#babyScore").text(0);

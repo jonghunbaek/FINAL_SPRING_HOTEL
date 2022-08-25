@@ -150,7 +150,6 @@
 		where user_id = #{id}
 	</update>
 	
-
 	<!-- int finePwCheck(@Param("id") String id, @Param("email")String email); -->
 	<select id="finePwCheck" parameterType="String" resultType="int">
 		select count(user_id)
@@ -181,7 +180,6 @@
 			  order by user_created_date desc)
 	    where rownum = #{value}
 	</select>
-	
 	<!-- 가입시 쿠폰 지급 -->
 	<insert id="insertCoupon" parameterType="Coupon">
 		insert into sh_coupon
@@ -189,7 +187,6 @@
 		values
 		(coupon_seq.nextval, #{title}, #{userNo})
 	</insert>
-	
 	<!-- 가입시 포인트 지급 -->
 	<insert id="insertPointHistory" parameterType="PointHistory">
 		insert into sh_user_points_his
@@ -197,7 +194,6 @@
 		values
 		(point_his_seq.nextval, #{title}, #{earned}, #{used}, #{userNo})
 	</insert>
-	
 	<!-- 회원 포인트정보 업데이트 -->
 	<update id="updateUserPoint" parameterType="int">
 		update sh_users
@@ -246,6 +242,17 @@
 		from sh_users u, sh_user_points_his h
 		where u.user_no = h.user_no
 		and u.user_no = #{value}
+		order by point_his_created_date desc
+	</select>
+	
+	<!-- 해당회원 최근 6개월 내 포인트 적립/사용 내역 조회 (마이페이지 메인에 사용) -->
+	<select id="getUserPointHistorySixMonthByUserNo" parameterType="int" resultMap="PointHistoryResultMap">
+		select u.user_point, h.point_his_title, h.point_his_earned_amount, h.point_his_used_amount, h.point_his_created_date
+		from sh_users u, sh_user_points_his h
+		where u.user_no = h.user_no
+		and h.point_his_created_date > (sysdate - interval '6' month)
+		and u.user_no = #{value}
+		order by point_his_created_date desc
 	</select>
 	
 	<!-- 마이페이지 포인트, 등급정보 -->
@@ -271,5 +278,83 @@
 		from sh_coupon
 		where user_no = #{value}
 	</select>
+	
+	<!-- 마이페이지 객실 -->
+	<resultMap type="RoomRev" id="RoomRevResultMap">
+		<id column="room_rev_no" property="no"/>
+		<result column="room_rev_checkin_time" property="checkinTime"/>
+		<result column="room_rev_checkout_time" property="checkoutTime"/>
+		<result column="room_rev_status" property="status"/>
+		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
+		<result column="room_rev_created_date" property="createdDate"/>
+		<result column="room_rev_updated_date" property="updatedDate"/>
+		<result column="room_name" property="roomName"/>
+		<result column="location_name" property="locationName"/>
+		<result column="room_price" property="roomPrice"/>
+		<result column="room_rev_deleted" property="deleted"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
+		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
+	</resultMap>
+	<!-- 해당회원의 Room 예약내역 -->
+	<select id="getRoomRevByUserNo" parameterType="int" resultMap="RoomRevResultMap">
+		select *
+		from sh_room_rev
+		where user_no = #{value}
+	</select>
+	<!-- 예약 취소 -->
+	<update id="cancleRoomRev" parameterType="int">
+		update sh_room_rev
+		set room_rev_deleted = 'Y'
+		where room_rev_no = #{value}
+	</update>
+	<!-- 재예약 -->
+	<update id="reRoomRev" parameterType="int">
+		update sh_room_rev
+		set room_rev_deleted = 'N'
+		where room_rev_no = #{value}
+	</update>
+	<!-- 객실 예약 삭제 -->
+	<delete id="deleteRoomRev" parameterType="int">
+		delete from sh_room_rev
+		where room_rev_no = #{value}
+	</delete>
+	
+	<!-- 마이페이지 스프링샵 -->
+	<resultMap type="ShopOrderItem" id="ShopOrderItemResultMap">
+		<result column="order_no" property="shopOrder.no"/>
+		<result column="order_status" property="shopOrder.status"/>
+		<result column="order_deleted" property="shopOrder.deleted"/>
+		<result column="order_created_date" property="shopOrder.createdDate"/>
+		<result column="product_no" property="product.no"/>
+		<result column="product_name" property="product.name"/>
+		<result column="product_price" property="product.price"/>
+		<result column="order_item_price" property="price"/>
+		<result column="order_item_quantity" property="quantity"/>
+	</resultMap>
+	<!-- 해당회원의 스프링 샵 구매내역 -->
+	<select id="getOrderItemsByUserNo" parameterType="int" resultMap="ShopOrderItemResultMap">
+		select o.order_no, p.product_name, i.order_item_quantity, p.product_price, o.order_status, o.order_created_date, o.order_deleted
+		from sh_shop_order o, sh_shop_order_items i, sh_shop_product p
+		where o.order_no = i.order_no
+		and i.product_no = p.product_no
+		and o.user_no = #{value}
+	</select>
+	<!-- 주문 취소 -->
+	<update id="cancleOrder" parameterType="int">
+		update sh_shop_order
+		set order_deleted = 'Y'
+		where order_no = #{value}
+	</update>
+	<!-- 재주문 -->
+	<update id="reorder" parameterType="int">
+		update sh_shop_order
+		set order_deleted = 'N'
+		where order_no = #{value}
+	</update>
+	<!-- 주문 삭제 -->
+	<delete id="deleteOrder" parameterType="int">
+		delete from sh_shop_order
+		where order_no = #{value}
+	</delete>
 	
 </mapper>

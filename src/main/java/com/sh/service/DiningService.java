@@ -23,6 +23,7 @@ import com.sh.vo.DnSeatCountOfDate;
 import com.sh.vo.Location;
 import com.sh.vo.RtRev;
 import com.sh.vo.RtRevCount;
+import com.sh.vo.User;
 import com.sh.web.form.DiningReservationForm;
 
 @Service
@@ -91,6 +92,7 @@ public class DiningService {
 		rtRev.setIsMember(diningReservationForm.getIsMember());
 		rtRev.setIsAllergy(diningReservationForm.getIsAllergy());
 		if(diningReservationForm.getIsMember().equals("Y")) {
+			rtRev.setUserId(diningReservationForm.getUserId());
 			rtRev.setUser(userMapper.getUserById(diningReservationForm.getUserId()));
 		}
 		rtRev.setMealTime(diningReservationForm.getMealTime());
@@ -192,6 +194,24 @@ public class DiningService {
 	
 	public void deleteRtRevCount(String mealTime, String seatType, int revCount) {
 		diningMapper.deleteRtRevCount(mealTime, seatType, revCount);
+	}
+
+	/**
+	 * 주문 조회
+	 * @param user
+	 * @return 주문
+	 */
+	public List<RtRev> getRtRevsByUserId(String userId) {
+		return diningMapper.getRtRevsByUserId(userId);
+	}
+	
+	/**
+	 * 주문번호로 주문조회
+	 * @param revNo 주문번호
+	 * @return 주문
+	 */
+	public RtRev getReservationByNo(String revNo) {
+		return diningMapper.getRtRevByRevNo(revNo);
 	}
 
 }

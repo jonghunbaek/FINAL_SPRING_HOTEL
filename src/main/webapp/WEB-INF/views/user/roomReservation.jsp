@@ -12,6 +12,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
 <style type="text/css">
 
 	#container {padding-top: 65px; width: 1200px; height:1500px; margin: auto; padding-left: 0px; padding-right: 0px;}
@@ -20,7 +24,7 @@
 	#container input {border: 1px solid rgb(204,204,204);}
 	li {list-style: none;}
 	#h5 {font-size: 15px; border-bottom: 3px; border-color: black; margin-top: 30px;}
-	#div-sidebar {float: left; width: 264px; height: 720px; background-color: rgb(241, 227, 196);
+	#div-sidebar {float: left; width: 264px; height: 700px; background-color: rgb(241, 227, 196);
 				  margin: auto; padding: 23px; text-align: left; border: 1px solid #e9dab8;}
 	#div-sidebar ul {padding: 0px;}
 	#list {margin-top: 25px; text-align: left;}
@@ -38,8 +42,11 @@
 	#div-tableBox {margin: 20px 0 26px;}
 	#div-hTitle {height: 40px; border-bottom: 3px solid #a1886f; margin-bottom: 20px 0px;}
 	#div-table {border: none; border-top: 1px solid #cdcbbe; width: 100%; border-collapse: collapse;}
-	.table {text-align: center; font-size: 13px;}
+	.table {text-align: center; font-size: 13px; vertical-align: middle;}
 	.table th {border-bottom: 1px solid #cdcbbe; color: #666666; line-height: 25px;}
+	#btn {text-decoration: none; background-color: rgb(62,43,44); width:55px; height:23px; 
+		  text-align: center; font-size: 11px; display: block; margin-left: 10px;}
+    #btn span {color: rgb(250,241,208);}
 	
 </style>
 <title>Spring Hotel</title>
@@ -57,17 +64,22 @@
 					<li><a href="dining">다이닝</a></li>
 				</ul>
 			</li>
+			<li id="list"><span>스프링 샵</span>
+				<ul id="list-border">
+					<li><a href="shop">주문내역 조회</a></li>
+				</ul>
+			</li>
 			<li id="list"><span>포인트</span>
 				<ul id="list-border">
 					<li><a href="point">포인트 조회</a></li>
-					<li><a href="#">포인트 조정신청</a></li>
-					<li><a href="#">상품권 교환 신청</a></li>
+					<!-- <li><a href="#">포인트 조정신청</a></li>
+					<li><a href="#">상품권 교환 신청</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>쿠폰</span>
 				<ul id="list-border">
 					<li><a href="coupon">쿠폰함</a></li>
-					<li><a href="#">프로모션 숙박권</a></li>
+					<!-- <li><a href="#">프로모션 숙박권</a></li> -->
 				</ul>
 			</li>
 			<li id="list"><span>내 정보</span>
@@ -107,33 +119,68 @@
 					<div id="div-hTitle">
 						<h5><img src="/resources/images/mypage/myRsvTit1_ko.gif"></h5>
 					</div>
-					<div class="mt-2">Total : 0</div>
+					<div class="mt-2"><span>Total : ${itemSize }</span></div>
 					<div class="mt-3" id="div-table">
 						<table class="table background-color" summary="호텔,구분,이용금액(원),적립포인트,사용포인트,이용날짜로 구성된 게시물 리스트 표">
 							<colgroup>
-								<col width="11%" class="col1">
-								<col width="17%" class="col2">
+								<col width="8%" class="col1">
+								<col width="11%" class="col2">
 								<col width="*%" class="col3">
-								<col width="8%" class="col4">
-								<col width="13%" class="col5">
-								<col width="14%" class="col6">
-								<col width="12%" class="col7">
+								<col width="30%" class="col4">
+								<col width="11%" class="col5">
+								<col width="15%" class="col6">
+								<col width="11%" class="col7">
 							</colgroup>
 							<thead>
 								<tr style="background-color: #faf9f4;">
 									<th>예약번호</th>
 									<th>호텔</th>
-									<th>객실/패키지</th>
-									<th>객실 수</th>
-									<th>체크인/체크아웃</th>
-									<th>홈페이지 예약여부</th>
+									<th>객실 / 패키지</th>
+									<th>체크인 / 체크아웃</th>
 									<th>예약상태</th>
+									<th>예약일</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="first last">
-									<td colspan="7">예약내역이 없습니다.</td>
-								</tr>
+							<c:choose>
+								<c:when test="${empty roomRevs }">
+									<tr class="first last">
+										<td colspan="6">예약내역이 없습니다.</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="room" items="${roomRevs }">
+										<tr>
+											<td>${room.no }</td>
+											<td>${room.locationName } 스프링</td>
+											<td>${room.room.name }</td>
+											<td>
+												<fmt:formatDate value="${room.checkinTime }" pattern="yyyy년 MM월 dd일"/> ~ 
+												<fmt:formatDate value="${room.checkoutTime }" pattern="yyyy년 MM월 dd일"/>
+											</td>
+											<td>
+												<c:if test="${room.deleted eq 'N' }">
+													예약완료
+												</c:if>
+												<c:if test="${room.deleted eq 'Y' }">
+													예약취소
+												</c:if>
+											</td>
+											<td><fmt:formatDate value="${room.createdDate }" pattern="yyyy년 MM월 dd일"/></td>
+											<td>
+												<c:if test="${room.deleted eq 'N' }">
+													<button id="btn" value="${room.no }" onclick="cancleRev(this);"><span>예약취소</span></button>
+												</c:if>
+												<c:if test="${room.deleted eq 'Y' }">
+													<button id="btn" value="${room.no }" onclick="reRev(this);"><span>재예약</span></button>
+												</c:if>
+												<p style="margin:5px 0 0;"><button id="btn" value="${room.no }" onclick="deleteRev(this);"><span>삭제</span></button></p>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 							</tbody>
 						</table>
 					</div>
@@ -147,6 +194,38 @@
 </body>
 <script type="text/javascript">
 
+	// 예약취소
+	function cancleRev(item) {
+		let revNo = item.value;
+		if (confirm("예약을 취소하시겠습니까?") == true) {
+			alert("예약을 취소합니다.");
+			location.href = "/user/cancleRoomRev?revNo="+revNo;
+		} else {
+			return false;
+		}
+	}
+	
+	// 재예약
+	function reRev(item) {
+		let revNo = item.value;
+		if (confirm("함께 예약한 다른 객실도 같이 예약됩니다. \n 예약 하시겠습니까?") == true) {
+			alert("객실을 예약합니다.");
+			location.href = "/user/reRoomRev?revNo="+revNo;
+		} else {
+			return false;
+		}
+	}
+	
+	// 예약내역 삭제
+	function deleteRev(item) {
+		let revNo = item.value;
+		if (confirm("함께 예약한 다른 예약내역도 같이 삭제됩니다. \n 삭제 하시겠습니까?") == true) {
+			alert("예약내역을 삭제합니다.");
+			location.href = "/user/deleteRoomRev?revNo="+revNo;
+		} else {
+			return false;
+		}
+	}
 	
 </script>
 </html>

@@ -15,7 +15,7 @@ import lombok.ToString;
 public class RtRevCount {
 
 	private int count;
-  @JsonFormat(pattern = "yyyy-M-d", timezone = "Asia/Seoul")
+    @JsonFormat(pattern = "yyyy-M-d", timezone = "Asia/Seoul")
 	private Date date;
 	private Dn dn;
 	private String mealTime;

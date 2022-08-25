@@ -29,7 +29,7 @@
 
 label {
 	font-weight:bold;
-}
+} 
 
 #userForm {
 	font-size: bold !important;
@@ -185,9 +185,9 @@ label {
 				</div>
 				<!-- --------------------------------------예약정보 form--------------------------------------------- -->
 				<div class="col-6">
-					<form id="revForm" method="post" action="addrevroomform">
+					<form id="revForm" method="post" action="addrevdiningform">
 						<input type="hidden" id="userNo" name="userNo">
-						<input type="hidden" id="dnNo" name="dnNo">
+						<input type="hidden" id="dnNo" name="diningNo">
 						<p>예약정보</p>		
 						<div class="row">
 							<div class="col-2">
@@ -200,48 +200,73 @@ label {
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-3 mb-3">
+							<div class="col mb-3">
 								<label for="recipient-name" class="col-form-label">성인</label> 
-								<input type="number" class="form-control" name="adult" id="adult" readonly><span style="position: relative; bottom: 26px; left: 140px;">명</span>
+								<input type="number" class="form-control" name="adult" id="adult" readonly><span style="position: relative; bottom: 26px; left: 100px;">명</span>
 							</div>
-							<div class="col-3 mb-3">
+							<div class="col mb-3">
 								<label for="recipient-name" class="col-form-label">어린이</label> 
-								<input type="number" class="form-control" name="child" id="child" readonly><span style="position: relative; bottom: 26px; left: 140px;">명</span>
+								<input type="number" class="form-control" name="child" id="child" readonly><span style="position: relative; bottom: 26px; left: 100px;">명</span>
 							</div>
-							<div class="col-3 mb-3">
+							<div class="col mb-3">
+								<label for="recipient-name" class="col-form-label">유아</label> 
+								<input type="number" class="form-control" name="baby" id="baby" value="0"><span style="position: relative; bottom: 26px; left: 100px;">명</span>
+							</div>
+							<div class="col mb-3">
 								<label for="recipient-name" class="col-form-label">지점</label> 
 								<input type="text" class="form-control" name="location" id="location" readonly>
 							</div>
-							<div class="col-3 mb-3">
+							<div class="col mb-3">
 								<label for="recipient-name" class="col-form-label">다이닝 종류</label> 
-								<input type="text" class="form-control" name="roomCategory" id="roomCategory" readonly>
+								<input type="text" class="form-control" name="dnCategory" id="dnCategory" readonly>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-6 mb-3">
+							<div class="col-3 mb-3">
 								<label for="recipient-name" class="col-form-label">방문일</label> 
-								<input type="text" class="form-control" name="checkinPeriod" id="checkinPeriod" readonly>
+								<input type="text" class="form-control" name="date" id="visitDate" readonly>
+							</div>
+							<div class="col-3 mb-3">
+								<label for="recipient-name" class="col-form-label">좌석유형</label> 
+								<input type="text" class="form-control" name="seat" id="seatType" readonly>
 							</div>
 							<div class="col-3 mb-3">
 								<label for="recipient-name" class="col-form-label">식사 타임</label> 
-								<select class="form-select form-select-sm" name="mealTime" id="mealTime">
-					
-								</select>
+								<input type="text" class="form-control" name="mealTime" id="mealTime" readonly>
 							</div>
 							<div class="col-3 mb-3">
 								<label for="recipient-name" class="col-form-label">방문예정시간</label> 
-								<select class="form-select form-select-sm" name="timeOption" id="timeOption">
-
-								</select>
+								<input type="text" class="form-control" name="visitTime" id="visitTime" readonly>
 							</div>
 						</div>
-						<div class="row" id="options">
-							
-							<div class="col-3 mb-3">
-								<label for="recipient-name" class="col-form-label">금액</label> 
-								<input type="text" class="form-control" name="totalPrice" id="totalPrice" readonly><span style="position: relative; bottom: 26px; left: 140px;">원</span>
+						<div class="row">
+							<div class="col-4 mb-3">
+								<label for="recipient-name" class="col-form-label">알레르기 유무</label>
+								<div class="row px-3" id="allergyCheck">
+									<input type="radio" class="form-check-input" name="isAllergy" id="isAllergy" autocomplete="off" value="Y">
+									<label class="col-3 form-check-label" for="isAllergy">유</label>
+									<input type="radio" class="form-check-input" name="isAllergy" id="isNotAllergy" autocomplete="off" value="N">
+									<label class="col-3 form-check-label" for="isNotAllergy">무</label>
+								</div>
 							</div>
-						</div>
+							<div class="col-8 mb-3 d-none" id="typeView">
+								<label for="recipient-name" class="col-form-label">알레르기 종류</label>
+								<div class="row px-3" id="allergyType">
+									 <input class="form-check-input" type="checkbox" name="allergyNos" value="1" id="flexCheckDefault">
+									 <label class="col form-check-label" for="flexCheckDefault">육류</label>
+									 <input class="form-check-input" type="checkbox" name="allergyNos" value="2" id="flexCheckDefault">
+									 <label class="col form-check-label" for="flexCheckDefault">어패류</label>
+									 <input class="form-check-input" type="checkbox" name="allergyNos" value="3" id="flexCheckDefault">
+									 <label class="col form-check-label" for="flexCheckDefault">유제품</label>
+									 <input class="form-check-input" type="checkbox" name="allergyNos" value="4" id="flexCheckDefault">
+									 <label class="col form-check-label" for="flexCheckDefault">견과류</label>
+								</div>
+									 <label class="col-form-label"for="etc">기타</label>
+								<div class="row px-3">
+									 <input type="text" class="col form-control" id="" name="etcAllergy" placeholder="기타 사항을 입력해 주세요." />
+								</div>
+							</div>
+				  		</div>
 						<div class="row">
 							<div class="col mb-3">
 								<label for="recipient-name" class="col-form-label">고객 요청사항</label>
@@ -277,7 +302,7 @@ label {
 	  </div>
 	</div>
 	
-	<!-------------------------- 객실검색 모달창-------------------------------------------->
+	<!-------------------------- 다이닝검색 모달창-------------------------------------------->
 	<div class="modal fade" id="dn-rev" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-dialog-scrollable">
 	    <div class="modal-content">
@@ -312,7 +337,7 @@ label {
 			  		</div>
 			  		<div class="col" id="filter-first-1">
 				  		<label for="location-field" class="form-label">좌석 유형</label>
-					  	<select class="form-select form-select-sm" name="seatType" id="seatType">
+					  	<select class="form-select form-select-sm" name="seatType" id="seatType-modal">
 					  		<option value="" selected>=====</option>
 							<option value="table">테이블</option>
 							<option value="room">룸</option>
@@ -424,7 +449,7 @@ $(function() {
 			alert("다이닝종류를 선택해주세요");	
 			return false;
 		}
-		if ($("#seatType option:selected").val() == null || $("#seatType option:selected").val() =='') {
+		if ($("#seatType-modal option:selected").val() == null || $("#seatType-modal option:selected").val() =='') {
 			alert("좌석유형을 선택해주세요");	
 			return false;
 		}
@@ -435,42 +460,94 @@ $(function() {
 		}
 		
 		diningCheck();
+		console.log($("#dnNo").val());
 	})
 	
-	// 날짜 선택시 해당 런치,디너중 가능시간 조회
-	
+	// 밀타임 변경시 시간 변경
+	$("#mealTime-modal").on('change', function() {
+		
+		let $mealTime = $("#mealTime-modal").val();
+		let $visitTime = $("#visitTime-modal").empty();
+		
+		if ($mealTime == 'lunch' || $mealTime == 'blunch') {
+			let content ='';
+			content += '<option value="12:00">12:00</option>';
+			content += '<option value="12:30">12:30</option>';
+			content += '<option value="13:00">13:00</option>';
+			
+			$visitTime.append(content);
+		} else if ($mealTime == 'dinner') {
+			let content ='';
+			content += '<option value="17:30">17:30</option>';
+			content += '<option value="18:00">18:00</option>';
+			content += '<option value="18:30">18:30</option>';
+			content += '<option value="12:30">19:00</option>';
+			
+			$visitTime.append(content);
+		}
+	})
 	
 	// 다이닝선택
-	let rooms = [];
 	$("#select-modal").on("click", function() {
-		let i = $(this).attr("data-tag");
-		let roomDetail = rooms[i];
-		let checkinPeriod = $("#datepicker").val();
 		
-		$("#location").attr('value', roomDetail.location.name);
-		$("#roomCategory").attr('value', roomDetail.roomCategory.name);
-		$("#checkinPeriod").attr('value', checkinPeriod);
-		
-		// 숙박일에 따른 금액 구하기
-		let checkinSplit = checkinPeriod.split("~")
-		let checkinout = [];
-		
-		for(let i=0; i<checkinSplit.length; i++) {
-			checkinout.push(checkinSplit[i].trim());
+		let $location = $("#location-modal").val();
+		let $dnCategory = $("#dnCategory-modal").val();
+		let $seatType = $("#seatType-modal").val();
+		let $adult = $("#adult-modal").val();
+		let $child = $("#child-modal").val();
+		let $datepicker = $("#datepicker").val();
+		let $mealTime = $("#mealTime-modal").val();
+		let $visitTime = $("#visitTime-modal").val();
+
+		if ($location == 1) {
+			$("#location").attr('value', '서울');
+		} else if ($location == 2) {
+			$("#location").attr('value', '부산');
+		} else if ($location == 3) {
+			$("#location").attr('value', '제주');
+		} else if ($location == 4) {
+			$("#location").attr('value', '강릉');
+		} else if ($location == 5) {
+			$("#location").attr('value', '광주');
 		}
-		// 체크인,아웃 날짜 사이 기간 구하기
-		let checkin = new Date(checkinout[0]);
-		let checkout = new Date(checkinout[1]);
-		let dateDiff = Math.ceil((checkout.getTime()-checkin.getTime())/(1000*3600*24));
 		
-		let periodPrice = roomDetail.discountPrice*dateDiff;
+		if ($dnCategory == 101) {
+			$("#dnCategory").attr('value', '라연');
+		} else if ($dnCategory == 102) {
+			$("#dnCategory").attr('value', '아리아께');
+		} else if ($dnCategory == 103) {
+			$("#dnCategory").attr('value', '팔선');
+		} else if ($dnCategory == 104) {
+			$("#dnCategory").attr('value', '더 파크뷰');
+		} else if ($dnCategory == 105) {
+			$("#dnCategory").attr('value', '콘티넨탈');
+		} 
+	
+		if ($seatType == 'room') {
+			$("#seatType").attr('value', '룸');
+		} else if ($seatType == 'table') {
+			$("#seatType").attr('value', '테이블');
+		}
 		
-		$("#totalPrice").attr('value', periodPrice.toLocaleString());
-		$("#roomId").attr('value', roomDetail.id);
+		$("#adult").attr('value', $adult);
+		$("#child").attr('value', $child);
+		$("#visitDate").attr('value', $datepicker);
+		$("#mealTime").attr('value', $mealTime);
+		$("#visitTime").attr('value', $visitTime);
 		
 		dnModal.hide(); //--------------------------------캘린더 d-none추가
 		$("#calendar").addClass("d-none");
-		rooms = [];
+	})
+	
+	// 알레르기 체크 여부
+	$(":radio[name=isAllergy]").on('change', function() {
+
+		let $allergyCheck = $(":radio[name=isAllergy]:checked").val();
+		if ($allergyCheck == 'Y') {
+			$("#typeView").removeClass("d-none");
+		} else {
+			$("#typeView").addClass("d-none");
+		}
 	})
 	
 	// 인원 수 유효성체크
@@ -486,7 +563,7 @@ $(function() {
 			$("#adult-modal").val(1);
 		}
 
-		let type = $("#seatType").val();
+		let type = $("#seatType-modal").val();
 		
 		if (type == 'table') {
 			if ($adult == 4) {
@@ -511,7 +588,7 @@ $(function() {
 	})
 	
 	let $preValChild = '';
-	$("#child-modal").on('keyup mouseup', function () {
+	$("#child-modal").on('change', function () {
 		
 		let $child = $("#child-modal").val();
 		var pattern = /[0-9]/;	// 숫자 
@@ -532,19 +609,41 @@ $(function() {
 		}
 	});
 	
+	let $preValBaby = '';
+	$("#baby").on('change', function () {
+		
+		let $baby = $("#baby").val();
+		var pattern = /[0-9]/;	// 숫자 
+		var testBaby = pattern.test($baby);
+		
+		if (!testBaby) {
+			alert("숫자만 입력가능 합니다.")
+			$("#baby").val(0);
+		}
+
+		if ($baby == 4) {
+			$(this).data('val', $(this).val());
+			$preValBaby = $(this).data('val');
+		}
+		if($baby < 0 || $baby > 4) {
+			alert("유아는 0~4명까지 선택가능합니다.");
+			$(this).val($preValBaby);
+		}
+	});
+
 	// 예약정보 form제출시 유효성체크
 	$("#btn-setting").on('click', function () {
-		let $location = $("#location").val();
-		let $roomCategory = $("#roomCategory").val();
-		let $checkinPeriod = $("#checkinPeriod").val();
 		let $userNo = $("#userNo").val();
+		let $location = $("#location").val();
+		let $dnCategory = $("#dnCategory").val();
+		let $visitDate = $("#visitDate").val();
 		let $dnNo = $("#dnNo").val();
 		
 		if ($userNo == null || $userNo == '') {
 			alert("고객정보 입력은 필수 입니다.");
 			return false;
 		}
-		if ($location == '' || $roomCategory == '' || $checkinPeriod == '' || $dnNo == '') {
+		if ($location == '' || $dnCategory == '' || $visitDate == '' || $dnNo == '') {
 			alert("다이닝 선택은 필수 입니다.");
 			return false;
 		}
@@ -612,9 +711,14 @@ $(function() {
 				$("#calendar").removeClass("d-none");
 				$("#time-select").removeClass("d-none");
 				
-				$.each(results, function(index, result) {
-					dates.push(result.countDate);
+				let dn = results.dn
+				let selectableDates = results.selectableDate
+				
+				$.each(selectableDates, function(index, selectableDate) {
+					dates.push(selectableDate.date);
 				})
+				
+				$("#dnNo").val(dn.no);
 			}
 		})
 			$("#datepicker").datepicker({
@@ -651,10 +755,12 @@ $(function() {
 								
 								$mealTime.append(content);
 							})
+							let content ='';
+							content += '<option value="" selected>선택해주세요</option>'
+							$mealTime.append(content);
 						}
 					})
-					// queryForm 초기화 어떻게------------------강사님께 질문
-					queryForm -= dateQuery
+					queryForm = queryForm.substring(0, queryForm.length - 16)
 
 			    }
    		    });                    

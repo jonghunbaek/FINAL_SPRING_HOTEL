@@ -64,5 +64,7 @@ public class RoomRev {
 	
 	private String isMem;
 	
+	private String deleted;
+	
 	
 }

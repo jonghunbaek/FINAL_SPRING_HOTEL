@@ -88,6 +88,7 @@
 		<result column="dn_max_count" property="maxCount"/>
 		<association property="location" column="dn_no" select="getLocationByDnNo"/>
 		<association property="dnInfo" column="dn_no" select="getDiningInfoByNo"/>
+		<association property="dnCategory" column="dn_category_no" select="getDnCategoryByNo"/>
 	</resultMap>
 	
 	<resultMap type="DnRev" id="DiningRevResultMap">
@@ -97,6 +98,18 @@
 		<association property="dn" column="dn_no" select="getDiningByNo"/>
 	</resultMap>
 	
+	<resultMap type="DnCategory" id="DnCategoryResultMap">
+		<id column="dn_category_no" property="no"/>
+		<result column="dn_category_name" property="name"/>
+		<result column="dn_group_no" property="groupNo"/>
+	</resultMap>
+	
+	<!-- DnCategory getDnCategoryByNo(int no); -->
+	<select id="getDnCategoryByNo" parameterType="int" resultMap="DnCategoryResultMap">
+		select *
+		from sh_dn_category
+		where dn_category_no = #{no}
+	</select>
 	<!-- Dining getDiningByNo(int no); -->
 	<select id="getDiningByNo" parameterType="int" resultMap="DiningResultMap">
 		select *
@@ -187,6 +200,7 @@
 	
 	<resultMap type="RtRev" id="RtRevResultMap">
 		<id column="rt_rev_no" property="no"/>
+		<result column="user_id" property="userId"/>
 		<result column="rt_rev_adult" property="adult"/>
 		<result column="rt_rev_child" property="child"/>
 		<result column="rt_rev_baby" property="baby"/>
@@ -214,6 +228,7 @@
 		<result column="rt_rev_reservation_no" property="reservationNo"/>
 		<result column="rt_rev_status" property="status"/>
 		<association property="dn" column="dn_no" select="getDiningByNo"/>
+		<!-- <association property="user" column="user_id" select="com.sh.mapper.UserMapper.getUserById"/> -->
 	</resultMap>
 	
 	<!-- void deleteRtRevCount(@Param("mealTime") String mealTime,@Param("seatType") String seatType, @Param("revCount") int revCount); -->
@@ -255,4 +270,13 @@
 			rt_rev_reservation_no = #{reservationNo}
 		where rt_rev_no = #{no}
 	</update>
+	
+	<!-- List<RtRev> getRtRevsByUser(User user); -->
+	<select id="getRtRevsByUserId" parameterType="String" resultMap="RtRevResultMap">
+		select *
+		from sh_rt_rev
+		where user_id = #{value}
+		order by rt_rev_visit_date desc
+	</select>
+	
 </mapper>

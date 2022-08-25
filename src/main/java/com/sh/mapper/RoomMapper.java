@@ -76,7 +76,7 @@ public interface RoomMapper {
 	
 	// 객실 예약 
 	void insertRoomRev(RoomReservationForm revForm);
-
+	
 	// 예약번호로 예약정보 가져오기
 	RoomRev getRoomRevByRoomRevNo(int no);
 
@@ -86,8 +86,7 @@ public interface RoomMapper {
 	// 객실 종류 반환 
 	List<String> getRoomCategories();
 	
-	//객실 그룹번호로 객실유형 받기 
-	List<RoomCategory> getRoomCategoryByGroupNo(int roomGroupNo);
 	
-
+	
+	RoomCategory getRoomCategoryByGroupNo(int roomGroupNo);
 }
