@@ -17,6 +17,78 @@
 		<result column="admin_updated_date" property="updatedDate"/>
 	</resultMap>
 	
+	<resultMap type="RoomRev" id="RoomRevResultMap">
+		<id column="room_rev_no" property="no"/>
+		<result column="room_rev_adult" property="adult"/>
+		<result column="room_rev_child" property="child"/>
+		<result column="room_rev_total_price" property="totalPrice"/>
+		<result column="room_rev_checkin" property="checkin"/>
+		<result column="room_rev_checkout" property="checkout"/>
+		<result column="room_rev_checkin_time" property="checkinTime"/>
+		<result column="room_rev_checkout_time" property="checkoutTime"/>
+		<result column="room_rev_request" property="request"/>
+		<result column="room_rev_status" property="status"/>
+		<result column="room_rev_option_checkin_time" property="optionCheckinTime"/>
+		<result column="room_bedtype" property="bedType"/>
+		<result column="room_rev_created_date" property="createdDate"/>
+		<result column="room_rev_updated_date" property="updatedDate"/>
+		<result column="room_rev_room_name" property="roomName"/>
+		<result column="room_rev_location_name" property="locationName"/>
+		<result column="room_rev_user_title" property="userTitle"/>
+		<result column="room_rev_first_name" property="firstName"/>
+		<result column="room_rev_last_name" property="lastName"/>
+		<result column="room_rev_email" property="email"/>
+		<result column="room_rev_tel" property="tel"/>
+		<result column="room_rev_country" property="country"/>
+		<result column="room_rev_option_adult_bf" property="optionAdultBf"/>
+		<result column="room_rev_option_child_bf" property="optionChildBf"/>
+		<result column="room_rev_option_extra_bed" property="extraBed"/>
+		<result column="room_rev_option_total_price" property="optionTotalPrice"/>
+		<result column="room_rev_card_type" property="cardType"/>
+		<result column="room_rev_card_number1" property="cardNumber1"/>
+		<result column="room_rev_card_number2" property="cardNumber2"/>
+		<result column="room_rev_card_number3" property="cardNumber3"/>
+		<result column="room_rev_card_number4" property="cardNumber4"/>
+		<result column="room_rev_card_type" property="cardType"/>
+		<result column="room_rev_card_valid_month" property="validMonth"/>
+		<result column="room_rev_card_valid_year" property="validYear"/>
+		<result column="is_m" property="isMem"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"></association>
+		<association property="room" column="room_id" select="com.sh.mapper.RoomMapper.getRoomById"></association>
+	</resultMap>
+	
+	<resultMap type="RtRev" id="RtRevResultMap">
+		<id column="rt_rev_no" property="no"/>
+		<result column="rt_rev_adult" property="adult"/>
+		<result column="rt_rev_child" property="child"/>
+		<result column="rt_rev_baby" property="baby"/>
+		<result column="rt_rev_visit" property="isVisit"/>
+		<result column="rt_rev_visit_time" property="visitTime"/>
+		<result column="rt_rev_visit_date" property="visitDate"/>
+		<result column="rt_seat_type" property="seatType"/>
+		<result column="rt_rev_request" property="request"/>
+		<result column="rt_rev_created_date" property="createdDate"/>
+		<result column="rt_rev_updated_date" property="updatedDate"/>
+		<result column="rt_rev_meal_time" property="mealTime"/>
+		<result column="rt_rev_is_member" property="isMember"/>
+		<result column="rt_rev_is_allergy" property="isAllergy"/>
+		<result column="rt_rev_etc_allergy" property="etcAllergy"/>
+		<result column="rt_rev_name" property="name"/>
+		<result column="rt_rev_email" property="email"/>
+		<result column="rt_rev_tel" property="tel"/>
+		<result column="rt_rev_card_sort" property="cardSort"/>
+		<result column="rt_rev_card_num1" property="cardNum1"/>
+		<result column="rt_rev_card_num2" property="cardNum2"/>
+		<result column="rt_rev_card_num3" property="cardNum3"/>
+		<result column="rt_rev_card_num4" property="cardNum4"/>
+		<result column="rt_rev_card_expiry_month" property="cardExpiryMonth"/>
+		<result column="rt_rev_card_expiry_year" property="cardExpiryYear"/>
+		<result column="rt_rev_reservation_no" property="reservationNo"/>
+		<result column="rt_rev_status" property="status"/>
+		<association property="dn" column="dn_no" select="com.sh.mapper.DiningMapper.getDiningByNo"/>
+		<association property="user" column="user_no" select="com.sh.mapper.UserMapper.getUserByNo"/>
+	</resultMap>
+	
 	<!-- Admin getAdminByEmail(String email); -->
 	<select id="getAdminByEmail" parameterType="string" resultMap="AdminResultMap">
 		select *
@@ -40,6 +112,25 @@
 		(admin_seq.nextval, #{password}, #{email}, #{tel}, #{grade}, #{name}, #{birth}, #{address}, #{addressDetail}, #{postcode}, 
 		#{hireDate}, #{location.no}, #{gender}, #{profileImage})
 	</insert>
+	
+	<!-- List<RoomRev> getRoomRevListByLocation(int locationNo);-->
+	<select id="getRoomRevListByLocation" parameterType="int" resultMap="RoomRevResultMap">
+		select *
+		from sh_room_rev
+		where room_id in (select room_id
+						  from sh_room
+						  where location_no = #{locationNo})
+		and room_rev_status = 'O'
+	</select>
+	<!--List<RtRev> getRtmRevListByLocation(int locationNo); -->
+	<select id="getRtmRevListByLocation" parameterType="int" resultMap="RtRevResultMap">
+		select *
+		from sh_rt_rev
+		where dn_no in (select dn_no
+						from sh_dn
+						where location_no = #{locationNo})
+		and rt_rev_status = 'O'
+	</select>
 	
 	<!-- int getSaleSeoul(); -->
 	<select id="getSaleSeoul" resultType="int">
@@ -83,44 +174,62 @@
 	</select>
 	
 	<!-- int getSaleJan(); -->
-	<select id="getSaleJan" resultType="int">
+	<select id="getSaleJan" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_rev_checkin_time &gt;= TO_DATE('2022-01-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-01-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
 	</select>
 	<!-- int getSaleFeb(); -->
-	<select id="getSaleFeb" resultType="int">
+	<select id="getSaleFeb" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_rev_checkin_time &gt;= TO_DATE('2022-02-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-02-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
 	</select>
 	<!-- int getSaleMar(); -->
-	<select id="getSaleMar" resultType="int">
+	<select id="getSaleMar" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_rev_checkin_time &gt;= TO_DATE('2022-03-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-03-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
 	</select>
 	<!-- int getSaleApr(); -->
-	<select id="getSaleApr" resultType="int">
+	<select id="getSaleApr" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_rev_checkin_time &gt;= TO_DATE('2022-04-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-04-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
 	</select>
 	<!-- int getSaleMay(); -->
-	<select id="getSaleMay" resultType="int">
+	<select id="getSaleMay" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_rev_checkin_time &gt;= TO_DATE('2022-05-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-05-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
 	</select>
 	<!-- int getSaleJun(); -->
-	<select id="getSaleJun" resultType="int">
+	<select id="getSaleJun" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_rev_checkin_time &gt;= TO_DATE('2022-06-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-06-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
 	</select>
 	
 	<!-- int getSaleStandard(); -->
-	<select id="getSaleStandard" resultType="int">
+	<select id="getSaleStandard" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_id in (select room_id
@@ -128,10 +237,11 @@
 		                  where room_category_no in (select g.room_category_no
 		                                             from sh_room_category g, sh_room_category c
 		                                             where g.room_group_no = c.room_category_no
-		                                             and g.room_group_no = 100))
+		                                             and g.room_group_no = 100)
+		                  and location_no = #{locationNo})
 	</select>
 	<!-- int getSaleExecutive(); -->
-	<select id="getSaleExecutive" resultType="int">
+	<select id="getSaleExecutive" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_id in (select room_id
@@ -139,10 +249,11 @@
 		                  where room_category_no in (select g.room_category_no
 		                                             from sh_room_category g, sh_room_category c
 		                                             where g.room_group_no = c.room_category_no
-		                                             and g.room_group_no = 200))
+		                                             and g.room_group_no = 200)
+		                  and location_no = #{locationNo})                           
 	</select>
 	<!-- int getSaleSuite(); -->
-	<select id="getSaleSuite" resultType="int">
+	<select id="getSaleSuite" resultType="int" parameterType="int">
 		select sum(ROOM_REV_TOTAL_PRICE)
 		from sh_room_rev
 		where room_id in (select room_id
@@ -150,7 +261,142 @@
 		                  where room_category_no in (select g.room_category_no
 		                                             from sh_room_category g, sh_room_category c
 		                                             where g.room_group_no = c.room_category_no
-		                                             and g.room_group_no = 200))
+		                                             and g.room_group_no = 200)
+		                  and location_no = #{locationNo})                           
+	</select>
+	
+	
+	<!-- int getRevSeoul(); -->
+	<select id="getRevSeoul" resultType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 1) 
+	</select>
+	<!--int getRevBusan(); -->
+	<select id="getRevBusan" resultType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 2) 
+	</select>
+	<!--int getRevJeju(); -->
+	<select id="getRevJeju" resultType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 3) 
+	</select>
+	<!--int getRevGangreung(); -->
+	<select id="getRevGangreung" resultType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 4) 
+	</select>
+	<!--int getRevGwangju();  -->
+	<select id="getRevGwangju" resultType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where location_no = 5) 
+	</select>
+	
+	<!--int getRevJan(int locationNo); -->
+	<select id="getRevJan" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-01-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-01-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
+	</select>
+	<!--int getRevFeb(int locationNo); -->
+	<select id="getRevFeb" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-02-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-02-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
+	</select>
+	<!--int getRevMar(int locationNo); -->
+	<select id="getRevMar" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-03-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-03-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
+	</select>
+	<!--int getRevApr(int locationNo); -->
+	<select id="getRevApr" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-04-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-04-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
+	</select>
+	<!--int getRevMay(int locationNo); -->
+	<select id="getRevMay" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-05-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-05-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
+	</select>
+	<!--int getRevJun(int locationNo); -->
+	<select id="getRevJun" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_rev_checkin_time &gt;= TO_DATE('2022-06-01') AND room_rev_checkin_time &lt; LAST_DAY(TO_DATE('2022-06-01')) + 1
+		and room_id in (select room_id
+	                    from sh_room
+	                    where location_no = #{locationNo})
+	</select>
+	
+	<!--int getRevStandard(int locationNo); -->
+	<select id="getRevStandard" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where room_category_no in (select g.room_category_no
+		                                             from sh_room_category g, sh_room_category c
+		                                             where g.room_group_no = c.room_category_no
+		                                             and g.room_group_no = 100)
+		                  and location_no = #{locationNo})                           
+	</select>
+	<!--int getRevExecutive(int locationNo); -->
+	<select id="getRevExecutive" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where room_category_no in (select g.room_category_no
+		                                             from sh_room_category g, sh_room_category c
+		                                             where g.room_group_no = c.room_category_no
+		                                             and g.room_group_no = 200)
+		                  and location_no = #{locationNo})                           
+	</select>
+	<!--int getRevSuite(int locationNo); -->
+	<select id="getRevSuite" resultType="int" parameterType="int">
+		select count(room_rev_no)
+		from sh_room_rev
+		where room_id in (select room_id
+		                  from sh_room
+		                  where room_category_no in (select g.room_category_no
+		                                             from sh_room_category g, sh_room_category c
+		                                             where g.room_group_no = c.room_category_no
+		                                             and g.room_group_no = 300)
+		                  and location_no = #{locationNo})                           
 	</select>
 	
 </mapper>

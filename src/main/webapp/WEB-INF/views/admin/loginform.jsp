@@ -47,7 +47,7 @@
 			<div class="tabContent">
 				<div class="allBox">
 					<div class="box">
-							<form id="loginForm" action="../admin/login" method="post">
+							<form id="loginForm" action="login" method="post">
 								<input type="hidden" id="" name="" value="">
 								<div class="inputForm">
 									<div class="inputId">

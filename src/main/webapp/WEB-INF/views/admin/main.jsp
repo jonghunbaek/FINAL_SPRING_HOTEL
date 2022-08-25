@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../common/tags.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +41,7 @@
 	li {
 		list-style-type: none;
 	}
+	
 	/* -------------------------지점별 버튼------------------------ */
 	#btn-seoul {
 		color:rgba(103, 36, 54, 1);	
@@ -49,6 +51,10 @@
 		color: rgba(255, 255, 255, 1);
 		box-shadow: rgba(103, 36, 54, 1) 0 80px 0px 2px inset;
 	}
+	#seoul:hover {
+		color: rgba(255, 255, 255, 1) !important;
+	}
+	
 	#btn-jeju {
 		color:rgba(132, 50, 61, 1);	
 		font-weight:bold;
@@ -57,6 +63,10 @@
 		color: rgba(255, 255, 255, 1);
 		box-shadow: rgba(132, 50, 61, 0.8) 0 80px 0px 2px inset;
 	}
+	#jeju:hover {
+		color: rgba(255, 255, 255, 1) !important;
+	}
+	
 	#btn-busan {
 		color:rgba(179, 76, 73, 1);	
 		font-weight:bold;
@@ -65,6 +75,10 @@
 		color: rgba(255, 255, 255, 1);
 		box-shadow: rgba(179, 76, 73, 1) 0 80px 0px 2px inset;
 	}
+	#busan:hover {
+		color: rgba(255, 255, 255, 1) !important;
+	}
+	
 	#btn-reung {
 		color:rgba(243, 115, 88, 1);
 		font-weight:bold;
@@ -73,6 +87,10 @@
 		color: rgba(255, 255, 255, 1);
 		box-shadow: rgba(243, 115, 88, 1) 0 80px 0px 2px inset;
 	}
+	#reung:hover {
+		color: rgba(255, 255, 255, 1) !important;
+	}
+	
 	#btn-gwang {
 		color:rgba(255, 173, 104, 1);	
 		font-weight:bold;
@@ -80,6 +98,9 @@
 	#btn-gwang:hover {
 		color: rgba(255, 255, 255, 1);
 		box-shadow: rgba(255, 173, 104, 1) 0 80px 0px 2px inset;
+	}
+	#gwang:hover {
+		color: rgba(255, 255, 255, 1) !important;
 	}
 	
 </style>
@@ -94,11 +115,11 @@
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2" style="font-weight:bold;">Spring Hotel Admin</h1>
         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-		  <button type="button" class="btn" id="btn-seoul">서울점</button>
-		  <button type="button" class="btn" id="btn-jeju">제주점</button>
-		  <button type="button" class="btn" id="btn-busan">부산점</button>
-		  <button type="button" class="btn" id="btn-reung">강릉점</button>
-		  <button type="button" class="btn" id="btn-gwang">광주점</button>
+		  <button type="button" class="btn" id="btn-seoul"><a href="main?location=1" id="seoul" style="text-decoration: none; color:rgba(103, 36, 54, 1); font-weight:bold;">서울점</a></button>
+		  <button type="button" class="btn" id="btn-jeju"><a href="main?location=2" id="busan" style="text-decoration: none; color:rgba(103, 36, 54, 1); font-weight:bold;">부산점</a></button>
+		  <button type="button" class="btn" id="btn-busan"><a href="main?location=3" id="jeju" style="text-decoration: none; color:rgba(103, 36, 54, 1); font-weight:bold;">제주점</a></button>
+		  <button type="button" class="btn" id="btn-reung"><a href="main?location=4" id="reung" style="text-decoration: none; color:rgba(103, 36, 54, 1); font-weight:bold;">강릉점</a></button>
+		  <button type="button" class="btn" id="btn-gwang"><a href="main?location=5" id="gwang" style="text-decoration: none; color:rgba(103, 36, 54, 1); font-weight:bold;">광주점</a></button>
 		</div>
       </div>
 	  <div class="row" id="sale">
@@ -118,7 +139,7 @@
 	  	<div class="col py-3">
 	  		<div class="row">
 	  			<div class="col-8">
-			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 00점 월별 매출</span>
+			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 ${location.name }점 월별 매출</span>
 	  			</div>
 	  			<div class="col-4 text-end">
 			  		<span style="color: darkgray; font-size:0.75rem;">단위 : 만원</span>
@@ -131,7 +152,7 @@
 	  	<div class="col py-3">
 	  		<div class="row">
 	  			<div class="col-8">
-			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 00점 객실타입별 매출</span>
+			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 ${location.name }점 객실타입별 매출</span>
 	  			</div>		
 	  		</div>
 	  		<div class="row py-4">
@@ -151,14 +172,14 @@
 	  			</div>
 	  			<div class="col-2">
 	  				<ul>
-	  					<li style="margin-bottom:35px; font-size:0.8rem; color:gray; position:relative; top:3px; right:90px;">35%</li>
-	  					<li style="margin-bottom:30px; font-size:0.8rem; color:gray; position:relative; right:90px;">25%</li>
-	  					<li style="font-size:0.8rem; color:gray; position:relative; right:90px;">40%</li>
+	  					<li style="margin-bottom:35px; font-size:0.8rem; color:gray; position:relative; top:3px; right:90px;">${sale.standardPer}%</li>
+	  					<li style="margin-bottom:30px; font-size:0.8rem; color:gray; position:relative; right:90px;">${sale.executivePer}%</li>
+	  					<li style="font-size:0.8rem; color:gray; position:relative; right:90px;">${sale.suitePer}%</li>
 	  				</ul>
 	  			</div>
 	  			<div class="col-3">
 	  				<p style="font-size:1.5rem; font-weight:bold; position:relative; top:30px; right:50px; color:#74a63f;" >총매출</p>
-	  				<small style="font-size:1rem; font-weight:bold; position:relative; top:30px; right:50px;">12,922만원</small>
+	  				<small style="font-size:1rem; font-weight:bold; position:relative; top:30px; right:50px;">${sale.totalSaleByType}만원</small>
 	  			</div>
 	  		</div>
 	  	</div>
@@ -181,11 +202,11 @@
 				</div>
 				<div class="col-2 text-end" style="font-size: 0.9rem; font-weight:bold; position:relative; top:6px;">
 					<ul>
-						<li style="margin-bottom:4px;">234</li>
-						<li style="margin-bottom:4px;">234</li>
-						<li style="margin-bottom:4px;">234</li>
-						<li style="margin-bottom:4px;">234</li>
-						<li>234</li>
+						<li style="margin-bottom:4px;">${sale.revSeoul}</li>
+						<li style="margin-bottom:4px;">${sale.revBusan}</li>
+						<li style="margin-bottom:4px;">${sale.revJeju}</li>
+						<li style="margin-bottom:4px;">${sale.revGangreung}</li>
+						<li>${sale.revGwangju}</li>
 					</ul>
 				</div>
 				<div class="col-2" style="font-size: 0.7rem; color:gray; position:relative; right:35px; top:9px;">
@@ -202,7 +223,7 @@
 	  	<div class="col py-3">
 	  		<div class="row">
 	  			<div class="col-8">
-			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 00점 월별 예약수</span>
+			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 ${location.name }점 월별 예약수</span>
 	  			</div>
 	  			<div class="col-4 text-end">
 			  		<span style="color: darkgray; font-size:0.75rem;">단위 : 건</span>
@@ -215,7 +236,7 @@
 	  	<div class="col py-3">
 	  		<div class="row">
 	  			<div class="col-8">
-			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 00점 객실타입별 예약수</span>
+			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 ${location.name }점 객실타입별 예약수</span>
 	  			</div>		
 	  		</div>
 	  		<div class="row py-4">
@@ -228,21 +249,21 @@
 	  			</div>
 	  			<div class="col-3">
 	  				<ul>
-	  					<li style="margin-bottom:32px; font-size:0.9rem; font-weight:bold; position:relative; top:3px; right:40px;">120</li>
-	  					<li style="margin-bottom:28px; font-size:0.9rem; font-weight:bold; position:relative; right:40px;">25</li>
-	  					<li style="font-size:0.9rem; font-weight:bold; position:relative; right:40px;">35</li>
+	  					<li style="margin-bottom:32px; font-size:0.9rem; font-weight:bold; position:relative; top:3px; right:40px;">${sale.revStan}건</li>
+	  					<li style="margin-bottom:28px; font-size:0.9rem; font-weight:bold; position:relative; right:40px;">${sale.revExec}건</li>
+	  					<li style="font-size:0.9rem; font-weight:bold; position:relative; right:40px;">${sale.revSuit}건</li>
 	  				</ul>
 	  			</div>
 	  			<div class="col-2">
 	  				<ul>
-	  					<li style="margin-bottom:35px; font-size:0.8rem; color:gray; position:relative; top:3px; right:90px;">35%</li>
-	  					<li style="margin-bottom:30px; font-size:0.8rem; color:gray; position:relative; right:90px;">25%</li>
-	  					<li style="font-size:0.8rem; color:gray; position:relative; right:90px;">40%</li>
+	  					<li style="margin-bottom:35px; font-size:0.8rem; color:gray; position:relative; top:3px; right:90px;">${sale.revStanPer}%</li>
+	  					<li style="margin-bottom:30px; font-size:0.8rem; color:gray; position:relative; right:90px;">${sale.revExecPer}%</li>
+	  					<li style="font-size:0.8rem; color:gray; position:relative; right:90px;">${sale.revSuitPer}%</li>
 	  				</ul>
 	  			</div>
 	  			<div class="col-3">
-	  				<p style="font-size:1.5rem; font-weight:bold; position:relative; top:30px; right:50px; color:#74a63f;" >총매출</p>
-	  				<small style="font-size:1rem; font-weight:bold; position:relative; top:30px; right:50px;">12,922만원</small>
+	  				<p style="font-size:1.5rem; font-weight:bold; position:relative; top:30px; right:50px; color:#74a63f;" >총예약</p>
+	  				<small style="font-size:1rem; font-weight:bold; position:relative; top:30px; right:50px;">${sale.totalRevByType}건</small>
 	  			</div>
 	  		</div>
 	  	</div>
@@ -264,13 +285,15 @@
 	            </tr>
 	          </thead>
 	          <tbody>
+	          <c:forEach var="roomRev" items="${roomRevs}">
 	            <tr>
-	              <td>123</a></td>
-	              <td>코너스위트</td>
-	              <td>홍길동<small class="d-block">010-1234-5678</small></td>
-	              <td>2022-08-21<small class="d-block">14:00</small></td>
-	              <td>강릉</td>
+	              <td>${roomRev.no }</td>
+	              <td>${roomRev.room.roomCategory.name }</td>
+	              <td>${roomRev.user.name }<small class="d-block">${roomRev.user.tel }</small></td>
+	              <td><fmt:formatDate value="${roomRev.checkinTime }" pattern="yyyy-MM-dd" /><small class="d-block">${roomRev.optionCheckinTime}</small></td>
+	              <td>${roomRev.room.location.name }</td>
 	            </tr>
+	          </c:forEach>
 	          </tbody>
 	        </table>
 	      </div>
@@ -289,13 +312,15 @@
 	            </tr>
 	          </thead>
 	          <tbody>
+	          <c:forEach var="rtRev" items="${rtRevs}">
 	            <tr>
-	              <td>123</a></td>
-	              <td>라연</td>
-	              <td>홍길동<small class="d-block">010-1234-5678</small></td>
-	              <td>2022-08-21<small class="d-block">14:00</small></td>
-	              <td>서울</td>
+	              <td>${rtRev.no }</td>
+	              <td>${rtRev.dn.dnCategory.name }</td>
+	              <td>${rtRev.user.name }<small class="d-block">${rtRev.user.tel }</small></td>
+	              <td><fmt:formatDate value="${rtRev.visitDate }" pattern="yyyy-MM-dd" /><small class="d-block">${rtRev.mealTime }</small></td>
+	              <td>${rtRev.dn.location.name }</td>
 	            </tr>
+	          </c:forEach>
 	          </tbody>
 	        </table>
 	      </div>
@@ -380,7 +405,7 @@ $(function () {
 		  data: {
 		    labels: ['01월', '02월', '03월', '04월', '05월', '06월'],
 		    datasets: [{ 
-		        data: [1000,2000,3000,3500,2600,3500],
+		        data: [${sale.saleJan}, ${sale.saleFeb}, ${sale.saleMar}, ${sale.saleApr}, ${sale.saleMay}, ${sale.saleJun}],
 		        label: "2022 상반기 월별 매출",
 		        backgroundColor: ["#002743", "#00486d", "#00769f", "#00b2d5", "#00fbff", "#003697"], 
 		      }]
@@ -417,7 +442,7 @@ $(function () {
 					  data: {
 					    labels: ["서울", "제주", "부산", "강릉", "광주"],
 					    datasets: [{ 
-					        data: [100,200,300,400,500],
+					        data: [${sale.revSeoul},${sale.revBusan}, ${sale.revJeju}, ${sale.revGangreung}, ${sale.revGwangju}],
 					        label: "지점별 예약수",
 					        borderColor: "RGBa(220, 220, 220, 0.3)",
 					        backgroundColor: ["rgba(103, 36, 54, 1)", "rgba(132, 50, 61, 1)", "rgba(179, 76, 73, 1)", "rgba(243, 115, 88, 1)", "rgba(255, 173, 104, 1)"]
@@ -450,7 +475,7 @@ $(function () {
 		  data: {
 		    labels: ['01월', '02월', '03월', '04월', '05월', '06월'],
 		    datasets: [{ 
-		        data: [1000,2000,3000,3500,2600,3500],
+		        data: [${sale.revJan},${sale.revFeb},${sale.revMar},${sale.revApr},${sale.revMay},${sale.revJun}],
 		        label: "2022 상반기 00지점 월별 예약수",
 		        backgroundColor: ["#002743", "#00486d", "#00769f", "#00b2d5", "#00fbff", "#003697"], 
 		      }]
