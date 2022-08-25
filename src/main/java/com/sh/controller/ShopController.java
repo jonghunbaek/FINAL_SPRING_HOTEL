@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sh.criteria.ShopProductListCriteria;
 import com.sh.service.ShopService;
@@ -76,6 +77,14 @@ public class ShopController {
 	public String nomemOrderList() {
 		return "shop/nomem/nomemOrderList";
 	}
+	
+	@GetMapping(path="/search")
+	@ResponseBody
+	public List<ShopProduct> searching(ShopProductListCriteria shoplistCriteria) {
+		System.out.println(shoplistCriteria);
+		return shopService.getAllProductsByParameters(shoplistCriteria);
+	}
+	
 	
 	//검색결과
 	@GetMapping(path="/search/list")
