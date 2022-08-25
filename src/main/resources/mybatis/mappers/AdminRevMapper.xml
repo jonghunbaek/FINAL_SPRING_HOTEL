@@ -236,6 +236,10 @@
 		select distinct rt_rev_count_date
 		from sh_rt_rev_count
 		where to_char(rt_rev_count_date, 'yyyy-mm-dd') = #{date}
+		and dn_no = (select dn_no
+		             from sh_dn
+		             where location_no = #{location}
+		             and dn_category_no = #{dnCategory})
 	</select>
 	<!-- 다이닝 신규예약시 선택날짜 존재하는지 확인 -->
 	<!-- String getRevDateBySelectedDateInAddRev(DiningReservationForm diningReservationForm); -->

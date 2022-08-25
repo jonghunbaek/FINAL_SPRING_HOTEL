@@ -1,5 +1,7 @@
 package com.sh.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.sh.dto.AdminSaleChartDto;
 import com.sh.exception.ApplicationException;
 import com.sh.service.AdminService;
-import com.sh.utils.SessionUtils;
 import com.sh.vo.Admin;
+import com.sh.vo.Location;
+import com.sh.vo.RoomRev;
+import com.sh.vo.RtRev;
 import com.sh.web.form.AdminRegisterForm;
 
 
@@ -32,10 +35,16 @@ public class AdminController {
 	
 	// 관리자 메인페이지 요청
 	@GetMapping(path = "/main")
-	public String main(Model model) {
+	public String main(@RequestParam(name = "location" , required = false, defaultValue = "1") int locationNo, Model model) {
 		
-		model.addAttribute("sale", adminService.getAllSale());    
+		List<RoomRev> roomRevs = adminService.getRoomRevListByLocation(locationNo);
+		List<RtRev> rtRevs = adminService.getRtRevListByLocation(locationNo);
 		
+		model.addAttribute("roomRevs", roomRevs);
+		model.addAttribute("rtRevs", rtRevs);
+		model.addAttribute("location", adminService.getLocationByNo(locationNo));
+		model.addAttribute("sale", adminService.getAllSale(locationNo));    
+			
 		return "admin/main";
 	}
 	
@@ -93,7 +102,7 @@ public class AdminController {
 			return "redirect:/admin/login?fail=invalid";
 		}
 
-		return "admin/main";
+		return "redirect:/admin/main";
 	}
 	
 	// 사원등록 완료 페이지

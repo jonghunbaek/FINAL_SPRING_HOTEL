@@ -878,11 +878,9 @@ $(function() {
 			<!------------------ 강사님께 질문 -------------------->
 			$('input:checkbox[name="allergyNos"]').prop('checked', false);
 			$('input:checkbox[name="allergyNos"]').each(function(i) {
-				console.log("test");
-				for(let i; i<allergy.length; i++) {
-					console.log("test1");
+				for(let i=0; i<allergy.length; i++) {
 					if ($(this).val() == allergy[i]) {
-						$(this).val().prop('checked', true);
+						$(this).prop('checked', true);
 					}
 				}
 			});
