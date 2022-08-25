@@ -193,7 +193,7 @@ h5 {
 }
 .amenity {
 	padding-block: 60px;
-	padding-bottom: 80px;
+	padding-bottom: 20px;
 	border-bottom: 0.01em solid #90773829;
 }
 
@@ -209,28 +209,26 @@ h5 {
 }
 .room-info-room {
 	display: inline-flex;
-    height: 200px;
 	border-bottom: 0.01em solid #90773829;
 	
 }
 .room-info-etc {
 	display: inline-flex;
-    height: 250px;
 	border-bottom: 0.01em solid #90773829;
 }
 .info-title {
 	font-size: 15px;
     color: #31312fbd;
-	background-color: lime;
+	/* background-color: lime; */
     width: 130px;
     height: 20px;
-    margin-block: 80px;
+    margin-block: 40px;
 	
 }
 .info-title1 {
 	font-size: 15px;
     color: #31312fbd;
-	background-color: lime;
+	/* background-color: lime; */
     width: 130px;
     height: 20px;
     margin-block: 100px;
@@ -239,7 +237,7 @@ h5 {
 .info-content {
 	width: 340px;
     padding: 20px;
-    font-size: 15px;
+    font-size: 12px;
 }
 .room-info-service {
 	display: inline-flex;
@@ -290,7 +288,6 @@ h5 {
 }
 .room-info-side {
 	background-color: #faf7ed;
-    height: 500px;
     font-size: 16px;
     opacity: 70%;
     padding: 20px;
@@ -298,8 +295,8 @@ h5 {
 
 .info-menu {
 	margin-block:35px;
-	border: 1px dotted;
-	height: 100px;
+	/* border: 1px dotted; */
+	height: 500px;
 	font-size: 14px;
 }
 

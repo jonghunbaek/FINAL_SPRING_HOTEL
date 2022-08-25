@@ -24,28 +24,28 @@
 					<li class="m1-first"><a> <span>스탠다드</span>
 					</a>
 						<ul class="st-menu">
-							<li class="roomt"><a href="../room/roomDetail"><span>디럭스</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=100&categoryNo=102"><span>비즈니스 디럭스</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=100&categoryNo=103"><span>그랜드 코너 디럭스</span></a></li>
+							<li class="roomt"><a href="../room/roomDetail?categoryNo=101"><span>디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=102"><span>비즈니스 디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=103"><span>그랜드 코너 디럭스</span></a></li>
 						</ul></li>
 					<li class="m2"><a> <span>이그제큐티브</span>
 					</a>
 						<ul class="st-menu">
-							<li class="roomt"><a href="../room/roomDetail?roomGroupNo=200&categoryNo=201"><span>이그제큐티브 비즈니스
+							<li class="roomt"><a href="../room/roomDetail?categoryNo=201"><span>이그제큐티브 비즈니스
 										디럭스</span></a></li>
-							<li class="room"><a href="../room/roomDetail?roomGroupNo=200&categoryNo=202"><span>이그제큐티브 그랜드 디럭스</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=202"><span>이그제큐티브 그랜드 디럭스</span></a></li>
 						</ul></li>
 					<li class="m3"><a> <span>스위트</span>
 					</a>
 						<ul class="st-menu">
 
-							<li class="roomt"><a href=""><span>수페리어 스위트</span></a></li>
-							<li class="room"><a href=""><span>코리안 스위트</span></a></li>
-							<li class="room"><a href=""><span>코너 스위트</span></a></li>
-							<li class="room"><a href=""><span>프리미어 스위트</span></a></li>
-							<li class="room"><a href=""><span>로열 스위트</span></a></li>
-							<li class="room"><a href=""><span>스프링 스위트</span></a></li>
-							<li class="room"><a href=""><span>프레지덴셜 스위트</span></a></li>
+							<li class="roomt"><a href="../room/roomDetail?categoryNo=301"><span>수페리어 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=302"><span>코리안 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=303"><span>코너 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=304"><span>프리미어 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=305"><span>로열 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=306"><span>신라 스위트</span></a></li>
+							<li class="room"><a href="../room/roomDetail?categoryNo=307"><span>프레지덴셜 스위트</span></a></li>
 
 						</ul></li>
 					<li class="m4-last" id="lounge"><a> <span>더 이그제큐티브
@@ -69,14 +69,14 @@
 				<!-- 박스 -->
 				<div class="st-box1">
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="디럭img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=101"> <img alt="디럭img"
 								src="../resources/images/room/detail/d1.jpg">
 						</a>
 						</span>
 						<!-- detail -->
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="디럭text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=101"> <img alt="디럭text"
 										src="../resources/images/room/mainInfo/d.gif">
 								</a>
 								</span>
@@ -94,14 +94,14 @@
 				<!-- 박스 -->
 				<div class="st-box2">
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="비디img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=102"> <img alt="비디img"
 								src="../resources/images/room/detail/bd4.jpg">
 						</a>
 						</span>
 						<!-- detail -->
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="비디text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=102"> <img alt="비디text"
 										src="../resources/images/room/mainInfo/bd.gif">
 								</a>
 								</span>
@@ -121,14 +121,14 @@
 				<!-- 박스 -->
 				<div class="st-box1">
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="그코디img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=103"> <img alt="그코디img"
 								src="../resources/images/room/detail/gcd3.jpg">
 						</a>
 						</span>
 						<!-- detail -->
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="그코디text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=103"> <img alt="그코디text"
 										src="../resources/images/room/mainInfo/gcd.gif">
 								</a>
 								</span>
@@ -151,14 +151,14 @@
 				<div class="st-box1">
 					<!-- 박스 디럭스 -->
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="이비디img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=201"> <img alt="이비디img"
 								src="../resources/images/room/detail/ebd4.jpg">
 						</a>
 						</span>
 						<!-- detail -->
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="이비디text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=201"> <img alt="이비디text"
 										src="../resources/images/room/mainInfo/ebd.gif">
 								</a>
 								</span>
@@ -176,13 +176,13 @@
 				</div>
 				<div class="st-box2">
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="이그디img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=202"> <img alt="이그디img"
 								src="../resources/images/room/detail/egd3.jpg">
 						</a>
 						</span>
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="이그디text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=202"> <img alt="이그디text"
 										src="../resources/images/room/mainInfo/egd.gif">
 								</a>
 								</span>
@@ -205,14 +205,14 @@
 				<div class="st-box1">
 					<!-- 박스 디럭스 -->
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="수스img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=301"> <img alt="수스img"
 								src="../resources/images/room/detail/ss2.jpg">
 						</a>
 						</span>
 						<!-- detail -->
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="수스text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=301"> <img alt="수스text"
 										src="../resources/images/room/mainInfo/ss.gif">
 								</a>
 								</span>
@@ -230,13 +230,13 @@
 				</div>
 				<div class="st-box2">
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="코스img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=302"> <img alt="코스img"
 								src="../resources/images/room/detail/ks2.jpg">
 						</a>
 						</span>
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="코스text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=302"> <img alt="코스text"
 										src="../resources/images/room/mainInfo/ks.gif">
 								</a>
 								</span>
@@ -256,14 +256,14 @@
 				<div class="st-box1">
 					<!-- 박스 디럭스 -->
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="코너스위트img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=303"> <img alt="코너스위트img"
 								src="../resources/images/room/detail/cs4.jpg">
 						</a>
 						</span>
 						<!-- detail -->
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="코너스위트text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=303"> <img alt="코너스위트text"
 										src="../resources/images/room/mainInfo/cs.gif">
 								</a>
 								</span>
@@ -281,13 +281,13 @@
 				</div>
 				<div class="st-box2">
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="프스위트img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=304"> <img alt="프스위트img"
 								src="../resources/images/room/detail/pms1.jpg">
 						</a>
 						</span>
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="프스위트text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=304"> <img alt="프스위트text"
 										src="../resources/images/room/mainInfo/ps.gif">
 								</a>
 								</span>
@@ -308,14 +308,14 @@
 				<div class="st-box1">
 					<!-- 박스 디럭스 -->
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="로열스위트img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=305"> <img alt="로열스위트img"
 								src="../resources/images/room/detail/rs2.jpg">
 						</a>
 						</span>
 						<!-- detail -->
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="로열스위트text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=305"> <img alt="로열스위트text"
 										src="../resources/images/room/mainInfo/rs.gif">
 								</a>
 								</span>
@@ -333,13 +333,13 @@
 				</div>
 				<div class="st-box2">
 					<div class="st-detail">
-						<span class="img"> <a href="#"> <img alt="신스img"
+						<span class="img"> <a href="../room/roomDetail?categoryNo=306"> <img alt="신스img"
 								src="../resources/images/room/detail/sins4.jpg">
 						</a>
 						</span>
 						<div class="st-info">
 							<div class="st-info-text">
-								<span class="img"> <a href="#"> <img alt="신스text"
+								<span class="img"> <a href="../room/roomDetail?categoryNo=306"> <img alt="신스text"
 										src="../resources/images/room/mainInfo/sins.gif">
 								</a>
 								</span>
@@ -358,14 +358,14 @@
 			<!-- 박스 -->
 			<div class="st-box1">
 				<div class="st-detail">
-					<span class="img"> <a href="#"> <img alt="프레지덴셜img"
+					<span class="img"> <a href="../room/roomDetail?categoryNo=307"> <img alt="프레지덴셜img"
 							src="../resources/images/room/detail/ps1.jpg">
 					</a>
 					</span>
 					<!-- detail -->
 					<div class="st-info">
 						<div class="st-info-text">
-							<span class="img"> <a href="#"> <img alt="프레지덴셜text"
+							<span class="img"> <a href="../room/roomDetail?categoryNo=307"> <img alt="프레지덴셜text"
 									src="../resources/images/room/mainInfo/ps.gif">
 							</a>
 							</span>

@@ -1,5 +1,7 @@
 package com.sh.vo;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
@@ -19,4 +21,7 @@ public class RoomCategory {
 	private String name;
 	private Category category;
 	private int roomGroupNo;
+	
+	
+	
 }

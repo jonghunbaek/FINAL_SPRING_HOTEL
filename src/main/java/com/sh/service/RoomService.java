@@ -25,8 +25,6 @@ public class RoomService {
 
 	@Autowired
 	private RoomMapper roomMapper;
-	@Autowired
-	private UserMapper userMapper;
 	
 	// 모든 카테고리 
 	public List<RoomCategory> getAllRoomCategories(){
@@ -76,9 +74,10 @@ public class RoomService {
 	}
 	
 	//객실 카테고리 no로 객실 찾기 
-	public Room getRoomByRoomCategoryNo(int no) {
-		return roomMapper.getRoomByRoomCategoryNo(no);
+	public Room getRoomByRoomCategoryNo(int roomCategory) {
+		return roomMapper.getRoomByRoomCategoryNo(roomCategory);
 	}
+	
 	
 	// 객실 이름으로 객실 찾기 
 	public Room getRoomByRoomName(String name) {
@@ -86,13 +85,8 @@ public class RoomService {
 	}
 	
 	// 객실 카테고리 넘버로 객실 어메니티 
-	public RoomAmenity getRoomAmenityByRoomCategoryNo(int no) {
-		return roomMapper.getRoomAmenityByCategoryNo(no);
-	}
-	
-	// 객실 카테고리 넘버로 객실정보 
-	public RoomInfo getRoomInfoByRoomCategoryNo(int no) {
-		return roomMapper.getRoomInfoByRoomCategoryNo(no);
+	public List<RoomInfo> getRoomInfoByRoomCategoryNo(int roomCateogoryNo){
+		return roomMapper.getRoomInfoByRoomCategory(roomCateogoryNo);
 	}
 	
 	// 객실 아이디로 룸 추가옵션 가져오기 
@@ -100,8 +94,23 @@ public class RoomService {
 		return roomMapper.getRoomOptionsByRoomId(id);
 	}
 	
-	
-	
+	RoomCategory getRoomCategoryByNo(int roomCategory) {
+		return roomMapper.getRoomCategoryByNo(roomCategory);
+	}
+
+//	객실 detail 페이지 
+	public Room getRoomDetail(int roomCategoryNo) {
+		RoomCategory roomCategory = roomMapper.getRoomCategoryByNo(roomCategoryNo);
+		RoomInfo roomInfo = roomMapper.getRoomInfoByRoomCategoryNo(roomCategoryNo);
+		List<RoomAmenity> amenities = roomMapper.getAllRoomAmenitiesByRoomCategoryNo(roomCategoryNo);
+		
+		Room room = new Room();
+		room.setRoomCategory(roomCategory);
+		room.setAmenities(amenities);
+		room.setRoomInfo(List.of(roomInfo));
+		
+		return room;
+	}
 //	사용자정보 + 예약 폼 을 db에 전달 
 	public void addNewReservation(RoomReservationForm roomReservationForm) throws IOException{
 

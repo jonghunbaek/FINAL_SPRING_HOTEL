@@ -48,22 +48,20 @@ public interface RoomMapper {
 	Room getRoomByLNo(int no);
 	
 	// 객실 유형별 객실 정보 
-	Room getRoomByRoomCategoryNo(int no);
+	Room getRoomByRoomCategoryNo(int roomCategory);
 	
 	//객실 이름으로 조회 
 	Room getRoomByRoomName(String name);
 	
 	// 객실 그룹번호로 모든 객실 카테고리 조회 
-	List<RoomCategory> getRoomCategoryNameByRoomGroupNo(int no);
+	List<RoomCategory> getRoomCategoryNameByRoomGroupNo(int roomGroupNo);
 	
 	// 모든 객실 어메니티 
 	List<RoomAmenity> getAllRoomAmenities();
-	// 객실별 어메니티 
-	RoomAmenity getRoomAmenityByCategoryNo(int no);
 	
 	// 모든 객실 detail
 	List<RoomInfo> getAllRoomInfo();
-	// 객실별 detail
+	// 객실별 detail 
 	RoomInfo getRoomInfoByRoomCategoryNo(int no);
 	
 	// 모든 룸 옵션 - 조식, 엑스트라 베드
@@ -86,7 +84,10 @@ public interface RoomMapper {
 	// 객실 종류 반환 
 	List<String> getRoomCategories();
 	
+	List<RoomCategory> getRoomCategoryByRoomGroupNo(int roomGroupNo);
 	
-	
+	List<RoomInfo> getRoomInfoByRoomCategory(int roomCategoryNo);
 	RoomCategory getRoomCategoryByGroupNo(int roomGroupNo);
+	
+	List<RoomAmenity> getAllRoomAmenitiesByRoomCategoryNo(int roomCategoryNo);
 }
