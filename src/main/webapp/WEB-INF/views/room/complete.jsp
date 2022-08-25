@@ -64,7 +64,7 @@
 								<li>투숙인원</li>
 							</ul>
 							<ul class="col-8" style="list-style: none; margin-top: 10px;">
-								<li><fmt:formatDate value="${roomReservationForm.checkinTime }" pattern="yyyy-MM-dd"/>-<fmt:formatDate value="${roomReservationForm.checkoutTime }" pattern="yyyy-MM-dd"/></li>
+								<li><span id="checkinDate"><fmt:formatDate value="${roomReservationForm.checkinTime }" pattern="yyyy-MM-dd"/></span><span>~</span><span id="checkoutDate"><fmt:formatDate value="${roomReservationForm.checkoutTime }" pattern="yyyy-MM-dd"/></span></li>
 								<li style="margin-block: 10px;">${roomReservationForm.roomName } / ${roomReservationForm.bedType }</li>
 								<li>성인 <fmt:formatNumber value="${roomReservationForm.adult }"/>, 어린이 <fmt:formatNumber value="${roomReservationForm.child }"/></li>
 							</ul>
@@ -94,7 +94,7 @@
 			<div id="Accordion_wrap2"
 				style="margin-top: 30px; border: 0.01em solid #80808063;">
 				<div class="que2" style="background-color: #9fa0a11c;">
-					<span style="margin-left: 20px;">요금상세</span>
+					<span style="margin-left: 20px;">요금상세 (<span id="night">0</span>박)</span>
 					<div class="arrow-wrap2">
 						<span class="arrow-top2">↑</span> <span class="arrow-bottom2">↓</span>
 					</div>
@@ -151,6 +151,13 @@
 	<%@ include file="../common/footer.jsp"%>
 	<script>
 
+		$('.customer-info').mouseout(function(){
+			let checkinDate = $('#checkinDate').text();
+			let checkoutDate = $('#checkoutDate').text();
+			let days = moment(checkoutDate).diff(moment(checkinDate), 'days');
+			
+			$('#night').text(days);	
+		})
 		// 아코디언 2
 		$(".que2").click(function() {
 			$(this).next(".anw2").stop().slideToggle(300);
