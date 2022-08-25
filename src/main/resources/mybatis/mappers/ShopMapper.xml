@@ -70,7 +70,23 @@
 		<if test="mainCategoryNo > 0">
 			AND P.SHOP_MAINCATEGORY_NO = #{mainCategoryNo}
 		</if>
-		ORDER BY P.PRODUCT_UPDATED_DATE DESC
+		<choose>
+			<when test="sort == 'createdDate'">
+				ORDER BY P.PRODUCT_CREATED_DATE DESC
+			</when>
+			<when test="sort == 'updatedDate'">
+				ORDER BY P.PRODUCT_UPDATED_DATE DESC
+			</when>
+			<when test="sort == 'lowPrice'">
+				ORDER BY P.PRODUCT_PRICE ASC
+			</when>
+			<when test="sort == 'highPrice'">
+				ORDER BY P.PRODUCT_PRICE DESC
+			</when>
+			<when test="sort == 'highdiscountRate'">
+				ORDER BY P.PRODUCT_DISCOUNT_RATE DESC
+			</when>
+		</choose>
 	</select>
 
 
