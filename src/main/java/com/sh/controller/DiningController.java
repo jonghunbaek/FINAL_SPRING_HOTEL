@@ -106,9 +106,9 @@ public class DiningController {
 	
 	@GetMapping("/lookUpSeat")
 	@ResponseBody
-	public Map<String, String> lookUpSeat(@DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @RequestParam("diningNo") int diningNo, @RequestParam("seat") String seatType, @RequestParam("adult") int adult, @RequestParam("child") int child, @RequestParam("baby") int baby) {
+	public List<String> lookUpSeat(@DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @RequestParam("diningNo") int diningNo, @RequestParam("seat") String seatType, @RequestParam("adult") int adult, @RequestParam("child") int child, @RequestParam("baby") int baby) {
 		
-		Map<String, String> seatImPossible = diningService.lookUpSeat(date, diningNo, seatType, adult, child, baby);
+		List<String> seatImPossible = diningService.lookUpSeat(date, diningNo, seatType, adult, child, baby);
 		
 		return seatImPossible;
 	}
