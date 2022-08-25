@@ -298,12 +298,7 @@ $("input[name=category]").change(function() {
 });
 
 $("#inquiryform").submit(function() {
-	// 개인정보수집 동의 체크하기
-	let checklength = $("input[type=checkbox][name=clause]:checked").length;
-	if (checklength == 0) {
-		alert("개인정보 수집 및 이용에 대한 동의는 필수입니다.")
-		return false;
-	}	
+	
 	// 제목필드에 값이 있는지 체크하기
 	if ($(":input[name=title]").val() === "") {
 		alert("제목은 필수 입력값입니다.");
@@ -337,6 +332,12 @@ $("#inquiryform").submit(function() {
 		alert("휴대전화는 필수 입력값입니다.");
 		return false;
 	}
+	// 개인정보수집 동의 체크하기
+	let checklength = $("input[type=checkbox][name=clause]:checked").length;
+	if (checklength == 0) {
+		alert("개인정보 수집 및 이용에 대한 동의는 필수입니다.")
+		return false;
+	}	
 	
 	//구글 reCAPTCHA 
 	let captcha = 1;

@@ -45,13 +45,19 @@ public class InquiryService {
 		int totalRows = inquiryMapper.getQnaTotalRowsByUserNo(no);
 		return totalRows;
 	}
+	
+	public int getTotalRowsByFilter(QnaCriteria criteria) {
+		int totalRows = inquiryMapper.getQnaTotalRowsByFilter(criteria);
+		return totalRows;
+	}
 		
-	/** 
+	/** 필터 적용 문의사항 조회
 	 * @param qnaCriteria
 	 * @return
 	 */
-	public List<Qna> searchQna(QnaCriteria qnaCriteria) {
-		return inquiryMapper.getInquiryByCriteria(qnaCriteria);
+	public List<Qna> getQnaByFilter(QnaCriteria qnaCriteria) {
+		List<Qna> inquiries = inquiryMapper.getInquiryByCriteria(qnaCriteria);
+		return inquiries;
 	}
 	
 	/** 모든 문의사항 카테고리 조회

@@ -37,6 +37,7 @@ public class InquiryController {
 	 * @param model
 	 * @return
 	 */
+	
 	@GetMapping(path = "/inquiryForm")
 	public String inquiryForm(@LoginUser User loginUser, Model model) {
 		if (loginUser != null) {
@@ -81,32 +82,40 @@ public class InquiryController {
 	 * @return
 	 */
 	@GetMapping(path = "/list")
-	public String inquiryList(@LoginUser User loginUser,
-			@RequestParam(name = "page", required = false, defaultValue = "1") String pageNo, Model model) {
+	public String inquiryList(@LoginUser User loginUser, Model model,
+							  @RequestParam(name = "page", required = false, defaultValue = "1") String pageNo, 
+							  @RequestParam(name = "state", required = false, defaultValue = "") String state,
+							  @RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
+							  @RequestParam(name = "search", required = false, defaultValue = "") String search) {
+		
 		if (loginUser == null) {
 			return "redirect:/login?fail=deny";
 		}
-
-		int totalRows = inquiryService.getTotalRowsByUserNo(loginUser.getNo());
+		
+		QnaCriteria criteria = new QnaCriteria();
+		criteria.setUserNo(loginUser.getNo());
+		criteria.setPage(pageNo);
+		criteria.setState(state);
+		criteria.setKeyword(keyword);
+		criteria.setSearch(search);
+		
+		int totalRows = inquiryService.getTotalRowsByFilter(criteria);
 		Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
-		List<Qna> inquiries = inquiryService.getAllQnaByUserNo(pagination, loginUser.getNo());
+		criteria.setPagination(pagination);
+		
+		List<Qna> inquiries = inquiryService.getQnaByFilter(criteria);
+		System.out.println(loginUser.getNo());
+		System.out.println(totalRows);
+		System.out.println(criteria);
+		//int totalRows = inquiryService.getTotalRowsByUserNo(loginUser.getNo());
+		//Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
+		//List<Qna> inquiries = inquiryService.getAllQnaByUserNo(pagination, loginUser.getNo());
 
+		model.addAttribute("criteria", criteria);
 		model.addAttribute("inquiries", inquiries);
 		model.addAttribute("pagination", pagination);
 
 		return "inquiry/list";
-	}
-
-	/**
-	 * 필터적용
-	 * 
-	 * @param qnaCriteria
-	 * @return
-	 */
-	@GetMapping("/search")
-	@ResponseBody
-	public List<Qna> search(QnaCriteria qnaCriteria) {
-		return inquiryService.searchQna(qnaCriteria);
 	}
 
 	/**
