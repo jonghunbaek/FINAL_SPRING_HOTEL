@@ -113,7 +113,8 @@
 				</div>
 				<div id="div-tableBox">
 					<div id="div-hTitle">
-						<h6>스프링 샵 - 주문내역</h6>
+						<h6 style="float:left;">스프링 샵 - 주문내역</h6>
+						<span style="float:right;">※ 상품정보를 클릭하면 상세정보로 이동할 수 있습니다.</span>
 					</div>
 					<div class="mt-2"><span>Total : ${itemSize}</span></div>
 					<div class="mt-3" id="div-table">
@@ -147,9 +148,9 @@
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="orderItem" items="${orderItems }">
-										<tr>
+										<tr id="table-tr-${orderItem.product.no }" data-no="${orderItem.product.no }" onclick="moveQnaDetail(this);" onmouseover="mouseOver(this);" onmouseout="mouseOut(this);">
 											<td>${orderItem.shopOrder.no }</td>
-											<td>${orderItem.product.name }</td>
+											<td><a href="/shop/detail?no=${orderItem.product.no }">${orderItem.product.name }</a></td>
 											<td>${orderItem.quantity }</td>
 											<td>${orderItem.product.price } 원</td>
 											<td>
@@ -190,7 +191,7 @@
 	// 주문 취소
 	function cancleOrder(item) {
 		let orderNo = item.value;
-		if (confirm("함께 주문한 다른 상품들도 같이 취소됩니다. \n 주문을 취소하시겠습니까?") == true) {
+		if (confirm("함께 주문한 다른 상품들도 같이 취소됩니다. \n\n주문을 취소하시겠습니까?") == true) {
 			alert("주문을 취소합니다.");
 			location.href = "/user/cancleOrder?orderNo="+orderNo;
 		} else {
@@ -201,7 +202,7 @@
 	// 재주문 
 	function reorder(item) {
 		let orderNo = item.value;
-		if (confirm("함께 주문한 다른 상품들도 같이 주문됩니다. \n 주문 하시겠습니까?") == true) {
+		if (confirm("함께 주문한 다른 상품들도 같이 주문됩니다. \n\n주문 하시겠습니까?") == true) {
 			alert("상품을 주문합니다.");
 			location.href = "/user/reorder?orderNo="+orderNo;
 		} else {
@@ -212,12 +213,26 @@
 	// 주문내역 삭제 
 	function deleteOrder(item) {
 		let orderNo = item.value;
-		if (confirm("함께 주문한 다른 상품들도 같이 삭제됩니다. \n 삭제 하시겠습니까?") == true) {
+		if (confirm("함께 주문한 다른 상품들도 같이 삭제됩니다. \n\n삭제 하시겠습니까?") == true) {
 			alert("주문내역을 삭제합니다.");
 			location.href = "/user/deleteOrder?orderNo="+orderNo;
 		} else {
 			return false;
 		}
+	}
+	
+	// 마우스 이벤트
+	function mouseOver(data) {
+		let no = data.getAttribute('data-no');
+	 	let select = document.querySelector('#table-tr-' + no);
+	 	select.style.backgroundColor = 'rgb(240,240,240)';
+	}
+	
+	// 마우스 이벤트
+	function mouseOut(data) {
+		let no = data.getAttribute('data-no');
+	 	let select = document.querySelector('#table-tr-' + no);
+	 	select.style.backgroundColor = '';
 	}
 	
 </script>

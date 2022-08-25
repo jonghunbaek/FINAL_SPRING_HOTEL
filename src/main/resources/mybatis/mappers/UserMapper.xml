@@ -333,7 +333,7 @@
 	</resultMap>
 	<!-- 해당회원의 스프링 샵 구매내역 -->
 	<select id="getOrderItemsByUserNo" parameterType="int" resultMap="ShopOrderItemResultMap">
-		select o.order_no, p.product_name, i.order_item_quantity, p.product_price, o.order_status, o.order_created_date, o.order_deleted
+		select o.order_no, p.product_name, i.order_item_quantity, p.product_price, o.order_status, o.order_created_date, o.order_deleted, i.product_no
 		from sh_shop_order o, sh_shop_order_items i, sh_shop_product p
 		where o.order_no = i.order_no
 		and i.product_no = p.product_no
