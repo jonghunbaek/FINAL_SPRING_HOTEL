@@ -340,8 +340,8 @@
 								<div class="rev-room-list">
 									<ul class="rev-room-list-ul">
 										<!-- 룸 박스 1 -->
-										<li class="room-first" style="display: block;"><c:forEach
-												var="room" items="${rooms }">
+										<li class="room-first" style="display: block;">
+										<c:forEach var="room" items="${rooms }">
 												<dl class="room-info"
 													style="border-bottom: 1px dotted #80808030; padding: 20px;">
 													<!-- 사진/내용/가격/버튼 포함 -->

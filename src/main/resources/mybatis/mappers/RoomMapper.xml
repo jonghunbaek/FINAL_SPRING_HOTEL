@@ -43,14 +43,14 @@
 	
 	<!-- RoomCategory getRoomCategoryByNo(int no); -->
 	<select id="getRoomCategoryByNo" parameterType="int" resultType="RoomCategory">
-		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		select room_category_no as roomCategory, room_category_name as name, category_no as category, room_group_no as roomGroupNo
 		from sh_room_category
 		where room_category_no = #{value}
 	</select>
 	
-	<!-- List<RoomCategory> getAllRoomCategories(); -->
+	<!-- List<RoomCategory> getAllRoomCategories(); dd-->
 	<select id="getAllRoomCategories" resultType="RoomCategory">
-		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		select room_category_no as roomCategory, room_category_name as name, category_no as category, room_group_no as roomGroupNo
 		from sh_room_category
 		where room_group_no is not null
 		order by room_category_no asc
@@ -63,7 +63,7 @@
 	where rowid in(select min(rowid) from sh_room group by room_name)
 	</select>
 	
-	<!-- List<Location> getAllLocations(); -->
+	<!-- List<Location> getAllLocations(); dd-->
 	<select id="getAllLocations" resultType="Location">
 		select 
 			location_no as no,
@@ -115,8 +115,8 @@
 	</select>
 	
 	<!-- 객실 유형별 객실 정보 -->
-	<!-- Room getRoomByRoomCategoryNo(int no); -->
-	<select id="getRoomByRoomCategoryNo" parameterType="int" resultMap="RoomResultMap">
+	<!-- Room getRoomByRoomCategoryNo(int roomCategory); dd-->
+	<select id="getRoomByRoomCategoryNo" parameterType="int" resultMap="RoomDetailResultMap">
 		select *
 		from sh_room
 		where room_category_no = #{value}
@@ -130,12 +130,11 @@
 		order by room_category_no asc
 	</select>
 	
-	<!-- 객실별 어메니티 --> 
-	<!-- RoomAmenity getRoomAmenityByRoomCategoryNo(int no); -->
-	<select id="getRoomAmenityByCategoryNo" parameterType="int" resultType="RoomAmenity">
+	<!-- List<RoomAmenity> getAllRoomAmenities(int roomCategoryNo); -->
+	<select id="getAllRoomAmenitiesByRoomCategoryNo" parameterType="int" resultType="RoomAmenity">
 		select amenity_type as type, amenity_description as description, room_category_no as roomCategory
 		from sh_room_amenity
-		where room_category_no = #{value}
+		order by room_category_no asc
 	</select>
 	
 	<!-- 모든 객실 detail -->
@@ -143,27 +142,34 @@
 	<select id="getAllRoomInfo" resultType="RoomInfo">
 		select room_info_detail_image as image, room_info_room as room, 
 				room_info_etc as etc, room_info_service as service, room_info_side as side, 
-				room_category_no as roomCategory
+				room_category_no as roomCategory, room_image as roomImage
 		from  sh_room_info
 		order by room_category_no asc
 	</select>
 	
 	<!-- 객실 그룹번호로 모든 객실 카테고리 조회  -->
-	<!-- List<RoomCategory> getRoomCategoryNameByRoomGroupNo(int no); -->
+	<!-- List<RoomCategory> getRoomCategoryNameByRoomGroupNo(int roomGroupNo); dd-->
 	<select id="getRoomCategoryNameByRoomGroupNo" parameterType="int" resultType="RoomCategory">
-		select room_category_no as no, room_category_name as name, room_group_no as roomGroupNo, category_no as category
+		select room_category_no as roomCategory, room_category_name as name, room_group_no as roomGroupNo, category_no as category
 		from sh_room_category
 		where room_group_no = #{value}
 	</select>
+	
+	<!-- List인 애들 Detail  dd -->
+	<resultMap type="Room" id="RoomDetailResultMap" extends="RoomResultMap">
+		<collection property="roomCategories" column="room_category_no" select="com.sh.mapper.RoomMapper.getRoomCategoryByNo"></collection>
+		<collection property="amenities" column="room_category_no" select="com.sh.mapper.RoomMapper.getRoomInfoByRoomCategory"></collection>
+		<collection property="roomInfo" column="room_category_no" select="com.sh.mapper.RoomMapper.getRoomInfoByRoomCategory"></collection>
+	</resultMap>
 	
 	<!-- 객실별 detail -->
 	<!-- RoomInfo getRoomInfoByRoomCategoryNo(int no); -->
 	<select id="getRoomInfoByRoomCategoryNo" parameterType="int" resultType="RoomInfo">
 		select room_info_detail_image as image, room_info_room as room, 
 				room_info_etc as etc, room_info_service as service, room_info_side as side, 
-				room_category_no as roomCategory
+				room_category_no as roomCategory, room_image as roomImage
 		from  sh_room_info 
-        where i.room_category_no = #{value}
+        where room_category_no = #{value}
 	</select>
 	
 	<!-- 모든 룸 옵션 - 조식, 엑스트라 베드 -->
@@ -172,6 +178,15 @@
 		select room_option_no as no, room_option_name as name, room_option_price as price
 		from sh_room_options
 		order by room_option_no asc
+	</select>
+	
+	<!-- List<RoomInfo> getRoomInfoByRoomCategory(int roomCategoryNo); dd -->
+	<select id="getRoomInfoByRoomCategory" parameterType="int" resultType="RoomInfo">
+		select room_info_detail_image as image, room_info_room as room, 
+				room_info_etc as etc, room_info_service as service, room_info_side as side, 
+				room_category_no as roomCategory, room_image as roomImage
+		from  sh_room_info 
+		where room_category_no = #{value}
 	</select>
 	
 	<!-- 객실별 룸 옵션 - id로 받아 roomNo은 중복일 수 있다  -->
@@ -211,12 +226,15 @@
 	</select>
 	
 	
-	<!-- RoomCategory getRoomCategoryByGroupNo(int roomGroupNo); -->
+
+	<!-- RoomCategory getRoomCategoryByGroupNo(int roomGroupNo);  dd-->
+
 	<select id="getRoomCategoryByGroupNo" parameterType="int">
-		select room_category_no as no, room_category_name as name, category_no as category, room_group_no as roomGroupNo
+		select room_category_no as roomCategory, room_category_name as name, category_no as category, room_group_no as roomGroupNo
 		from sh_room_category
 		where room_group_no = #{value}
 	</select>
+	
 	<resultMap type="RoomRev" id="RoomRevResultMap">
 		<id column="room_rev_no" property="no"/>
 		<result column="room_rev_adult" property="adult"/>

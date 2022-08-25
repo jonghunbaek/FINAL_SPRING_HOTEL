@@ -187,7 +187,7 @@ select[name=cardSort] {width:365px; height:70%;}
 						<p>연락처(휴대전화) &nbsp;&nbsp;<span class="important">*</span></p>
 					</div>
 					<div class="col-9">
-						<input type="text" name="tel" placeholder="-없이 숫자만 입력"/>
+						<input type="tel" name="tel" placeholder="-없이 숫자만 입력"/>
 						<a href="#"><img id="btn-double-check" src="../resources/images/dining/btn-doubleCheck.png"/></a>
 					</div>
 				</div>
@@ -330,10 +330,56 @@ select[name=cardSort] {width:365px; height:70%;}
 	</form>
 </div>
 
+<div class="modal" tabindex="-1" id="modal-tel-check" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="exampleModalLabel">온라인 예약가능 안내</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+     	<h5>온라인 예약이 가능합니다.</h5>
+     	<p>※ 동일 날짜의 동일 시간대에 온라인과 유선으로 예약한 내역이 중복으로 확인될 경우 단 건으로 처리될 수 있습니다.</p>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+        <form id="form-delete-Rev" method="post" action="/dining/deleteRev">
+        	<input type="hidden" name="rtRevNo">
+        	<input type="hidden" name="name">
+        	<input type="hidden" name="seatType">
+        	<input type="hidden" name="mealTime">
+        	<input type="hidden" name="revCount">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <%@ include file="../common/footer.jsp" %>
 <script type="text/javascript">
 $(function(){
 	
+
+	let telCheckModal = new bootstrap.Modal(document.getElementById("modal-tel-check"));
+	
+	//예약취소 모달창 오픈
+	$("#btn-double-check").click(function(){
+		if($(":input[name=tel]").val().length < 11){
+			console.log($(":input[name=tel]").val().length)
+			alert("유효한 전화번호가 아닙니다.")
+			return false;
+		} else if($(":input[name=tel]").val().length > 11) {
+			console.log($(":input[name=tel]").val().length)
+			alert("유효한 전화번호가 아닙니다.")
+			return false;
+		} else {
+			telCheckModal.show();
+		}
+		
+		
+	})
+
 	/* if($(":input[name=tel]").prop('disabled', true)){
 		$(":input[name=tel]").css("width","365px");
 	} */

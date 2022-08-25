@@ -3,6 +3,7 @@ package com.sh.service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -132,29 +133,31 @@ public class DiningService {
 	}
 	
 	// 잔여좌석 조회 결과
-	public Map<String, String> lookUpSeat(Date date, int diningNo, String seatType, int adult, int child, int baby){
+	public List<String> lookUpSeat(Date date, int diningNo, String seatType, int adult, int child, int baby){
 		
-		Map<String, String> result = new HashMap<>();
 		int totalCount = adult + child + baby;
 		int totalSeat = 0;
+		int totalRoom = 0;
 		List<DnSeatCountOfDate> seatCountList = diningMapper.getDnSeatCountOfDate(diningNo, date, seatType);
 		
-		if(seatType.equals("table")) {
-			totalSeat = diningMapper.getTotalSeatByNo(diningNo);
-			for(DnSeatCountOfDate seatCount : seatCountList) {
+		List<String> mealTime = new ArrayList<>();
+		
+
+		for(DnSeatCountOfDate seatCount : seatCountList) {
+			if(seatType.equals("table")) {
+				totalSeat = diningMapper.getTotalSeatByNo(diningNo);
 				if((totalSeat -(totalCount + seatCount.getCount()))< 0) {
-					result.put("mealTime", seatCount.getMealTime());
+					mealTime.add(seatCount.getMealTime());
 				}
-			}
-		} else {
-			totalSeat = diningMapper.getTotalRoomByNo(diningNo);
-			for(DnSeatCountOfDate seatCount : seatCountList) {
-				if((totalSeat -(1 + seatCount.getCount()))< 0) {
-					result.put("mealTime", seatCount.getMealTime());
+			} else {
+				totalRoom = diningMapper.getTotalRoomByNo(diningNo);
+				if((totalRoom -(1 + seatCount.getCount()))< 0) {
+					mealTime.add(seatCount.getMealTime());
 				}
 			}
 		}
-		return result;
+		
+		return mealTime;
 	} 
 	/**
 	 * 비회원 예약조회

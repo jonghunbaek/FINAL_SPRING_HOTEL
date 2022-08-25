@@ -19,4 +19,10 @@ public class RoomInfo {
 	private String service;
 	private String side;
 	private RoomCategory roomCategory;
+	private String roomImage;
+	
+	
+	public String[] getRoomImages(){
+		return roomImage.split(" ");
+	}
 }

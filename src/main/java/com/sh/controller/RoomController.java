@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.sh.mapper.RoomMapper;
 import com.sh.service.RoomService;
 import com.sh.vo.Room;
 import com.sh.vo.RoomAmenity;
@@ -37,19 +38,22 @@ public class RoomController {
 //객실 메인페이지 
 	@GetMapping(path="/roomHome")
 	public String home(Model model) {
-		List<Room> rooms = roomService.getAllRooms();
-		model.addAttribute("room", rooms);
+
+		
+		model.addAttribute("roomCategories", roomService.getAllRoomCategories());
+		model.addAttribute("rooms", roomService.getAllRooms());
+
 		return "room/roomHome";
 	}
 
 //객실 상세페이지
 	@GetMapping(path="/roomDetail")
-//	public String detail(Model model, int no, int roomGroupNo) {
-	public String detail() {
-//		Room room = roomService.getRoomByRoomCategoryNo(no);
-//		RoomCategory roomCat = roomService.getRoomCategoryByGroupNo(roomGroupNo);
-//		model.addAttribute("room", room);
-//		model.addAttribute("roomCategory", roomCat);
+
+	public String detail(@RequestParam("categoryNo") int roomCategoryNo, Model model ) {
+//	public String detail( ) {
+		Room room = roomService.getRoomDetail(roomCategoryNo);
+		model.addAttribute("room", room);
+
 		return "room/roomDetail";
 	}
 	
