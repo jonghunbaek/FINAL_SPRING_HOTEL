@@ -22,9 +22,6 @@ public class AdminQnaService {
 	public void updateAnswer(Qna qna) {
 		qna.setUpdatedDate(new Date());
 		qna.setAnswerState("Y");
-		System.out.println();
-		System.out.println(qna);
-		System.out.println();
 		inquiryMapper.updateAnswer(qna);
 	}
 
@@ -36,10 +33,13 @@ public class AdminQnaService {
 	public void deleteAnswer(Qna qna) {
 		qna.setAnswerContent(null);
 		qna.setAnswerState("N");
-		System.out.println();
-		System.out.println(qna);
-		System.out.println();
 		inquiryMapper.updateAnswer(qna);
 	}
 
+	/** 문의내역 삭제
+	 * @param qna
+	 */
+	public void deleteInquiry(Qna qna) {
+		inquiryMapper.deleteInquiry(qna);
+	}
 }

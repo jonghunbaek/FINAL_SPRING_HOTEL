@@ -283,6 +283,57 @@
 		</p>
 		<!-- 조건설정하는 헤드부분 -->
 		<div class="row" id="title">
+			<div class="col-11">
+			</div>
+			<div class="col-1 dropdown" id="filter">
+			  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
+			    <i class="bi bi-gear"></i>
+			  </button>
+			  <input type="hidden" name="page" />
+			  <form class="dropdown-menu" aria-labelledby="dropdownMenuClickableOutside" id="filter-room-form" style="width: 320%; height:550%;">
+			  	<div class="row" id="filter-title">문의 필터</div><hr/>
+			  	<div class="row justify-content-center gy-1 px-3" id="filter-first">
+			  		<div class="col" id="filter-first-1">
+				  		<label for="state-field" class="form-label">답변상태</label>
+					  	<select class="form-select form-select-sm" name="answerState">
+					  		<option value="" selected>모두보기</option>
+							<option value="N">답변대기</option>
+							<option value="Y">답변완료</option>
+						</select>
+			  		</div>
+			  		<div class="col" id="filter-first-2">
+						<label for="user-field" class="form-label">회원/비회원</label>
+						<select class="form-select form-select-sm" name="belogin">
+							<option value="" selected>모두보기</option>
+							<option value="" >회원</option>
+							<option value="">비회원</option>
+						</select>
+					</div>
+			  	</div><hr/>
+			  	<div class="row justify-content-center gy-1 px-3" id="filter-third">
+			  		<div class="col-4" id="filter-third-3">
+			  			<label for="checkout-field" class="form-label">검색조건</label>
+			  			<select class="form-select form-select-sm" name="search">
+							<option value="titleContent" selected>제목+내용</option>
+							<option value="name">작성자</option>
+						</select>
+			  		</div>
+			  		<div class="col-8" id="filter-third-3" id="searchBox" style="vertical-align:middle;">
+			  			<label for="checkout-field" class="form-label">검색내용</label>
+						<input class="form-control" type="tdext" name="keyword" value="${criteria.keyword}" placeholder="검색어를 입력해주세요">
+					</div>
+			  	</div><hr/>
+		  		<div class="row justify-content-center px-3">
+		  			<div class="col-3">
+			  			<button type="button" class="btn setting" id="btn-setting">적용</button>
+		  			</div>
+		  			<div class="col-6"></div>
+		  			<div class="col-3">
+			  			<button type="reset" class="btn setting" id="btn-reset" style="position:relative; right:10px;">초기화</button>
+		  			</div>
+		  		</div>
+			  </form>
+			</div>
 		</div>
 		<!-- 테이블 시작 -->
 		<div class="row">

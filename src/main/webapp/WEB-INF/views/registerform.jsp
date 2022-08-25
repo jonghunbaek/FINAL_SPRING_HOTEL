@@ -22,7 +22,6 @@
 <%@ include file="common/nav.jsp"%>
 <div class="container" id="container">
 		<div class="registerBox contents" id="contents">
-		
 		 	<!-- 약관동의 -->
 			<div class="terms" style="display:none">
 				<div class="location rgt">
@@ -134,7 +133,7 @@
 					<form:password path="password"/>
 					<span id="ex">비밀번호입력안내 8~20자 이내 영문/숫자 조합(특수문자 입력가능)</span><br>
 					<form:errors path="password" class="text-danger small fst-italic"></form:errors>
-				</li>
+				</li>  
 				<li class="end">
 					<label class="required">비밀번호 확인</label>
 					<input type="password" name="passwordCheck" id="passwordCheck"/>

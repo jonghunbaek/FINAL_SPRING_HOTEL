@@ -53,12 +53,12 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-					<form id="filter-inquiry" method="get" action="inquiry/list">
+					<form id="filter-inquiry" name="filter-inquiry" method="get" action="list">
 					<input type="hidden" name="page" value="${page}" />
-					<select name="state" class="m-2 float-end" onchange="changeStatus()">
-						<option value="" ${''.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">모두보기</option>
-						<option value="N" ${'N'.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">답변대기</option>
-						<option value="Y" ${'Y'.equals(answerState) ? 'selected' : '' } data-tag="${answerState}">답변완료</option>
+					<select name="state" class="m-2 float-end" onchange="changeFilter()">
+						<option value="" ${''.equals(criteria.state) ? 'selected' : '' } data-tag="${answerState}">모두보기</option>
+						<option value="N" ${'N'.equals(criteria.state) ? 'selected' : '' } data-tag="${answerState}">답변대기</option>
+						<option value="Y" ${'Y'.equals(criteria.state) ? 'selected' : '' } data-tag="${answerState}">답변완료</option>
 					</select>
 					<div class="inquiryList">
 							<table class="table">
@@ -99,22 +99,22 @@
 				<nav aria-label="Page navigation">
 				  <ul class="pagination pagination-sm" >
 				    <li class="page-item ${pagination.currentPage eq '1' ? 'disabled' : ''}">
-				      <a class="page-link" href="list?page=${pagination.currentPage - 1 }" aria-label="Previous">
+				      <a class="page-link" href="javascript:clickPageNo(${pagination.currentPage - 1 })" aria-label="Previous">
 				        <span aria-hidden="true">이전</span>
 				      </a>
 				    </li>
 				    <c:forEach var="pageNo" begin="${pagination.beginPage}" end="${pagination.endPage}">
-				    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" data-tag="${pageNo}"><a class="page-link" href="/inquiry/list?page=${pageNo}">${pageNo}</a></li>
+				    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" data-tag="${pageNo}"><a class="page-link" href="javascript:clickPageNo(${pageNo})">${pageNo}</a></li>
 				    </c:forEach>
 				    <li class="page-item">
-				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="list?page=${pagination.currentPage + 1 }" aria-label="Next">
+				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="javascript:clickPageNo(${pagination.currentPage + 1 })" aria-label="Next">
 				        <span aria-hidden="true">다음</span>
 				      </a>
 				    </li>
 				  </ul>
 				  <ul class="search float-end">
-					<input type="text" name="keyword" value="${keyword}" placeholder="검색어를 입력해주세요">
-					<button type="button" class="searchBtn" style="height:30px; width:60px;" onclick="searchInquiry()">검색</button>
+					<input type="text" name="keyword" value="${criteria.keyword}" placeholder="검색어를 입력해주세요">
+					<button type="button" class="searchBtn" style="height:30px; width:60px;" onclick="changeFilter()">검색</button>
 				  </ul> 
 				</nav>
 				</div>
@@ -131,11 +131,15 @@
 $(function() {
 		document.querySelector('#container').style.height = "600px";
 		
-	function changeStatus() {
-		document.querySelector("input[name=page]").value =1;
-		document.querySelector("input[name=state]").value = document.querySelector("select[name=state]").value;
-		document.getElementById("filter-inquiry").submit();
-	}
 });
+function changeFilter() {
+	document.querySelector("input[name=page]").value =1;
+	document.getElementById("filter-inquiry").submit();
+};
+
+function clickPageNo(pageNo) {
+	document.querySelector("input[name=page]").value = pageNo;
+	document.getElementById("filter-inquiry").submit();
+}
 </script>
 </html>

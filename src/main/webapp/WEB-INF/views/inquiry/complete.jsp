@@ -37,7 +37,8 @@
 			<div class="info">
 					<p>※ 작성하신 이메일로 답변을 보내드립니다.</p>
 				</div>
+	</div>
 </div>
-<%@ include file="../common/footer.jsp"%>
 </body>
+<%@ include file="../common/footer.jsp"%>
 </html>

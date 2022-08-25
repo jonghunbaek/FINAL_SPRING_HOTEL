@@ -41,27 +41,31 @@
 	</select>
 	
 	<!-- int getQnaTotalRowsByFilter(QnaCriteria qnaCriteria); -->
-	<!--<select id="getQnaTotalRowsByFilter" parameterType="QnaCriteria" resultType="int">
+	<select id="getQnaTotalRowsByFilter" parameterType="QnaCriteria" resultType="int">
 		select count(*)
 		from sh_qna
-		<where>
+		<where> qna_deleted ='N'
+			<if test='userNo != null'>
+			    and user_no = #{userNo}
+			</if>
 			<if test='search == "name"'>
-				user_no in (select user_no
+				and user_no in (select user_no
 		                    from sh_users
 		                    where user_name like '%'||#{keyword}||'%')
 			</if>
-			<if test='search == "title"'>
-				and qna_title like '%'||#{keyword}||'%' 
+			<if test='search != "name"'>
+				and (qna_title like '%'||#{keyword}||'%' or qna_content like '%'||#{keyword}||'%')
 			</if>
-			<if test="search != content">
-				or qna_content like '%'||#{keyword}||'%'
-			</if>
-			<if test="answerState != null">
-				and qna_answer_state = #{answerState} 
-			</if>
+			<choose>
+				<when test='state == "Y"'>
+					and qna_answer_state = #{state}
+				</when>
+				<when test='state == "N"'>
+					and qna_answer_state = #{state}
+				</when>
+			</choose>
 		</where>
 	</select>
-	 -->
 	
 	<!-- List<Qna> getAllInquiry(); -->
 	 <select id="getAllInquiry"  parameterType="Pagination" resultMap="inquiryResultMap">
@@ -81,19 +85,40 @@
 			  FROM SH_QNA Q
 			  WHERE QNA_DELETED = 'N'
 			  AND USER_NO = #{userNo})	
-		where ROW_NUMBER &gt;= #{pagination.beginIndex} and ROW_NUMBER &lt;=#{pagination.endIndex}
+		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
 	</select>
 	
 	<!-- List<Qna> getInquiryByCriteria(QnaCriteria qnaCriteria); -->
-	<!-- <select id="getInquiryByCriteria" parameterType="QnaCriteria" resultMap="inquiryResultMap">
+	 <select id="getInquiryByCriteria" parameterType="QnaCriteria" resultMap="inquiryResultMap">
 		select *
 		from (SELECT Q.*,
       		  ROW_NUMBER() OVER (ORDER BY QNA_NO DESC) ROW_NUMBER
 			  FROM SH_QNA Q
-			  WHERE QNA_DELETED = 'N' 
-			  AND WHERE USER_NO = #{userNo})	
-		where ROW_NUMBER &gt;= #{beginIndex} and ROW_NUMBER &lt;=#{endIndex}
-	</select> -->
+			<where> QNA_DELETED = 'N'
+				<if test='userNo != null'>
+			        and user_no = #{userNo}
+				</if>
+				<if test='search == "name"'>
+					and user_no in (select user_no
+			                    from sh_users
+			                    where user_name like '%'||#{keyword}||'%')
+				</if>
+				<if test='search != "name"'>
+					and (qna_title like '%'||#{keyword}||'%' or qna_content like '%'||#{keyword}||'%')
+				</if>
+				<choose>
+					<when test='state == "Y"'>
+						and qna_answer_state = #{state}
+					</when>
+					<when test='state == "N"'>
+						and qna_answer_state = #{state}
+					</when>
+				</choose>
+			</where>)
+			<where>
+			 ROW_NUMBER &gt;= #{pagination.beginIndex} and ROW_NUMBER &lt;=#{pagination.endIndex}
+			</where>
+	</select>
 	
 	<!-- Qna getInquiryByNo(int no); -->
 	<select id="getInquiryByNo" parameterType="int" resultMap="inquiryResultMap">

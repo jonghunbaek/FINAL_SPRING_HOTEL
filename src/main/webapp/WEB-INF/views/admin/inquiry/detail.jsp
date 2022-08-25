@@ -358,11 +358,30 @@
 					<button type="button" class="btn btn-inquiry" onclick="location.href='/admin/modify?no=${inquiry.no}'">답변수정</button>
 					<button type="button" class="btn btn-inquiry" onclick="location.href='/admin/delete?no=${inquiry.no}'">답변내역 삭제</button>
 					</c:if>
+					<button type="button" class="btn btn-inquiry" data-bs-toggle="modal"
+							data-bs-target="#deleteCheck">문의내역 삭제</button>
 					<button style="float:right" type="button" class="btn btn-inquiry" onclick="location.href='/admin/inquiry'">목록</button>
 				</div>
 			</div>
 		</div>
 		
+		<!-- deleteCheckModal -->
+		<div class="modal fade" id="deleteCheck" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<p style="color:black;">문의내역을 삭제하시겠습니까?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-inquiry"
+							onclick="location.href='/admin/inquiryDelete?no=${inquiry.no}'">확인</button>
+						<button type="button" class="btn btn-inquiry"
+							 data-bs-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 

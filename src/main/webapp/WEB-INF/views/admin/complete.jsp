@@ -17,7 +17,7 @@
 <body>
 <c:set var="menu" value="main"/>
 <%@ include file="common/nav.jsp" %>
-<div class="container">
+<div class="container-fluid" id="container">
 	<div class="row mb-3">
         <div class="col">
             <div class="border p-3 bg-light">

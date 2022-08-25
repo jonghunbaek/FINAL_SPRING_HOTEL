@@ -21,8 +21,8 @@
 <c:set var="menu" value="home" />
 <%@ include file="common/nav.jsp"%>
 <div class="container" id="container">
-<div class="registerBox contents" id="contents">
-	        <!-- 회원가입 헤더 -->
+		<div class="loginBox contents" id="contents">
+	        <!-- 회원가입 헤더 --> 
 			<div class="location rgt">
 				<p class="list">
 					<span class="crPosit"></span> &gt; <strong>가입완료</strong>
@@ -36,7 +36,8 @@
 				</h1>
 			<div class="info">
 					<p>※ 로그인하여 회원만을 위한 다양한 서비스와 혜택을 즐겨보세요.</p>
-				</div>
+			</div>
+	</div>
 </div>
 <%@ include file="common/footer.jsp"%>
 </body>

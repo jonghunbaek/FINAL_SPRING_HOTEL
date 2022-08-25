@@ -1,5 +1,7 @@
 package com.sh.criteria;
 
+import com.sh.vo.Pagination;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,11 +14,7 @@ public class QnaCriteria {
 	private String search;
 	private String page;
 	private Integer userNo;
-	private String answerState;
+	private String state;
 	private String keyword;
-	private String sort;
-	private String rows;
-	
-	private int beginIndex;			
-	private int endIndex;
+	private Pagination pagination;
 }

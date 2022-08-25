@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sh.annotation.LoginUser;
+import com.sh.criteria.QnaCriteria;
 import com.sh.service.AdminQnaService;
 import com.sh.service.AdminService;
 import com.sh.service.InquiryService;
@@ -36,14 +37,36 @@ public class AdminQnaController {
 	 * @return
 	 */
 	@GetMapping(path = "/inquiry")
-	public String inquiryList(@RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo, Model model) {
+	public String inquiryList(@RequestParam(name = "page" , required = false, defaultValue = "1") String pageNo,
+							  @RequestParam(name = "state", required = false, defaultValue = "") String state,
+							  @RequestParam(name = "keyword", required = false, defaultValue = "") String keyword,
+							  @RequestParam(name = "search", required = false, defaultValue = "") String search,
+							  Model model) {
 		
-		int totalRows = inquiryService.getTotalRows();
+		QnaCriteria criteria = new QnaCriteria();
+		criteria.setPage(pageNo);
+		criteria.setState(state);
+		criteria.setKeyword(keyword);
+		criteria.setSearch(search);
+		
+		int totalRows = inquiryService.getTotalRowsByFilter(criteria);
 		Pagination pagination = new Pagination(totalRows, Integer.parseInt(pageNo));
-		List<Qna> inquiries = inquiryService.getAllQna(pagination);
+		criteria.setPagination(pagination);
+		List<Qna> inquiries = inquiryService.getQnaByFilter(criteria);
 		
-		model.addAttribute("inquiries",inquiries);
-		model.addAttribute("pagination",pagination);
+		System.out.println(totalRows);
+		System.out.println(pagination);
+		System.out.println(criteria);
+		
+		/*
+		 * int totalRows = inquiryService.getTotalRows(); Pagination pagination = new
+		 * Pagination(totalRows, Integer.parseInt(pageNo)); List<Qna> inquiries =
+		 * inquiryService.getAllQna(pagination);
+		 */
+		
+		model.addAttribute("criteria", criteria);
+		model.addAttribute("inquiries", inquiries);
+		model.addAttribute("pagination", pagination);
 		
 		return "/admin/inquiry/inquiry";
 	}
@@ -113,5 +136,15 @@ public class AdminQnaController {
 	public String deleteAnswer(Qna qna) {
 		adminQnaService.deleteAnswer(qna);
 		return "redirect:/admin/detail?no="+qna.getNo();
+	}
+	
+	/** 문의내역 삭제
+	 * @param qna
+	 * @return
+	 */
+	@GetMapping(path="/inquiryDelete")
+	public String deleteInquiry(Qna qna) {
+		adminQnaService.deleteInquiry(qna);
+		return "redirect:/admin/inquiry";
 	}
 }
