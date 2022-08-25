@@ -42,6 +42,7 @@
 
 #date-choice img{width: 100px; height: 30px;}
 
+
 #visit-div{border: 5px solid #f1e3c4; padding:10px; margin-top: 50px; margin-left:10px; background:#FFFFFB;}
 
 #datepicker{margin-left: 130px;margin-bottom: 50px;}

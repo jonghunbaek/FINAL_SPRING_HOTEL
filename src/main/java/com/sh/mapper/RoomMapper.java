@@ -84,10 +84,12 @@ public interface RoomMapper {
 	// 객실 종류 반환 
 	List<String> getRoomCategories();
 	
+
 	List<RoomCategory> getRoomCategoryByRoomGroupNo(int roomGroupNo);
 	
 	List<RoomInfo> getRoomInfoByRoomCategory(int roomCategoryNo);
 	RoomCategory getRoomCategoryByGroupNo(int roomGroupNo);
 	
 	List<RoomAmenity> getAllRoomAmenitiesByRoomCategoryNo(int roomCategoryNo);
+
 }

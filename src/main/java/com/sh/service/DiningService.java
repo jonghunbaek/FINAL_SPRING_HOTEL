@@ -24,6 +24,7 @@ import com.sh.vo.DnSeatCountOfDate;
 import com.sh.vo.Location;
 import com.sh.vo.RtRev;
 import com.sh.vo.RtRevCount;
+import com.sh.vo.User;
 import com.sh.web.form.DiningReservationForm;
 
 @Service

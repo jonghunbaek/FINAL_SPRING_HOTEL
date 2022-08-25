@@ -38,20 +38,22 @@ public class RoomController {
 //객실 메인페이지 
 	@GetMapping(path="/roomHome")
 	public String home(Model model) {
+
 		
 		model.addAttribute("roomCategories", roomService.getAllRoomCategories());
 		model.addAttribute("rooms", roomService.getAllRooms());
-		
+
 		return "room/roomHome";
 	}
 
 //객실 상세페이지
 	@GetMapping(path="/roomDetail")
+
 	public String detail(@RequestParam("categoryNo") int roomCategoryNo, Model model ) {
 //	public String detail( ) {
 		Room room = roomService.getRoomDetail(roomCategoryNo);
 		model.addAttribute("room", room);
-		
+
 		return "room/roomDetail";
 	}
 	

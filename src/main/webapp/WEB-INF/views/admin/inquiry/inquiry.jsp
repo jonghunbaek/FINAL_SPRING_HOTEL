@@ -270,7 +270,7 @@
 	}
 }
 </style>
-<title>객실 관리</title>
+<title>고객문의 관리</title>
 </head>
 <body>
 <c:set var="menu" value="roomrev"/>
@@ -289,23 +289,23 @@
 			  <button class="btn dropdown-toggle" type="button" id="dropdownMenuClickableInside" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">
 			    <i class="bi bi-gear"></i>
 			  </button>
-			  <input type="hidden" name="page" />
-			  <form class="dropdown-menu" aria-labelledby="dropdownMenuClickableOutside" id="filter-room-form" style="width: 320%; height:550%;">
+			  <form class="dropdown-menu" aria-labelledby="dropdownMenuClickableOutside" id="filter-inquiry" method="GET" style="width: 320%; height:550%;">
+			  <input type="hidden" name="page" value="${pageNo}"/>
 			  	<div class="row" id="filter-title">문의 필터</div><hr/>
 			  	<div class="row justify-content-center gy-1 px-3" id="filter-first">
 			  		<div class="col" id="filter-first-1">
 				  		<label for="state-field" class="form-label">답변상태</label>
-					  	<select class="form-select form-select-sm" name="answerState">
-					  		<option value="" selected>모두보기</option>
-							<option value="N">답변대기</option>
-							<option value="Y">답변완료</option>
+					  	<select class="form-select form-select-sm" name="state">
+					  		<option value="" ${''.equals(criteria.state) ? 'selected' : '' }>모두보기</option>
+							<option value="N" ${'N'.equals(criteria.state) ? 'selected' : '' }>답변대기</option>
+							<option value="Y" ${'Y'.equals(criteria.state) ? 'selected' : '' }>답변완료</option>
 						</select>
 			  		</div>
 			  		<div class="col" id="filter-first-2">
 						<label for="user-field" class="form-label">회원/비회원</label>
-						<select class="form-select form-select-sm" name="belogin">
+						<select class="form-select form-select-sm">
 							<option value="" selected>모두보기</option>
-							<option value="" >회원</option>
+							<option value="">회원</option>
 							<option value="">비회원</option>
 						</select>
 					</div>
@@ -314,8 +314,8 @@
 			  		<div class="col-4" id="filter-third-3">
 			  			<label for="checkout-field" class="form-label">검색조건</label>
 			  			<select class="form-select form-select-sm" name="search">
-							<option value="titleContent" selected>제목+내용</option>
-							<option value="name">작성자</option>
+							<option value="" ${''.equals(criteria.search) ? 'selected' : '' }>제목+내용</option>
+							<option value="name" ${'name'.equals(criteria.search) ? 'selected' : '' }>작성자</option>
 						</select>
 			  		</div>
 			  		<div class="col-8" id="filter-third-3" id="searchBox" style="vertical-align:middle;">
@@ -325,7 +325,7 @@
 			  	</div><hr/>
 		  		<div class="row justify-content-center px-3">
 		  			<div class="col-3">
-			  			<button type="button" class="btn setting" id="btn-setting">적용</button>
+			  			<button type="submit" class="btn setting" id="btn-setting">적용</button>
 		  			</div>
 		  			<div class="col-6"></div>
 		  			<div class="col-3">
@@ -391,15 +391,16 @@
 				<nav aria-label="Page navigation example">
 				  <ul class="pagination">
 				    <li class="page-item">
-				      <a class="page-link ${pagination.currentPage eq '1' ? 'disabled' : '' }" href="inquiry?page=${pagination.currentPage - 1}" aria-label="Previous">
+				      <a class="page-link ${pagination.currentPage eq '1' ? 'disabled' : '' }" 
+				      	href="javascript:clickPageNo(${pagination.currentPage - 1 })" aria-label="Previous">
 				        <span aria-hidden="true">&laquo;</span>
 				      </a>
 				    </li>
 				    <c:forEach var="pageNo" begin="${pagination.beginPage}" end="${pagination.endPage}">		
-					    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" id="page-${pageNo }" ><a class="page-link" href="inquiry?page=${pageNo }">${pageNo }</a></li>
+					    <li class="page-item ${pagination.currentPage eq pageNo ? 'active' : '' }" id="page-${pageNo }" ><a class="page-link" href="javascript:clickPageNo(${pageNo})">${pageNo }</a></li>
 				    </c:forEach>
 				    <li class="page-item">
-				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="inquiry?page=${pagination.currentPage + 1}" aria-label="Next">
+				      <a class="page-link ${pagination.currentPage eq pagination.totalPages ? 'disabled' : '' }" href="javascript:clickPageNo(${pagination.currentPage + 1 })" aria-label="Next">
 				        <span aria-hidden="true">&raquo;</span>
 				      </a>
 				    </li>
@@ -415,9 +416,15 @@
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/resources/admincss/dashboard.js"></script>
 <script>
-$(function() {
-	
-})
+function changeFilter() {
+	document.querySelector("input[name=page]").value =1;
+	document.getElementById("filter-inquiry").submit();
+};
+
+function clickPageNo(pageNo) {
+	document.querySelector("input[name=page]").value = pageNo;
+	document.getElementById("filter-inquiry").submit();
+}
 </script>
 </body>
 </html>

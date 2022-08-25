@@ -360,6 +360,7 @@ select[name=cardSort] {width:365px; height:70%;}
 <script type="text/javascript">
 $(function(){
 	
+
 	let telCheckModal = new bootstrap.Modal(document.getElementById("modal-tel-check"));
 	
 	//예약취소 모달창 오픈
@@ -378,8 +379,7 @@ $(function(){
 		
 		
 	})
-		
-			
+
 	/* if($(":input[name=tel]").prop('disabled', true)){
 		$(":input[name=tel]").css("width","365px");
 	} */
