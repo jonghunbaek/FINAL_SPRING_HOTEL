@@ -75,6 +75,7 @@ public class DiningController {
 	@GetMapping("/info")
 	@ResponseBody
 	public Dn info(@RequestParam("dining") int diningNo) {
+		System.out.println(diningService.getDiningByNo(diningNo));
 		return diningService.getDiningByNo(diningNo);
 	}
 	
