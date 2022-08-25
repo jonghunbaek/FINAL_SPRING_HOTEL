@@ -42,7 +42,7 @@
 
 #date-choice img{width: 100px; height: 30px;}
 
-#visit-div{border: 5px solid #f1e3c4; padding:10px; margin-top: 50px; margin-left:10px; background:#FCFCFC;}
+#visit-div{border: 5px solid #f1e3c4; padding:10px; margin-top: 50px; margin-left:10px; background:#FFFFFB;}
 
 #datepicker{margin-left: 130px;margin-bottom: 50px;}
 
@@ -133,7 +133,7 @@
 					<input id="input-baby" type="hidden" name="baby"/>
 				</div>
 				<div class="col-1" id="date-choice">
-					<a href="#" id="btn-date-choice"><img src="../resources/images/dining/날짜선택.png"></a>
+					<a href="#" id="btn-date-choice"><img id="img-date-choice" src="../resources/images/dining/btn-date-default.png"></a>
 				</div>
 			</div>
 		</div>
@@ -367,6 +367,13 @@ $(function() {
 	
 	// 테이블 , 룸 변경시
 	$(":radio[name=seat]").change(function(e) {
+		$("#img-date-choice").attr('src', '/resources/images/dining/btn-date-default.png');
+		$("#babyScore").text(0);
+		$(":input[name=adult]").val(0);
+		$("#adultScore").text(0);
+		$(":input[name=child]").val(0);
+		$("#childScore").text(0);
+		$(":input[name=baby]").val(0);
 		if((!$("#date-time-select-form").hasClass('d-none'))){
 			$checkedSeat = $(":radio[name=seat]:checked")
 			if($checkedSeat == 'table'){
@@ -461,6 +468,8 @@ $(function() {
 	// 날짜변경 클릭시
 	$("#datepicker").click(function(){
 		searchSeat();
+		$("#time-select").val(0);
+		
 		if($(":radio[name=mealTime]:checked").length > 0 ) {
 			searchTime();
 		} else {
@@ -501,7 +510,6 @@ $(function() {
 	
 	$('#decreaseAdult').click(function(e){
 		resetTime();
-		
 		let adultStat = $('#adultScore').text();
 		let adultNum = parseInt(adultStat,10);
 		let childStat = $('#childScore').text();
@@ -527,6 +535,14 @@ $(function() {
 		}
 		$('#adultScore').text(adultNum);
 		$(":input[name=adult]").val(adultNum);
+		
+		let checkedSeatValue = $(":input[name:seat]:checked").val();
+		if(checkedSeatValue == 'table' && totalNum <= 2){
+			$("#img-date-choice").attr('src', '/resources/images/dining/btn-date-default.png');
+		}
+		if(checkedSeatValue == 'room' && totalNum <= 8){
+			$("#img-date-choice").attr('src', '/resources/images/dining/btn-date-default.png');
+		}
 	});
 	
 	$('#increaseAdult').click(function(){
@@ -558,11 +574,20 @@ $(function() {
 				return;
 			}
 		}
-		adultNum++;
 	
+		adultNum++;
+		
+		if(checkedSeatValue === 'table' && totalNum >= 1){
+			$("#img-date-choice").attr('src', '/resources/images/dining/날짜선택.png');
+		}
+		if(checkedSeatValue === 'room' && totalNum >= 7){
+			$("#img-date-choice").attr('src', '/resources/images/dining/날짜선택.png');
+		}
 		
 		$('#adultScore').text(adultNum);
 		$(":input[name=adult]").val(adultNum);
+		
+		
 	});
 	$('#decreaseChild').click(function(e){
 		resetTime();
@@ -587,6 +612,14 @@ $(function() {
 		}
 		$('#childScore').text(childNum);
 		$(":input[name=child]").val(childNum);
+		
+		let checkedSeatValue = $(":input[name:seat]:checked").val();
+		if(checkedSeatValue == 'table' && totalNum <= 2){
+			$("#img-date-choice").attr('src', '/resources/images/dining/btn-date-default.png');
+		}
+		if(checkedSeatValue == 'room' && totalNum <= 8){
+			$("#img-date-choice").attr('src', '/resources/images/dining/btn-date-default.png');
+		}
 	});
 	
 	$('#increaseChild').click(function(e){
@@ -621,6 +654,12 @@ $(function() {
 		
 		e.preventDefault();
 		childNum++;
+		if(checkedSeatValue === 'table' && totalNum >= 1){
+			$("#img-date-choice").attr('src', '/resources/images/dining/날짜선택.png');
+		}
+		if(checkedSeatValue === 'room' && totalNum >= 7){
+			$("#img-date-choice").attr('src', '/resources/images/dining/날짜선택.png');
+		}
 
 		$('#childScore').text(childNum);
 		$(":input[name=child]").val(childNum);
@@ -651,7 +690,15 @@ $(function() {
 		}
 		$('#babyScore').text(babyNum);
 		$(":input[name=baby]").val(babyNum);
-	});
+		
+		if(checkedSeatValue == 'table' && totalNum <= 2){
+			$("#img-date-choice").attr('src', '/resources/images/dining/btn-date-default.png');
+		}
+		if(checkedSeatValue == 'room' && totalNum <= 8){
+			$("#img-date-choice").attr('src', '/resources/images/dining/btn-date-default.png');
+		}
+	})
+	
 	$('#increaseBaby').click(function(e){
 		resetTime();
 		
@@ -683,10 +730,15 @@ $(function() {
 		}
 		
 		babyNum++;
-
+		if(checkedSeatValue === 'table' && totalNum >= 1){
+			$("#img-date-choice").attr('src', '/resources/images/dining/날짜선택.png');
+		}
+		if(checkedSeatValue === 'room' && totalNum >= 7){
+			$("#img-date-choice").attr('src', '/resources/images/dining/날짜선택.png');
+		}
 		$('#babyScore').text(babyNum);
 		$(":input[name=baby]").val(babyNum);
-	});
+	})
 	
 	function searchTime() {
 		let queryString = $("#form-select").serialize();
