@@ -19,7 +19,8 @@
 <!-- total zone -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+<!-- moment -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 <title>Spring Hotel</title>
 </head>
 <body>
@@ -662,7 +663,7 @@
 						</div>
 						<div class="total-detail col-9">
 							<div class="total-title-box">
-								<div class="total-title">요금상세 (n박)</div>
+								<div class="total-title">요금상세 (<span id="night">n</span>박)</div>
 								<span><img alt="예약초기화"
 									src="../resources/images/room/rev/rev_clear.png"></span>
 							</div>
@@ -723,8 +724,11 @@
 		$('#final-price').text(alltotalprice);
 		let h = alltotalprice.replace(',','');
 		$('input[name=totalPrice]').val(h);
+		let checkinDate = $('#checkinDate').text();
+		let checkoutDate = $('#checkoutDate').text();
+		let days = moment(checkoutDate).diff(moment(checkinDate), 'days');
 		
-		
+		$('#night').text(days);
 		$('#vat').text(b);
 	})
 	$(".r-box a").click(function(){
