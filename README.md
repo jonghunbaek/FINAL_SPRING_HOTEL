@@ -1,6 +1,7 @@
 # SPRING HOTELS & e-SHOP
 
 ![footer-logo](https://user-images.githubusercontent.com/107451401/186796646-9f303fc4-83e2-457b-9214-08a94f7f4366.png)
+    
 **중앙 파이널 프로젝트 3조**
 
 **백종훈 이제원 손동훈 정자경 양지인 최은오**
