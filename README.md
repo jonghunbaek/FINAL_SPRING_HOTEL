@@ -58,3 +58,11 @@
  양지인 | 객실 예약 및 객실정보 및 예약정보 조회
  최은오 | 다이닝 예약 및 다이닝 예약정보 조회
 <br>
+
+## ☁ API
+
+- 카카오 우편번호 서비스 : https://postcode.map.daum.net/guide
+- 카카오톡 공유하기 서비스 : https://developers.kakao.com/docs/latest/ko/message/js-link
+<br>
+
+<br>
