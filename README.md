@@ -20,7 +20,7 @@
 
 <br>
 
-## 🏨사용기술 및 개발환경
+## :computer:사용기술 및 개발환경
 <img height="40px" src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=java&logoColor=white"/>  <img height="40px" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
 <img height="40px" src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/>
 <img height="40px" src="https://img.shields.io/badge/JSON-000000?style=flat&logo=JSON&logoColor=white"/>
