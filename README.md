@@ -12,7 +12,7 @@
 
 
     
-## 🏨프로젝트 소개
+## 🏨 프로젝트 소개
 - 목적 : 스프링부트를 활용한 웹 어플리케이션 개발
 - 내용 : 신라호텔과 롯데호텔의 웹 어플리케이션을 분석하여 호텔 예약 및 관리 서비스를 구현한다.
   - 사용자는 회원가입 / 회원정보확인 / 지역별 객실 예약 / 지점별 다이닝예약 / 호텔통합스토어에 접근할 수 있다.
@@ -20,7 +20,7 @@
 
 <br>
 
-## :computer:사용기술 및 개발환경
+## 🖥 사용기술 및 개발환경
 <img height="40px" src="https://img.shields.io/badge/JAVA-007396?style=flat&logo=java&logoColor=white"/>  <img height="40px" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/>
 <img height="40px" src="https://img.shields.io/badge/jQuery-0769AD?style=flat&logo=jQuery&logoColor=white"/>
 <img height="40px" src="https://img.shields.io/badge/JSON-000000?style=flat&logo=JSON&logoColor=white"/>
@@ -38,7 +38,7 @@
 
 <br>
     
-## 📅개발기간
+## 📅 개발기간
 - 2022-07-27 ~ 2022-08-25
 - 개발과정
   - 프로젝트 주제 선정
@@ -48,7 +48,7 @@
   
 <br>
     
-## 👨‍💻👩‍💻담당 기능
+## 👨‍💻👩‍💻 담당 기능
 
  백종훈 | 관리자 페이지(직원 등록, 다이닝 및 객실 예약 추가, 다이닝 및 객실 예약조회)
 ---- | ---- 
