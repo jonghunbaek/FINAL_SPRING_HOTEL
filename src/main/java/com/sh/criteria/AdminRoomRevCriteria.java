@@ -15,8 +15,8 @@ public class AdminRoomRevCriteria {
 	private String search;
 	private String page;
 	private String keyword;
-	private String location;		// 변환
-	private String roomCategory;	// 변환
+	private String location;		
+	private String roomCategory;	
 	private String revStatus;
 	private String checkinPeriod;
 	private String sortRev;

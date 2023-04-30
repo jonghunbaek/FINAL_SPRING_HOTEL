@@ -235,7 +235,7 @@
 	  	</div>
 	  	<div class="col py-3">
 	  		<div class="row">
-	  			<div class="col-8">
+	  			<div class="col-9">
 			  		<span style="font-size:1rem; font-weight:bold;">2022년 상반기 ${location.name }점 객실타입별 예약수</span>
 	  			</div>		
 	  		</div>
