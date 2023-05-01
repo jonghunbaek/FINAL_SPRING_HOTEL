@@ -37,7 +37,7 @@ public interface AdminRevMapper {
 	// 선택된 날짜가 sh_rt_rev_count에 존재하는지 확인 --> 신규 다이닝 예약등록시
 	String getRevDateBySelectedDateInAddRev(DiningReservationForm diningReservationForm);
 	// 선택된 날짜가 존재할 때 해당 날짜의 mealTime이 존재하는 지 확인
-	String checkSelectedMeal(DiningReservationForm diningReservationForm);
+	/* String checkSelectedMeal(DiningReservationForm diningReservationForm); */
 	
 	// 다이닝 넘버 가져오기
 	Dn getDnByNo(AdminDnRevCriteria adminDnRevCriteria);
@@ -53,6 +53,9 @@ public interface AdminRevMapper {
 
 	// 신규 다이닝예약 등록
 	void insertNewDiningRev(DiningReservationForm diningReservationForm);
+	void insertNewRtRevCount(DiningReservationForm diningReservationForm);
+	void updateRtRevCount(DiningReservationForm diningReservationForm);
+	void insertAllergyToSelected(DiningReservationForm diningReservationForm);
 	
 	/*----------------------------- 객실예약 조회 관련---------------------------- */
 	List<RoomRev> getAllRoomRevList(Pagination pagination);
@@ -89,12 +92,4 @@ public interface AdminRevMapper {
 	RtRev getRtRevDetailByNo(int revNo);
 	// 예약번호로 저장된 알레르기번호를 가져온다.
 	List<AllergySelected> getAllergySelectedByNo(int revNo);
-
-
-	
-
-	
-
-	
-
 }

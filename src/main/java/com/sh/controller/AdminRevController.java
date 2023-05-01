@@ -41,7 +41,11 @@ public class AdminRevController {
 		return "admin/reservation/addrev";
 	}
 	
-	// 예약등록 페이지 고객 검색
+	/**
+	 * 예약 등록 페이지 고객 검색
+	 * @param keyword
+	 * @return
+	 */
 	@PostMapping(path = "/addrev/user")
 	@ResponseBody
 	public List<User> searchUser(String keyword) {
@@ -112,7 +116,11 @@ public class AdminRevController {
 		return "admin/reservation/roomrev";
 	}
 	
-	// 객실 예약현황 조건 별 페이지 요청
+	/**
+	 * 객실 예약현황 조건 별 페이지 요청
+	 * @param adminRoomRevCriteria
+	 * @return
+	 */
 	@GetMapping(path = "/roomrev/filter")
 	@ResponseBody
 	public Map<String, Object> Filter(AdminRoomRevCriteria adminRoomRevCriteria) {

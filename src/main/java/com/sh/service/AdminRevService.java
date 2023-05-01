@@ -41,14 +41,58 @@ public class AdminRevService {
 	@Autowired
 	private RoomMapper roomMapper;
 	
-	// 매일 밤 12:00시 정각에 실행 돼 체크인 당일, 전일인 예약상태를 '임박(O)'으로 변경
+	/**
+	 * 매일 밤 12:00시에 예약일이 당일, 전일인 예약상태를 '임박(O)'으로 변경
+	 */
 	@Scheduled(cron = "0 0 0 * * *")
 	public void changeRevStatus() {
 		adminRevMapper.changeRevStatus();
 	}
 	
+	/**
+	 * 예약 등록 페이지 고객 검색
+	 * @param keyword
+	 * @return
+	 */
 	public List<User> getUserByName(String keyword) {
 		return userMapper.getUserByName(keyword);
+	}
+	
+	/**
+	 * 페이징 처리에 필요한 데이터 가공
+	 * @param adminRoomRevCriteria
+	 * @return
+	 */
+	public Pagination getPageInfo(AdminRoomRevCriteria adminRoomRevCriteria){
+		if (adminRoomRevCriteria.getPage() == null || adminRoomRevCriteria.getPage() == "") {
+			adminRoomRevCriteria.setPage("1");
+		}
+		
+		return new Pagination(Integer.parseInt(adminRoomRevCriteria.getRows())
+							  ,adminRevMapper.getTotalRowsByFilter(adminRoomRevCriteria)
+							  ,Integer.parseInt(adminRoomRevCriteria.getPage()));
+	}
+	
+	/**
+	 * SQL에 사용하기 위한 데이터 처리
+	 * @param adminRoomRevCriteria
+	 * @return
+	 */
+	public AdminRoomRevCriteria parseData(AdminRoomRevCriteria adminRoomRevCriteria) {
+		String checkinPeriod = adminRoomRevCriteria.getCheckinPeriod();
+		String locationNo = adminRoomRevCriteria.getLocation();
+		String roomCategoryNo = adminRoomRevCriteria.getRoomCategory();
+		
+		if (checkinPeriod != null && checkinPeriod != "") {
+			String[] checkins = checkinPeriod.split("~");
+			adminRoomRevCriteria.setInStartDate(checkins[0].trim());
+			adminRoomRevCriteria.setInEndDate(checkins[1].trim());
+		}
+		if ((locationNo != null && locationNo != "") && (roomCategoryNo != null && roomCategoryNo != "")) {
+			adminRoomRevCriteria.setLocationNo(Integer.parseInt(locationNo));
+	    	adminRoomRevCriteria.setRoomCategoryNo(Integer.parseInt(roomCategoryNo));
+		}
+		return adminRoomRevCriteria;
 	}
 	
 	// ------------------------------------------객실 신규예약추가 ----------------------------------------------
@@ -87,7 +131,6 @@ public class AdminRevService {
 	
 	// ------------------------------------------다이닝 신규예약추가 ----------------------------------------------
 	public Map<String, Object> getRtSelectableDate(AdminDnRevCriteria adminDnRevCriteria) {
-		
 		Dn dn = adminRevMapper.getDnByNo(adminDnRevCriteria);
 		List<RtRevCount> selectableDate = adminRevMapper.getRtSelectableDate(adminDnRevCriteria);
 		
@@ -100,30 +143,45 @@ public class AdminRevService {
 	}
 	
 	public List<String> getMealTime(AdminDnRevCriteria adminDnRevCriteria) {
-		
 		String revDate = adminRevMapper.getRevDateBySelectedDate(adminDnRevCriteria);
 		
 		if (revDate == null) {
-			
 			List<String> mealTimeIsNot = adminRevMapper.getMealTimeByRevIsNot(adminDnRevCriteria);
 			return mealTimeIsNot;
-		
 		} else {
 			List<String> mealTimeIs = adminRevMapper.getMealTimeByRevIs(adminDnRevCriteria);
 			return mealTimeIs;
 		}
-		
 	}
+	
+	/**
+	 * 레스토랑 신규 예약 추가
+	 * @param diningReservationForm
+	 */
 	public void insertNewDiningRev(DiningReservationForm diningReservationForm) {
-	
-		// 선택된 날짜가 sh_rt_rev_count에 존재하는지 체크하여 form에 담는다
-		diningReservationForm.setRevDate(adminRevMapper.getRevDateBySelectedDateInAddRev(diningReservationForm));
-		// 선택된 날짜가 존재 할때 해당 mealtime이 존재하는지 체크한다.
-		diningReservationForm.setCheckMeal(adminRevMapper.checkSelectedMeal(diningReservationForm));
-		
+		diningReservationForm = checkRevCountByDateAndMeal(diningReservationForm);
 		adminRevMapper.insertNewDiningRev(diningReservationForm);
+		
+		if (diningReservationForm.getIsAllergy() == "Y") {
+			adminRevMapper.insertAllergyToSelected(diningReservationForm);
+		}
+		
+		if (diningReservationForm.getRevDate() == null || diningReservationForm.getRevDate() == " ") {
+			adminRevMapper.insertNewRtRevCount(diningReservationForm);
+			return;
+		}
+		adminRevMapper.updateRtRevCount(diningReservationForm);
 	}
 	
+	/**
+	 * 선택된 날짜, 식사 타임에 기존 자리수 카운팅 데이터 존재 여부 조회
+	 * @param diningReservationForm
+	 * @return
+	 */
+	public DiningReservationForm checkRevCountByDateAndMeal(DiningReservationForm diningReservationForm) {
+		diningReservationForm.setRevDate(adminRevMapper.getRevDateBySelectedDateInAddRev(diningReservationForm));
+		return diningReservationForm;
+	}
 	// ------------------------------------------객실 예약현황 ----------------------------------------------
 	// 페이징처리에 필요한 전체 개수 
 	public int getTotalRows() {
@@ -133,60 +191,28 @@ public class AdminRevService {
 
 	// 전체 예약리스트 가져오기
 	public List<RoomRev> getAllRoomRevList(Pagination pagination) {
-		
 		List<RoomRev> roomRev = adminRevMapper.getAllRoomRevList(pagination);
 		return roomRev;
 	}
 
+	// daterangepicker에서 yyyy-mm-dd ~ yyyy-mm-dd 형식으로 넘어오는 String을 분리 시켜준다.
+	// String을 Date타입으로 parse시키지 않는 이유는 첫째, java에서의 Date타입이 db에서 적용되나 헷갈려서 --> 추후 검색 더 해보자
+	// 둘째, 값이 많은 수가 아니기때문에 db에서 to_date로 충분히 조회가 가능하기때문 
+	
+	/**
+	 * 객실 예약현황 조건 별 페이지 요청
+	 * @param adminRoomRevCriteria
+	 * @return
+	 */
 	public Map<String, Object> filterRev(AdminRoomRevCriteria adminRoomRevCriteria) {
-		
-		// daterangepicker에서 yyyy-mm-dd ~ yyyy-mm-dd 형식으로 넘어오는 String을 분리 시켜준다.
-		// String을 Date타입으로 parse시키지 않는 이유는 첫째, java에서의 Date타입이 db에서 적용되나 헷갈려서 --> 추후 검색 더 해보자
-		// 둘째, 값이 많은 수가 아니기때문에 db에서 to_date로 충분히 조회가 가능하기때문 
-		String checkinPeriod = adminRoomRevCriteria.getCheckinPeriod();
-		
-		if (checkinPeriod == null || checkinPeriod == "") {
-			 System.out.println("checkinPeriod:-------" + checkinPeriod);
-		} else {
-			
-			String[] checkins = checkinPeriod.split("~");
-			
-			List<String> checkinTrim = new ArrayList<String>();
-			
-			for (int i=0; i<checkins.length; i++) {
-				checkinTrim.add(checkins[i].trim());
-			}
-			
-			adminRoomRevCriteria.setInStartDate(checkinTrim.get(0));
-			adminRoomRevCriteria.setInEndDate(checkinTrim.get(1));
-		}
-		
-		// location, roomCategory를 int로 parse시켜준다.
-		try {
-	    	adminRoomRevCriteria.setLocationNo(Integer.parseInt(adminRoomRevCriteria.getLocation()));
-	    	adminRoomRevCriteria.setRoomCategoryNo(Integer.parseInt(adminRoomRevCriteria.getRoomCategory()));
-	    } catch(NumberFormatException e) {}
-	  
-		// Pagination 객체 생성 후 페이지에 표시될 개수를 매개변수로 전해주고 그 값을 adminRoomRevCriteria에 담는다.
-		int totalRows = adminRevMapper.getTotalRowsByFilter(adminRoomRevCriteria);
-		
-		if (adminRoomRevCriteria.getPage() == null || adminRoomRevCriteria.getPage() == "") {
-			adminRoomRevCriteria.setPage("1");
-		}
-		
-		int currentPage = Integer.parseInt(adminRoomRevCriteria.getPage());
-			
-		Pagination pagination = new Pagination(Integer.parseInt(adminRoomRevCriteria.getRows()) , totalRows, currentPage);
-
+		adminRoomRevCriteria = parseData(adminRoomRevCriteria);
+		Pagination pagination = getPageInfo(adminRoomRevCriteria);
 		adminRoomRevCriteria.setBeginIndex(pagination.getBeginIndex());
 		adminRoomRevCriteria.setEndIndex(pagination.getEndIndex());
 		
-		List<RoomRev> roomRev = adminRevMapper.filterRev(adminRoomRevCriteria);
-		
 		Map<String, Object> filter = new HashMap<String, Object>();
 		filter.put("pagination", pagination);
-		filter.put("roomRev", roomRev);
-
+		filter.put("roomRev", adminRevMapper.filterRev(adminRoomRevCriteria));
 		return filter;
 	}
 
