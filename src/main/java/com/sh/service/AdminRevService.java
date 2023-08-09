@@ -138,7 +138,7 @@ public class AdminRevService {
 		
 		dnDate.put("dn", dn);
 		dnDate.put("selectableDate", selectableDate);
-		
+		System.out.println("test");
 		return dnDate;
 	}
 	
